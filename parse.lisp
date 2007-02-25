@@ -3,7 +3,7 @@
 
 (defvar *datatype-library*)
 
-(defun parse-relax-ng (input)
+(defun parse-relax-ng (input &key entity-resolver)
   (klacks:with-open-source (source (cxml:make-source input))
     (klacks:find-event source :start-element)
     (let ((*datatype-library* ""))
@@ -223,11 +223,12 @@
 (defun p/value (source ns)
   (klacks:expecting-element (source "value")
     (let* ((type (ntc "type" (klacks:list-attributes source)))
-	   (string (parse-characters source)))
-      (make-value :string string
-		  :type type
-		  :datatype-library *datatype-library*
-		  :ns ns))))
+	   (string (parse-characters source))
+	   (dl *datatype-library*))
+      (unless type
+	(setf type "token")
+	(setf dl ""))
+      (make-value :string string :type type :datatype-library dl :ns ns))))
 
 (defun p/data (source ns)
   (klacks:expecting-element (source "data")
@@ -270,7 +271,7 @@
 (defun p/external-ref (source ns)
   (klacks:expecting-element (source "externalRef")
     (make-external-ref
-     :href (attribute "href" (klacks:list-attributes source))
+     :href (escape-uri (attribute "href" (klacks:list-attributes source)))
      :ns ns)))
 
 (defun p/grammar (source ns)
@@ -318,7 +319,7 @@
 
 (defun p/include (source)
   (klacks:expecting-element (source "div")
-    (let ((href (attribute "href" source))
+    (let ((href (escape-uri (attribute "href" source)))
 	  (content (p/grammar-content* source :disallow-include t)))
       (make-include :href href :content content))))
 
@@ -386,3 +387,12 @@
 ;;;   Escaping is done by p/pattern.
 ;;;   Attribute value defaulting is done using *datatype-library*; only
 ;;;   p/data and p/value record the computed value.
+
+;;; 4.4. type attribute of value element
+;;;   Done by p/value.
+
+;;; 4.5. href attribute
+;;;   Escaping is done by p/include and p/external-ref.
+;;;
+;;;   FIXME: Mime-type handling should be the job of the entity resolver,
+;;;   but that requires xstream hacking.
