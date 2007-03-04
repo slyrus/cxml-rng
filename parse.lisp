@@ -514,33 +514,52 @@
 
 ;;;; tests
 
-(defun test (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
-  (dribble "/home/david/src/lisp/cxml-rng/TEST")
+(defun run-tests (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
+  (dribble "/home/david/src/lisp/cxml-rng/TEST" :if-exists :rename-and-delete)
   (let ((pass 0)
 	(total 0))
     (dolist (d (directory p))
       (let ((name (car (last (pathname-directory d)))))
 	(when (parse-integer name :junk-allowed t)
 	  (incf total)
-	  (let* ((i (merge-pathnames "i.rng" d))
-		 (c (merge-pathnames "c.rng" d)))
-	    (format t "~A: " name)
-	    (if (probe-file c)
-		(handler-case
-		    (progn
-		      (parse-relax-ng c)
-		      (format t " PASS~%")
-		      (incf pass))
-		  (error (c)
-		    (format t " FAIL: ~A~%" c)))
-		(handler-case
-		    (progn
-		      (parse-relax-ng i)
-		      (format t " FAIL: didn't detect invalid schema~%"))
-		  (rng-error (c)
-		    (format t " PASS: ~A~%" c)
-		    (incf pass))
-		  (error (c)
-		    (format t " FAIL: incorrect condition type: ~A~%" c))))))))
+	  (when (test1 d)
+	    (incf pass)))))
     (format t "Passed ~D/~D tests.~%" pass total))
   (dribble))
+
+(defun run-test (n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
+  (test1 (merge-pathnames (format nil "~3,'0D/" n) p)))
+
+(defun parse-test (n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
+  (let* ((d (merge-pathnames (format nil "~3,'0D/" n) p))
+	 (i (merge-pathnames "i.rng" d))
+	 (c (merge-pathnames "c.rng" d))
+	 (rng (if (probe-file c) c i)))
+    (format t "~A: " (car (last (pathname-directory d))))
+    (print rng)
+    (parse-relax-ng rng)))
+
+(defun test1 (d)
+  (let* ((i (merge-pathnames "i.rng" d))
+	 (c (merge-pathnames "c.rng" d)))
+    (format t "~A: " (car (last (pathname-directory d))))
+    (if (probe-file c)
+	(handler-case
+	    (progn
+	      (parse-relax-ng c)
+	      (format t " PASS~%")
+	      t)
+	  (error (c)
+	    (format t " FAIL: ~A~%" c)
+	    nil))
+	(handler-case
+	    (progn
+	      (parse-relax-ng i)
+	      (format t " FAIL: didn't detect invalid schema~%")
+	      nil)
+	  (rng-error (c)
+	    (format t " PASS: ~A~%" c)
+	    t)
+	  (error (c)
+	    (format t " FAIL: incorrect condition type: ~A~%" c)
+	    nil)))))

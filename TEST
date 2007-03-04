@@ -8,13 +8,16 @@
 008:  PASS: invalid schema: except not allowed here
 009:  FAIL: didn't detect invalid schema
 010:  FAIL: didn't detect invalid schema
-011:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
-012:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+011:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+012:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 013:  PASS: invalid schema: notAllowed not allowed here
 014:  PASS: invalid schema: start not allowed here
 015:  PASS: invalid schema: start not allowed here
 016:  PASS: invalid schema: start not allowed here
-017:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+017:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 018:  PASS: invalid schema: element not allowed here
 019:  PASS: invalid schema: element not allowed here
 020:  FAIL: didn't detect invalid schema
@@ -83,13 +86,15 @@
 080:  FAIL: didn't detect invalid schema
 081:  FAIL: didn't detect invalid schema
 082:  PASS: invalid schema: start not allowed here
-083:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+083:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 084:  PASS: invalid schema: attribute not allowed here
 085:  FAIL: didn't detect invalid schema
 086:  PASS: invalid schema: element not allowed here
 087:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
 088:  PASS
-089:  FAIL: expected END-ELEMENT but got CHARACTERS
+089:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 090:  FAIL: invalid schema: start not allowed here
 091:  FAIL: invalid schema: start not allowed here
 092:  FAIL: invalid schema: start not allowed here
@@ -192,12 +197,15 @@
 159:  PASS: invalid schema: start not allowed here
 160:  PASS: invalid schema: start not allowed here
 161:  PASS: invalid schema: start not allowed here
-162:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+162:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 163:  PASS
-164:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+164:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 165:  PASS: invalid schema: notAllowed not allowed here
 166:  PASS: invalid schema: start not allowed here
-167:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+167:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 168:  PASS: invalid schema: attribute not allowed here
 169:  PASS: invalid schema: attribute not allowed here
 170:  PASS: invalid schema: attribute not allowed here
@@ -205,7 +213,8 @@
 172:  PASS: invalid schema: attribute not allowed here
 173:  PASS: invalid schema: attribute not allowed here
 174:  PASS: invalid schema: attribute not allowed here
-175:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+175:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 176:  PASS
 177:  PASS: invalid schema: param not allowed here
 178:  FAIL: didn't detect invalid schema
@@ -257,33 +266,45 @@
 224:  FAIL: invalid schema: element not allowed here
 225:  FAIL: unknown &KEY argument: :POSSIBILITY
 226:  FAIL: unknown &KEY argument: :POSSIBILITY
-227:  FAIL: expected END-ELEMENT but got CHARACTERS
+227:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 228:  FAIL: unknown &KEY argument: :POSSIBILITY
 229:  FAIL: unknown &KEY argument: :POSSIBILITY
-230:  FAIL: expected END-ELEMENT but got CHARACTERS
-231:  FAIL: expected END-ELEMENT but got CHARACTERS
-232:  FAIL: expected END-ELEMENT but got CHARACTERS
-233:  FAIL: expected END-ELEMENT but got CHARACTERS
-234:  FAIL: expected END-ELEMENT but got CHARACTERS
+230:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+231:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+232:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+233:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+234:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 235:  PASS
-236:  FAIL: expected END-ELEMENT but got CHARACTERS
+236:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 237:  FAIL: unknown &KEY argument: :POSSIBILITY
 238:  FAIL: unknown &KEY argument: :POSSIBILITY
 239:  FAIL: unknown &KEY argument: :POSSIBILITY
-240:  FAIL: expected END-ELEMENT but got CHARACTERS
+240:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 241:  PASS
 242:  FAIL: unknown &KEY argument: :POSSIBILITY
 243:  FAIL: unknown &KEY argument: :POSSIBILITY
 244:  FAIL: unknown &KEY argument: :POSSIBILITY
-245:  FAIL: expected END-ELEMENT but got CHARACTERS
+245:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 246:  FAIL: unknown &KEY argument: :POSSIBILITY
 247:  FAIL: unknown &KEY argument: :POSSIBILITY
 248:  FAIL: invalid schema: attribute not allowed here
-249:  FAIL: expected END-ELEMENT but got CHARACTERS
+249:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 250:  FAIL: unknown &KEY argument: :POSSIBILITY
 251:  FAIL: unknown &KEY argument: :POSSIBILITY
-252:  FAIL: expected END-ELEMENT but got CHARACTERS
-253:  FAIL: expected END-ELEMENT but got CHARACTERS
+252:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
+253:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
+
 254:  FAIL: invalid schema: attribute not allowed here
 255:  FAIL: invalid schema: attribute not allowed here
 256:  FAIL: invalid schema: attribute not allowed here
@@ -404,4 +425,4 @@
 371:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 372:  FAIL: invalid schema: start not allowed here
 373:  FAIL: invalid schema: notAllowed not allowed here
-Passed 176/373 tests.
+Passed 184/373 tests.
