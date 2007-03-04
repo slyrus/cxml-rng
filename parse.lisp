@@ -331,6 +331,7 @@
 		 source))))
 	(unless (pattern-ns result)
 	  (setf (pattern-ns result) ns))
+	(klacks:consume source)
 	result))))
 
 (defun p/grammar (source ns)
@@ -396,6 +397,7 @@
 		     (p/grammar source "wrong://")))
 		 source)))
 	     (grammar-content (pattern-content grammar)))
+	(klacks:consume source)
 	(make-div :children
 		  (cons (make-div :children
 				  (simplify-include source

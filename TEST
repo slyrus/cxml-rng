@@ -155,16 +155,11 @@
 098:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 57 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/098/c.rng> ]
 099:  FAIL: unknown &KEY argument: :TYPE
-100:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 4, column 85 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/100/c.rng> ]
-101:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 9, column 35 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/101/c.rng> ]
-102:  PASS: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 4, column 72 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/102/i.rng> ]
-103:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 4, column 68 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/103/c.rng> ]
-104:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 4, column 96 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/104/c.rng> ]
+100:  PASS
+101:  FAIL: unknown &KEY argument: :POSSIBILITY
+102:  FAIL: didn't detect invalid schema
+103:  PASS
+104:  PASS
 105:  PASS: looping include
   [ Error at line 4, column 68 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/105/x> ]
 106:  PASS: invalid schema: start not allowed here
@@ -203,8 +198,7 @@
 123:  PASS
 124:  FAIL: invalid schema: attribute not allowed here
   [ Error at line 5, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/124/c.rng> ]
-125:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got START-ELEMENT
-  [ Error at line 5, column 24 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/125/c.rng> ]
+125:  FAIL: unknown &KEY argument: :POSSIBILITY
 126:  FAIL: invalid schema: element not allowed here
   [ Error at line 5, column 40 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/126/c.rng> ]
 127:  FAIL: invalid schema: element not allowed here
@@ -624,4 +618,4 @@
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
 373:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 198/373 tests.
+Passed 200/373 tests.
