@@ -1,19 +1,32 @@
 (in-package :cxml-rng)
 
 
+;;;; Errors
+
+(define-condition rng-error (simple-error) ())
+
+(defun rng-error (fmt &rest args)
+  (error 'rng-error :format-control fmt :format-arguments args))
+
+
+;;;; Parser
+
 (defvar *datatype-library*)
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
 (defvar *include-href-stack*)
 
 (defun parse-relax-ng (input &key entity-resolver)
-  (klacks:with-open-source (source (cxml:make-source input))
-    (klacks:find-event source :start-element)
-    (let ((*datatype-library* "")
-	  (*entity-resolver* entity-resolver)
-	  (*external-href-stack* '())
-	  (*include-href-stack* '()))
-      (p/pattern source))))
+  (handler-case
+      (klacks:with-open-source (source (cxml:make-source input))
+	(klacks:find-event source :start-element)
+	(let ((*datatype-library* "")
+	      (*entity-resolver* entity-resolver)
+	      (*external-href-stack* '())
+	      (*include-href-stack* '()))
+	  (p/pattern source)))
+    (cxml:xml-parse-error (c)
+      (rng-error "Cannot parse schema: ~A" c))))
 
 
 ;;;; pattern structures
@@ -94,8 +107,9 @@
 (defvar *rng-namespace* "http://relaxng.org/ns/structure/1.0")
 
 (defun skip-foreign (source)
-  (print (klacks:current-lname source))
-  (assert (not (equal (klacks:current-uri source) *rng-namespace*)))
+  (when (equal (klacks:current-uri source) *rng-namespace*)
+    (rng-error "invalid schema: ~A not allowed here"
+	       (klacks:current-lname source)))
   (klacks:serialize-element source nil))
 
 (defun attribute (lname attrs)
@@ -493,3 +507,32 @@
 
 ;;; 4.6. externalRef element
 ;;;   Done by p/external-ref.
+
+;;; 4.7. include element
+;;;   Done by p/include.
+
+
+;;;; tests
+
+(defun test (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
+  (dolist (d (directory p))
+    (let ((name (car (last (pathname-directory d)))))
+      (when (parse-integer name :junk-allowed t)
+	(let* ((i (merge-pathnames "i.rng" d))
+	       (c (merge-pathnames "c.rng" d)))
+	  (format t "~A: " name)
+	  (if (probe-file c)
+	      (handler-case
+		  (progn
+		    (parse-relax-ng c)
+		    (format t " PASS~%"))
+		(error (c)
+		  (format t " FAIL: ~A~%" c)))
+	      (handler-case
+		  (progn
+		    (parse-relax-ng i)
+		    (format t " FAIL: didn't detect invalid schema~%"))
+		(rng-error (c)
+		  (format t " PASS: ~A~%" c))
+		(error (c)
+		  (format t " FAIL: incorrect condition type: ~A~%" c)))))))))
