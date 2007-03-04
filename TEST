@@ -24,18 +24,18 @@
 021:  FAIL: didn't detect invalid schema
 022:  PASS: invalid schema: keyRef not allowed here
 023:  PASS: invalid schema: key not allowed here
-024:  FAIL: incorrect condition type: empty element
+024:  PASS: empty element
 025:  PASS: invalid schema: element not allowed here
 026:  PASS: invalid schema: element not allowed here
 027:  PASS: invalid schema: attribute not allowed here
-028:  FAIL: incorrect condition type: empty element
-029:  FAIL: incorrect condition type: empty element
-030:  FAIL: incorrect condition type: empty element
-031:  FAIL: incorrect condition type: empty element
-032:  FAIL: incorrect condition type: empty element
-033:  FAIL: incorrect condition type: empty element
-034:  FAIL: incorrect condition type: empty element
-035:  FAIL: incorrect condition type: empty element
+028:  PASS: empty element
+029:  PASS: empty element
+030:  PASS: empty element
+031:  PASS: empty element
+032:  PASS: empty element
+033:  PASS: empty element
+034:  PASS: empty element
+035:  PASS: empty element
 036:  PASS: invalid schema: element not allowed here
 037:  PASS: invalid schema: element not allowed here
 038:  PASS: invalid schema: element not allowed here
@@ -425,4 +425,4 @@
 371:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 372:  FAIL: invalid schema: start not allowed here
 373:  FAIL: invalid schema: notAllowed not allowed here
-Passed 184/373 tests.
+Passed 193/373 tests.

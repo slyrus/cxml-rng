@@ -174,7 +174,7 @@
 	  (let ((p (p/pattern source))) (when p (push p children))))
 	(:end-element (return))))
     (unless children
-      (error "empty element"))
+      (rng-error "empty element"))
     (nreverse children)))
 
 (defun p/pattern? (source)
@@ -290,7 +290,7 @@
     (let ((href
 	   (escape-uri (attribute "href" (klacks:list-attributes source)))))
       (when (find href *include-href-stack* :test #'string=)
-	(error "looping include"))
+	(rng-error "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
 	     (result
@@ -319,7 +319,7 @@
 		(:|div| (push (p/div source) content))
 		(:|include|
 		  (when disallow-include
-		    (error "nested include not permitted"))
+		    (rng-error "nested include not permitted"))
 		  (push (p/include source) content))
 		(t (skip-foreign source)))))
 	  (:end-element (return)))))
@@ -351,7 +351,7 @@
 	   (escape-uri (attribute "href" (klacks:list-attributes source))))
 	  (include-content (p/grammar-content* source :disallow-include t)))
       (when (find href *include-href-stack* :test #'string=)
-	(error "looping include"))
+	(rng-error "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
 	     (grammar
@@ -399,7 +399,7 @@
 					(t x)))
 				    grammar-content))
 	  (unless ok
-	    (error "expected start in grammar")))
+	    (rng-error "expected start in grammar")))
 	grammar-content)))
 
 (defun simplify-include/define (grammar-content include-content)
@@ -424,7 +424,7 @@
 	 grammar-content)
       (loop for (define . okp) in defines do
 	    (unless okp
-	      (error "expected matching ~A in grammar" define))))))
+	      (rng-error "expected matching ~A in grammar" define))))))
 
 (defun simplify-include (grammar-content include-content)
   (simplify-include/define
