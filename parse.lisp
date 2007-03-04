@@ -2,11 +2,17 @@
 
 
 (defvar *datatype-library*)
+(defvar *entity-resolver*)
+(defvar *external-href-stack*)
+(defvar *include-href-stack*)
 
 (defun parse-relax-ng (input &key entity-resolver)
   (klacks:with-open-source (source (cxml:make-source input))
     (klacks:find-event source :start-element)
-    (let ((*datatype-library* ""))
+    (let ((*datatype-library* "")
+	  (*entity-resolver* entity-resolver)
+	  (*external-href-stack* '())
+	  (*include-href-stack* '()))
       (p/pattern source))))
 
 
@@ -55,9 +61,6 @@
   except)
 
 (defstruct (not-allowed (:include pattern) (:conc-name "PATTERN-")))
-
-(defstruct (external-ref (:include pattern) (:conc-name "PATTERN-"))
-  href)
 
 (defstruct (grammar (:include pattern) (:conc-name "PATTERN-"))
   content)
@@ -116,7 +119,7 @@
 	nil)))
 
 (defmacro with-datatype-library (attrs &body body)
-  `(invoke-with-datatype-library (lambda () ,@body) attrs))
+  `(invoke-with-datatype-library (lambda () ,@body) ,attrs))
 
 (defun invoke-with-datatype-library (fn attrs)
   (let* ((dl (attribute "datatypeLibrary" attrs))
@@ -270,9 +273,20 @@
 
 (defun p/external-ref (source ns)
   (klacks:expecting-element (source "externalRef")
-    (make-external-ref
-     :href (escape-uri (attribute "href" (klacks:list-attributes source)))
-     :ns ns)))
+    (let ((href
+	   (escape-uri (attribute "href" (klacks:list-attributes source)))))
+      (when (find href *include-href-stack* :test #'string=)
+	(error "looping include"))
+      (let* ((*include-href-stack* (cons href *include-href-stack*))
+	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
+	     (result
+	      (klacks:with-open-source (source (cxml:make-source xstream))
+		(klacks:find-event source :start-element)
+		(let ((*datatype-library* ""))
+		  (p/pattern source)))))
+	(unless (pattern-ns result)
+	  (setf (pattern-ns result) ns))
+	result))))
 
 (defun p/grammar (source ns)
   (klacks:expecting-element (source "grammar")
@@ -318,10 +332,90 @@
     (make-div :content (p/grammar-content* source))))
 
 (defun p/include (source)
-  (klacks:expecting-element (source "div")
-    (let ((href (escape-uri (attribute "href" source)))
-	  (content (p/grammar-content* source :disallow-include t)))
-      (make-include :href href :content content))))
+  (klacks:expecting-element (source "include")
+    (let ((href
+	   (escape-uri (attribute "href" (klacks:list-attributes source))))
+	  (include-content (p/grammar-content* source :disallow-include t)))
+      (when (find href *include-href-stack* :test #'string=)
+	(error "looping include"))
+      (let* ((*include-href-stack* (cons href *include-href-stack*))
+	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
+	     (grammar
+	      (klacks:with-open-source (source (cxml:make-source xstream))
+		(klacks:find-event source :start-element)
+		(let ((*datatype-library* ""))
+		  (p/grammar source))))
+	     (grammar-content (pattern-content grammar)))
+	(make-div :children
+		  (cons (make-div :children
+				  (simplify-include grammar-content
+						    include-content))
+			include-content))))))
+
+(defun simplify-include/map (fn l)
+  (loop
+      for x in l
+      for value = (let ((result (funcall fn x)))
+		    (when (typep x 'div)
+		      (loop
+			  for x in (div-content x)
+			  for value = (funcall fn x)
+			  when value
+			  collect value into content
+			  finally
+			    (setf (div-content x) content)))
+		    result)
+      when value
+      collect value))
+
+(defun simplify-include/start (grammar-content include-content)
+  (let ((startp
+	 (block nil
+	   (simplify-include/map (lambda (x)
+				   (when (typep x 'start)
+				     (return t))
+				   x)
+				 include-content))))
+    (if startp
+	(let ((ok nil))
+	  (prog1
+	      (simplify-include/map (lambda (x)
+				      (cond
+					((typep x 'start) (setf ok t) nil)
+					(t x)))
+				    grammar-content))
+	  (unless ok
+	    (error "expected start in grammar")))
+	grammar-content)))
+
+(defun simplify-include/define (grammar-content include-content)
+  (let ((defines '()))
+    (simplify-include/map (lambda (x)
+			    (when (typep x 'define)
+			      (push (cons x nil) defines))
+			    x)
+			  include-content)
+    (prog1
+	(simplify-include/map
+	 (lambda (x)
+	   (if (typep x 'define)
+	       (let ((cons (find (define-name x) defines :key #'car)))
+		 (cond
+		   (cons
+		     (setf (cdr cons) t)
+		     nil)
+		   (t
+		     x)))
+	       x))
+	 grammar-content)
+      (loop for (define . okp) in defines do
+	    (unless okp
+	      (error "expected matching ~A in grammar" define))))))
+
+(defun simplify-include (grammar-content include-content)
+  (simplify-include/define
+   (simplify-include/start grammar-content include-content)
+   include-content))
 
 (defun p/name-class (source)
   (klacks:expecting-element (source)
@@ -396,3 +490,6 @@
 ;;;
 ;;;   FIXME: Mime-type handling should be the job of the entity resolver,
 ;;;   but that requires xstream hacking.
+
+;;; 4.6. externalRef element
+;;;   Done by p/external-ref.
