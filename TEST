@@ -44,10 +44,7 @@
 041:  PASS: invalid schema: param not allowed here
 042:  PASS: invalid schema: start not allowed here
 043:  PASS: invalid schema: start not allowed here
-044:  FAIL: incorrect condition type: There is no applicable method for the generic function
-                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-                                      when called with arguments
-                                        ("").
+044:  PASS: missing URI
 045:  PASS: invalid schema: include not allowed here
 046:  PASS: invalid schema: start not allowed here
 047:  PASS: invalid schema: start not allowed here
@@ -105,42 +102,15 @@
 097:  FAIL: invalid schema: element not allowed here
 098:  FAIL: invalid schema: start not allowed here
 099:  FAIL: unknown &KEY argument: :TYPE
-100:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("x").
-101:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("x").
-102:  FAIL: incorrect condition type: There is no applicable method for the generic function
-                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-                                      when called with arguments
-                                        ("x#foo").
-103:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("x").
-104:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("x").
-105:  FAIL: incorrect condition type: There is no applicable method for the generic function
-                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-                                      when called with arguments
-                                        ("x").
-106:  FAIL: incorrect condition type: There is no applicable method for the generic function
-                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-                                      when called with arguments
-                                        ("x").
-107:  FAIL: incorrect condition type: There is no applicable method for the generic function
-                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-                                      when called with arguments
-                                        ("x").
-108:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("sub/x").
+100:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+101:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+102:  FAIL: incorrect condition type: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+103:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+104:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+105:  FAIL: incorrect condition type: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+106:  FAIL: incorrect condition type: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+107:  FAIL: incorrect condition type: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
+108:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/sub/x", No such file or directory.
 109:  FAIL: invalid schema: include not allowed here
 110:  FAIL: invalid schema: include not allowed here
 111:  FAIL: invalid schema: include not allowed here
@@ -157,10 +127,7 @@
 122:  PASS
 123:  PASS
 124:  FAIL: invalid schema: attribute not allowed here
-125:  FAIL: There is no applicable method for the generic function
-              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
-            when called with arguments
-              ("x").
+125:  FAIL: Error opening #P"/home/david/src/lisp/cxml-rng/x", No such file or directory.
 126:  FAIL: invalid schema: element not allowed here
 127:  FAIL: invalid schema: element not allowed here
 128:  FAIL: invalid schema: attribute not allowed here
@@ -425,4 +392,4 @@
 371:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 372:  FAIL: invalid schema: start not allowed here
 373:  FAIL: invalid schema: notAllowed not allowed here
-Passed 193/373 tests.
+Passed 194/373 tests.

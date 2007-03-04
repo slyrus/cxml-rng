@@ -285,6 +285,14 @@
   (klacks:expecting-element (source "notAllowed")
     (make-not-allowed :ns ns)))
 
+(defun safe-parse-uri (str)
+  (when (zerop (length str))
+    (rng-error "missing URI"))
+  (handler-case
+      (puri:parse-uri str)
+    (puri:uri-parse-error ()
+      (rng-error "invalid URI: ~A" str))))
+
 (defun p/external-ref (source ns)
   (klacks:expecting-element (source "externalRef")
     (let ((href
@@ -292,7 +300,8 @@
       (when (find href *include-href-stack* :test #'string=)
 	(rng-error "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
+	     (uri (safe-parse-uri href))
+	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (result
 	      (klacks:with-open-source (source (cxml:make-source xstream))
 		(klacks:find-event source :start-element)
@@ -353,7 +362,8 @@
       (when (find href *include-href-stack* :test #'string=)
 	(rng-error "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil href))
+	     (uri (safe-parse-uri href))
+	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (grammar
 	      (klacks:with-open-source (source (cxml:make-source xstream))
 		(klacks:find-event source :start-element)
