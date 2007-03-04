@@ -5,8 +5,17 @@
 
 (define-condition rng-error (simple-error) ())
 
-(defun rng-error (fmt &rest args)
-  (error 'rng-error :format-control fmt :format-arguments args))
+(defun rng-error (source fmt &rest args)
+  (let ((s (make-string-output-stream)))
+    (apply #'format s fmt args)
+    (when source
+      (format s "~&  [ Error at line ~D, column ~D in ~S ]"
+	      (klacks:current-line-number source)
+	      (klacks:current-column-number source)
+	      (klacks:current-system-id source)))
+    (error 'rng-error
+	   :format-control "~A"
+	   :format-arguments (list (get-output-stream-string s)))))
 
 
 ;;;; Parser
@@ -16,17 +25,23 @@
 (defvar *external-href-stack*)
 (defvar *include-href-stack*)
 
-(defun parse-relax-ng (input &key entity-resolver)
+(defun invoke-with-klacks-handler (fn source)
   (handler-case
-      (klacks:with-open-source (source (cxml:make-source input))
-	(klacks:find-event source :start-element)
-	(let ((*datatype-library* "")
-	      (*entity-resolver* entity-resolver)
-	      (*external-href-stack* '())
-	      (*include-href-stack* '()))
-	  (p/pattern source)))
+      (funcall fn)
     (cxml:xml-parse-error (c)
-      (rng-error "Cannot parse schema: ~A" c))))
+      (rng-error source "Cannot parse schema: ~A" c))))
+
+(defun parse-relax-ng (input &key entity-resolver)
+  (klacks:with-open-source (source (cxml:make-source input))
+    (invoke-with-klacks-handler
+     (lambda ()
+       (klacks:find-event source :start-element)
+       (let ((*datatype-library* "")
+	     (*entity-resolver* entity-resolver)
+	     (*external-href-stack* '())
+	     (*include-href-stack* '()))
+	 (p/pattern source)))
+      source)))
 
 
 ;;;; pattern structures
@@ -108,7 +123,8 @@
 
 (defun skip-foreign (source)
   (when (equal (klacks:current-uri source) *rng-namespace*)
-    (rng-error "invalid schema: ~A not allowed here"
+    (rng-error source
+	       "invalid schema: ~A not allowed here"
 	       (klacks:current-lname source)))
   (klacks:serialize-element source nil))
 
@@ -174,7 +190,7 @@
 	  (let ((p (p/pattern source))) (when p (push p children))))
 	(:end-element (return))))
     (unless children
-      (rng-error "empty element"))
+      (rng-error source "empty element"))
     (nreverse children)))
 
 (defun p/pattern? (source)
@@ -285,28 +301,34 @@
   (klacks:expecting-element (source "notAllowed")
     (make-not-allowed :ns ns)))
 
-(defun safe-parse-uri (str)
+(defun safe-parse-uri (source str &optional base)
   (when (zerop (length str))
-    (rng-error "missing URI"))
+    (rng-error source "missing URI"))
   (handler-case
-      (puri:parse-uri str)
+      (if base
+	  (puri:merge-uris str base)
+	  (puri:parse-uri str))
     (puri:uri-parse-error ()
-      (rng-error "invalid URI: ~A" str))))
+      (rng-error source "invalid URI: ~A" str))))
 
 (defun p/external-ref (source ns)
   (klacks:expecting-element (source "externalRef")
     (let ((href
-	   (escape-uri (attribute "href" (klacks:list-attributes source)))))
+	   (escape-uri (attribute "href" (klacks:list-attributes source))))
+	  (base (klacks:current-xml-base source)))
       (when (find href *include-href-stack* :test #'string=)
-	(rng-error "looping include"))
+	(rng-error source "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (uri (safe-parse-uri href))
+	     (uri (safe-parse-uri source href base))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (result
 	      (klacks:with-open-source (source (cxml:make-source xstream))
-		(klacks:find-event source :start-element)
-		(let ((*datatype-library* ""))
-		  (p/pattern source)))))
+		(invoke-with-klacks-handler
+		 (lambda ()
+		   (klacks:find-event source :start-element)
+		   (let ((*datatype-library* ""))
+		     (p/pattern source)))
+		 source))))
 	(unless (pattern-ns result)
 	  (setf (pattern-ns result) ns))
 	result))))
@@ -328,7 +350,7 @@
 		(:|div| (push (p/div source) content))
 		(:|include|
 		  (when disallow-include
-		    (rng-error "nested include not permitted"))
+		    (rng-error source "nested include not permitted"))
 		  (push (p/include source) content))
 		(t (skip-foreign source)))))
 	  (:end-element (return)))))
@@ -358,21 +380,26 @@
   (klacks:expecting-element (source "include")
     (let ((href
 	   (escape-uri (attribute "href" (klacks:list-attributes source))))
+	  (base (klacks:current-xml-base source))
 	  (include-content (p/grammar-content* source :disallow-include t)))
       (when (find href *include-href-stack* :test #'string=)
-	(rng-error "looping include"))
+	(rng-error source "looping include"))
       (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (uri (safe-parse-uri href))
+	     (uri (safe-parse-uri source href base))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (grammar
 	      (klacks:with-open-source (source (cxml:make-source xstream))
-		(klacks:find-event source :start-element)
-		(let ((*datatype-library* ""))
-		  (p/grammar source "wrong://"))))
+		(invoke-with-klacks-handler
+		 (lambda ()
+		   (klacks:find-event source :start-element)
+		   (let ((*datatype-library* ""))
+		     (p/grammar source "wrong://")))
+		 source)))
 	     (grammar-content (pattern-content grammar)))
 	(make-div :children
 		  (cons (make-div :children
-				  (simplify-include grammar-content
+				  (simplify-include source
+						    grammar-content
 						    include-content))
 			include-content))))))
 
@@ -392,7 +419,7 @@
       when value
       collect value))
 
-(defun simplify-include/start (grammar-content include-content)
+(defun simplify-include/start (source grammar-content include-content)
   (let ((startp
 	 (block nil
 	   (simplify-include/map (lambda (x)
@@ -409,10 +436,10 @@
 					(t x)))
 				    grammar-content))
 	  (unless ok
-	    (rng-error "expected start in grammar")))
+	    (rng-error source "expected start in grammar")))
 	grammar-content)))
 
-(defun simplify-include/define (grammar-content include-content)
+(defun simplify-include/define (source grammar-content include-content)
   (let ((defines '()))
     (simplify-include/map (lambda (x)
 			    (when (typep x 'define)
@@ -434,11 +461,12 @@
 	 grammar-content)
       (loop for (define . okp) in defines do
 	    (unless okp
-	      (rng-error "expected matching ~A in grammar" define))))))
+	      (rng-error source "expected matching ~A in grammar" define))))))
 
-(defun simplify-include (grammar-content include-content)
+(defun simplify-include (source grammar-content include-content)
   (simplify-include/define
-   (simplify-include/start grammar-content include-content)
+   source
+   (simplify-include/start source grammar-content include-content)
    include-content))
 
 (defun p/name-class (source)
