@@ -1,0 +1,407 @@
+001:  FAIL: didn't detect invalid schema
+002:  PASS: invalid schema: element not allowed here
+003:  PASS: invalid schema: define not allowed here
+004:  PASS: invalid schema: name not allowed here
+005:  PASS: invalid schema: name not allowed here
+006:  PASS: invalid schema: element not allowed here
+007:  PASS: invalid schema: element not allowed here
+008:  PASS: invalid schema: except not allowed here
+009:  FAIL: didn't detect invalid schema
+010:  FAIL: didn't detect invalid schema
+011:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+012:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+013:  PASS: invalid schema: notAllowed not allowed here
+014:  PASS: invalid schema: start not allowed here
+015:  PASS: invalid schema: start not allowed here
+016:  PASS: invalid schema: start not allowed here
+017:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+018:  PASS: invalid schema: element not allowed here
+019:  PASS: invalid schema: element not allowed here
+020:  FAIL: didn't detect invalid schema
+021:  FAIL: didn't detect invalid schema
+022:  PASS: invalid schema: keyRef not allowed here
+023:  PASS: invalid schema: key not allowed here
+024:  FAIL: incorrect condition type: empty element
+025:  PASS: invalid schema: element not allowed here
+026:  PASS: invalid schema: element not allowed here
+027:  PASS: invalid schema: attribute not allowed here
+028:  FAIL: incorrect condition type: empty element
+029:  FAIL: incorrect condition type: empty element
+030:  FAIL: incorrect condition type: empty element
+031:  FAIL: incorrect condition type: empty element
+032:  FAIL: incorrect condition type: empty element
+033:  FAIL: incorrect condition type: empty element
+034:  FAIL: incorrect condition type: empty element
+035:  FAIL: incorrect condition type: empty element
+036:  PASS: invalid schema: element not allowed here
+037:  PASS: invalid schema: element not allowed here
+038:  PASS: invalid schema: element not allowed here
+039:  PASS: invalid schema: except not allowed here
+040:  FAIL: didn't detect invalid schema
+041:  PASS: invalid schema: param not allowed here
+042:  PASS: invalid schema: start not allowed here
+043:  PASS: invalid schema: start not allowed here
+044:  FAIL: incorrect condition type: There is no applicable method for the generic function
+                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+                                      when called with arguments
+                                        ("").
+045:  PASS: invalid schema: include not allowed here
+046:  PASS: invalid schema: start not allowed here
+047:  PASS: invalid schema: start not allowed here
+048:  PASS: invalid schema: start not allowed here
+049:  PASS
+050:  PASS
+051:  PASS
+052:  PASS
+053:  FAIL: didn't detect invalid schema
+054:  PASS
+055:  PASS
+056:  FAIL: didn't detect invalid schema
+057:  FAIL: didn't detect invalid schema
+058:  FAIL: didn't detect invalid schema
+059:  PASS
+060:  FAIL: didn't detect invalid schema
+061:  FAIL: didn't detect invalid schema
+062:  FAIL: didn't detect invalid schema
+063:  FAIL: didn't detect invalid schema
+064:  PASS
+065:  PASS
+066:  PASS
+067:  FAIL: didn't detect invalid schema
+068:  FAIL: didn't detect invalid schema
+069:  PASS
+070:  FAIL: didn't detect invalid schema
+071:  FAIL: didn't detect invalid schema
+072:  PASS: invalid schema: element not allowed here
+073:  FAIL: didn't detect invalid schema
+074:  PASS: invalid schema: start not allowed here
+075:  FAIL: invalid schema: start not allowed here
+076:  PASS: invalid schema: start not allowed here
+077:  PASS: invalid schema: start not allowed here
+078:  PASS: invalid schema: start not allowed here
+079:  FAIL: didn't detect invalid schema
+080:  FAIL: didn't detect invalid schema
+081:  FAIL: didn't detect invalid schema
+082:  PASS: invalid schema: start not allowed here
+083:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+084:  PASS: invalid schema: attribute not allowed here
+085:  FAIL: didn't detect invalid schema
+086:  PASS: invalid schema: element not allowed here
+087:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+088:  PASS
+089:  FAIL: expected END-ELEMENT but got CHARACTERS
+090:  FAIL: invalid schema: start not allowed here
+091:  FAIL: invalid schema: start not allowed here
+092:  FAIL: invalid schema: start not allowed here
+093:  FAIL: The value NIL is not of type STRING.
+094:  PASS
+095:  FAIL: unknown &KEY argument: :TYPE
+096:  PASS
+097:  FAIL: invalid schema: element not allowed here
+098:  FAIL: invalid schema: start not allowed here
+099:  FAIL: unknown &KEY argument: :TYPE
+100:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("x").
+101:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("x").
+102:  FAIL: incorrect condition type: There is no applicable method for the generic function
+                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+                                      when called with arguments
+                                        ("x#foo").
+103:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("x").
+104:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("x").
+105:  FAIL: incorrect condition type: There is no applicable method for the generic function
+                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+                                      when called with arguments
+                                        ("x").
+106:  FAIL: incorrect condition type: There is no applicable method for the generic function
+                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+                                      when called with arguments
+                                        ("x").
+107:  FAIL: incorrect condition type: There is no applicable method for the generic function
+                                        #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+                                      when called with arguments
+                                        ("x").
+108:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("sub/x").
+109:  FAIL: invalid schema: include not allowed here
+110:  FAIL: invalid schema: include not allowed here
+111:  FAIL: invalid schema: include not allowed here
+112:  PASS: invalid schema: include not allowed here
+113:  PASS: invalid schema: include not allowed here
+114:  PASS: invalid schema: include not allowed here
+115:  FAIL: invalid schema: include not allowed here
+116:  PASS: invalid schema: include not allowed here
+117:  FAIL: invalid schema: include not allowed here
+118:  PASS: invalid schema: include not allowed here
+119:  FAIL: invalid schema: include not allowed here
+120:  FAIL: invalid schema: start not allowed here
+121:  PASS: invalid schema: start not allowed here
+122:  PASS
+123:  PASS
+124:  FAIL: invalid schema: attribute not allowed here
+125:  FAIL: There is no applicable method for the generic function
+              #<STANDARD-GENERIC-FUNCTION PURI:URI-SCHEME (1)>
+            when called with arguments
+              ("x").
+126:  FAIL: invalid schema: element not allowed here
+127:  FAIL: invalid schema: element not allowed here
+128:  FAIL: invalid schema: attribute not allowed here
+129:  FAIL: didn't detect invalid schema
+130:  PASS
+131:  PASS
+132:  PASS
+133:  FAIL: invalid schema: div not allowed here
+134:  FAIL: invalid schema: start not allowed here
+135:  FAIL: unknown &KEY argument: :POSSIBILITY
+136:  FAIL: unknown &KEY argument: :POSSIBILITY
+137:  FAIL: unknown &KEY argument: :POSSIBILITY
+138:  FAIL: unknown &KEY argument: :TYPE
+139:  FAIL: unknown &KEY argument: :POSSIBILITY
+140:  FAIL: invalid schema: element not allowed here
+141:  FAIL: invalid schema: element not allowed here
+142:  FAIL: invalid schema: except not allowed here
+143:  PASS
+144:  FAIL: invalid schema: attribute not allowed here
+145:  FAIL: unknown &KEY argument: :POSSIBILITY
+146:  FAIL: unknown &KEY argument: :POSSIBILITY
+147:  FAIL: unknown &KEY argument: :POSSIBILITY
+148:  FAIL: unknown &KEY argument: :POSSIBILITY
+149:  FAIL: unknown &KEY argument: :POSSIBILITY
+150:  FAIL: unknown &KEY argument: :POSSIBILITY
+151:  FAIL: unknown &KEY argument: :POSSIBILITY
+152:  FAIL: unknown &KEY argument: :POSSIBILITY
+153:  FAIL: unknown &KEY argument: :POSSIBILITY
+154:  PASS: invalid schema: start not allowed here
+155:  PASS: invalid schema: start not allowed here
+156:  PASS: invalid schema: start not allowed here
+157:  PASS: invalid schema: start not allowed here
+158:  PASS: invalid schema: start not allowed here
+159:  PASS: invalid schema: start not allowed here
+160:  PASS: invalid schema: start not allowed here
+161:  PASS: invalid schema: start not allowed here
+162:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+163:  PASS
+164:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+165:  PASS: invalid schema: notAllowed not allowed here
+166:  PASS: invalid schema: start not allowed here
+167:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+168:  PASS: invalid schema: attribute not allowed here
+169:  PASS: invalid schema: attribute not allowed here
+170:  PASS: invalid schema: attribute not allowed here
+171:  PASS: invalid schema: attribute not allowed here
+172:  PASS: invalid schema: attribute not allowed here
+173:  PASS: invalid schema: attribute not allowed here
+174:  PASS: invalid schema: attribute not allowed here
+175:  FAIL: incorrect condition type: expected END-ELEMENT but got CHARACTERS
+176:  PASS
+177:  PASS: invalid schema: param not allowed here
+178:  FAIL: didn't detect invalid schema
+179:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+180:  PASS: invalid schema: notAllowed not allowed here
+181:  PASS: invalid schema: notAllowed not allowed here
+182:  PASS: invalid schema: notAllowed not allowed here
+183:  PASS: invalid schema: start not allowed here
+184:  PASS: invalid schema: start not allowed here
+185:  PASS: invalid schema: start not allowed here
+186:  PASS: invalid schema: start not allowed here
+187:  PASS: invalid schema: start not allowed here
+188:  PASS: invalid schema: start not allowed here
+189:  PASS: invalid schema: start not allowed here
+190:  FAIL: invalid schema: start not allowed here
+191:  FAIL: invalid schema: start not allowed here
+192:  PASS: invalid schema: start not allowed here
+193:  PASS: invalid schema: start not allowed here
+194:  FAIL: invalid schema: start not allowed here
+195:  FAIL: invalid schema: start not allowed here
+196:  PASS: invalid schema: start not allowed here
+197:  PASS: invalid schema: start not allowed here
+198:  PASS: invalid schema: define not allowed here
+199:  PASS: invalid schema: start not allowed here
+200:  PASS: invalid schema: notAllowed not allowed here
+201:  PASS: invalid schema: start not allowed here
+202:  PASS: invalid schema: start not allowed here
+203:  PASS: invalid schema: start not allowed here
+204:  PASS: invalid schema: start not allowed here
+205:  PASS: invalid schema: start not allowed here
+206:  PASS: invalid schema: start not allowed here
+207:  PASS: invalid schema: start not allowed here
+208:  FAIL: invalid schema: start not allowed here
+209:  FAIL: invalid schema: start not allowed here
+210:  FAIL: invalid schema: start not allowed here
+211:  PASS: invalid schema: start not allowed here
+212:  FAIL: invalid schema: start not allowed here
+213:  FAIL: invalid schema: start not allowed here
+214:  PASS: invalid schema: start not allowed here
+215:  FAIL: invalid schema: element not allowed here
+216:  FAIL: invalid schema: element not allowed here
+217:  FAIL: invalid schema: element not allowed here
+218:  FAIL: invalid schema: element not allowed here
+219:  FAIL: invalid schema: element not allowed here
+220:  FAIL: invalid schema: element not allowed here
+221:  FAIL: invalid schema: element not allowed here
+222:  FAIL: invalid schema: element not allowed here
+223:  FAIL: invalid schema: element not allowed here
+224:  FAIL: invalid schema: element not allowed here
+225:  FAIL: unknown &KEY argument: :POSSIBILITY
+226:  FAIL: unknown &KEY argument: :POSSIBILITY
+227:  FAIL: expected END-ELEMENT but got CHARACTERS
+228:  FAIL: unknown &KEY argument: :POSSIBILITY
+229:  FAIL: unknown &KEY argument: :POSSIBILITY
+230:  FAIL: expected END-ELEMENT but got CHARACTERS
+231:  FAIL: expected END-ELEMENT but got CHARACTERS
+232:  FAIL: expected END-ELEMENT but got CHARACTERS
+233:  FAIL: expected END-ELEMENT but got CHARACTERS
+234:  FAIL: expected END-ELEMENT but got CHARACTERS
+235:  PASS
+236:  FAIL: expected END-ELEMENT but got CHARACTERS
+237:  FAIL: unknown &KEY argument: :POSSIBILITY
+238:  FAIL: unknown &KEY argument: :POSSIBILITY
+239:  FAIL: unknown &KEY argument: :POSSIBILITY
+240:  FAIL: expected END-ELEMENT but got CHARACTERS
+241:  PASS
+242:  FAIL: unknown &KEY argument: :POSSIBILITY
+243:  FAIL: unknown &KEY argument: :POSSIBILITY
+244:  FAIL: unknown &KEY argument: :POSSIBILITY
+245:  FAIL: expected END-ELEMENT but got CHARACTERS
+246:  FAIL: unknown &KEY argument: :POSSIBILITY
+247:  FAIL: unknown &KEY argument: :POSSIBILITY
+248:  FAIL: invalid schema: attribute not allowed here
+249:  FAIL: expected END-ELEMENT but got CHARACTERS
+250:  FAIL: unknown &KEY argument: :POSSIBILITY
+251:  FAIL: unknown &KEY argument: :POSSIBILITY
+252:  FAIL: expected END-ELEMENT but got CHARACTERS
+253:  FAIL: expected END-ELEMENT but got CHARACTERS
+254:  FAIL: invalid schema: attribute not allowed here
+255:  FAIL: invalid schema: attribute not allowed here
+256:  FAIL: invalid schema: attribute not allowed here
+257:  FAIL: invalid schema: element not allowed here
+258:  FAIL: unknown &KEY argument: :TYPE
+259:  FAIL: unknown &KEY argument: :TYPE
+260:  FAIL: unknown &KEY argument: :POSSIBILITY
+261:  FAIL: invalid schema: param not allowed here
+262:  FAIL: unknown &KEY argument: :TYPE
+263:  FAIL: unknown &KEY argument: :TYPE
+264:  FAIL: invalid schema: except not allowed here
+265:  PASS
+266:  FAIL: unknown &KEY argument: :TYPE
+267:  FAIL: invalid schema: except not allowed here
+268:  PASS
+269:  PASS
+270:  FAIL: unknown &KEY argument: :TYPE
+271:  FAIL: unknown &KEY argument: :TYPE
+272:  FAIL: unknown &KEY argument: :TYPE
+273:  FAIL: unknown &KEY argument: :TYPE
+274:  FAIL: unknown &KEY argument: :TYPE
+275:  FAIL: unknown &KEY argument: :TYPE
+276:  FAIL: didn't detect invalid schema
+277:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+278:  PASS: invalid schema: param not allowed here
+279:  PASS: invalid schema: param not allowed here
+280:  FAIL: unknown &KEY argument: :TYPE
+281:  FAIL: unknown &KEY argument: :TYPE
+282:  FAIL: unknown &KEY argument: :TYPE
+283:  FAIL: unknown &KEY argument: :POSSIBILITY
+284:  FAIL: unknown &KEY argument: :TYPE
+285:  PASS: invalid schema: start not allowed here
+286:  PASS: invalid schema: start not allowed here
+287:  PASS: invalid schema: start not allowed here
+288:  PASS: invalid schema: start not allowed here
+289:  PASS: invalid schema: start not allowed here
+290:  PASS: invalid schema: start not allowed here
+291:  PASS: invalid schema: start not allowed here
+292:  PASS: invalid schema: start not allowed here
+293:  PASS: invalid schema: start not allowed here
+294:  PASS: invalid schema: start not allowed here
+295:  PASS: invalid schema: start not allowed here
+296:  PASS: invalid schema: start not allowed here
+297:  PASS: invalid schema: start not allowed here
+298:  PASS: invalid schema: start not allowed here
+299:  PASS: invalid schema: start not allowed here
+300:  PASS: invalid schema: start not allowed here
+301:  PASS: invalid schema: start not allowed here
+302:  PASS: invalid schema: start not allowed here
+303:  PASS: invalid schema: start not allowed here
+304:  PASS: invalid schema: start not allowed here
+305:  PASS: invalid schema: start not allowed here
+306:  PASS: invalid schema: start not allowed here
+307:  PASS: invalid schema: start not allowed here
+308:  PASS: invalid schema: start not allowed here
+309:  PASS: invalid schema: start not allowed here
+310:  PASS: invalid schema: start not allowed here
+311:  PASS: invalid schema: start not allowed here
+312:  PASS: invalid schema: start not allowed here
+313:  PASS: invalid schema: start not allowed here
+314:  PASS: invalid schema: start not allowed here
+315:  PASS: invalid schema: start not allowed here
+316:  PASS: invalid schema: start not allowed here
+317:  PASS: invalid schema: start not allowed here
+318:  PASS: invalid schema: start not allowed here
+319:  PASS: invalid schema: start not allowed here
+320:  PASS: invalid schema: start not allowed here
+321:  PASS: invalid schema: start not allowed here
+322:  PASS: invalid schema: start not allowed here
+323:  PASS: invalid schema: start not allowed here
+324:  PASS: invalid schema: start not allowed here
+325:  PASS: invalid schema: start not allowed here
+326:  PASS: invalid schema: start not allowed here
+327:  PASS: invalid schema: start not allowed here
+328:  FAIL: invalid schema: start not allowed here
+329:  FAIL: didn't detect invalid schema
+330:  FAIL: invalid schema: notAllowed not allowed here
+331:  FAIL: invalid schema: notAllowed not allowed here
+332:  FAIL: invalid schema: start not allowed here
+333:  FAIL: invalid schema: start not allowed here
+334:  FAIL: invalid schema: notAllowed not allowed here
+335:  PASS: invalid schema: start not allowed here
+336:  FAIL: invalid schema: notAllowed not allowed here
+337:  PASS: invalid schema: notAllowed not allowed here
+338:  FAIL: didn't detect invalid schema
+339:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+340:  FAIL: unknown &KEY argument: :POSSIBILITY
+341:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+342:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+343:  PASS: invalid schema: attribute not allowed here
+344:  PASS: invalid schema: attribute not allowed here
+345:  FAIL: invalid schema: attribute not allowed here
+346:  PASS: invalid schema: attribute not allowed here
+347:  PASS: invalid schema: attribute not allowed here
+348:  PASS: invalid schema: attribute not allowed here
+349:  PASS: invalid schema: attribute not allowed here
+350:  PASS: invalid schema: attribute not allowed here
+351:  PASS: invalid schema: attribute not allowed here
+352:  PASS: invalid schema: attribute not allowed here
+353:  FAIL: invalid schema: attribute not allowed here
+354:  FAIL: invalid schema: attribute not allowed here
+355:  FAIL: unknown &KEY argument: :POSSIBILITY
+356:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+357:  PASS: invalid schema: attribute not allowed here
+358:  PASS: invalid schema: attribute not allowed here
+359:  PASS: invalid schema: attribute not allowed here
+360:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+361:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+362:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+363:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+364:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+365:  PASS: invalid schema: element not allowed here
+366:  PASS: invalid schema: element not allowed here
+367:  PASS: invalid schema: notAllowed not allowed here
+368:  FAIL: invalid schema: element not allowed here
+369:  FAIL: unknown &KEY argument: :POSSIBILITY
+370:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+371:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
+372:  FAIL: invalid schema: start not allowed here
+373:  FAIL: invalid schema: notAllowed not allowed here
+Passed 176/373 tests.

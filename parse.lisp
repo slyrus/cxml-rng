@@ -358,7 +358,7 @@
 	      (klacks:with-open-source (source (cxml:make-source xstream))
 		(klacks:find-event source :start-element)
 		(let ((*datatype-library* ""))
-		  (p/grammar source))))
+		  (p/grammar source "wrong://"))))
 	     (grammar-content (pattern-content grammar)))
 	(make-div :children
 		  (cons (make-div :children
@@ -515,24 +515,32 @@
 ;;;; tests
 
 (defun test (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
-  (dolist (d (directory p))
-    (let ((name (car (last (pathname-directory d)))))
-      (when (parse-integer name :junk-allowed t)
-	(let* ((i (merge-pathnames "i.rng" d))
-	       (c (merge-pathnames "c.rng" d)))
-	  (format t "~A: " name)
-	  (if (probe-file c)
-	      (handler-case
-		  (progn
-		    (parse-relax-ng c)
-		    (format t " PASS~%"))
-		(error (c)
-		  (format t " FAIL: ~A~%" c)))
-	      (handler-case
-		  (progn
-		    (parse-relax-ng i)
-		    (format t " FAIL: didn't detect invalid schema~%"))
-		(rng-error (c)
-		  (format t " PASS: ~A~%" c))
-		(error (c)
-		  (format t " FAIL: incorrect condition type: ~A~%" c)))))))))
+  (dribble "/home/david/src/lisp/cxml-rng/TEST")
+  (let ((pass 0)
+	(total 0))
+    (dolist (d (directory p))
+      (let ((name (car (last (pathname-directory d)))))
+	(when (parse-integer name :junk-allowed t)
+	  (incf total)
+	  (let* ((i (merge-pathnames "i.rng" d))
+		 (c (merge-pathnames "c.rng" d)))
+	    (format t "~A: " name)
+	    (if (probe-file c)
+		(handler-case
+		    (progn
+		      (parse-relax-ng c)
+		      (format t " PASS~%")
+		      (incf pass))
+		  (error (c)
+		    (format t " FAIL: ~A~%" c)))
+		(handler-case
+		    (progn
+		      (parse-relax-ng i)
+		      (format t " FAIL: didn't detect invalid schema~%"))
+		  (rng-error (c)
+		    (format t " PASS: ~A~%" c)
+		    (incf pass))
+		  (error (c)
+		    (format t " FAIL: incorrect condition type: ~A~%" c))))))))
+    (format t "Passed ~D/~D tests.~%" pass total))
+  (dribble))
