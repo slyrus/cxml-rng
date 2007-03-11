@@ -598,7 +598,7 @@
 	      (format t " FAIL: didn't detect invalid schema~%")
 	      nil)
 	  (rng-error (c)
-	    (format t " PASS: ~A~%" c)
+	    (format t " PASS: ~S~%" c)
 	    t)
 	  (error (c)
 	    (format t " FAIL: incorrect condition type: ~A~%" c)
