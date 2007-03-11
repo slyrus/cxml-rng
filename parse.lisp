@@ -67,18 +67,22 @@
 
 (defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
   a b)
-(defstruct (group (:include %combination)
+(defstruct (group
+	    (:include %combination)
 	    (:constructor make-group (a b))))
-(defstruct (interleave (:include %combination)
+(defstruct (interleave
+	    (:include %combination)
 	    (:constructor make-interleave (a b))))
-(defstruct (choice (:include %combination)
+(defstruct (choice
+	    (:include %combination)
 	    (:constructor make-choice (a b))))
 
-(defstruct (one-or-more (:include %parent) (:conc-name "PATTERN-")))
-(defstruct (zero-or-more (:include %parent) (:conc-name "PATTERN-")))
-(defstruct (optional (:include %parent) (:conc-name "PATTERN-")))
-(defstruct (list-pattern (:include %parent) (:conc-name "PATTERN-")))
-(defstruct (mixed (:include %parent) (:conc-name "PATTERN-")))
+(defstruct (one-or-more
+	    (:include %parent)
+	    (:constructor make-one-or-more (child))))
+(defstruct (list-pattern
+	    (:include %parent)
+	    (:constructor make-list-pattern (child))))
 
 (defstruct (%ref (:include pattern) (:conc-name "PATTERN-"))
   ref-name)
@@ -276,31 +280,32 @@
   (klacks:expecting-element (source "oneOrMore")
     (consume-and-skip-to-native source)
     (let ((children (p/pattern+ source)))
-      (make-one-or-more :child (groupify children)))))
+      (make-one-or-more (groupify children)))))
 
 (defun p/zero-or-more (source)
   (klacks:expecting-element (source "zeroOrMore")
     (consume-and-skip-to-native source)
     (let ((children (p/pattern+ source)))
-      (make-zero-or-more :child (groupify children)))))
+      (make-choice (make-one-or-more (groupify children))
+		   (make-empty)))))
 
 (defun p/optional (source)
   (klacks:expecting-element (source "optional")
     (consume-and-skip-to-native source)
     (let ((children (p/pattern+ source)))
-      (make-optional :child (groupify children)))))
+      (make-choice (groupify children) (make-empty)))))
 
 (defun p/list (source)
   (klacks:expecting-element (source "list")
     (consume-and-skip-to-native source)
     (let ((children (p/pattern+ source)))
-      (make-list-pattern :child (groupify children)))))
+      (make-list-pattern (groupify children)))))
 
 (defun p/mixed (source)
   (klacks:expecting-element (source "mixed")
     (consume-and-skip-to-native source)
     (let ((children (p/pattern+ source)))
-      (make-mixed :child (groupify children)))))
+      (make-interleave (groupify children) (make-text)))))
 
 (defun p/ref (source)
   (klacks:expecting-element (source "ref")
@@ -669,7 +674,7 @@
 ;;; 4.11. div element
 ;;;    Legen wir gar nicht erst an.
 
-;;; 4.12. Number of child elements
+;;; 4.12. 4.13 4.14 4.15
 ;;;    beim anlegen
 
 
