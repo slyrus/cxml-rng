@@ -57,30 +57,33 @@
 
 (defstruct pattern)
 
-(defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
-  possibilities)
-
-(defstruct (%named-pattern (:include pattern) (:conc-name "PATTERN-"))
-  name)
-
-(defstruct (element (:include %named-pattern) (:conc-name "PATTERN-"))
-  children)
-
-(defstruct (attribute (:include %named-pattern) (:conc-name "PATTERN-"))
+(defstruct (%parent (:include pattern) (:conc-name "PATTERN-"))
   child)
 
-(defstruct (group (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (interleave (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (choice (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (optional (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (zero-or-more (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (one-or-more (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (list-pattern (:include %combination) (:conc-name "PATTERN-")))
-(defstruct (mixed (:include %combination) (:conc-name "PATTERN-")))
+(defstruct (%named-pattern (:include %parent) (:conc-name "PATTERN-"))
+  name)
+(defstruct (element (:include %named-pattern) (:conc-name "PATTERN-")))
+(defstruct (attribute (:include %named-pattern) (:conc-name "PATTERN-")))
 
-(defstruct (ref (:include %named-pattern) (:conc-name "PATTERN-")))
+(defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
+  a b)
+(defstruct (group (:include %combination)
+	    (:constructor make-group (a b))))
+(defstruct (interleave (:include %combination)
+	    (:constructor make-interleave (a b))))
+(defstruct (choice (:include %combination)
+	    (:constructor make-choice (a b))))
 
-(defstruct (parent-ref (:include %named-pattern) (:conc-name "PATTERN-")))
+(defstruct (one-or-more (:include %parent) (:conc-name "PATTERN-")))
+(defstruct (zero-or-more (:include %parent) (:conc-name "PATTERN-")))
+(defstruct (optional (:include %parent) (:conc-name "PATTERN-")))
+(defstruct (list-pattern (:include %parent) (:conc-name "PATTERN-")))
+(defstruct (mixed (:include %parent) (:conc-name "PATTERN-")))
+
+(defstruct (%ref (:include pattern) (:conc-name "PATTERN-"))
+  ref-name)
+(defstruct (ref (:include %ref) (:conc-name "PATTERN-")))
+(defstruct (parent-ref (:include %ref) (:conc-name "PATTERN-")))
 
 (defstruct (empty (:include pattern) (:conc-name "PATTERN-")))
 (defstruct (text (:include pattern) (:conc-name "PATTERN-")))
@@ -116,7 +119,7 @@
 (defstruct define
   name
   combine
-  children)
+  child)
 
 
 ;;;; parser
@@ -191,14 +194,14 @@
       (case (find-symbol lname :keyword)
 	(:|element|     (p/element source (ntc "name" attrs)))
 	(:|attribute|   (p/attribute source (ntc "name" attrs)))
-	(:|group|       (p/combination #'make-group source))
-	(:|interleave|  (p/combination #'make-interleave source))
-	(:|choice|      (p/combination #'make-choice source))
-	(:|optional|    (p/combination #'make-optional source))
-	(:|zeroOrMore|  (p/combination #'make-zero-or-more source))
-	(:|oneOrMore|   (p/combination #'make-one-or-more source))
-	(:|list|        (p/combination #'make-list-pattern source))
-	(:|mixed|       (p/combination #'make-mixed source))
+	(:|group|       (p/combination #'groupify source))
+	(:|interleave|  (p/combination #'interleave-ify source))
+	(:|choice|      (p/combination #'choice-ify source))
+	(:|optional|    (p/optional source))
+	(:|zeroOrMore|  (p/zero-or-more source))
+	(:|oneOrMore|   (p/one-or-more source))
+	(:|list|        (p/list source))
+	(:|mixed|       (p/mixed source))
 	(:|ref|         (p/ref source))
 	(:|parentRef|   (p/parent-ref source))
 	(:|empty|       (p/empty source))
@@ -248,7 +251,7 @@
 		(list :name name :uri *namespace-uri*))
 	  (setf (pattern-name result) (p/name-class source)))
       (skip-to-native source)
-      (setf (pattern-children result) (p/pattern+ source))
+      (setf (pattern-child result) (groupify (p/pattern+ source)))
       result)))
 
 (defun p/attribute (source name)
@@ -260,25 +263,55 @@
 		(list :name name :uri ""))
 	  (setf (pattern-name result) (p/name-class source)))
       (skip-to-native source)
-      (setf (pattern-child result) (p/pattern? source))
+      (setf (pattern-child result)
+	    (or (p/pattern? source) (make-text)))
       result)))
 
-(defun p/combination (constructor source)
+(defun p/combination (zipper source)
   (klacks:expecting-element (source)
     (consume-and-skip-to-native source)
-    (let ((possibilities (p/pattern+ source)))
-      (funcall constructor :possibilities possibilities))))
+    (funcall zipper (p/pattern+ source))))
+
+(defun p/one-or-more (source)
+  (klacks:expecting-element (source "oneOrMore")
+    (consume-and-skip-to-native source)
+    (let ((children (p/pattern+ source)))
+      (make-one-or-more :child (groupify children)))))
+
+(defun p/zero-or-more (source)
+  (klacks:expecting-element (source "zeroOrMore")
+    (consume-and-skip-to-native source)
+    (let ((children (p/pattern+ source)))
+      (make-zero-or-more :child (groupify children)))))
+
+(defun p/optional (source)
+  (klacks:expecting-element (source "optional")
+    (consume-and-skip-to-native source)
+    (let ((children (p/pattern+ source)))
+      (make-optional :child (groupify children)))))
+
+(defun p/list (source)
+  (klacks:expecting-element (source "list")
+    (consume-and-skip-to-native source)
+    (let ((children (p/pattern+ source)))
+      (make-list-pattern :child (groupify children)))))
+
+(defun p/mixed (source)
+  (klacks:expecting-element (source "mixed")
+    (consume-and-skip-to-native source)
+    (let ((children (p/pattern+ source)))
+      (make-mixed :child (groupify children)))))
 
 (defun p/ref (source)
   (klacks:expecting-element (source "ref")
     (prog1
-	(make-ref :name (ntc "name" source))
+	(make-ref :ref-name (ntc "name" source))
       (skip-foreign* source))))
 
 (defun p/parent-ref (source)
   (klacks:expecting-element (source "parentRef")
     (prog1
-	(make-parent-ref :name (ntc "name" source))
+	(make-parent-ref :ref-name (ntc "name" source))
       (skip-foreign* source))))
 
 (defun p/empty (source)
@@ -348,7 +381,7 @@
   (klacks:expecting-element (source "except")
     (with-library-and-ns (klacks:list-attributes source)
       (klacks:consume source)
-      (p/pattern+ source))))
+      (choice-ify (p/pattern+ source)))))
 
 (defun p/not-allowed (source)
   (klacks:expecting-element (source "notAllowed")
@@ -426,6 +459,21 @@
       (make-start :combine (find-symbol (string-upcase combine) :keyword)
 		  :child child))))
 
+(defun zip (constructor children)
+  (cond
+    ((null children)
+      (rng-error nil "empty choice?"))
+    ((null (cdr children))
+      (car children))
+    (t
+      (destructuring-bind (a b &rest rest)
+	  children
+	(zip constructor (cons (funcall constructor a b) rest))))))
+
+(defun choice-ify (children) (zip #'make-choice children))
+(defun groupify (children) (zip #'make-group children))
+(defun interleave-ify (children) (zip #'make-interleave children))
+
 (defun p/define (source)
   (klacks:expecting-element (source "define")
     (let ((name (ntc "name" source))
@@ -435,7 +483,7 @@
 		      (p/pattern+ source))))
       (make-define :name name
 		   :combine (find-symbol (string-upcase combine) :keyword)
-		   :children children))))
+		   :child (groupify children)))))
 
 (defun p/div (source)
   (klacks:expecting-element (source "div")
@@ -620,6 +668,10 @@
 
 ;;; 4.11. div element
 ;;;    Legen wir gar nicht erst an.
+
+;;; 4.12. Number of child elements
+;;;    beim anlegen
+
 
 ;;;; tests
 
