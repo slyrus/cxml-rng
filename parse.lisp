@@ -24,6 +24,7 @@
 ;;;; Parser
 
 (defvar *datatype-library*)
+(defvar *namespace-uri*)
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
 (defvar *include-uri-stack*)
@@ -44,6 +45,7 @@
      (lambda ()
        (klacks:find-event source :start-element)
        (let ((*datatype-library* "")
+	     (*namespace-uri* "")
 	     (*entity-resolver* entity-resolver)
 	     (*external-href-stack* '())
 	     (*include-uri-stack* '()))
@@ -53,8 +55,7 @@
 
 ;;;; pattern structures
 
-(defstruct pattern
-  ns)
+(defstruct pattern)
 
 (defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
   possibilities)
@@ -89,6 +90,7 @@
   type)
 
 (defstruct (value (:include %typed-pattern) (:conc-name "PATTERN-"))
+  ns
   string)
 
 (defstruct (data (:include %typed-pattern) (:conc-name "PATTERN-"))
@@ -179,39 +181,40 @@
 	(string-trim *whitespace* (sax:attribute-value a))
 	nil)))
 
-(defmacro with-datatype-library (attrs &body body)
-  `(invoke-with-datatype-library (lambda () ,@body) ,attrs))
+(defmacro with-library-and-ns (attrs &body body)
+  `(invoke-with-library-and-ns (lambda () ,@body) ,attrs))
 
-(defun invoke-with-datatype-library (fn attrs)
+(defun invoke-with-library-and-ns (fn attrs)
   (let* ((dl (attribute "datatypeLibrary" attrs))
-	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*)))
+	 (ns (attribute "ns" attrs))
+	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*))
+	 (*namespace-uri* (or ns *namespace-uri*)))
     (funcall fn)))
 
 (defun p/pattern (source)
   (let* ((lname (klacks:current-lname source))
-	 (attrs (klacks:list-attributes source))
-	 (ns (attribute "ns" attrs)))
-    (with-datatype-library attrs
+	 (attrs (klacks:list-attributes source)))
+    (with-library-and-ns attrs
       (case (find-symbol lname :keyword)
-	(:|element|     (p/element source (ntc "name" attrs) ns))
-	(:|attribute|   (p/attribute source (ntc "name" attrs) ns))
-	(:|group|       (p/combination #'make-group source ns))
-	(:|interleave|  (p/combination #'make-interleave source ns))
-	(:|choice|      (p/combination #'make-choice source ns))
-	(:|optional|    (p/combination #'make-optional source ns))
-	(:|zeroOrMore|  (p/combination #'make-zero-or-more source ns))
-	(:|oneOrMore|   (p/combination #'make-one-or-more source ns))
-	(:|list|        (p/combination #'make-list-pattern source ns))
-	(:|mixed|       (p/combination #'make-mixed source ns))
-	(:|ref|         (p/ref source ns))
-	(:|parentRef|   (p/parent-ref source ns))
-	(:|empty|       (p/empty source ns))
-	(:|text|        (p/text source ns))
-	(:|value|       (p/value source ns))
-	(:|data|        (p/data source ns))
-	(:|notAllowed|  (p/not-allowed source ns))
-	(:|externalRef| (p/external-ref source ns))
-	(:|grammar|     (p/grammar source ns))
+	(:|element|     (p/element source (ntc "name" attrs)))
+	(:|attribute|   (p/attribute source (ntc "name" attrs)))
+	(:|group|       (p/combination #'make-group source))
+	(:|interleave|  (p/combination #'make-interleave source))
+	(:|choice|      (p/combination #'make-choice source))
+	(:|optional|    (p/combination #'make-optional source))
+	(:|zeroOrMore|  (p/combination #'make-zero-or-more source))
+	(:|oneOrMore|   (p/combination #'make-one-or-more source))
+	(:|list|        (p/combination #'make-list-pattern source))
+	(:|mixed|       (p/combination #'make-mixed source))
+	(:|ref|         (p/ref source))
+	(:|parentRef|   (p/parent-ref source))
+	(:|empty|       (p/empty source))
+	(:|text|        (p/text source))
+	(:|value|       (p/value source))
+	(:|data|        (p/data source))
+	(:|notAllowed|  (p/not-allowed source))
+	(:|externalRef| (p/external-ref source))
+	(:|grammar|     (p/grammar source))
 	(t (skip-foreign source))))))
 
 (defun p/pattern+ (source)
@@ -243,55 +246,57 @@
 	  (klacks:consume source))))
     result))
 
-(defun p/element (source name ns)
+(defun p/element (source name)
   (klacks:expecting-element (source "element")
-    (let ((result (make-element :ns ns)))
+    (let ((result (make-element)))
       (consume-and-skip-to-native source)
       (if name
-	  (setf (pattern-name result) (list :name name))
+	  (setf (pattern-name result)
+		(list :name name :uri *namespace-uri*))
 	  (setf (pattern-name result) (p/name-class source)))
       (skip-to-native source)
       (setf (pattern-children result) (p/pattern+ source))
       result)))
 
-(defun p/attribute (source name ns)
+(defun p/attribute (source name)
   (klacks:expecting-element (source "attribute")
-    (let ((result (make-attribute :ns ns)))
+    (let ((result (make-attribute)))
       (consume-and-skip-to-native source)
       (if name
-	  (setf (pattern-name result) (list :name name))
+	  (setf (pattern-name result)
+		(list :name name :uri ""))
 	  (setf (pattern-name result) (p/name-class source)))
       (skip-to-native source)
       (setf (pattern-child result) (p/pattern? source))
       result)))
 
-(defun p/combination (constructor source ns)
+(defun p/combination (constructor source)
   (klacks:expecting-element (source)
     (consume-and-skip-to-native source)
     (let ((possibilities (p/pattern+ source)))
-      (funcall constructor :possibilities possibilities :ns ns))))
+      (funcall constructor :possibilities possibilities))))
 
-(defun p/ref (source ns)
+(defun p/ref (source)
   (klacks:expecting-element (source "ref")
     (prog1
-	(make-ref :name (ntc "name" source) :ns ns)
+	(make-ref :name (ntc "name" source))
       (skip-foreign* source))))
 
-(defun p/parent-ref (source ns)
+(defun p/parent-ref (source)
   (klacks:expecting-element (source "parentRef")
     (prog1
-	(make-parent-ref :name (ntc "name" source) :ns ns)
+	(make-parent-ref :name (ntc "name" source))
       (skip-foreign* source))))
 
-(defun p/empty (source ns)
+(defun p/empty (source)
   (klacks:expecting-element (source "empty")
     (skip-foreign* source)
-    (make-empty :ns ns)))
+    (make-empty)))
 
-(defun p/text (source ns)
+(defun p/text (source)
   (klacks:expecting-element (source "text")
     (skip-foreign* source)
-    (make-text :ns ns)))
+    (make-text)))
 
 (defun consume-and-parse-characters (source)
   ;; fixme
@@ -304,22 +309,23 @@
 	  (:end-element (return)))))
     tmp))
 
-(defun p/value (source ns)
+(defun p/value (source)
   (klacks:expecting-element (source "value")
     (let* ((type (ntc "type" source))
 	   (string (consume-and-parse-characters source))
+	   (ns *namespace-uri*)
 	   (dl *datatype-library*))
       (unless type
 	(setf type "token")
 	(setf dl ""))
-      (make-value :string string :type type :datatype-library dl :ns ns))))
+      (make-value :string string :type type :ns ns :datatype-library dl))))
 
-(defun p/data (source ns)
+(defun p/data (source)
   (klacks:expecting-element (source "data")
     (let* ((type (ntc "type" source))
 	   (result (make-data :type type
 			      :datatype-library *datatype-library*
-			      :ns ns))
+			     ))
 	   (params '()))
       (loop
 	(multiple-value-bind (key uri lname)
@@ -347,14 +353,14 @@
 
 (defun p/except-pattern (source)
   (klacks:expecting-element (source "except")
-    (with-datatype-library (klacks:list-attributes source)
+    (with-library-and-ns (klacks:list-attributes source)
       (klacks:consume source)
       (p/pattern+ source))))
 
-(defun p/not-allowed (source ns)
+(defun p/not-allowed (source)
   (klacks:expecting-element (source "notAllowed")
     (consume-and-skip-to-native source)
-    (make-not-allowed :ns ns)))
+    (make-not-allowed)))
 
 (defun safe-parse-uri (source str &optional base)
   (when (zerop (length str))
@@ -366,7 +372,7 @@
     (puri:uri-parse-error ()
       (rng-error source "invalid URI: ~A" str))))
 
-(defun p/external-ref (source ns)
+(defun p/external-ref (source)
   (klacks:expecting-element (source "externalRef")
     (let* ((href
 	    (escape-uri (attribute "href" (klacks:list-attributes source))))
@@ -374,25 +380,23 @@
 	   (uri (safe-parse-uri source href base)))
       (when (find uri *include-uri-stack* :test #'puri:uri=)
 	(rng-error source "looping include"))
-      (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
-	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
-	     (result
-	      (klacks:with-open-source (source (cxml:make-source xstream))
-		(invoke-with-klacks-handler
-		 (lambda ()
-		   (klacks:find-event source :start-element)
-		   (let ((*datatype-library* ""))
-		     (p/pattern source)))
-		 source))))
-	(unless (pattern-ns result)
-	  (setf (pattern-ns result) ns))
-	(skip-foreign* source)
-	result))))
+      (prog1
+	  (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
+		 (xstream
+		  (cxml::xstream-open-extid* *entity-resolver* nil uri)))
+	    (klacks:with-open-source (source (cxml:make-source xstream))
+	      (invoke-with-klacks-handler
+	       (lambda ()
+		 (klacks:find-event source :start-element)
+		 (let ((*datatype-library* ""))
+		   (p/pattern source)))
+	       source)))
+	(skip-foreign* source)))))
 
-(defun p/grammar (source ns)
+(defun p/grammar (source)
   (klacks:expecting-element (source "grammar")
     (consume-and-skip-to-native source)
-    (make-grammar :content (p/grammar-content* source) :ns ns)))
+    (make-grammar :content (p/grammar-content* source))))
 
 (defun p/grammar-content* (source &key disallow-include)
   (let ((content nil))
@@ -401,7 +405,7 @@
 	uri
 	(case key
 	  (:start-element
-	    (with-datatype-library (klacks:list-attributes source)
+	    (with-library-and-ns (klacks:list-attributes source)
 	      (case (find-symbol lname :keyword)
 		(:|start| (push (p/start source) content))
 		(:|define| (push (p/define source) content))
@@ -462,7 +466,7 @@
 		 (lambda ()
 		   (klacks:find-event source :start-element)
 		   (let ((*datatype-library* ""))
-		     (p/grammar source "wrong://")))
+		     (p/grammar source)))
 		 source)))
 	     (grammar-content (pattern-content grammar)))
 	(make-div :content
@@ -544,21 +548,25 @@
 
 (defun p/name-class (source)
   (klacks:expecting-element (source)
-    (with-datatype-library (klacks:list-attributes source)
+    (with-library-and-ns (klacks:list-attributes source)
       (case (find-symbol (klacks:current-lname source) :keyword)
 	(:|name|
-	  (list :name (string-trim *whitespace*
-				   (consume-and-parse-characters source))))
+	  (let ((qname (string-trim *whitespace*
+				    (consume-and-parse-characters source))))
+	    (multiple-value-bind (uri lname)
+		(klacks:decode-qname qname source)
+	      (list :name lname :uri (or uri *namespace-uri*)))))
 	(:|anyName|
 	  (klacks:consume source)
 	  (prog1
 	      (cons :any (p/except-name-class? source))
 	    (skip-to-native source)))
 	(:|nsName|
-	  (klacks:consume source)
-	  (prog1
-	      (cons :ns (p/except-name-class? source))
-	    (skip-to-native source)))
+	  (let ((uri *namespace-uri*))
+	    (klacks:consume source)
+	    (prog1
+		(list :nsname (p/except-name-class? source) :uri uri)
+	      (skip-to-native source))))
 	(:|choice|
 	  (klacks:consume source)
 	  (cons :choice (p/name-class* source)))
@@ -587,7 +595,7 @@
 
 (defun p/except-name-class (source)
   (klacks:expecting-element (source "except")
-    (with-datatype-library (klacks:list-attributes source)
+    (with-library-and-ns (klacks:list-attributes source)
       (klacks:consume source)
       (cons :except (p/name-class* source)))))
 
@@ -633,6 +641,15 @@
 ;;; 4.7. include element
 ;;;   Done by p/include.
 
+;;; 4.8. name attribute of element and attribute elements
+;;;   `name' is stored as a slot, not a child.  Done by p/element and
+;;;    p/attribute.  
+
+;;; 4.9. ns attribute
+;;;    done by p/name-class, p/value, p/element, p/attribute
+
+;;; 4.10. QNames
+;;;    done by p/name-class
 
 ;;;; tests
 
