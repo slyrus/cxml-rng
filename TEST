@@ -1,51 +1,51 @@
 001:  FAIL: didn't detect invalid schema
-002:  PASS: #<RNG-ERROR {10036C3341}>
-003:  PASS: #<RNG-ERROR {10036E1B31}>
-004:  PASS: #<RNG-ERROR {10037000E1}>
-005:  PASS: #<RNG-ERROR {100371ECB1}>
-006:  PASS: #<RNG-ERROR {100373CCC1}>
-007:  PASS: #<RNG-ERROR {100375C181}>
-008:  PASS: #<RNG-ERROR {100377AF61}>
+002:  PASS: RNG-ERROR
+003:  PASS: RNG-ERROR
+004:  PASS: RNG-ERROR
+005:  PASS: RNG-ERROR
+006:  PASS: RNG-ERROR
+007:  PASS: RNG-ERROR
+008:  PASS: RNG-ERROR
 009:  FAIL: didn't detect invalid schema
 010:  FAIL: didn't detect invalid schema
-011:  PASS: #<RNG-ERROR {10037D95A1}>
-012:  PASS: #<RNG-ERROR {10037FF851}>
-013:  PASS: #<RNG-ERROR {100381EED1}>
-014:  PASS: #<RNG-ERROR {100383D251}>
-015:  PASS: #<RNG-ERROR {100385B601}>
-016:  PASS: #<RNG-ERROR {1003879AC1}>
-017:  PASS: #<RNG-ERROR {10038A7391}>
-018:  PASS: #<RNG-ERROR {10038CE561}>
-019:  PASS: #<RNG-ERROR {10038EC5C1}>
+011:  PASS: RNG-ERROR
+012:  PASS: RNG-ERROR
+013:  PASS: RNG-ERROR
+014:  PASS: RNG-ERROR
+015:  PASS: RNG-ERROR
+016:  PASS: RNG-ERROR
+017:  PASS: RNG-ERROR
+018:  PASS: RNG-ERROR
+019:  PASS: RNG-ERROR
 020:  FAIL: didn't detect invalid schema
 021:  FAIL: didn't detect invalid schema
-022:  PASS: #<RNG-ERROR {100395F001}>
-023:  PASS: #<RNG-ERROR {1003981671}>
-024:  PASS: #<RNG-ERROR {100399EF61}>
-025:  PASS: #<RNG-ERROR {10039BCF71}>
-026:  PASS: #<RNG-ERROR {10039DBFA1}>
-027:  PASS: #<RNG-ERROR {10039FAA01}>
-028:  PASS: #<RNG-ERROR {1003A18691}>
-029:  PASS: #<RNG-ERROR {1003A362E1}>
-030:  PASS: #<RNG-ERROR {1003A53F11}>
-031:  PASS: #<RNG-ERROR {1003A75DA1}>
-032:  PASS: #<RNG-ERROR {1003A98A61}>
-033:  PASS: #<RNG-ERROR {1003AE4961}>
-034:  PASS: #<RNG-ERROR {1003B04691}>
-035:  PASS: #<RNG-ERROR {1003B222B1}>
-036:  PASS: #<RNG-ERROR {1003B49D71}>
-037:  PASS: #<RNG-ERROR {1004C4C6C1}>
-038:  PASS: #<RNG-ERROR {1004C6A741}>
-039:  PASS: #<RNG-ERROR {1004C89571}>
+022:  PASS: RNG-ERROR
+023:  PASS: RNG-ERROR
+024:  PASS: RNG-ERROR
+025:  PASS: RNG-ERROR
+026:  PASS: RNG-ERROR
+027:  PASS: RNG-ERROR
+028:  PASS: RNG-ERROR
+029:  PASS: RNG-ERROR
+030:  PASS: RNG-ERROR
+031:  PASS: RNG-ERROR
+032:  PASS: RNG-ERROR
+033:  PASS: RNG-ERROR
+034:  PASS: RNG-ERROR
+035:  PASS: RNG-ERROR
+036:  PASS: RNG-ERROR
+037:  PASS: RNG-ERROR
+038:  PASS: RNG-ERROR
+039:  PASS: RNG-ERROR
 040:  FAIL: didn't detect invalid schema
-041:  PASS: #<RNG-ERROR {10023F16D1}>
-042:  PASS: #<RNG-ERROR {10024A14E1}>
-043:  PASS: #<RNG-ERROR {10025642B1}>
-044:  PASS: #<RNG-ERROR {100267E711}>
-045:  PASS: #<RNG-ERROR {10026D61C1}>
-046:  PASS: #<RNG-ERROR {10027055A1}>
-047:  PASS: #<RNG-ERROR {10027259A1}>
-048:  PASS: #<RNG-ERROR {1002755C91}>
+041:  PASS: RNG-ERROR
+042:  PASS: RNG-ERROR
+043:  PASS: RNG-ERROR
+044:  PASS: RNG-ERROR
+045:  PASS: RNG-ERROR
+046:  PASS: RNG-ERROR
+047:  PASS: RNG-ERROR
+048:  PASS: RNG-ERROR
 049:  PASS
 050:  PASS
 051:  PASS
@@ -69,26 +69,25 @@
 069:  PASS
 070:  FAIL: didn't detect invalid schema
 071:  FAIL: didn't detect invalid schema
-072:  PASS: #<RNG-ERROR {1002A2C171}>
+072:  PASS: RNG-ERROR
 073:  FAIL: didn't detect invalid schema
-074:  PASS: #<RNG-ERROR {1002A65B51}>
+074:  PASS: RNG-ERROR
 075:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/075/c.rng> ]
-076:  PASS: #<RNG-ERROR {10032F5131}>
-077:  PASS: #<RNG-ERROR {1003317551}>
-078:  PASS: #<RNG-ERROR {1003338D21}>
+076:  PASS: RNG-ERROR
+077:  PASS: RNG-ERROR
+078:  PASS: RNG-ERROR
 079:  FAIL: didn't detect invalid schema
 080:  FAIL: didn't detect invalid schema
 081:  FAIL: didn't detect invalid schema
-082:  PASS: #<RNG-ERROR {10033B62B1}>
-083:  PASS: #<RNG-ERROR {10033E2CC1}>
-084:  PASS: #<RNG-ERROR {10034037B1}>
+082:  PASS: RNG-ERROR
+083:  PASS: RNG-ERROR
+084:  PASS: RNG-ERROR
 085:  FAIL: didn't detect invalid schema
-086:  PASS: #<RNG-ERROR {10034401F1}>
+086:  PASS: RNG-ERROR
 087:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
 088:  PASS
-089:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/089/c.rng> ]
+089:  PASS
 090:  FAIL: invalid schema: start not allowed here
   [ Error at line 7, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/090/c.rng> ]
 091:  FAIL: invalid schema: start not allowed here
@@ -109,9 +108,9 @@
 102:  FAIL: didn't detect invalid schema
 103:  PASS
 104:  PASS
-105:  PASS: #<RNG-ERROR {1003750401}>
-106:  PASS: #<RNG-ERROR {100378E761}>
-107:  PASS: #<RNG-ERROR {10037DD461}>
+105:  PASS: RNG-ERROR
+106:  PASS: RNG-ERROR
+107:  PASS: RNG-ERROR
 108:  FAIL: looping include
   [ Error at line 4, column 72 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/108/sub/x> ]
 109:  FAIL: invalid schema: include not allowed here
@@ -120,20 +119,20 @@
   [ Error at line 5, column 50 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/110/c.rng> ]
 111:  FAIL: invalid schema: include not allowed here
   [ Error at line 5, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/111/c.rng> ]
-112:  PASS: #<RNG-ERROR {10038A0241}>
-113:  PASS: #<RNG-ERROR {10038C85C1}>
-114:  PASS: #<RNG-ERROR {10038E6A71}>
+112:  PASS: RNG-ERROR
+113:  PASS: RNG-ERROR
+114:  PASS: RNG-ERROR
 115:  FAIL: invalid schema: include not allowed here
   [ Error at line 5, column 26 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/115/c.rng> ]
-116:  PASS: #<RNG-ERROR {1003923B91}>
+116:  PASS: RNG-ERROR
 117:  FAIL: invalid schema: include not allowed here
   [ Error at line 5, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/117/c.rng> ]
-118:  PASS: #<RNG-ERROR {1003986B91}>
+118:  PASS: RNG-ERROR
 119:  FAIL: invalid schema: include not allowed here
   [ Error at line 5, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/119/c.rng> ]
 120:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/c.rng> ]
-121:  PASS: #<RNG-ERROR {10039E37C1}>
+121:  PASS: RNG-ERROR
 122:  PASS
 123:  PASS
 124:  FAIL: invalid schema: attribute not allowed here
@@ -176,76 +175,76 @@
 151:  FAIL: unknown &KEY argument: :POSSIBILITY
 152:  FAIL: unknown &KEY argument: :POSSIBILITY
 153:  FAIL: unknown &KEY argument: :POSSIBILITY
-154:  PASS: #<RNG-ERROR {10028902D1}>
-155:  PASS: #<RNG-ERROR {10028AE671}>
-156:  PASS: #<RNG-ERROR {10028CCA21}>
-157:  PASS: #<RNG-ERROR {10028EADD1}>
-158:  PASS: #<RNG-ERROR {10029091A1}>
-159:  PASS: #<RNG-ERROR {10029360B1}>
-160:  PASS: #<RNG-ERROR {1002954431}>
-161:  PASS: #<RNG-ERROR {10029727C1}>
-162:  PASS: #<RNG-ERROR {1002993B71}>
+154:  PASS: RNG-ERROR
+155:  PASS: RNG-ERROR
+156:  PASS: RNG-ERROR
+157:  PASS: RNG-ERROR
+158:  PASS: RNG-ERROR
+159:  PASS: RNG-ERROR
+160:  PASS: RNG-ERROR
+161:  PASS: RNG-ERROR
+162:  PASS: RNG-ERROR
 163:  PASS
-164:  PASS: #<RNG-ERROR {10029D01E1}>
-165:  PASS: #<RNG-ERROR {10029EF091}>
-166:  PASS: #<RNG-ERROR {1002A15571}>
-167:  PASS: #<RNG-ERROR {1002A36A21}>
-168:  PASS: #<RNG-ERROR {1002A554E1}>
-169:  PASS: #<RNG-ERROR {1002A9C3B1}>
-170:  PASS: #<RNG-ERROR {10032DB081}>
-171:  PASS: #<RNG-ERROR {1003304B61}>
-172:  PASS: #<RNG-ERROR {1003327611}>
-173:  PASS: #<RNG-ERROR {1003349E21}>
-174:  PASS: #<RNG-ERROR {1003368F01}>
-175:  PASS: #<RNG-ERROR {100338A401}>
+164:  PASS: RNG-ERROR
+165:  PASS: RNG-ERROR
+166:  PASS: RNG-ERROR
+167:  PASS: RNG-ERROR
+168:  PASS: RNG-ERROR
+169:  PASS: RNG-ERROR
+170:  PASS: RNG-ERROR
+171:  PASS: RNG-ERROR
+172:  PASS: RNG-ERROR
+173:  PASS: RNG-ERROR
+174:  PASS: RNG-ERROR
+175:  PASS: RNG-ERROR
 176:  PASS
-177:  PASS: #<RNG-ERROR {10033DAB61}>
+177:  PASS: RNG-ERROR
 178:  FAIL: didn't detect invalid schema
 179:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
-180:  PASS: #<RNG-ERROR {100343E3E1}>
-181:  PASS: #<RNG-ERROR {100345D2F1}>
-182:  PASS: #<RNG-ERROR {100347C181}>
-183:  PASS: #<RNG-ERROR {100349A541}>
-184:  PASS: #<RNG-ERROR {10034B88D1}>
-185:  PASS: #<RNG-ERROR {10034F1C51}>
-186:  PASS: #<RNG-ERROR {1003512001}>
-187:  PASS: #<RNG-ERROR {10035304D1}>
-188:  PASS: #<RNG-ERROR {100354E8D1}>
-189:  PASS: #<RNG-ERROR {100356CD61}>
+180:  PASS: RNG-ERROR
+181:  PASS: RNG-ERROR
+182:  PASS: RNG-ERROR
+183:  PASS: RNG-ERROR
+184:  PASS: RNG-ERROR
+185:  PASS: RNG-ERROR
+186:  PASS: RNG-ERROR
+187:  PASS: RNG-ERROR
+188:  PASS: RNG-ERROR
+189:  PASS: RNG-ERROR
 190:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/c.rng> ]
 191:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 25 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/191/c.rng> ]
-192:  PASS: #<RNG-ERROR {10035C8991}>
-193:  PASS: #<RNG-ERROR {10035EC751}>
+192:  PASS: RNG-ERROR
+193:  PASS: RNG-ERROR
 194:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/c.rng> ]
 195:  FAIL: invalid schema: start not allowed here
   [ Error at line 6, column 29 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/195/c.rng> ]
-196:  PASS: #<RNG-ERROR {1003648B61}>
-197:  PASS: #<RNG-ERROR {10036677D1}>
-198:  PASS: #<RNG-ERROR {1003687E31}>
-199:  PASS: #<RNG-ERROR {10036A81C1}>
-200:  PASS: #<RNG-ERROR {10036C81B1}>
-201:  PASS: #<RNG-ERROR {10036E6571}>
-202:  PASS: #<RNG-ERROR {1003704941}>
-203:  PASS: #<RNG-ERROR {1003722D51}>
-204:  PASS: #<RNG-ERROR {1003741131}>
-205:  PASS: #<RNG-ERROR {1003760571}>
-206:  PASS: #<RNG-ERROR {1003782941}>
-207:  PASS: #<RNG-ERROR {10037A3D51}>
+196:  PASS: RNG-ERROR
+197:  PASS: RNG-ERROR
+198:  PASS: RNG-ERROR
+199:  PASS: RNG-ERROR
+200:  PASS: RNG-ERROR
+201:  PASS: RNG-ERROR
+202:  PASS: RNG-ERROR
+203:  PASS: RNG-ERROR
+204:  PASS: RNG-ERROR
+205:  PASS: RNG-ERROR
+206:  PASS: RNG-ERROR
+207:  PASS: RNG-ERROR
 208:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/208/c.rng> ]
 209:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/209/c.rng> ]
 210:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/210/c.rng> ]
-211:  PASS: #<RNG-ERROR {1003824441}>
+211:  PASS: RNG-ERROR
 212:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/212/c.rng> ]
 213:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/213/c.rng> ]
-214:  PASS: #<RNG-ERROR {100387FEE1}>
+214:  PASS: RNG-ERROR
 215:  FAIL: invalid schema: element not allowed here
   [ Error at line 4, column 54 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/215/c.rng> ]
 216:  FAIL: invalid schema: element not allowed here
@@ -339,56 +338,56 @@
 275:  FAIL: unknown &KEY argument: :TYPE
 276:  FAIL: didn't detect invalid schema
 277:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
-278:  PASS: #<RNG-ERROR {10038FB941}>
-279:  PASS: #<RNG-ERROR {100391AB31}>
+278:  PASS: RNG-ERROR
+279:  PASS: RNG-ERROR
 280:  FAIL: unknown &KEY argument: :TYPE
 281:  FAIL: unknown &KEY argument: :TYPE
 282:  FAIL: unknown &KEY argument: :TYPE
 283:  FAIL: unknown &KEY argument: :POSSIBILITY
 284:  FAIL: unknown &KEY argument: :TYPE
-285:  PASS: #<RNG-ERROR {1003A01BC1}>
-286:  PASS: #<RNG-ERROR {1003A1FF51}>
-287:  PASS: #<RNG-ERROR {1003A3E301}>
-288:  PASS: #<RNG-ERROR {1003A5F841}>
-289:  PASS: #<RNG-ERROR {1003A84C81}>
-290:  PASS: #<RNG-ERROR {1003AA3001}>
-291:  PASS: #<RNG-ERROR {1003AF1C81}>
-292:  PASS: #<RNG-ERROR {1003B10001}>
-293:  PASS: #<RNG-ERROR {1003B2E3C1}>
-294:  PASS: #<RNG-ERROR {1003B558D1}>
-295:  PASS: #<RNG-ERROR {1003B73C51}>
-296:  PASS: #<RNG-ERROR {1003B970D1}>
-297:  PASS: #<RNG-ERROR {1003BB5461}>
-298:  PASS: #<RNG-ERROR {1003BDF0A1}>
-299:  PASS: #<RNG-ERROR {1004875041}>
-300:  PASS: #<RNG-ERROR {10048933C1}>
-301:  PASS: #<RNG-ERROR {10048B70A1}>
-302:  PASS: #<RNG-ERROR {10048E0451}>
-303:  PASS: #<RNG-ERROR {100491D121}>
-304:  PASS: #<RNG-ERROR {100493B4C1}>
-305:  PASS: #<RNG-ERROR {10049598D1}>
-306:  PASS: #<RNG-ERROR {1004977C51}>
-307:  PASS: #<RNG-ERROR {1004996001}>
-308:  PASS: #<RNG-ERROR {10049B43C1}>
-309:  PASS: #<RNG-ERROR {10049D27C1}>
-310:  PASS: #<RNG-ERROR {10049F0B41}>
-311:  PASS: #<RNG-ERROR {1004A0EED1}>
-312:  PASS: #<RNG-ERROR {1004A2D241}>
-313:  PASS: #<RNG-ERROR {1004A4B5E1}>
-314:  PASS: #<RNG-ERROR {1004A69991}>
-315:  PASS: #<RNG-ERROR {1004A87D41}>
-316:  PASS: #<RNG-ERROR {1004AA6121}>
-317:  PASS: #<RNG-ERROR {1004AC44C1}>
-318:  PASS: #<RNG-ERROR {1004AE28D1}>
-319:  PASS: #<RNG-ERROR {1004B00C51}>
-320:  PASS: #<RNG-ERROR {1004B1F001}>
-321:  PASS: #<RNG-ERROR {1004B3D3C1}>
-322:  PASS: #<RNG-ERROR {1004B5B7C1}>
-323:  PASS: #<RNG-ERROR {1004B79B41}>
-324:  PASS: #<RNG-ERROR {1004B97ED1}>
-325:  PASS: #<RNG-ERROR {1004BB6241}>
-326:  PASS: #<RNG-ERROR {1004BD45E1}>
-327:  PASS: #<RNG-ERROR {1004BF2991}>
+285:  PASS: RNG-ERROR
+286:  PASS: RNG-ERROR
+287:  PASS: RNG-ERROR
+288:  PASS: RNG-ERROR
+289:  PASS: RNG-ERROR
+290:  PASS: RNG-ERROR
+291:  PASS: RNG-ERROR
+292:  PASS: RNG-ERROR
+293:  PASS: RNG-ERROR
+294:  PASS: RNG-ERROR
+295:  PASS: RNG-ERROR
+296:  PASS: RNG-ERROR
+297:  PASS: RNG-ERROR
+298:  PASS: RNG-ERROR
+299:  PASS: RNG-ERROR
+300:  PASS: RNG-ERROR
+301:  PASS: RNG-ERROR
+302:  PASS: RNG-ERROR
+303:  PASS: RNG-ERROR
+304:  PASS: RNG-ERROR
+305:  PASS: RNG-ERROR
+306:  PASS: RNG-ERROR
+307:  PASS: RNG-ERROR
+308:  PASS: RNG-ERROR
+309:  PASS: RNG-ERROR
+310:  PASS: RNG-ERROR
+311:  PASS: RNG-ERROR
+312:  PASS: RNG-ERROR
+313:  PASS: RNG-ERROR
+314:  PASS: RNG-ERROR
+315:  PASS: RNG-ERROR
+316:  PASS: RNG-ERROR
+317:  PASS: RNG-ERROR
+318:  PASS: RNG-ERROR
+319:  PASS: RNG-ERROR
+320:  PASS: RNG-ERROR
+321:  PASS: RNG-ERROR
+322:  PASS: RNG-ERROR
+323:  PASS: RNG-ERROR
+324:  PASS: RNG-ERROR
+325:  PASS: RNG-ERROR
+326:  PASS: RNG-ERROR
+327:  PASS: RNG-ERROR
 328:  FAIL: invalid schema: start not allowed here
   [ Error at line 6, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/328/c.rng> ]
 329:  FAIL: didn't detect invalid schema
@@ -402,43 +401,43 @@
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/333/c.rng> ]
 334:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 9, column 24 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/334/c.rng> ]
-335:  PASS: #<RNG-ERROR {1004D00681}>
+335:  PASS: RNG-ERROR
 336:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 9, column 18 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/336/c.rng> ]
-337:  PASS: #<RNG-ERROR {1004D469E1}>
+337:  PASS: RNG-ERROR
 338:  FAIL: didn't detect invalid schema
 339:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 340:  FAIL: unknown &KEY argument: :POSSIBILITY
 341:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 342:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
-343:  PASS: #<RNG-ERROR {1003421691}>
-344:  PASS: #<RNG-ERROR {1003440FC1}>
+343:  PASS: RNG-ERROR
+344:  PASS: RNG-ERROR
 345:  FAIL: invalid schema: attribute not allowed here
   [ Error at line 7, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/345/c.rng> ]
-346:  PASS: #<RNG-ERROR {1003480A61}>
-347:  PASS: #<RNG-ERROR {10034A03C1}>
-348:  PASS: #<RNG-ERROR {10034DA551}>
-349:  PASS: #<RNG-ERROR {10034F9691}>
-350:  PASS: #<RNG-ERROR {1003518761}>
-351:  PASS: #<RNG-ERROR {1003537891}>
-352:  PASS: #<RNG-ERROR {10035569A1}>
+346:  PASS: RNG-ERROR
+347:  PASS: RNG-ERROR
+348:  PASS: RNG-ERROR
+349:  PASS: RNG-ERROR
+350:  PASS: RNG-ERROR
+351:  PASS: RNG-ERROR
+352:  PASS: RNG-ERROR
 353:  FAIL: invalid schema: attribute not allowed here
   [ Error at line 6, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/353/c.rng> ]
 354:  FAIL: invalid schema: attribute not allowed here
   [ Error at line 6, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/354/c.rng> ]
 355:  FAIL: unknown &KEY argument: :POSSIBILITY
 356:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
-357:  PASS: #<RNG-ERROR {10035FD081}>
-358:  PASS: #<RNG-ERROR {100361BB31}>
-359:  PASS: #<RNG-ERROR {100363A5D1}>
+357:  PASS: RNG-ERROR
+358:  PASS: RNG-ERROR
+359:  PASS: RNG-ERROR
 360:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 361:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 362:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 363:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
 364:  FAIL: incorrect condition type: unknown &KEY argument: :POSSIBILITY
-365:  PASS: #<RNG-ERROR {100370FC21}>
-366:  PASS: #<RNG-ERROR {100372FD31}>
-367:  PASS: #<RNG-ERROR {10037525C1}>
+365:  PASS: RNG-ERROR
+366:  PASS: RNG-ERROR
+367:  PASS: RNG-ERROR
 368:  FAIL: invalid schema: element not allowed here
   [ Error at line 9, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/368/c.rng> ]
 369:  FAIL: unknown &KEY argument: :POSSIBILITY
@@ -448,4 +447,4 @@
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
 373:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 200/373 tests.
+Passed 201/373 tests.

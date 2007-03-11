@@ -25,11 +25,15 @@
 (defvar *external-href-stack*)
 (defvar *include-href-stack*)
 
+(defvar *debug* nil)
+
 (defun invoke-with-klacks-handler (fn source)
-  (handler-case
+  (if *debug*
       (funcall fn)
-    (cxml:xml-parse-error (c)
-      (rng-error source "Cannot parse schema: ~A" c))))
+      (handler-case
+	  (funcall fn)
+	(cxml:xml-parse-error (c)
+	  (rng-error source "Cannot parse schema: ~A" c)))))
 
 (defun parse-relax-ng (input &key entity-resolver)
   (klacks:with-open-source (source (cxml:make-source input))
@@ -120,6 +124,12 @@
 ;;;; parser
 
 (defvar *rng-namespace* "http://relaxng.org/ns/structure/1.0")
+
+(defun skip-foreign* (source)
+  (loop
+    (case (klacks:peek-next source)
+      (:start-element (skip-foreign source))
+      (:end-element (return)))))
 
 (defun skip-foreign (source)
   (when (equal (klacks:current-uri source) *rng-namespace*)
@@ -234,12 +244,12 @@
 
 (defun p/empty (source ns)
   (klacks:expecting-element (source "empty")
-    (klacks:consume source)
+    (skip-foreign* source)
     (make-empty :ns ns)))
 
 (defun p/text (source ns)
   (klacks:expecting-element (source "text")
-    (klacks:consume source)
+    (skip-foreign* source)
     (make-text :ns ns)))
 
 (defun parse-characters (source)
@@ -331,7 +341,7 @@
 		 source))))
 	(unless (pattern-ns result)
 	  (setf (pattern-ns result) ns))
-	(klacks:consume source)
+	(skip-foreign* source)
 	result))))
 
 (defun p/grammar (source ns)
@@ -571,7 +581,8 @@
   (test1 (merge-pathnames (format nil "~3,'0D/" n) p)))
 
 (defun parse-test (n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
-  (let* ((d (merge-pathnames (format nil "~3,'0D/" n) p))
+  (let* ((*debug* t)
+	 (d (merge-pathnames (format nil "~3,'0D/" n) p))
 	 (i (merge-pathnames "i.rng" d))
 	 (c (merge-pathnames "c.rng" d))
 	 (rng (if (probe-file c) c i)))
@@ -598,7 +609,7 @@
 	      (format t " FAIL: didn't detect invalid schema~%")
 	      nil)
 	  (rng-error (c)
-	    (format t " PASS: ~S~%" c)
+	    (format t " PASS: ~S~%" (type-of c))
 	    t)
 	  (error (c)
 	    (format t " FAIL: incorrect condition type: ~A~%" c)
