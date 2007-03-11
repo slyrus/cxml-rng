@@ -385,12 +385,13 @@
 
 (defun p/grammar (source ns)
   (klacks:expecting-element (source "grammar")
+    (consume-and-skip-to-native source)
     (make-grammar :content (p/grammar-content* source) :ns ns)))
 
 (defun p/grammar-content* (source &key disallow-include)
   (let ((content nil))
     (loop
-      (multiple-value-bind (key uri lname) (klacks:peek-next source)
+      (multiple-value-bind (key uri lname) (klacks:peek source)
 	uri
 	(case key
 	  (:start-element
@@ -404,7 +405,8 @@
 		    (rng-error source "nested include not permitted"))
 		  (push (p/include source) content))
 		(t (skip-foreign source)))))
-	  (:end-element (return)))))
+	  (:end-element (return))))
+      (klacks:consume source))
     (nreverse content)))
 
 (defun p/start (source)
@@ -457,9 +459,8 @@
 		     (p/grammar source "wrong://")))
 		 source)))
 	     (grammar-content (pattern-content grammar)))
-	(klacks:consume source)
-	(make-div :children
-		  (cons (make-div :children
+	(make-div :content
+		  (cons (make-div :content
 				  (simplify-include source
 						    grammar-content
 						    include-content))
@@ -488,7 +489,8 @@
 				   (when (typep x 'start)
 				     (return t))
 				   x)
-				 include-content))))
+				 include-content)
+	   nil)))
     (if startp
 	(let ((ok nil))
 	  (prog1
@@ -512,7 +514,10 @@
 	(simplify-include/map
 	 (lambda (x)
 	   (if (typep x 'define)
-	       (let ((cons (find (define-name x) defines :key #'car)))
+	       (let ((cons (find (define-name x)
+				 defines
+				 :key (lambda (y) (define-name (car y)))
+				 :test #'equal)))
 		 (cond
 		   (cons
 		     (setf (cdr cons) t)

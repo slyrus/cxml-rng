@@ -106,27 +106,18 @@
 106:  PASS: RNG-ERROR
 107:  PASS: RNG-ERROR
 108:  PASS
-109:  FAIL: unknown &KEY argument: :CHILDREN
-110:  FAIL: unknown &KEY argument: :CHILDREN
-111:  FAIL: unknown &KEY argument: :CHILDREN
+109:  PASS
+110:  PASS
+111:  PASS
 112:  PASS: RNG-ERROR
 113:  PASS: RNG-ERROR
 114:  PASS: RNG-ERROR
-115:  FAIL: unknown &KEY argument: :CHILDREN
+115:  PASS
 116:  PASS: RNG-ERROR
-117:  FAIL: expected start in grammar
-  [ Error at line 9, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/117/c.rng> ]
+117:  PASS
 118:  PASS: RNG-ERROR
-119:  FAIL: expected matching #S(DEFINE
-                     :NAME foo
-                     :COMBINE NIL
-                     :CHILDREN (#S(ELEMENT
-                                   :NS NIL
-                                   :NAME (NAME foo)
-                                   :CHILDREN (#S(EMPTY :NS NIL))))) in grammar
-  [ Error at line 11, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/119/c.rng> ]
-120:  FAIL: invalid schema: element not allowed here
-  [ Error at line 10, column 28 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/c.rng> ]
+119:  PASS
+120:  PASS
 121:  PASS: RNG-ERROR
 122:  PASS
 123:  PASS
@@ -139,8 +130,7 @@
 130:  PASS
 131:  PASS
 132:  PASS
-133:  FAIL: Cannot parse schema: Klacks assertion failed: expected grammar but got div
-  [ Error at line 16, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/133/c.rng> ]
+133:  PASS
 134:  PASS
 135:  PASS
 136:  PASS
@@ -398,4 +388,4 @@
   [ Error at line 10, column 30 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
 373:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 220/373 tests.
+Passed 228/373 tests.
