@@ -82,13 +82,13 @@
 (defstruct (text (:include pattern) (:conc-name "PATTERN-")))
 
 (defstruct (%typed-pattern (:include pattern) (:conc-name "PATTERN-"))
-  datatype-library)
+  datatype-library
+  type)
 
 (defstruct (value (:include %typed-pattern) (:conc-name "PATTERN-"))
   string)
 
 (defstruct (data (:include %typed-pattern) (:conc-name "PATTERN-"))
-  type
   params
   except)
 

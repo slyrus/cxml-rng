@@ -85,7 +85,7 @@
 084:  PASS: RNG-ERROR
 085:  FAIL: didn't detect invalid schema
 086:  PASS: RNG-ERROR
-087:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+087:  PASS: RNG-ERROR
 088:  PASS
 089:  PASS
 090:  FAIL: invalid schema: start not allowed here
@@ -96,13 +96,13 @@
   [ Error at line 7, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/092/c.rng> ]
 093:  FAIL: The value NIL is not of type STRING.
 094:  PASS
-095:  FAIL: unknown &KEY argument: :TYPE
+095:  PASS
 096:  PASS
 097:  FAIL: invalid schema: element not allowed here
   [ Error at line 4, column 54 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/097/c.rng> ]
 098:  FAIL: invalid schema: start not allowed here
   [ Error at line 5, column 57 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/098/c.rng> ]
-099:  FAIL: unknown &KEY argument: :TYPE
+099:  PASS
 100:  PASS
 101:  PASS
 102:  FAIL: didn't detect invalid schema
@@ -155,7 +155,7 @@
 135:  PASS
 136:  PASS
 137:  PASS
-138:  FAIL: unknown &KEY argument: :TYPE
+138:  PASS
 139:  PASS
 140:  FAIL: invalid schema: element not allowed here
   [ Error at line 4, column 54 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/140/c.rng> ]
@@ -200,7 +200,7 @@
 176:  PASS
 177:  PASS: RNG-ERROR
 178:  FAIL: didn't detect invalid schema
-179:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+179:  FAIL: didn't detect invalid schema
 180:  PASS: RNG-ERROR
 181:  PASS: RNG-ERROR
 182:  PASS: RNG-ERROR
@@ -303,36 +303,36 @@
   [ Error at line 5, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/256/c.rng> ]
 257:  FAIL: invalid schema: element not allowed here
   [ Error at line 4, column 54 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/257/c.rng> ]
-258:  FAIL: unknown &KEY argument: :TYPE
-259:  FAIL: unknown &KEY argument: :TYPE
+258:  PASS
+259:  PASS
 260:  PASS
 261:  FAIL: invalid schema: param not allowed here
   [ Error at line 6, column 28 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/c.rng> ]
-262:  FAIL: unknown &KEY argument: :TYPE
-263:  FAIL: unknown &KEY argument: :TYPE
+262:  PASS
+263:  PASS
 264:  FAIL: invalid schema: except not allowed here
   [ Error at line 6, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/264/c.rng> ]
 265:  PASS
-266:  FAIL: unknown &KEY argument: :TYPE
+266:  PASS
 267:  FAIL: invalid schema: except not allowed here
   [ Error at line 6, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/267/c.rng> ]
 268:  PASS
 269:  PASS
-270:  FAIL: unknown &KEY argument: :TYPE
-271:  FAIL: unknown &KEY argument: :TYPE
-272:  FAIL: unknown &KEY argument: :TYPE
-273:  FAIL: unknown &KEY argument: :TYPE
-274:  FAIL: unknown &KEY argument: :TYPE
-275:  FAIL: unknown &KEY argument: :TYPE
+270:  PASS
+271:  PASS
+272:  PASS
+273:  PASS
+274:  PASS
+275:  PASS
 276:  FAIL: didn't detect invalid schema
-277:  FAIL: incorrect condition type: unknown &KEY argument: :TYPE
+277:  FAIL: didn't detect invalid schema
 278:  PASS: RNG-ERROR
 279:  PASS: RNG-ERROR
-280:  FAIL: unknown &KEY argument: :TYPE
-281:  FAIL: unknown &KEY argument: :TYPE
-282:  FAIL: unknown &KEY argument: :TYPE
+280:  PASS
+281:  PASS
+282:  PASS
 283:  PASS
-284:  FAIL: unknown &KEY argument: :TYPE
+284:  PASS
 285:  PASS: RNG-ERROR
 286:  PASS: RNG-ERROR
 287:  PASS: RNG-ERROR
@@ -435,4 +435,4 @@
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
 373:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 242/373 tests.
+Passed 261/373 tests.
