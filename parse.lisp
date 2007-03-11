@@ -118,13 +118,6 @@
   combine
   children)
 
-(defstruct div
-  content)
-
-(defstruct include
-  href
-  content)
-
 
 ;;;; parser
 
@@ -399,25 +392,28 @@
     (make-grammar :content (p/grammar-content* source))))
 
 (defun p/grammar-content* (source &key disallow-include)
-  (let ((content nil))
-    (loop
-      (multiple-value-bind (key uri lname) (klacks:peek source)
-	uri
-	(case key
-	  (:start-element
-	    (with-library-and-ns (klacks:list-attributes source)
-	      (case (find-symbol lname :keyword)
-		(:|start| (push (p/start source) content))
-		(:|define| (push (p/define source) content))
-		(:|div| (push (p/div source) content))
-		(:|include|
-		  (when disallow-include
-		    (rng-error source "nested include not permitted"))
-		  (push (p/include source) content))
-		(t (skip-foreign source)))))
-	  (:end-element (return))))
-      (klacks:consume source))
-    (nreverse content)))
+  (loop
+      append
+	(prog1
+	    (multiple-value-bind (key uri lname) (klacks:peek source)
+	      uri
+	      (case key
+		(:start-element
+		  (with-library-and-ns (klacks:list-attributes source)
+		    (case (find-symbol lname :keyword)
+		      (:|start| (list (p/start source)))
+		      (:|define| (list (p/define source)))
+		      (:|div| (p/div source))
+		      (:|include|
+			(when disallow-include
+			  (rng-error source "nested include not permitted"))
+			(p/include source))
+		      (t
+			(skip-foreign source)
+			nil))))
+		(:end-element
+		  (loop-finish))))
+	  (klacks:consume source))))
 
 (defun p/start (source)
   (klacks:expecting-element (source "start")
@@ -444,7 +440,7 @@
 (defun p/div (source)
   (klacks:expecting-element (source "div")
     (consume-and-skip-to-native source)
-    (make-div :content (p/grammar-content* source))))
+    (p/grammar-content* source)))
 
 (defun p/include (source)
   (klacks:expecting-element (source "include")
@@ -469,73 +465,44 @@
 		     (p/grammar source)))
 		 source)))
 	     (grammar-content (pattern-content grammar)))
-	(make-div :content
-		  (cons (make-div :content
-				  (simplify-include source
-						    grammar-content
-						    include-content))
-			include-content))))))
+	(append
+	 (simplify-include source grammar-content include-content)
+	 include-content)))))
 
 (defun simplify-include/map (fn l)
-  (loop
-      for x in l
-      for value = (let ((result (funcall fn x)))
-		    (when (typep x 'div)
-		      (loop
-			  for x in (div-content x)
-			  for value = (funcall fn x)
-			  when value
-			  collect value into content
-			  finally
-			    (setf (div-content x) content)))
-		    result)
-      when value
-      collect value))
+  (remove nil (mapcar fn l)))
 
 (defun simplify-include/start (source grammar-content include-content)
-  (let ((startp
-	 (block nil
-	   (simplify-include/map (lambda (x)
-				   (when (typep x 'start)
-				     (return t))
-				   x)
-				 include-content)
-	   nil)))
+  (let ((startp (some (lambda (x) (typep x 'start)) include-content)))
     (if startp
 	(let ((ok nil))
 	  (prog1
-	      (simplify-include/map (lambda (x)
-				      (cond
-					((typep x 'start) (setf ok t) nil)
-					(t x)))
-				    grammar-content))
-	  (unless ok
-	    (rng-error source "expected start in grammar")))
+	      (remove-if (lambda (x)
+			   (when (typep x 'start)
+			     (setf ok t)
+			     t))
+			 grammar-content)
+	    (unless ok
+	      (rng-error source "expected start in grammar"))))
 	grammar-content)))
 
 (defun simplify-include/define (source grammar-content include-content)
   (let ((defines '()))
-    (simplify-include/map (lambda (x)
-			    (when (typep x 'define)
-			      (push (cons x nil) defines))
-			    x)
-			  include-content)
+    (dolist (x include-content)
+      (when (typep x 'define)
+	(push (cons x nil) defines)))
     (prog1
-	(simplify-include/map
-	 (lambda (x)
-	   (if (typep x 'define)
-	       (let ((cons (find (define-name x)
-				 defines
-				 :key (lambda (y) (define-name (car y)))
-				 :test #'equal)))
-		 (cond
-		   (cons
-		     (setf (cdr cons) t)
-		     nil)
-		   (t
-		     x)))
-	       x))
-	 grammar-content)
+	(remove-if (lambda (x)
+		     (when (typep x 'define)
+		       (let ((cons (find (define-name x)
+					 defines
+					 :key (lambda (y)
+						(define-name (car y)))
+					 :test #'equal)))
+			 (when cons
+			   (setf (cdr cons) t)
+			   t))))
+		   grammar-content)
       (loop for (define . okp) in defines do
 	    (unless okp
 	      (rng-error source "expected matching ~A in grammar" define))))))
@@ -650,6 +617,9 @@
 
 ;;; 4.10. QNames
 ;;;    done by p/name-class
+
+;;; 4.11. div element
+;;;    Legen wir gar nicht erst an.
 
 ;;;; tests
 
