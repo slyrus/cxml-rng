@@ -23,7 +23,7 @@
 (defvar *datatype-library*)
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
-(defvar *include-href-stack*)
+(defvar *include-uri-stack*)
 
 (defvar *debug* nil)
 
@@ -43,7 +43,7 @@
        (let ((*datatype-library* "")
 	     (*entity-resolver* entity-resolver)
 	     (*external-href-stack* '())
-	     (*include-href-stack* '()))
+	     (*include-uri-stack* '()))
 	 (p/pattern source)))
       source)))
 
@@ -328,13 +328,13 @@
 
 (defun p/external-ref (source ns)
   (klacks:expecting-element (source "externalRef")
-    (let ((href
-	   (escape-uri (attribute "href" (klacks:list-attributes source))))
-	  (base (klacks:current-xml-base source)))
-      (when (find href *include-href-stack* :test #'string=)
+    (let* ((href
+	    (escape-uri (attribute "href" (klacks:list-attributes source))))
+	   (base (klacks:current-xml-base source))
+	   (uri (safe-parse-uri source href base)))
+      (when (find uri *include-uri-stack* :test #'puri:uri=)
 	(rng-error source "looping include"))
-      (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (uri (safe-parse-uri source href base))
+      (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (result
 	      (klacks:with-open-source (source (cxml:make-source xstream))
@@ -394,14 +394,14 @@
 
 (defun p/include (source)
   (klacks:expecting-element (source "include")
-    (let ((href
-	   (escape-uri (attribute "href" (klacks:list-attributes source))))
-	  (base (klacks:current-xml-base source))
-	  (include-content (p/grammar-content* source :disallow-include t)))
-      (when (find href *include-href-stack* :test #'string=)
+    (let* ((href
+	    (escape-uri (attribute "href" (klacks:list-attributes source))))
+	   (base (klacks:current-xml-base source))
+	   (uri (safe-parse-uri source href base))
+	   (include-content (p/grammar-content* source :disallow-include t)))
+      (when (find uri *include-uri-stack* :test #'puri:uri=)
 	(rng-error source "looping include"))
-      (let* ((*include-href-stack* (cons href *include-href-stack*))
-	     (uri (safe-parse-uri source href base))
+      (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
 	     (grammar
 	      (klacks:with-open-source (source (cxml:make-source xstream))

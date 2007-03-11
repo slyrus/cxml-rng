@@ -111,8 +111,7 @@
 105:  PASS: RNG-ERROR
 106:  PASS: RNG-ERROR
 107:  PASS: RNG-ERROR
-108:  FAIL: looping include
-  [ Error at line 4, column 72 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/108/sub/x> ]
+108:  PASS
 109:  FAIL: invalid schema: include not allowed here
   [ Error at line 5, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/109/c.rng> ]
 110:  FAIL: invalid schema: include not allowed here
@@ -435,4 +434,4 @@
   [ Error at line 5, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
 373:  FAIL: invalid schema: notAllowed not allowed here
   [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 261/373 tests.
+Passed 262/373 tests.
