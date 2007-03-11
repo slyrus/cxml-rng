@@ -34,8 +34,8 @@
 034:  PASS: RNG-ERROR
 035:  PASS: RNG-ERROR
 036:  FAIL: didn't detect invalid schema
-037:  PASS: RNG-ERROR
-038:  PASS: RNG-ERROR
+037:  FAIL: didn't detect invalid schema
+038:  FAIL: didn't detect invalid schema
 039:  PASS: RNG-ERROR
 040:  FAIL: didn't detect invalid schema
 041:  FAIL: didn't detect invalid schema
@@ -138,10 +138,8 @@
 138:  PASS
 139:  PASS
 140:  PASS
-141:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/141/c.rng> ]
-142:  FAIL: Cannot parse schema: Klacks assertion failed: expected except but got data
-  [ Error at line 11, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/142/c.rng> ]
+141:  PASS
+142:  PASS
 143:  PASS
 144:  PASS
 145:  PASS
@@ -153,18 +151,18 @@
 151:  PASS
 152:  PASS
 153:  PASS
-154:  PASS: RNG-ERROR
-155:  PASS: RNG-ERROR
-156:  PASS: RNG-ERROR
-157:  PASS: RNG-ERROR
-158:  PASS: RNG-ERROR
-159:  PASS: RNG-ERROR
-160:  PASS: RNG-ERROR
-161:  PASS: RNG-ERROR
+154:  FAIL: didn't detect invalid schema
+155:  FAIL: didn't detect invalid schema
+156:  FAIL: didn't detect invalid schema
+157:  FAIL: didn't detect invalid schema
+158:  FAIL: didn't detect invalid schema
+159:  FAIL: didn't detect invalid schema
+160:  FAIL: didn't detect invalid schema
+161:  FAIL: didn't detect invalid schema
 162:  FAIL: didn't detect invalid schema
 163:  PASS
 164:  FAIL: didn't detect invalid schema
-165:  PASS: RNG-ERROR
+165:  FAIL: didn't detect invalid schema
 166:  FAIL: didn't detect invalid schema
 167:  FAIL: didn't detect invalid schema
 168:  FAIL: didn't detect invalid schema
@@ -172,16 +170,16 @@
 170:  FAIL: didn't detect invalid schema
 171:  FAIL: didn't detect invalid schema
 172:  FAIL: didn't detect invalid schema
-173:  PASS: RNG-ERROR
-174:  PASS: RNG-ERROR
+173:  FAIL: didn't detect invalid schema
+174:  FAIL: didn't detect invalid schema
 175:  FAIL: didn't detect invalid schema
 176:  PASS
 177:  FAIL: didn't detect invalid schema
 178:  FAIL: didn't detect invalid schema
 179:  FAIL: didn't detect invalid schema
-180:  PASS: RNG-ERROR
-181:  PASS: RNG-ERROR
-182:  PASS: RNG-ERROR
+180:  FAIL: didn't detect invalid schema
+181:  FAIL: didn't detect invalid schema
+182:  FAIL: didn't detect invalid schema
 183:  FAIL: didn't detect invalid schema
 184:  FAIL: didn't detect invalid schema
 185:  FAIL: didn't detect invalid schema
@@ -199,13 +197,13 @@
 197:  FAIL: didn't detect invalid schema
 198:  FAIL: didn't detect invalid schema
 199:  FAIL: didn't detect invalid schema
-200:  PASS: RNG-ERROR
+200:  FAIL: didn't detect invalid schema
 201:  FAIL: didn't detect invalid schema
 202:  FAIL: didn't detect invalid schema
-203:  PASS: RNG-ERROR
+203:  FAIL: didn't detect invalid schema
 204:  FAIL: didn't detect invalid schema
 205:  FAIL: didn't detect invalid schema
-206:  PASS: RNG-ERROR
+206:  FAIL: didn't detect invalid schema
 207:  FAIL: didn't detect invalid schema
 208:  PASS
 209:  PASS
@@ -213,18 +211,14 @@
 211:  FAIL: didn't detect invalid schema
 212:  PASS
 213:  PASS
-214:  PASS: RNG-ERROR
+214:  FAIL: didn't detect invalid schema
 215:  PASS
-216:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/216/c.rng> ]
-217:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/217/c.rng> ]
+216:  PASS
+217:  PASS
 218:  PASS
 219:  PASS
-220:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/220/c.rng> ]
-221:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 6, column 5 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/221/c.rng> ]
+220:  PASS
+221:  PASS
 222:  PASS
 223:  PASS
 224:  PASS
@@ -267,12 +261,10 @@
 261:  PASS
 262:  PASS
 263:  PASS
-264:  FAIL: Cannot parse schema: Klacks assertion failed: expected except but got data
-  [ Error at line 12, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/264/c.rng> ]
+264:  PASS
 265:  PASS
 266:  PASS
-267:  FAIL: Cannot parse schema: Klacks assertion failed: expected except but got data
-  [ Error at line 9, column 10 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/267/c.rng> ]
+267:  PASS
 268:  PASS
 269:  PASS
 270:  PASS
@@ -309,14 +301,14 @@
 301:  FAIL: didn't detect invalid schema
 302:  FAIL: didn't detect invalid schema
 303:  FAIL: didn't detect invalid schema
-304:  PASS: RNG-ERROR
-305:  PASS: RNG-ERROR
-306:  PASS: RNG-ERROR
-307:  PASS: RNG-ERROR
-308:  PASS: RNG-ERROR
-309:  PASS: RNG-ERROR
-310:  PASS: RNG-ERROR
-311:  PASS: RNG-ERROR
+304:  FAIL: didn't detect invalid schema
+305:  FAIL: didn't detect invalid schema
+306:  FAIL: didn't detect invalid schema
+307:  FAIL: didn't detect invalid schema
+308:  FAIL: didn't detect invalid schema
+309:  FAIL: didn't detect invalid schema
+310:  FAIL: didn't detect invalid schema
+311:  FAIL: didn't detect invalid schema
 312:  FAIL: didn't detect invalid schema
 313:  FAIL: didn't detect invalid schema
 314:  FAIL: didn't detect invalid schema
@@ -335,41 +327,35 @@
 327:  FAIL: didn't detect invalid schema
 328:  PASS
 329:  FAIL: didn't detect invalid schema
-330:  FAIL: invalid schema: notAllowed not allowed here
-  [ Error at line 8, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/330/c.rng> ]
-331:  FAIL: invalid schema: notAllowed not allowed here
-  [ Error at line 9, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/331/c.rng> ]
+330:  PASS
+331:  PASS
 332:  PASS
 333:  PASS
-334:  FAIL: invalid schema: notAllowed not allowed here
-  [ Error at line 9, column 24 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/334/c.rng> ]
+334:  PASS
 335:  FAIL: didn't detect invalid schema
-336:  FAIL: invalid schema: notAllowed not allowed here
-  [ Error at line 9, column 18 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/336/c.rng> ]
-337:  PASS: RNG-ERROR
+336:  PASS
+337:  FAIL: didn't detect invalid schema
 338:  FAIL: didn't detect invalid schema
 339:  FAIL: didn't detect invalid schema
 340:  PASS
 341:  FAIL: didn't detect invalid schema
 342:  FAIL: didn't detect invalid schema
 343:  FAIL: didn't detect invalid schema
-344:  PASS: RNG-ERROR
-345:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 9, column 2 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/345/c.rng> ]
+344:  FAIL: didn't detect invalid schema
+345:  PASS
 346:  FAIL: didn't detect invalid schema
-347:  PASS: RNG-ERROR
+347:  FAIL: didn't detect invalid schema
 348:  FAIL: didn't detect invalid schema
 349:  FAIL: didn't detect invalid schema
-350:  PASS: RNG-ERROR
-351:  PASS: RNG-ERROR
-352:  PASS: RNG-ERROR
-353:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 8, column 2 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/353/c.rng> ]
+350:  FAIL: didn't detect invalid schema
+351:  FAIL: didn't detect invalid schema
+352:  FAIL: didn't detect invalid schema
+353:  PASS
 354:  PASS
 355:  PASS
 356:  FAIL: didn't detect invalid schema
-357:  PASS: RNG-ERROR
-358:  PASS: RNG-ERROR
+357:  FAIL: didn't detect invalid schema
+358:  FAIL: didn't detect invalid schema
 359:  PASS: RNG-ERROR
 360:  FAIL: didn't detect invalid schema
 361:  FAIL: didn't detect invalid schema
@@ -378,14 +364,11 @@
 364:  FAIL: didn't detect invalid schema
 365:  FAIL: didn't detect invalid schema
 366:  FAIL: didn't detect invalid schema
-367:  PASS: RNG-ERROR
-368:  FAIL: Cannot parse schema: Klacks assertion failed: expected END-ELEMENT but got CHARACTERS
-  [ Error at line 11, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/368/c.rng> ]
+367:  FAIL: didn't detect invalid schema
+368:  PASS
 369:  PASS
 370:  FAIL: didn't detect invalid schema
 371:  FAIL: didn't detect invalid schema
-372:  FAIL: at most one pattern expected here
-  [ Error at line 10, column 30 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/c.rng> ]
-373:  FAIL: invalid schema: notAllowed not allowed here
-  [ Error at line 4, column 58 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/373/c.rng> ]
-Passed 228/373 tests.
+372:  PASS
+373:  PASS
+Passed 208/373 tests.

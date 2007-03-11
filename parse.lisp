@@ -209,6 +209,7 @@
 	(:|text|        (p/text source ns))
 	(:|value|       (p/value source ns))
 	(:|data|        (p/data source ns))
+	(:|notAllowed|  (p/not-allowed source ns))
 	(:|externalRef| (p/external-ref source ns))
 	(:|grammar|     (p/grammar source ns))
 	(t (skip-foreign source))))))
@@ -219,8 +220,10 @@
       (case (klacks:peek source)
 	(:start-element
 	  (let ((p (p/pattern source))) (when p (push p children))))
-	(:end-element (return)))
-      (klacks:consume source))
+	(:end-element
+	  (return))
+	(t
+	  (klacks:consume source))))
     (unless children
       (rng-error source "empty element"))
     (nreverse children)))
@@ -228,14 +231,17 @@
 (defun p/pattern? (source)
   (let ((result nil))
     (loop
+      (skip-to-native source)
       (case (klacks:peek source)
 	(:start-element
 	  (when result
 	    (rng-error source "at most one pattern expected here"))
 	  (setf result (p/pattern source)))
 	(:end-element
-	  (return result)))
-      (klacks:consume source))))
+	  (return))
+	(t
+	  (klacks:consume source))))
+    result))
 
 (defun p/element (source name ns)
   (klacks:expecting-element (source "element")
@@ -287,7 +293,7 @@
     (skip-foreign* source)
     (make-text :ns ns)))
 
-(defun parse-characters (source)
+(defun consume-and-parse-characters (source)
   ;; fixme
   (let ((tmp ""))
     (loop
@@ -301,7 +307,7 @@
 (defun p/value (source ns)
   (klacks:expecting-element (source "value")
     (let* ((type (ntc "type" source))
-	   (string (parse-characters source))
+	   (string (consume-and-parse-characters source))
 	   (dl *datatype-library*))
       (unless type
 	(setf type "token")
@@ -325,6 +331,7 @@
 		(:|param| (push (p/param source) params))
 		(:|except|
 		  (setf (pattern-except result) (p/except-pattern source))
+		  (skip-to-native source)
 		  (return))
 		(t (skip-foreign source))))
 	    (:end-element
@@ -335,19 +342,18 @@
 (defun p/param (source)
   (klacks:expecting-element (source "param")
     (let ((name (ntc "name" source))
-	  (string (parse-characters source)))
+	  (string (consume-and-parse-characters source)))
       (make-param :name name :string string))))
 
 (defun p/except-pattern (source)
   (klacks:expecting-element (source "except")
     (with-datatype-library (klacks:list-attributes source)
-      (consume-and-skip-to-native source)
-      (prog1
-	  (p/pattern+ source)
-	(skip-foreign* source)))))
+      (klacks:consume source)
+      (p/pattern+ source))))
 
 (defun p/not-allowed (source ns)
   (klacks:expecting-element (source "notAllowed")
+    (consume-and-skip-to-native source)
     (make-not-allowed :ns ns)))
 
 (defun safe-parse-uri (source str &optional base)
@@ -541,39 +547,49 @@
     (with-datatype-library (klacks:list-attributes source)
       (case (find-symbol (klacks:current-lname source) :keyword)
 	(:|name|
-	  (list :name (string-trim *whitespace* (parse-characters source))))
+	  (list :name (string-trim *whitespace*
+				   (consume-and-parse-characters source))))
 	(:|anyName|
-	  (cons :any (p/except-name-class? source)))
+	  (klacks:consume source)
+	  (prog1
+	      (cons :any (p/except-name-class? source))
+	    (skip-to-native source)))
 	(:|nsName|
-	  (cons :ns (p/except-name-class? source)))
+	  (klacks:consume source)
+	  (prog1
+	      (cons :ns (p/except-name-class? source))
+	    (skip-to-native source)))
 	(:|choice|
+	  (klacks:consume source)
 	  (cons :choice (p/name-class* source)))
 	(t
-	  (skip-foreign source))))))
+	  (rng-error source "invalid child in except"))))))
 
 (defun p/name-class* (source)
   (let ((results nil))
     (loop
-      (case (klacks:peek-next source)
+      (skip-to-native source)
+      (case (klacks:peek source)
 	(:start-element (push (p/name-class source) results))
-	(:end-element (return))))
+	(:end-element (return)))
+      (klacks:consume source))
     (nreverse results)))
 
 (defun p/except-name-class? (source)
-  (loop
-    (multiple-value-bind (key uri lname)
-	(klacks:peek-next source)
-      uri
-      (unless (eq key :start-element)
-	(return))
-      (when (string= (find-symbol lname :keyword) "except")
-	(return (p/except-name-class source)))
-      (skip-foreign source))))
+  (skip-to-native source)
+  (multiple-value-bind (key uri lname)
+      (klacks:peek source)
+    uri
+    (if (and (eq key :start-element)
+	     (string= (find-symbol lname :keyword) "except"))
+	(p/except-name-class source)
+	nil)))
 
 (defun p/except-name-class (source)
   (klacks:expecting-element (source "except")
     (with-datatype-library (klacks:list-attributes source)
-      (cons :except (p/name-class source)))))
+      (klacks:consume source)
+      (cons :except (p/name-class* source)))))
 
 (defun escape-uri (string)
   (with-output-to-string (out)
