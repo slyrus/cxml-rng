@@ -204,10 +204,15 @@
     (nreverse children)))
 
 (defun p/pattern? (source)
-  (loop
-    (case (klacks:peek-next source)
-      (:start-element (return (p/pattern source)))
-      (:end-element (return)))))
+  (let ((result nil))
+    (loop
+      (case (klacks:peek-next source)
+	(:start-element
+	  (when result
+	    (rng-error source "at most one pattern expected here"))
+	  (setf result (p/pattern source)))
+	(:end-element
+	  (return result))))))
 
 (defun p/element (source name ns)
   (klacks:expecting-element (source "element")
@@ -229,8 +234,8 @@
 
 (defun p/combination (constructor source ns)
   (klacks:expecting-element (source)
-    (let ((possibility (p/pattern+ source)))
-      (funcall constructor :possibility possibility :ns ns))))
+    (let ((possibilities (p/pattern+ source)))
+      (funcall constructor :possibilities possibilities :ns ns))))
 
 (defun p/ref (source ns)
   (klacks:expecting-element (source "ref")
