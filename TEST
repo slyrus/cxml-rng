@@ -151,27 +151,27 @@
 151:  PASS
 152:  PASS
 153:  PASS
-154:  FAIL: didn't detect invalid schema
-155:  FAIL: didn't detect invalid schema
-156:  FAIL: didn't detect invalid schema
-157:  FAIL: didn't detect invalid schema
-158:  FAIL: didn't detect invalid schema
-159:  FAIL: didn't detect invalid schema
-160:  FAIL: didn't detect invalid schema
-161:  FAIL: didn't detect invalid schema
+154:  PASS: RNG-ERROR
+155:  PASS: RNG-ERROR
+156:  PASS: RNG-ERROR
+157:  PASS: RNG-ERROR
+158:  PASS: RNG-ERROR
+159:  PASS: RNG-ERROR
+160:  PASS: RNG-ERROR
+161:  PASS: RNG-ERROR
 162:  FAIL: didn't detect invalid schema
 163:  PASS
 164:  FAIL: didn't detect invalid schema
 165:  FAIL: didn't detect invalid schema
 166:  FAIL: didn't detect invalid schema
 167:  FAIL: didn't detect invalid schema
-168:  FAIL: didn't detect invalid schema
-169:  FAIL: didn't detect invalid schema
-170:  FAIL: didn't detect invalid schema
+168:  PASS: RNG-ERROR
+169:  PASS: RNG-ERROR
+170:  PASS: RNG-ERROR
 171:  FAIL: didn't detect invalid schema
-172:  FAIL: didn't detect invalid schema
-173:  FAIL: didn't detect invalid schema
-174:  FAIL: didn't detect invalid schema
+172:  PASS: RNG-ERROR
+173:  PASS: RNG-ERROR
+174:  PASS: RNG-ERROR
 175:  FAIL: didn't detect invalid schema
 176:  PASS
 177:  FAIL: didn't detect invalid schema
@@ -371,4 +371,4 @@
 371:  FAIL: didn't detect invalid schema
 372:  PASS
 373:  PASS
-Passed 208/373 tests.
+Passed 222/373 tests.

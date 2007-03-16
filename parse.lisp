@@ -258,6 +258,8 @@
       (setf (pattern-child result) (groupify (p/pattern+ source)))
       result)))
 
+(defvar *attribute-namespace-p* nil)
+
 (defun p/attribute (source name)
   (klacks:expecting-element (source "attribute")
     (let ((result (make-attribute)))
@@ -265,7 +267,9 @@
       (if name
 	  (setf (pattern-name result)
 		(list :name name :uri ""))
-	  (setf (pattern-name result) (p/name-class source)))
+	  (setf (pattern-name result)
+		(let ((*attribute-namespace-p* t))
+		  (p/name-class source))))
       (skip-to-native source)
       (setf (pattern-child result)
 	    (or (p/pattern? source) (make-text)))
@@ -566,6 +570,9 @@
    (simplify-include/start source grammar-content include-content)
    include-content))
 
+(defvar *any-name-allowed-p* t)
+(defvar *ns-name-allowed-p* t)
+
 (defun p/name-class (source)
   (klacks:expecting-element (source)
     (with-library-and-ns (klacks:list-attributes source)
@@ -575,14 +582,29 @@
 				    (consume-and-parse-characters source))))
 	    (multiple-value-bind (uri lname)
 		(klacks:decode-qname qname source)
-	      (list :name lname :uri (or uri *namespace-uri*)))))
+	      (setf uri (or uri *namespace-uri*))
+	      (when (and *attribute-namespace-p*
+			 (or (and (equal lname "xmlns") (equal uri ""))
+			     (equal uri "http://www.w3.org/2000/xmlns")))
+		(rng-error source "namespace attribute not permitted"))
+	      (list :name lname :uri uri))))
 	(:|anyName|
+	  (unless *any-name-allowed-p*
+	    (rng-error source "anyname now permitted in except"))
 	  (klacks:consume source)
 	  (prog1
-	      (cons :any (p/except-name-class? source))
+	      (let ((*any-name-allowed-p* nil))
+		(cons :any (p/except-name-class? source)))
 	    (skip-to-native source)))
 	(:|nsName|
-	  (let ((uri *namespace-uri*))
+	  (unless *ns-name-allowed-p*
+	    (rng-error source "nsname now permitted in except"))
+	  (let ((uri *namespace-uri*)
+		(*any-name-allowed-p* nil)
+		(*ns-name-allowed-p* nil))
+	    (when (and *attribute-namespace-p*
+		       (equal uri "http://www.w3.org/2000/xmlns"))
+	      (rng-error source "namespace attribute not permitted"))
 	    (klacks:consume source)
 	    (prog1
 		(list :nsname (p/except-name-class? source) :uri uri)
@@ -677,13 +699,17 @@
 ;;; 4.12. 4.13 4.14 4.15
 ;;;    beim anlegen
 
+;;; 4.16
+;;;    p/name-class
+;;;    -- ausser der sache mit den datentypen
 
 ;;;; tests
 
 (defun run-tests (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
   (dribble "/home/david/src/lisp/cxml-rng/TEST" :if-exists :rename-and-delete)
   (let ((pass 0)
-	(total 0))
+	(total 0)
+	(*package* (find-package :cxml-rng)))
     (dolist (d (directory p))
       (let ((name (car (last (pathname-directory d)))))
 	(when (parse-integer name :junk-allowed t)
