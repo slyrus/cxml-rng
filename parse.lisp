@@ -54,6 +54,12 @@
 
 
 ;;;; pattern structures
+;;;;
+;;;; Before final simplification, all patterns are allowed.
+;;;;
+;;;; Afterwards, parent-ref has been removed, element appears only in define,
+;;;; and define only in grammar, notallowed only in start or element, and
+;;;; empty only in selected situations.
 
 (defstruct pattern)
 
@@ -251,8 +257,7 @@
     (let ((result (make-element)))
       (consume-and-skip-to-native source)
       (if name
-	  (setf (pattern-name result)
-		(list :name name :uri *namespace-uri*))
+	  (setf (pattern-name result) (destructure-name source name))
 	  (setf (pattern-name result) (p/name-class source)))
       (skip-to-native source)
       (setf (pattern-child result) (groupify (p/pattern+ source)))
@@ -266,7 +271,8 @@
       (consume-and-skip-to-native source)
       (if name
 	  (setf (pattern-name result)
-		(list :name name :uri ""))
+		(let ((*namespace-uri* ""))
+		  (destructure-name source name)))
 	  (setf (pattern-name result)
 		(let ((*attribute-namespace-p* t))
 		  (p/name-class source))))
@@ -573,6 +579,16 @@
 (defvar *any-name-allowed-p* t)
 (defvar *ns-name-allowed-p* t)
 
+(defun destructure-name (source qname)
+  (multiple-value-bind (uri lname)
+      (klacks:decode-qname qname source)
+    (setf uri (or uri *namespace-uri*))
+    (when (and *attribute-namespace-p*
+	       (or (and (equal lname "xmlns") (equal uri ""))
+		   (equal uri "http://www.w3.org/2000/xmlns")))
+      (rng-error source "namespace attribute not permitted"))
+    (list :name lname uri)))
+
 (defun p/name-class (source)
   (klacks:expecting-element (source)
     (with-library-and-ns (klacks:list-attributes source)
@@ -580,14 +596,7 @@
 	(:|name|
 	  (let ((qname (string-trim *whitespace*
 				    (consume-and-parse-characters source))))
-	    (multiple-value-bind (uri lname)
-		(klacks:decode-qname qname source)
-	      (setf uri (or uri *namespace-uri*))
-	      (when (and *attribute-namespace-p*
-			 (or (and (equal lname "xmlns") (equal uri ""))
-			     (equal uri "http://www.w3.org/2000/xmlns")))
-		(rng-error source "namespace attribute not permitted"))
-	      (list :name lname :uri uri))))
+	    (destructure-name source qname)))
 	(:|anyName|
 	  (unless *any-name-allowed-p*
 	    (rng-error source "anyname now permitted in except"))
@@ -607,7 +616,7 @@
 	      (rng-error source "namespace attribute not permitted"))
 	    (klacks:consume source)
 	    (prog1
-		(list :nsname (p/except-name-class? source) :uri uri)
+		(list :nsname uri (p/except-name-class? source))
 	      (skip-to-native source))))
 	(:|choice|
 	  (klacks:consume source)
@@ -649,6 +658,96 @@
 	    (if (or (>= code 127) (<= code 32) (find c "<>\"{}|\\^`"))
 		(format out "%~2,'0X" code)
 		(write-char c out))))))
+
+
+;;;; unparsing
+
+(defun serialize-grammar (grammar sink)
+  (cxml:with-xml-output sink
+    (serialize-pattern grammar)))
+
+(defun serialize-pattern (pattern)
+  (etypecase pattern
+    (element
+      (cxml:with-element "element"
+	(serialize-name (pattern-name pattern))
+	(serialize-pattern (pattern-child pattern))))
+    (attribute
+      (cxml:with-element "attribute"
+	(serialize-name (pattern-name pattern))
+	(serialize-pattern (pattern-child pattern))))
+    (%combination
+      (cxml:with-element
+	  (etypecase pattern
+	    (group "group")
+	    (interleave "interleave")
+	    (choice "choice"))
+	(serialize-pattern (pattern-a pattern))
+	(serialize-pattern (pattern-b pattern))))
+    (one-or-more
+      (cxml:with-element "oneOrmore"
+	(serialize-pattern (pattern-child pattern))))
+    (list-pattern
+      (cxml:with-element "list"
+	(serialize-pattern (pattern-child pattern))))
+    (ref
+      (cxml:with-element "ref"
+	(cxml:attribute "name" (pattern-ref-name pattern))))
+    (parent-ref
+      (cxml:with-element "parentRef"
+	(cxml:attribute "name" (pattern-ref-name pattern))))
+    (empty
+      (cxml:with-element "empty"))
+    (not-allowed
+      (cxml:with-element "notAllowed"))
+    (text
+      (cxml:with-element "text"))
+    (value
+      (cxml:with-element "value"
+	(cxml:attribute "datatype-library"
+			(pattern-datatype-library pattern))
+	(cxml:attribute "type" (pattern-type pattern))
+	(cxml:attribute "ns" (pattern-ns pattern))
+	(cxml:text (pattern-string pattern))))
+    (data
+      (cxml:with-element "value"
+	(cxml:attribute "datatype-library"
+			(pattern-datatype-library pattern))
+	(cxml:attribute "type" (pattern-type pattern))
+	(dolist (param (pattern-params pattern))
+	  (cxml:with-element "param"
+	    (cxml:attribute "name" (param-name param))
+	    (cxml:text (param-string param))))
+	(when (pattern-except pattern)
+	  (cxml:with-element "except"
+	    (serialize-pattern (pattern-except pattern))))))))
+
+(defun serialize-name (name)
+  (ecase (car name)
+    (:name
+      (cxml:with-element "name"
+	(destructuring-bind (lname uri)
+	    (cdr name)
+	  (cxml:attribute "ns" uri)
+	  (cxml:text lname))))
+    (:any
+      (cxml:with-element "anyName"
+	(when (cdr name)
+	  (serialize-except-name name))))
+    (:nsname
+      (cxml:with-element "anyName"
+	(destructuring-bind (uri except)
+	    (cdr name)
+	  (cxml:attribute "ns" uri)
+	  (when except
+	    (serialize-except-name name)))))
+    (:choice
+      (cxml:with-element "choice"
+	(mapc #'serialize-name (cdr name))))))
+
+(defun serialize-except-name (spec)
+  (cxml:with-element "except"
+    (mapc #'serialize-name (cdr spec))))
 
 
 ;;;; simplification
