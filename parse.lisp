@@ -59,6 +59,7 @@
 	       (make-definition :name :start :child result))
 	 (check-pattern-definitions source *grammar*)
 	 (check-recursion result 0)
+	 (setf result (fold-not-allowed result))
 	 result))
       source)))
 
@@ -951,6 +952,70 @@
 
 (defmethod check-recursion ((pattern %leaf) depth)
   (declare (ignore depth)))
+
+(defmethod check-recursion ((pattern data) depth)
+  (when (pattern-except pattern)
+    (check-recursion (pattern-except pattern) depth)))
+
+
+;;;; 4.20
+
+;;; %PARENT
+
+(defmethod fold-not-allowed ((pattern element))
+  (setf (pattern-child pattern) (fold-not-allowed (pattern-child pattern))))
+
+(defmethod fold-not-allowed ((pattern %parent))
+  (if (typep (pattern-child pattern) 'not-allowed)
+      (pattern-child pattern)
+      pattern))
+
+;;; %COMBINATION
+
+(defmethod fold-not-allowed ((pattern %combination))
+  (setf (pattern-a pattern) (fold-not-allowed (pattern-a pattern)))
+  (setf (pattern-b pattern) (fold-not-allowed (pattern-b pattern))))
+
+(defmethod fold-not-allowed ((pattern group))
+  (call-next-method)
+  (cond
+    ;; remove if any child is not allowed
+    ((typep (pattern-a pattern) 'not-allowed) (pattern-a pattern))
+    ((typep (pattern-b pattern) 'not-allowed) (pattern-b pattern))
+    (t pattern)))
+
+(defmethod fold-not-allowed ((pattern interleave))
+  (call-next-method)
+  (cond
+    ;; remove if any child is not allowed
+    ((typep (pattern-a pattern) 'not-allowed) (pattern-a pattern))
+    ((typep (pattern-b pattern) 'not-allowed) (pattern-b pattern))
+    (t pattern)))
+
+(defmethod fold-not-allowed ((pattern choice))
+  (call-next-method)
+  (cond
+    ;; if any child is not allowed, choose the other
+    ((typep (pattern-a pattern) 'not-allowed) (pattern-b pattern))
+    ((typep (pattern-b pattern) 'not-allowed) (pattern-a pattern))
+    (t pattern)))
+
+
+;;; LEAF
+
+(defmethod fold-not-allowed ((pattern %leaf))
+  pattern)
+
+(defmethod fold-not-allowed ((pattern data))
+  (when (pattern-except pattern)
+    (setf (pattern-except pattern) (fold-not-allowed (pattern-except pattern)))
+    (when (typep (pattern-except pattern) 'not-allowed)
+      (setf (pattern-except pattern) nil))))
+
+;;; REF
+
+(defmethod fold-not-allowed ((pattern ref))
+  pattern)
 
 
 ;;;; tests
