@@ -60,6 +60,7 @@
 	 (check-pattern-definitions source *grammar*)
 	 (check-recursion result 0)
 	 (setf result (fold-not-allowed result))
+	 (setf result (fold-empty result))
 	 result))
       source)))
 
@@ -963,9 +964,11 @@
 ;;; %PARENT
 
 (defmethod fold-not-allowed ((pattern element))
-  (setf (pattern-child pattern) (fold-not-allowed (pattern-child pattern))))
+  (setf (pattern-child pattern) (fold-not-allowed (pattern-child pattern)))
+  pattern)
 
 (defmethod fold-not-allowed ((pattern %parent))
+  (setf (pattern-child pattern) (fold-not-allowed (pattern-child pattern)))
   (if (typep (pattern-child pattern) 'not-allowed)
       (pattern-child pattern)
       pattern))
@@ -974,7 +977,8 @@
 
 (defmethod fold-not-allowed ((pattern %combination))
   (setf (pattern-a pattern) (fold-not-allowed (pattern-a pattern)))
-  (setf (pattern-b pattern) (fold-not-allowed (pattern-b pattern))))
+  (setf (pattern-b pattern) (fold-not-allowed (pattern-b pattern)))
+  pattern)
 
 (defmethod fold-not-allowed ((pattern group))
   (call-next-method)
@@ -1000,7 +1004,6 @@
     ((typep (pattern-b pattern) 'not-allowed) (pattern-a pattern))
     (t pattern)))
 
-
 ;;; LEAF
 
 (defmethod fold-not-allowed ((pattern %leaf))
@@ -1010,11 +1013,76 @@
   (when (pattern-except pattern)
     (setf (pattern-except pattern) (fold-not-allowed (pattern-except pattern)))
     (when (typep (pattern-except pattern) 'not-allowed)
-      (setf (pattern-except pattern) nil))))
+      (setf (pattern-except pattern) nil)))
+  pattern)
 
 ;;; REF
 
 (defmethod fold-not-allowed ((pattern ref))
+  pattern)
+
+
+;;;; 4.21
+
+;;; %PARENT
+
+(defmethod fold-empty ((pattern one-or-more))
+  (call-next-method)
+  (if (typep (pattern-child pattern) 'empty)
+      (pattern-child pattern)
+      pattern))
+
+(defmethod fold-empty ((pattern %parent))
+  (setf (pattern-child pattern) (fold-empty (pattern-child pattern)))
+  pattern)
+
+;;; %COMBINATION
+
+(defmethod fold-empty ((pattern %combination))
+  (setf (pattern-a pattern) (fold-empty (pattern-a pattern)))
+  (setf (pattern-b pattern) (fold-empty (pattern-b pattern)))
+  pattern)
+
+(defmethod fold-empty ((pattern group))
+  (call-next-method)
+  (cond
+    ;; if any child is empty, choose the other
+    ((typep (pattern-a pattern) 'empty) (pattern-b pattern))
+    ((typep (pattern-b pattern) 'empty) (pattern-a pattern))
+    (t pattern)))
+
+(defmethod fold-empty ((pattern interleave))
+  (call-next-method)
+  (cond
+    ;; if any child is empty, choose the other
+    ((typep (pattern-a pattern) 'empty) (pattern-b pattern))
+    ((typep (pattern-b pattern) 'empty) (pattern-a pattern))
+    (t pattern)))
+
+(defmethod fold-empty ((pattern choice))
+  (call-next-method)
+  (if (typep (pattern-b pattern) 'empty)
+      (cond
+	((typep (pattern-a pattern) 'empty)
+	  (pattern-a pattern))
+	(t
+	  (rotatef (pattern-a pattern) (pattern-b pattern))
+	  pattern))
+      pattern))
+
+;;; LEAF
+
+(defmethod fold-empty ((pattern %leaf))
+  pattern)
+
+(defmethod fold-empty ((pattern data))
+  (when (pattern-except pattern)
+    (setf (pattern-except pattern) (fold-empty (pattern-except pattern))))
+  pattern)
+
+;;; REF
+
+(defmethod fold-empty ((pattern ref))
   pattern)
 
 
