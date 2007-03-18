@@ -44,8 +44,8 @@
 044:  PASS: RNG-ERROR
 045:  PASS: RNG-ERROR
 046:  FAIL: didn't detect invalid schema
-047:  FAIL: didn't detect invalid schema
-048:  FAIL: didn't detect invalid schema
+047:  PASS: RNG-ERROR
+048:  PASS: RNG-ERROR
 049:  PASS
 050:  PASS
 051:  PASS
@@ -76,9 +76,9 @@
 076:  FAIL: didn't detect invalid schema
 077:  FAIL: didn't detect invalid schema
 078:  FAIL: didn't detect invalid schema
-079:  FAIL: didn't detect invalid schema
-080:  FAIL: didn't detect invalid schema
-081:  FAIL: didn't detect invalid schema
+079:  PASS: RNG-ERROR
+080:  PASS: RNG-ERROR
+081:  PASS: RNG-ERROR
 082:  PASS: RNG-ERROR
 083:  PASS: RNG-ERROR
 084:  PASS: RNG-ERROR
@@ -106,18 +106,25 @@
 106:  PASS: RNG-ERROR
 107:  PASS: RNG-ERROR
 108:  PASS
-109:  PASS
-110:  PASS
-111:  PASS
+109:  FAIL: no <start> in grammar
+  [ Error at line 6, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/109/c.rng> ]
+110:  FAIL: no <start> in grammar
+  [ Error at line 6, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/110/c.rng> ]
+111:  FAIL: no <start> in grammar
+  [ Error at line 6, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/111/x> ]
 112:  PASS: RNG-ERROR
 113:  PASS: RNG-ERROR
 114:  PASS: RNG-ERROR
-115:  PASS
+115:  FAIL: no <start> in grammar
+  [ Error at line 6, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/115/sub/x> ]
 116:  PASS: RNG-ERROR
-117:  PASS
+117:  FAIL: no <start> in grammar
+  [ Error at line 10, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/117/x> ]
 118:  PASS: RNG-ERROR
-119:  PASS
-120:  PASS
+119:  FAIL: unresolved reference to foo
+  [ Error at line 8, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/119/x> ]
+120:  FAIL: no <start> in grammar
+  [ Error at line 10, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/x> ]
 121:  PASS: RNG-ERROR
 122:  PASS
 123:  PASS
@@ -126,7 +133,7 @@
 126:  PASS
 127:  PASS
 128:  PASS
-129:  FAIL: didn't detect invalid schema
+129:  PASS: RNG-ERROR
 130:  PASS
 131:  PASS
 132:  PASS
@@ -168,7 +175,7 @@
 168:  PASS: RNG-ERROR
 169:  PASS: RNG-ERROR
 170:  PASS: RNG-ERROR
-171:  FAIL: didn't detect invalid schema
+171:  PASS: RNG-ERROR
 172:  PASS: RNG-ERROR
 173:  PASS: RNG-ERROR
 174:  PASS: RNG-ERROR
@@ -183,27 +190,27 @@
 183:  FAIL: didn't detect invalid schema
 184:  FAIL: didn't detect invalid schema
 185:  FAIL: didn't detect invalid schema
-186:  FAIL: didn't detect invalid schema
-187:  FAIL: didn't detect invalid schema
-188:  FAIL: didn't detect invalid schema
-189:  FAIL: didn't detect invalid schema
+186:  PASS: RNG-ERROR
+187:  PASS: RNG-ERROR
+188:  PASS: RNG-ERROR
+189:  PASS: RNG-ERROR
 190:  PASS
 191:  PASS
-192:  FAIL: didn't detect invalid schema
-193:  FAIL: didn't detect invalid schema
+192:  PASS: RNG-ERROR
+193:  PASS: RNG-ERROR
 194:  PASS
 195:  PASS
-196:  FAIL: didn't detect invalid schema
-197:  FAIL: didn't detect invalid schema
-198:  FAIL: didn't detect invalid schema
-199:  FAIL: didn't detect invalid schema
-200:  FAIL: didn't detect invalid schema
-201:  FAIL: didn't detect invalid schema
-202:  FAIL: didn't detect invalid schema
-203:  FAIL: didn't detect invalid schema
-204:  FAIL: didn't detect invalid schema
-205:  FAIL: didn't detect invalid schema
-206:  FAIL: didn't detect invalid schema
+196:  PASS: RNG-ERROR
+197:  PASS: RNG-ERROR
+198:  PASS: RNG-ERROR
+199:  PASS: RNG-ERROR
+200:  PASS: RNG-ERROR
+201:  PASS: RNG-ERROR
+202:  PASS: RNG-ERROR
+203:  PASS: RNG-ERROR
+204:  PASS: RNG-ERROR
+205:  PASS: RNG-ERROR
+206:  PASS: RNG-ERROR
 207:  FAIL: didn't detect invalid schema
 208:  PASS
 209:  PASS
@@ -371,4 +378,4 @@
 371:  FAIL: didn't detect invalid schema
 372:  PASS
 373:  PASS
-Passed 222/373 tests.
+Passed 239/373 tests.

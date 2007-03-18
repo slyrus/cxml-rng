@@ -28,6 +28,7 @@
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
 (defvar *include-uri-stack*)
+(defvar *grammar*)
 
 (defvar *debug* nil)
 
@@ -48,18 +49,16 @@
 	     (*namespace-uri* "")
 	     (*entity-resolver* entity-resolver)
 	     (*external-href-stack* '())
-	     (*include-uri-stack* '()))
-	 (p/pattern source)))
+	     (*include-uri-stack* '())
+	     (*grammar* (make-grammar nil)))
+	 (setf (grammar-start *grammar*)
+	       (make-definition :name :start :child (p/pattern source)))
+	 (check-pattern-definitions source *grammar*)
+	 *grammar*))
       source)))
 
 
 ;;;; pattern structures
-;;;;
-;;;; Before final simplification, all patterns are allowed.
-;;;;
-;;;; Afterwards, parent-ref has been removed, element appears only in define,
-;;;; and define only in grammar, notallowed only in start or element, and
-;;;; empty only in selected situations.
 
 (defstruct pattern)
 
@@ -90,10 +89,11 @@
 	    (:include %parent)
 	    (:constructor make-list-pattern (child))))
 
-(defstruct (%ref (:include pattern) (:conc-name "PATTERN-"))
-  ref-name)
-(defstruct (ref (:include %ref) (:conc-name "PATTERN-")))
-(defstruct (parent-ref (:include %ref) (:conc-name "PATTERN-")))
+(defstruct (ref
+	    (:include pattern)
+	    (:conc-name "PATTERN-")
+	    (:constructor make-ref (target)))
+  target)
 
 (defstruct (empty (:include pattern) (:conc-name "PATTERN-")))
 (defstruct (text (:include pattern) (:conc-name "PATTERN-")))
@@ -112,8 +112,10 @@
 
 (defstruct (not-allowed (:include pattern) (:conc-name "PATTERN-")))
 
-(defstruct (grammar (:include pattern) (:conc-name "PATTERN-"))
-  content)
+(defstruct (grammar (:constructor make-grammar (parent)))
+  (start nil)
+  parent
+  (definitions (make-hash-table :test 'equal)))
 
 
 ;;;; non-pattern
@@ -126,9 +128,12 @@
   combine
   child)
 
-(defstruct define
+;; Clark calls this structure "RefPattern"
+(defstruct (definition (:conc-name "DEFN-"))
   name
-  combine
+  combine-method
+  head-p
+  redefinition
   child)
 
 
@@ -169,8 +174,8 @@
 	(sax:attribute-value a)
 	nil)))
 
-(defvar *whitespace*
-    (format nil "~C~C~C"
+(defparameter *whitespace*
+    (format nil "~C~C~C~C"
 	    (code-char 9)
 	    (code-char 32)
 	    (code-char 13)
@@ -320,13 +325,24 @@
 (defun p/ref (source)
   (klacks:expecting-element (source "ref")
     (prog1
-	(make-ref :ref-name (ntc "name" source))
+	(let* ((name (ntc "name" source))
+	       (pdefinition
+		(or (find-definition name)
+		    (setf (find-definition name)
+			  (make-definition :name name :child nil)))))
+	  (make-ref pdefinition))
       (skip-foreign* source))))
 
 (defun p/parent-ref (source)
   (klacks:expecting-element (source "parentRef")
     (prog1
-	(make-parent-ref :ref-name (ntc "name" source))
+	(let* ((name (ntc "name" source))
+	       (grammar (grammar-parent *grammar*))
+	       (pdefinition
+		(or (find-definition name grammar)
+		    (setf (find-definition name grammar)
+			  (make-definition :name name :child nil)))))
+	  (make-ref pdefinition))
       (skip-foreign* source))))
 
 (defun p/empty (source)
@@ -434,45 +450,83 @@
 	       source)))
 	(skip-foreign* source)))))
 
-(defun p/grammar (source)
+(defun p/grammar (source &optional grammar)
   (klacks:expecting-element (source "grammar")
     (consume-and-skip-to-native source)
-    (make-grammar :content (p/grammar-content* source))))
+    (let ((*grammar* (or grammar (make-grammar *grammar*))))
+      (p/grammar-content* source)
+      (unless (grammar-start *grammar*)
+	(rng-error source "no <start> in grammar"))
+      (check-pattern-definitions source *grammar*)
+      (defn-child (grammar-start *grammar*)))))
 
 (defun p/grammar-content* (source &key disallow-include)
   (loop
-      append
-	(prog1
-	    (multiple-value-bind (key uri lname) (klacks:peek source)
-	      uri
-	      (case key
-		(:start-element
-		  (with-library-and-ns (klacks:list-attributes source)
-		    (case (find-symbol lname :keyword)
-		      (:|start| (list (p/start source)))
-		      (:|define| (list (p/define source)))
-		      (:|div| (p/div source))
-		      (:|include|
-			(when disallow-include
-			  (rng-error source "nested include not permitted"))
-			(p/include source))
-		      (t
-			(skip-foreign source)
-			nil))))
-		(:end-element
-		  (loop-finish))))
-	  (klacks:consume source))))
+    (multiple-value-bind (key uri lname) (klacks:peek source)
+      uri
+      (case key
+	(:start-element
+	  (with-library-and-ns (klacks:list-attributes source)
+	    (case (find-symbol lname :keyword)
+	      (:|start| (process-start source))
+	      (:|define| (process-define source))
+	      (:|div| (process-div source))
+	      (:|include|
+		(when disallow-include
+		  (rng-error source "nested include not permitted"))
+		(process-include source))
+	      (t
+		(skip-foreign source)))))
+	(:end-element
+	  (return))))
+    (klacks:consume source)))
 
-(defun p/start (source)
+(defun process-start (source)
   (klacks:expecting-element (source "start")
-    (let ((combine (ntc "combine" source))
-	  (child
-	   (progn
-	     (consume-and-skip-to-native source)
-	     (p/pattern source))))
+    (let* ((combine0 (ntc "combine" source))
+	   (combine
+	    (when combine0
+	      (find-symbol (string-upcase combine0) :keyword)))
+	   (child
+	    (progn
+	      (consume-and-skip-to-native source)
+	      (p/pattern source)))
+	   (pdefinition (grammar-start *grammar*)))
       (skip-foreign* source)
-      (make-start :combine (find-symbol (string-upcase combine) :keyword)
-		  :child child))))
+      ;; fixme: shared code with process-define
+      (unless pdefinition
+	(setf pdefinition (make-definition :name :start :child nil))
+	(setf (grammar-start *grammar*) pdefinition))
+      (cond
+	((defn-child pdefinition)
+	 (ecase (defn-redefinition pdefinition)
+	   (:not-being-redefined
+	     (when (and combine
+			(defn-combine-method pdefinition)
+			(not (eq combine
+				 (defn-combine-method pdefinition))))
+	       (rng-error source "conflicting combine values for <start>"))
+	     (unless combine
+	       (when (defn-head-p pdefinition)
+		 (rng-error source "multiple definitions for <start>"))
+	       (setf (defn-head-p pdefinition) t))
+	     (unless (defn-combine-method pdefinition)
+	       (setf (defn-combine-method pdefinition) combine))
+	     (setf (defn-child pdefinition)
+		   (case (defn-combine-method pdefinition)
+		     (:choice
+		       (make-choice (defn-child pdefinition) child))
+		     (:interleave
+		       (make-interleave (defn-child pdefinition) child)))))
+	   (:being-redefined-and-no-original
+	     (setf (defn-redefinition pdefinition)
+		   :being-redefined-and-original))
+	   (:being-redefined-and-original)))
+	(t
+	  (setf (defn-child pdefinition) child)
+	  (setf (defn-combine-method pdefinition) combine)
+	  (setf (defn-head-p pdefinition) (null combine))
+	  (setf (defn-redefinition pdefinition) :not-being-redefined))))))
 
 (defun zip (constructor children)
   (cond
@@ -489,92 +543,124 @@
 (defun groupify (children) (zip #'make-group children))
 (defun interleave-ify (children) (zip #'make-interleave children))
 
-(defun p/define (source)
-  (klacks:expecting-element (source "define")
-    (let ((name (ntc "name" source))
-	  (combine (ntc "combine" source))
-	  (children (progn
-		      (consume-and-skip-to-native source)
-		      (p/pattern+ source))))
-      (make-define :name name
-		   :combine (find-symbol (string-upcase combine) :keyword)
-		   :child (groupify children)))))
+(defun find-definition (name &optional (grammar *grammar*))
+  (gethash name (grammar-definitions grammar)))
 
-(defun p/div (source)
+(defun (setf find-definition) (newval name &optional (grammar *grammar*))
+  (setf (gethash name (grammar-definitions grammar)) newval))
+
+(defun process-define (source)
+  (klacks:expecting-element (source "define")
+    (let* ((name (ntc "name" source))
+	   (combine0 (ntc "combine" source))
+	   (combine (when combine0
+		      (find-symbol (string-upcase combine0) :keyword)))
+	   (child (groupify
+		   (progn
+		     (consume-and-skip-to-native source)
+		     (p/pattern+ source))))
+	   (pdefinition (find-definition name)))
+      (unless pdefinition
+	(setf pdefinition (make-definition :name name :child nil))
+	(setf (find-definition name) pdefinition))
+      (cond
+	((defn-child pdefinition)
+	  (case (defn-redefinition pdefinition)
+	    (:not-being-redefined
+	      (when (and combine
+			 (defn-combine-method pdefinition)
+			 (not (eq combine
+				  (defn-combine-method pdefinition))))
+		(rng-error source "conflicting combine values for ~A" name))
+	      (unless combine
+		(when (defn-head-p pdefinition)
+		  (rng-error source "multiple definitions for ~A" name))
+		(setf (defn-head-p pdefinition) t))
+	      (unless (defn-combine-method pdefinition)
+		(setf (defn-combine-method pdefinition) combine))
+	      (setf (defn-child pdefinition)
+		    (case (defn-combine-method pdefinition)
+		      (:choice
+			(make-choice (defn-child pdefinition) child))
+		      (:interleave
+			(make-interleave (defn-child pdefinition) child)))))
+	    (:being-redefined-and-no-original
+	      (setf (defn-redefinition pdefinition)
+		    :being-redefined-and-original))
+	    (:being-redefined-and-original)))
+	(t
+	  (setf (defn-child pdefinition) child)
+	  (setf (defn-combine-method pdefinition) combine)
+	  (setf (defn-head-p pdefinition) (null combine))
+	  (setf (defn-redefinition pdefinition) :not-being-redefined))))))
+
+(defun process-div (source)
   (klacks:expecting-element (source "div")
     (consume-and-skip-to-native source)
     (p/grammar-content* source)))
 
-(defun p/include (source)
+(defun reset-definition-for-include (defn)
+  (setf (defn-combine-method defn) nil)
+  (setf (defn-redefinition defn) :being-redefined-and-no-original)
+  (setf (defn-head-p defn) nil))
+
+(defun restore-definition (defn original)
+  (setf (defn-combine-method defn) (defn-combine-method original))
+  (setf (defn-redefinition defn) (defn-redefinition original))
+  (setf (defn-head-p defn) (defn-head-p original)))
+
+(defun process-include (source)
   (klacks:expecting-element (source "include")
     (let* ((href
 	    (escape-uri (attribute "href" (klacks:list-attributes source))))
 	   (base (klacks:current-xml-base source))
 	   (uri (safe-parse-uri source href base))
-	   (include-content
-	    (progn
-	      (consume-and-skip-to-native source)
-	      (p/grammar-content* source :disallow-include t))))
-      (when (find uri *include-uri-stack* :test #'puri:uri=)
-	(rng-error source "looping include"))
-      (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
-	     (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
-	     (grammar
-	      (klacks:with-open-source (source (cxml:make-source xstream))
-		(invoke-with-klacks-handler
-		 (lambda ()
-		   (klacks:find-event source :start-element)
-		   (let ((*datatype-library* ""))
-		     (p/grammar source)))
-		 source)))
-	     (grammar-content (pattern-content grammar)))
-	(append
-	 (simplify-include source grammar-content include-content)
-	 include-content)))))
+	   (*grammar* (make-grammar *grammar*)))
+      (consume-and-skip-to-native source)
+      (p/grammar-content* source :disallow-include t)
+      (let ((tmp-start
+	     (when (grammar-start *grammar*)
+	       (prog1
+		   (copy-structure (grammar-start *grammar*))
+		 (reset-definition-for-include (grammar-start *grammar*)))))
+	    (tmp-defns
+	     (loop
+		 for defn being each hash-value
+		 in (grammar-definitions *grammar*)
+		 collect
+		   (prog1
+		       (copy-structure defn)
+		     (reset-definition-for-include defn)))))
+	(when (find uri *include-uri-stack* :test #'puri:uri=)
+	  (rng-error source "looping include"))
+	(let* ((*include-uri-stack* (cons uri *include-uri-stack*))
+	       (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
+	       (grammar *grammar*))
+	  (klacks:with-open-source (source (cxml:make-source xstream))
+	    (invoke-with-klacks-handler
+	     (lambda ()
+	       (klacks:find-event source :start-element)
+	       (let ((*datatype-library* ""))
+		 (p/grammar source *grammar*)))
+	     source))
+	  (check-pattern-definitions source *grammar*)
+	  (when tmp-start
+	    (restore-definition (grammar-start *grammar*) tmp-start))
+	  (dolist (copy tmp-defns)
+	    (let ((defn (gethash (defn-name copy)
+				 (grammar-definitions grammar))))
+	      (restore-definition defn copy)))
+	  (defn-child (grammar-start grammar)))))))
 
-(defun simplify-include/map (fn l)
-  (remove nil (mapcar fn l)))
-
-(defun simplify-include/start (source grammar-content include-content)
-  (let ((startp (some (lambda (x) (typep x 'start)) include-content)))
-    (if startp
-	(let ((ok nil))
-	  (prog1
-	      (remove-if (lambda (x)
-			   (when (typep x 'start)
-			     (setf ok t)
-			     t))
-			 grammar-content)
-	    (unless ok
-	      (rng-error source "expected start in grammar"))))
-	grammar-content)))
-
-(defun simplify-include/define (source grammar-content include-content)
-  (let ((defines '()))
-    (dolist (x include-content)
-      (when (typep x 'define)
-	(push (cons x nil) defines)))
-    (prog1
-	(remove-if (lambda (x)
-		     (when (typep x 'define)
-		       (let ((cons (find (define-name x)
-					 defines
-					 :key (lambda (y)
-						(define-name (car y)))
-					 :test #'equal)))
-			 (when cons
-			   (setf (cdr cons) t)
-			   t))))
-		   grammar-content)
-      (loop for (define . okp) in defines do
-	    (unless okp
-	      (rng-error source "expected matching ~A in grammar" define))))))
-
-(defun simplify-include (source grammar-content include-content)
-  (simplify-include/define
-   source
-   (simplify-include/start source grammar-content include-content)
-   include-content))
+(defun check-pattern-definitions (source grammar)
+  (when (eq (defn-redefinition (grammar-start grammar))
+	    :being-redefined-and-no-original)
+    (rng-error source "start not found in redefinition of grammar"))
+  (loop for defn being each hash-value in (grammar-definitions grammar) do
+	(when (eq (defn-redefinition defn) :being-redefined-and-no-original)
+	  (rng-error source "redefinition not found in grammar"))
+	(unless (defn-child defn)
+	  (rng-error source "unresolved reference to ~A" (defn-name defn)))))
 
 (defvar *any-name-allowed-p* t)
 (defvar *ns-name-allowed-p* t)
@@ -692,10 +778,7 @@
 	(serialize-pattern (pattern-child pattern))))
     (ref
       (cxml:with-element "ref"
-	(cxml:attribute "name" (pattern-ref-name pattern))))
-    (parent-ref
-      (cxml:with-element "parentRef"
-	(cxml:attribute "name" (pattern-ref-name pattern))))
+	(cxml:attribute "name" (defn-name (pattern-target pattern)))))
     (empty
       (cxml:with-element "empty"))
     (not-allowed
@@ -771,7 +854,7 @@
 ;;;   Done by p/value.
 
 ;;; 4.5. href attribute
-;;;   Escaping is done by p/include and p/external-ref.
+;;;   Escaping is done by process-include and p/external-ref.
 ;;;
 ;;;   FIXME: Mime-type handling should be the job of the entity resolver,
 ;;;   but that requires xstream hacking.
@@ -780,7 +863,7 @@
 ;;;   Done by p/external-ref.
 
 ;;; 4.7. include element
-;;;   Done by p/include.
+;;;   Done by process-include.
 
 ;;; 4.8. name attribute of element and attribute elements
 ;;;   `name' is stored as a slot, not a child.  Done by p/element and
