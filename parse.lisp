@@ -55,7 +55,7 @@
 	 (setf (grammar-start *grammar*)
 	       (make-definition :name :start :child (p/pattern source)))
 	 (check-pattern-definitions source *grammar*)
-	 *grammar*))
+	 (defn-child (grammar-start *grammar*))))
       source)))
 
 
@@ -113,21 +113,17 @@
 
 (defstruct (not-allowed (:include pattern) (:conc-name "PATTERN-")))
 
+
+;;;; non-pattern
+
 (defstruct (grammar (:constructor make-grammar (parent)))
   (start nil)
   parent
   (definitions (make-hash-table :test 'equal)))
 
-
-;;;; non-pattern
-
 (defstruct param
   name
   string)
-
-(defstruct start
-  combine
-  child)
 
 ;; Clark calls this structure "RefPattern"
 (defstruct (definition (:conc-name "DEFN-"))
@@ -756,9 +752,29 @@
 
 ;;;; unparsing
 
+(defvar *definitions-to-names*)
+(defvar *seen-names*)
+
+(defun serialization-name (defn)
+  (or (gethash defn *definitions-to-names*)
+      (setf (gethash defn *definitions-to-names*)
+	    (let ((name (if (gethash (defn-name defn) *seen-names*)
+			    (format nil "~A-~D"
+				    (defn-name defn)
+				    (hash-table-count *seen-names*))
+			    (defn-name defn))))
+	      (setf (gethash name *seen-names*) defn)
+	      name))))
+
 (defun serialize-grammar (grammar sink)
   (cxml:with-xml-output sink
-    (serialize-pattern grammar)))
+    (let ((*definitions-to-names* (make-hash-table))
+	  (*seen-names* (make-hash-table :test 'equal)))
+      (cxml:with-element "grammar"
+	(cxml:with-element "start"
+	  (serialize-pattern grammar))
+	(loop for defn being each hash-key in *definitions-to-names* do
+	      (serialize-definition defn))))))
 
 (defun serialize-pattern (pattern)
   (etypecase pattern
@@ -786,7 +802,7 @@
 	(serialize-pattern (pattern-child pattern))))
     (ref
       (cxml:with-element "ref"
-	(cxml:attribute "name" (defn-name (pattern-target pattern)))))
+	(cxml:attribute "name" (serialization-name (pattern-target pattern)))))
     (empty
       (cxml:with-element "empty"))
     (not-allowed
@@ -812,6 +828,11 @@
 	(when (pattern-except pattern)
 	  (cxml:with-element "except"
 	    (serialize-pattern (pattern-except pattern))))))))
+
+(defun serialize-definition (defn)
+  (cxml:with-element "define"
+    (cxml:attribute "name" (serialization-name defn))
+    (serialize-pattern (defn-child defn))))
 
 (defun serialize-name (name)
   (ecase (car name)
@@ -892,6 +913,15 @@
 ;;; 4.16
 ;;;    p/name-class
 ;;;    -- ausser der sache mit den datentypen
+
+;;; 4.17, 4.18, 4.19
+;;;    Ueber die Grammar-und Definition Objekte, wie von James Clark
+;;;    beschrieben.
+;;;
+;;;    Dabei werden keine Umbenennungen vorgenommen, weil Referenzierung
+;;;    durch Aufbei der Graphenstruktur zwischen ref und Definition
+;;;    erfolgt und Namen dann bereits aufgeloest sind.  Wir benennen
+;;;    dafuer beim Serialisieren um.
 
 ;;;; tests
 
