@@ -46,16 +46,20 @@
     (invoke-with-klacks-handler
      (lambda ()
        (klacks:find-event source :start-element)
-       (let ((*datatype-library* "")
-	     (*namespace-uri* "")
-	     (*entity-resolver* entity-resolver)
-	     (*external-href-stack* '())
-	     (*include-uri-stack* '())
-	     (*grammar* (make-grammar nil)))
+       (let* ((*datatype-library* "")
+	      (*namespace-uri* "")
+	      (*entity-resolver* entity-resolver)
+	      (*external-href-stack* '())
+	      (*include-uri-stack* '())
+	      (*grammar* (make-grammar nil))
+	      (result (p/pattern source)))
+	 (unless result
+	   (rng-error nil "empty grammar"))
 	 (setf (grammar-start *grammar*)
-	       (make-definition :name :start :child (p/pattern source)))
+	       (make-definition :name :start :child result))
 	 (check-pattern-definitions source *grammar*)
-	 (defn-child (grammar-start *grammar*))))
+	 (check-recursion result 0)
+	 result))
       source)))
 
 
@@ -94,12 +98,15 @@
 	    (:include pattern)
 	    (:conc-name "PATTERN-")
 	    (:constructor make-ref (target)))
+  crdepth
   target)
 
-(defstruct (empty (:include pattern) (:conc-name "PATTERN-")))
-(defstruct (text (:include pattern) (:conc-name "PATTERN-")))
+(defstruct (%leaf (:include pattern)))
 
-(defstruct (%typed-pattern (:include pattern) (:conc-name "PATTERN-"))
+(defstruct (empty (:include %leaf) (:conc-name "PATTERN-")))
+(defstruct (text (:include %leaf) (:conc-name "PATTERN-")))
+
+(defstruct (%typed-pattern (:include %leaf) (:conc-name "PATTERN-"))
   datatype-library
   type)
 
@@ -111,7 +118,7 @@
   params
   except)
 
-(defstruct (not-allowed (:include pattern) (:conc-name "PATTERN-")))
+(defstruct (not-allowed (:include %leaf) (:conc-name "PATTERN-")))
 
 
 ;;;; non-pattern
@@ -922,6 +929,29 @@
 ;;;    durch Aufbei der Graphenstruktur zwischen ref und Definition
 ;;;    erfolgt und Namen dann bereits aufgeloest sind.  Wir benennen
 ;;;    dafuer beim Serialisieren um.
+
+(defmethod check-recursion ((pattern element) depth)
+  (check-recursion (pattern-child pattern) (1+ depth)))
+
+(defmethod check-recursion ((pattern ref) depth)
+  (when (eql (pattern-crdepth pattern) depth)
+    (rng-error nil "infinite recursion in ~A"
+	       (defn-name (pattern-target pattern))))
+  (when (null (pattern-crdepth pattern))
+    (setf (pattern-crdepth pattern) depth)
+    (check-recursion (defn-child (pattern-target pattern)) depth)
+    (setf (pattern-crdepth pattern) t)))
+
+(defmethod check-recursion ((pattern %parent) depth)
+  (check-recursion (pattern-child pattern) depth))
+
+(defmethod check-recursion ((pattern %combination) depth)
+  (check-recursion (pattern-a pattern) depth)
+  (check-recursion (pattern-b pattern) depth))
+
+(defmethod check-recursion ((pattern %leaf) depth)
+  (declare (ignore depth)))
+
 
 ;;;; tests
 

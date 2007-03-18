@@ -1,4 +1,4 @@
-001:  FAIL: didn't detect invalid schema
+001:  PASS: RNG-ERROR
 002:  PASS: RNG-ERROR
 003:  PASS: RNG-ERROR
 004:  PASS: RNG-ERROR
@@ -206,14 +206,14 @@
 204:  PASS: RNG-ERROR
 205:  PASS: RNG-ERROR
 206:  PASS: RNG-ERROR
-207:  FAIL: didn't detect invalid schema
+207:  PASS: RNG-ERROR
 208:  PASS
 209:  PASS
 210:  PASS
-211:  FAIL: didn't detect invalid schema
+211:  PASS: RNG-ERROR
 212:  PASS
 213:  PASS
-214:  FAIL: didn't detect invalid schema
+214:  PASS: RNG-ERROR
 215:  PASS
 216:  PASS
 217:  PASS
@@ -373,4 +373,4 @@
 371:  FAIL: didn't detect invalid schema
 372:  PASS
 373:  PASS
-Passed 244/373 tests.
+Passed 248/373 tests.
