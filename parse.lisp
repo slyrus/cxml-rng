@@ -28,6 +28,7 @@
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
 (defvar *include-uri-stack*)
+(defvar *include-body-p* nil)
 (defvar *grammar*)
 
 (defvar *debug* nil)
@@ -454,13 +455,16 @@
   (klacks:expecting-element (source "grammar")
     (consume-and-skip-to-native source)
     (let ((*grammar* (or grammar (make-grammar *grammar*))))
-      (p/grammar-content* source)
+      (process-grammar-content* source)
       (unless (grammar-start *grammar*)
 	(rng-error source "no <start> in grammar"))
       (check-pattern-definitions source *grammar*)
       (defn-child (grammar-start *grammar*)))))
 
-(defun p/grammar-content* (source &key disallow-include)
+(defvar *include-start*)
+(defvar *include-definitions*)
+
+(defun process-grammar-content* (source &key disallow-include)
   (loop
     (multiple-value-bind (key uri lname) (klacks:peek source)
       uri
@@ -497,6 +501,8 @@
       (unless pdefinition
 	(setf pdefinition (make-definition :name :start :child nil))
 	(setf (grammar-start *grammar*) pdefinition))
+      (when *include-body-p*
+	(setf *include-start* pdefinition))
       (cond
 	((defn-child pdefinition)
 	 (ecase (defn-redefinition pdefinition)
@@ -563,6 +569,8 @@
       (unless pdefinition
 	(setf pdefinition (make-definition :name name :child nil))
 	(setf (find-definition name) pdefinition))
+      (when *include-body-p*
+	(push pdefinition *include-definitions*))
       (cond
 	((defn-child pdefinition)
 	  (case (defn-redefinition pdefinition)
@@ -597,7 +605,7 @@
 (defun process-div (source)
   (klacks:expecting-element (source "div")
     (consume-and-skip-to-native source)
-    (p/grammar-content* source)))
+    (process-grammar-content* source)))
 
 (defun reset-definition-for-include (defn)
   (setf (defn-combine-method defn) nil)
@@ -615,18 +623,19 @@
 	    (escape-uri (attribute "href" (klacks:list-attributes source))))
 	   (base (klacks:current-xml-base source))
 	   (uri (safe-parse-uri source href base))
-	   (*grammar* (make-grammar *grammar*)))
+	   (*include-start* nil)
+	   (*include-definitions* '()))
       (consume-and-skip-to-native source)
-      (p/grammar-content* source :disallow-include t)
+      (let ((*include-body-p* t))
+	(process-grammar-content* source :disallow-include t))
       (let ((tmp-start
-	     (when (grammar-start *grammar*)
+	     (when *include-start*
 	       (prog1
-		   (copy-structure (grammar-start *grammar*))
-		 (reset-definition-for-include (grammar-start *grammar*)))))
+		   (copy-structure *include-start*)
+		 (reset-definition-for-include *include-start*))))
 	    (tmp-defns
 	     (loop
-		 for defn being each hash-value
-		 in (grammar-definitions *grammar*)
+		 for defn in *include-definitions*
 		 collect
 		   (prog1
 		       (copy-structure defn)
@@ -634,8 +643,7 @@
 	(when (find uri *include-uri-stack* :test #'puri:uri=)
 	  (rng-error source "looping include"))
 	(let* ((*include-uri-stack* (cons uri *include-uri-stack*))
-	       (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri))
-	       (grammar *grammar*))
+	       (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri)))
 	  (klacks:with-open-source (source (cxml:make-source xstream))
 	    (invoke-with-klacks-handler
 	     (lambda ()
@@ -645,12 +653,12 @@
 	     source))
 	  (check-pattern-definitions source *grammar*)
 	  (when tmp-start
-	    (restore-definition (grammar-start *grammar*) tmp-start))
+	    (restore-definition *include-start* tmp-start))
 	  (dolist (copy tmp-defns)
 	    (let ((defn (gethash (defn-name copy)
-				 (grammar-definitions grammar))))
+				 (grammar-definitions *grammar*))))
 	      (restore-definition defn copy)))
-	  (defn-child (grammar-start grammar)))))))
+	  (defn-child (grammar-start *grammar*)))))))
 
 (defun check-pattern-definitions (source grammar)
   (when (eq (defn-redefinition (grammar-start grammar))
