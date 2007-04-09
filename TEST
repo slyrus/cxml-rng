@@ -174,9 +174,8 @@
 120-3.i: PASS: RNG-ERROR
 121:  PASS: RNG-ERROR
 122:  PASS
-122-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI  :LNAME bar)) :B #S(EMPTY))
-  [ Error at line 4, column 55 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/122/1.v.xml> ]
-122-2.i: FAIL: didn't detect invalid document
+122-1.v: PASS
+122-2.i: PASS: RNG-ERROR
 123:  PASS
 123-1.i: PASS: RNG-ERROR
 123-2.v: PASS
@@ -907,4 +906,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 761/902 tests.
+Passed 763/902 tests.

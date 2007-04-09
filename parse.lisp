@@ -58,6 +58,7 @@
 
 (defvar *datatype-library*)
 (defvar *namespace-uri*)
+(defvar *ns*)
 (defvar *entity-resolver*)
 (defvar *external-href-stack*)
 (defvar *include-uri-stack*)
@@ -276,7 +277,8 @@
   (let* ((dl (attribute "datatypeLibrary" attrs))
 	 (ns (attribute "ns" attrs))
 	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*))
-	 (*namespace-uri* (or ns *namespace-uri*)))
+	 (*namespace-uri* (or ns *namespace-uri*))
+	 (*ns* ns))
     (funcall fn)))
 
 (defun p/pattern (source)
@@ -353,7 +355,7 @@
       (consume-and-skip-to-native source)
       (if name
 	  (setf (pattern-name result)
-		(let ((*namespace-uri* ""))
+		(let ((*namespace-uri* (or *ns* "")))
 		  (destructure-name source name)))
 	  (setf (pattern-name result)
 		(let ((*attribute-namespace-p* t))
