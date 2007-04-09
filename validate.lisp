@@ -257,7 +257,8 @@
   pattern)
 
 (defun words (str)
-  (cl-ppcre:split #.(format nil "[~A]+" *whitespace*) str))
+  (cl-ppcre:split #.(format nil "[~A]+" *whitespace*)
+		  (string-trim *whitespace* str)))
 
 
 ;;;; INTERN

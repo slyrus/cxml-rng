@@ -676,8 +676,7 @@
 260-1.i: PASS: RNG-ERROR
 260-2.i: PASS: RNG-ERROR
 260-3.v: PASS
-260-4.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(DATA :DATATYPE-LIBRARY  :TYPE token :PARAMS NIL :EXCEPT NIL)) :B #S(EMPTY))
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/260/4.v.xml> ]
+260-4.v: PASS
 260-5.i: PASS: RNG-ERROR
 261:  PASS
 261-1.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
@@ -774,20 +773,17 @@
 279:  FAIL: didn't detect invalid schema
 280:  PASS
 280-1.v: PASS
-280-2.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(VALUE :DATATYPE-LIBRARY #1= :TYPE string :NS #1# :STRING x)) :B #S(EMPTY))
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/280/2.v.xml> ]
+280-2.v: PASS
 280-3.i: PASS: RNG-ERROR
 281:  PASS
 281-1.v: PASS
-281-2.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(ONE-OR-MORE :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 21 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/281/2.v.xml> ]
+281-2.v: PASS
 281-3.i: PASS: RNG-ERROR
 281-4.i: PASS: RNG-ERROR
 282:  PASS
 282-1.v: PASS
 282-2.v: PASS
-282-3.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(GROUP :A # :B #)) :B #S(EMPTY))
-  [ Error at line 5, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/282/3.v.xml> ]
+282-3.v: PASS
 282-4.i: PASS: RNG-ERROR
 283:  PASS
 283-1.v: PASS
@@ -906,4 +902,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 763/902 tests.
+Passed 767/902 tests.
