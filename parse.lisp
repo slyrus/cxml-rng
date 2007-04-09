@@ -1,3 +1,29 @@
+;;; Copyright (c) 2007 David Lichteblau. All rights reserved.
+
+;;; Redistribution and use in source and binary forms, with or without
+;;; modification, are permitted provided that the following conditions
+;;; are met:
+;;;
+;;;   * Redistributions of source code must retain the above copyright
+;;;     notice, this list of conditions and the following disclaimer.
+;;;
+;;;   * Redistributions in binary form must reproduce the above
+;;;     copyright notice, this list of conditions and the following
+;;;     disclaimer in the documentation and/or other materials
+;;;     provided with the distribution.
+;;;
+;;; THIS SOFTWARE IS PROVIDED BY THE AUTHOR 'AS IS' AND ANY EXPRESSED
+;;; OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+;;; WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;;; ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+;;; DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+;;; DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+;;; GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+;;; WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+;;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 (in-package :cxml-rng)
 
 #+sbcl
@@ -12,10 +38,17 @@
   (let ((s (make-string-output-stream)))
     (apply #'format s fmt args)
     (when source
-      (format s "~&  [ Error at line ~D, column ~D in ~S ]"
-	      (klacks:current-line-number source)
-	      (klacks:current-column-number source)
-	      (klacks:current-system-id source)))
+      (etypecase source
+	(klacks:source
+	 (format s "~&  [ Error at line ~D, column ~D in ~S ]"
+		 (klacks:current-line-number source)
+		 (klacks:current-column-number source)
+		 (klacks:current-system-id source)))
+	(sax:sax-parser-mixin
+	 (format s "~&  [ Error at line ~D, column ~D in ~S ]"
+		 (sax:line-number source)
+		 (sax:column-number source)
+		 (sax:system-id source))) ))
     (error 'rng-error
 	   :format-control "~A"
 	   :format-arguments (list (get-output-stream-string s)))))
@@ -88,6 +121,9 @@
 (defstruct (choice
 	    (:include %combination)
 	    (:constructor make-choice (a b))))
+(defstruct (after
+	    (:include %combination)
+	    (:constructor make-after (a b))))
 
 (defstruct (one-or-more
 	    (:include %parent)
@@ -141,6 +177,36 @@
   head-p
   redefinition
   child)
+
+
+;;; name-class
+
+(defun missing ()
+  (error "missing arg"))
+
+(defstruct name-class)
+
+(defstruct (any-name (:include name-class)
+		     (:constructor make-any-name (except)))
+  (except (missing) :type (or null name-class)))
+
+(defstruct (name (:include name-class)
+		 (:constructor make-name (uri lname)))
+  (uri (missing) :type string)
+  (lname (missing) :type string))
+
+(defstruct (ns-name (:include name-class)
+		    (:constructor make-ns-name (uri except)))
+  (uri (missing) :type string)
+  (except (missing) :type (or null name-class)))
+
+(defstruct (name-class-choice (:include name-class)
+			      (:constructor make-name-class-choice (a b)))
+  (a (missing) :type name-class)
+  (b (missing) :type name-class))
+
+(defun simplify-nc-choice (values)
+  (zip #'make-name-class-choice values))
 
 
 ;;;; parser
@@ -686,7 +752,7 @@
 	       (or (and (equal lname "xmlns") (equal uri ""))
 		   (equal uri "http://www.w3.org/2000/xmlns")))
       (rng-error source "namespace attribute not permitted"))
-    (list :name lname uri)))
+    (make-name uri lname)))
 
 (defun p/name-class (source)
   (klacks:expecting-element (source)
@@ -702,7 +768,7 @@
 	  (klacks:consume source)
 	  (prog1
 	      (let ((*any-name-allowed-p* nil))
-		(cons :any (p/except-name-class? source)))
+		(make-any-name (p/except-name-class? source)))
 	    (skip-to-native source)))
 	(:|nsName|
 	  (unless *ns-name-allowed-p*
@@ -715,11 +781,11 @@
 	      (rng-error source "namespace attribute not permitted"))
 	    (klacks:consume source)
 	    (prog1
-		(list :nsname uri (p/except-name-class? source))
+		(make-ns-name uri (p/except-name-class? source))
 	      (skip-to-native source))))
 	(:|choice|
 	  (klacks:consume source)
-	  (cons :choice (p/name-class* source)))
+	  (simplify-nc-choice (p/name-class* source)))
 	(t
 	  (rng-error source "invalid child in except"))))))
 
@@ -747,7 +813,10 @@
   (klacks:expecting-element (source "except")
     (with-library-and-ns (klacks:list-attributes source)
       (klacks:consume source)
-      (cons :except (p/name-class* source)))))
+      (let ((x (p/name-class* source)))
+	(if (cdr x)
+	    (simplify-nc-choice x)
+	    (car x))))))
 
 (defun escape-uri (string)
   (with-output-to-string (out)
@@ -844,31 +913,28 @@
     (serialize-pattern (defn-child defn))))
 
 (defun serialize-name (name)
-  (ecase (car name)
-    (:name
-      (cxml:with-element "name"
-	(destructuring-bind (lname uri)
-	    (cdr name)
-	  (cxml:attribute "ns" uri)
-	  (cxml:text lname))))
-    (:any
-      (cxml:with-element "anyName"
-	(when (cdr name)
-	  (serialize-except-name name))))
-    (:nsname
-      (cxml:with-element "anyName"
-	(destructuring-bind (uri except)
-	    (cdr name)
-	  (cxml:attribute "ns" uri)
-	  (when except
-	    (serialize-except-name name)))))
-    (:choice
-      (cxml:with-element "choice"
-	(mapc #'serialize-name (cdr name))))))
+  (etypecase name
+    (name
+     (cxml:with-element "name"
+       (cxml:attribute "ns" (name-uri name))
+       (cxml:text (name-lname name))))
+    (any-name
+     (cxml:with-element "anyName"
+       (when (any-name-except name)
+	 (serialize-except-name (any-name-except name)))))
+    (ns-name
+     (cxml:with-element "anyName"
+       (cxml:attribute "ns" (ns-name-uri name))
+       (when (ns-name-except name)
+	 (serialize-except-name (ns-name-except name)))))
+    (name-class-choice
+     (cxml:with-element "choice"
+       (serialize-name (name-class-choice-a name))
+       (serialize-name (name-class-choice-b name))))))
 
 (defun serialize-except-name (spec)
   (cxml:with-element "except"
-    (mapc #'serialize-name (cdr spec))))
+    (serialize-name (cdr spec))))
 
 
 ;;;; simplification

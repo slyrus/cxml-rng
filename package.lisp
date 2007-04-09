@@ -1,4 +1,5 @@
 (defpackage :cxml-rng
   (:nicknames :rng)
   (:use :cl)
-  (:export))
+  (:export #:parse-relax-ng
+	   #:make-validator))

@@ -16,5 +16,6 @@
     :serial t
     :components
     ((:file "package")
-     (:file "parse"))
-    :depends-on (:cxml))
+     (:file "parse")
+     (:file "validate"))
+    :depends-on (:cxml :cl-ppcre))

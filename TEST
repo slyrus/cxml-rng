@@ -33,7 +33,7 @@
 033:  PASS: RNG-ERROR
 034:  PASS: RNG-ERROR
 035:  PASS: RNG-ERROR
-036:  FAIL: didn't detect invalid schema
+036:  PASS: RNG-ERROR
 037:  FAIL: didn't detect invalid schema
 038:  FAIL: didn't detect invalid schema
 039:  PASS: RNG-ERROR
@@ -373,4 +373,4 @@
 371:  FAIL: didn't detect invalid schema
 372:  PASS
 373:  PASS
-Passed 248/373 tests.
+Passed 249/373 tests.
