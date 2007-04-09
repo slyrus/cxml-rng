@@ -532,12 +532,14 @@
 (defun p/grammar (source &optional grammar)
   (klacks:expecting-element (source "grammar")
     (consume-and-skip-to-native source)
-    (let ((*grammar* (or grammar (make-grammar *grammar*))))
+    (let ((*grammar* (or grammar (make-grammar *grammar*)))
+	  (includep grammar))
       (process-grammar-content* source)
-      (unless (grammar-start *grammar*)
+      (unless (or includep (grammar-start *grammar*))
 	(rng-error source "no <start> in grammar"))
       (check-pattern-definitions source *grammar*)
-      (defn-child (grammar-start *grammar*)))))
+      (unless includep
+	(defn-child (grammar-start *grammar*))))))
 
 (defvar *include-start*)
 (defvar *include-definitions*)
@@ -736,11 +738,12 @@
 	    (let ((defn (gethash (defn-name copy)
 				 (grammar-definitions *grammar*))))
 	      (restore-definition defn copy)))
-	  (defn-child (grammar-start *grammar*)))))))
+	  nil)))))
 
 (defun check-pattern-definitions (source grammar)
-  (when (eq (defn-redefinition (grammar-start grammar))
-	    :being-redefined-and-no-original)
+  (when (and (grammar-start grammar)
+	     (eq (defn-redefinition (grammar-start grammar))
+		 :being-redefined-and-no-original))
     (rng-error source "start not found in redefinition of grammar"))
   (loop for defn being each hash-value in (grammar-definitions grammar) do
 	(when (eq (defn-redefinition defn) :being-redefined-and-no-original)
