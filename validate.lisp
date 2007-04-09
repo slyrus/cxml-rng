@@ -145,10 +145,13 @@
     ;; process non-whitespace now; discard whitespace completely
     (let ((data (pending-text-node hsx)))
       (unless (whitespacep data)
-	(setf (current-pattern hsx)
-	      (text\' hsx (current-pattern hsx) data))
-	(check-allowed hsx "text node")))
+	(advance hsx
+		 (text\' hsx (current-pattern hsx) data)
+		 "text node")))
     (setf (pending-text-node hsx) nil))
+  (setf attributes
+	(remove-if (cxml::compose #'cxml::xmlns-attr-p #'sax:attribute-qname)
+		   attributes))
   (let* ((p0 (current-pattern hsx))
 	 (p1 (open-start-tag\' hsx p0 uri lname))
 	 (p2 (progn

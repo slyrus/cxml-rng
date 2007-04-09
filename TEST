@@ -49,8 +49,7 @@
 049:  PASS
 049-1.v: PASS
 050:  PASS
-050-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 20 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/050/1.v.xml> ]
+050-1.v: PASS
 051:  PASS
 052:  PASS
 053:  FAIL: didn't detect invalid schema
@@ -138,8 +137,7 @@
 103-1.v: PASS
 103-2.i: PASS: RNG-ERROR
 104:  PASS
-104-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/104/1.v.xml> ]
+104-1.v: PASS
 104-2.i: PASS: RNG-ERROR
 105:  PASS: RNG-ERROR
 106:  PASS: RNG-ERROR
@@ -151,8 +149,7 @@
 109-1.v: PASS
 109-2.i: PASS: RNG-ERROR
 110:  PASS
-110-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/110/1.v.xml> ]
+110-1.v: PASS
 110-2.i: PASS: RNG-ERROR
 111:  PASS
 111-1.v: PASS
@@ -183,39 +180,31 @@
 122:  PASS
 122-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI  :LNAME bar)) :B #S(EMPTY))
   [ Error at line 4, column 55 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/122/1.v.xml> ]
-122-2.i: PASS: RNG-ERROR
+122-2.i: FAIL: didn't detect invalid document
 123:  PASS
 123-1.i: PASS: RNG-ERROR
-123-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI  :LNAME bar)) :B #S(EMPTY))
-  [ Error at line 4, column 52 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/123/2.v.xml> ]
+123-2.v: PASS
 124:  PASS
-124-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
-  [ Error at line 4, column 55 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/124/1.v.xml> ]
+124-1.v: PASS
 124-2.i: PASS: RNG-ERROR
 125:  PASS
-125-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/125/1.v.xml> ]
+125-1.v: PASS
 125-2.i: PASS: RNG-ERROR
 126:  PASS
-126-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 3, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/126/1.v.xml> ]
+126-1.v: PASS
 126-2.i: PASS: RNG-ERROR
 127:  PASS
-127-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 3, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/127/1.v.xml> ]
+127-1.v: PASS
 127-2.i: PASS: RNG-ERROR
 128:  PASS
-128-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
-  [ Error at line 3, column 57 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/128/1.v.xml> ]
+128-1.v: PASS
 128-2.i: PASS: RNG-ERROR
 129:  PASS: RNG-ERROR
 130:  PASS
-130-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/130/1.v.xml> ]
+130-1.v: PASS
 130-2.i: PASS: RNG-ERROR
 131:  PASS
-131-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
-  [ Error at line 4, column 52 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/131/1.v.xml> ]
+131-1.v: PASS
 131-2.i: PASS: RNG-ERROR
 132:  PASS
 132-1.v: PASS
@@ -337,21 +326,21 @@
 150-1.v: PASS
 150-2.i: PASS: RNG-ERROR
 151:  PASS
-151-1.v: FAIL: The function CHECK-ALLOWED is undefined.
+151-1.v: PASS
 151-2.v: PASS
 151-3.v: PASS
-151-4.v: FAIL: The function CHECK-ALLOWED is undefined.
+151-4.v: PASS
 151-5.i: PASS: RNG-ERROR
 151-6.i: PASS: RNG-ERROR
 152:  PASS
 152-1.v: PASS
 152-2.v: PASS
-152-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+152-3.i: PASS: RNG-ERROR
 152-4.i: PASS: RNG-ERROR
 153:  PASS
 153-1.v: PASS
 153-2.v: PASS
-153-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+153-3.i: PASS: RNG-ERROR
 153-4.i: PASS: RNG-ERROR
 153-5.v: PASS
 154:  PASS: RNG-ERROR
@@ -378,8 +367,7 @@
 174:  PASS: RNG-ERROR
 175:  FAIL: didn't detect invalid schema
 176:  PASS
-176-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 3, column 44 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/176/1.v.xml> ]
+176-1.v: PASS
 177:  FAIL: didn't detect invalid schema
 178:  FAIL: didn't detect invalid schema
 179:  FAIL: didn't detect invalid schema
@@ -459,17 +447,14 @@
 214:  PASS: RNG-ERROR
 215:  PASS
 215-1.v: PASS
-215-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/215/2.v.xml> ]
+215-2.v: PASS
 216:  PASS
 216-1.i: PASS: RNG-ERROR
-216-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/216/2.v.xml> ]
+216-2.v: PASS
 216-3.v: PASS
 217:  PASS
 217-1.i: PASS: RNG-ERROR
-217-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/217/2.v.xml> ]
+217-2.v: PASS
 218:  PASS
 218-1.v: PASS
 218-2.i: PASS: RNG-ERROR
@@ -477,23 +462,18 @@
 219-1.i: PASS: RNG-ERROR
 219-2.i: PASS: RNG-ERROR
 219-3.i: PASS: RNG-ERROR
-219-4.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/219/4.v.xml> ]
+219-4.v: PASS
 220:  PASS
 220-1.i: PASS: RNG-ERROR
 220-2.i: PASS: RNG-ERROR
-220-3.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/220/3.v.xml> ]
+220-3.v: PASS
 221:  PASS
 221-1.i: PASS: RNG-ERROR
 221-2.i: PASS: RNG-ERROR
-221-3.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/221/3.v.xml> ]
-221-4.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/221/4.v.xml> ]
+221-3.v: PASS
+221-4.v: PASS
 222:  PASS
-222-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/222/1.v.xml> ]
+222-1.v: PASS
 222-2.i: PASS: RNG-ERROR
 222-3.i: PASS: RNG-ERROR
 222-4.i: PASS: RNG-ERROR
@@ -605,26 +585,26 @@
 242:  PASS
 242-1.v: PASS
 242-2.v: PASS
-242-3.v: FAIL: The function CHECK-ALLOWED is undefined.
-242-4.v: FAIL: The function CHECK-ALLOWED is undefined.
+242-3.v: PASS
+242-4.v: PASS
 242-5.i: PASS: RNG-ERROR
 242-6.i: PASS: RNG-ERROR
 243:  PASS
 243-1.v: PASS
 243-2.v: PASS
-243-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+243-3.i: PASS: RNG-ERROR
 243-4.v: PASS
 243-5.i: PASS: RNG-ERROR
 243-6.v: PASS
 244:  PASS
 244-1.v: PASS
 244-2.v: PASS
-244-3.v: FAIL: The function CHECK-ALLOWED is undefined.
+244-3.v: PASS
 244-4.v: PASS
 244-5.i: PASS: RNG-ERROR
 244-6.v: PASS
-244-7.v: FAIL: The function CHECK-ALLOWED is undefined.
-244-8.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+244-7.v: PASS
+244-8.i: PASS: RNG-ERROR
 245:  PASS
 245-1.v: PASS
 245-2.v: PASS
@@ -737,7 +717,7 @@
 262-3.i: PASS: RNG-ERROR
 262-4.v: PASS
 262-5.v: PASS
-262-6.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+262-6.i: PASS: RNG-ERROR
 262-7.i: PASS: RNG-ERROR
 262-8.i: PASS: RNG-ERROR
 263:  PASS
@@ -746,7 +726,7 @@
 263-3.i: PASS: RNG-ERROR
 263-4.v: PASS
 263-5.v: PASS
-263-6.v: FAIL: The function CHECK-ALLOWED is undefined.
+263-6.v: PASS
 263-7.i: PASS: RNG-ERROR
 263-8.v: PASS
 264:  PASS
@@ -925,8 +905,7 @@
 353-2.i: PASS: RNG-ERROR
 353-3.v: PASS
 354:  PASS
-354-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(GROUP :A #S(ONE-OR-MORE :CHILD #) :B #S(ONE-OR-MORE :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 103 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/354/1.v.xml> ]
+354-1.v: PASS
 355:  PASS
 355-1.v: PASS
 356:  FAIL: didn't detect invalid schema
@@ -951,4 +930,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 710/902 tests.
+Passed 742/902 tests.
