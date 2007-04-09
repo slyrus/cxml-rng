@@ -17,5 +17,6 @@
     :components
     ((:file "package")
      (:file "parse")
-     (:file "validate"))
+     (:file "validate")
+     (:file "test"))
     :depends-on (:cxml :cl-ppcre))
