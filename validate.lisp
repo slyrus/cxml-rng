@@ -105,9 +105,27 @@
    (pending-text-node :initform nil :accessor pending-text-node)
    (registratur :initform (make-hash-table :test 'equal) :reader registratur)))
 
-(defun check-allowed (hsx message)
-  (when (typep (current-pattern hsx) 'not-allowed)
-    (rng-error hsx message)))
+(defun advance (hsx pattern message)
+  (when (typep pattern 'not-allowed)
+    (rng-error hsx "~A, was expecting a ~A"
+	       message
+	       (replace-scary-characters (current-pattern hsx))))
+  (when *debug*
+    (write-line (replace-scary-characters (current-pattern hsx))))
+  (setf (current-pattern hsx) pattern))
+
+;; make sure slime doesn't die
+(defun replace-scary-characters (pattern)
+  (let ((str (write-to-string pattern
+			      :circle t
+			      :escape nil
+			      :pretty nil)))
+    (loop
+       for c across str
+       for i from 0
+       when (>= (char-code c) 128)
+       do (setf (elt str i) #\?))
+    str))
 
 (defmethod sax:characters ((hsx validator) data)
   (assert (null (pending-text-node hsx))) ;parser must be normalize
@@ -115,9 +133,9 @@
       (setf (pending-text-node hsx) data)
       (unless (whitespacep data)
 	;; we already saw an element sibling, so discard whitespace
-	(setf (current-pattern hsx)
-	      (text\' hsx (current-pattern hsx) data))
-	(check-allowed hsx "text node not valid")))
+	(advance hsx
+		 (text\' hsx (current-pattern hsx) data)
+		 "text node not valid")))
   (setf (after-start-tag-p hsx) nil))
 
 (defmethod sax:start-element ((hsx validator) uri lname qname attributes)
@@ -134,13 +152,12 @@
   (let* ((p0 (current-pattern hsx))
 	 (p1 (open-start-tag\' hsx p0 uri lname))
 	 (p2 (progn
-	       (check-allowed hsx "element not valid")
+	       (advance hsx p1 "element not valid")
 	       (attributes\' hsx p1 attributes)))
 	 (p3 (progn
-	       (check-allowed hsx "attributes not valid")
+	       (advance hsx p2 "attributes not valid")
 	       (close-start-tag\' hsx p2))))
-    (check-allowed hsx "attributes not valid")
-    (setf (current-pattern hsx) p3)
+    (advance hsx p3 "attributes not valid")
     (setf (after-start-tag-p hsx) t)))
 
 (defmethod sax:end-element ((hsx validator) uri lname qname)
@@ -154,15 +171,15 @@
     (let* ((current (current-pattern hsx))
 	   (data (pending-text-node hsx))
 	   (next (text\' hsx current data)))
-      (setf (current-pattern hsx)
-	    (if (whitespacep data)
-		(intern-choice hsx current next)
-		next)))
-    (check-allowed hsx "text node not valid")
+      (advance hsx
+	       (if (whitespacep data)
+		   (intern-choice hsx current next)
+		   next)
+	       "text node not valid"))
     (setf (pending-text-node hsx) nil))
-  (setf (current-pattern hsx)
-        (end-tag\' hsx (current-pattern hsx)))
-  (check-allowed hsx "end of element not valid"))
+  (advance hsx
+	   (end-tag\' hsx (current-pattern hsx))
+	   "end of element not valid"))
 
 
 ;;;; TEXT'
@@ -332,7 +349,7 @@
                  (open-start-tag\' hsx (pattern-b pattern) uri lname)))
 
 (defmethod open-start-tag\' (hsx (pattern element) uri lname)
-  (if (contains (pattern-name pattern) uri lname)
+  (if (contains (pattern-name pattern) (or uri "") lname)
       (intern-after hsx (pattern-child pattern) *empty*)
       *not-allowed*))
 
@@ -422,7 +439,7 @@
 
 (defmethod attribute\' (hsx (pattern attribute) a)
   (eat (and (contains (pattern-name pattern)
-		      (sax:attribute-namespace-uri a)
+		      (or (sax:attribute-namespace-uri a) "")
 		      (sax:attribute-local-name a))
 	    (value-matches-p hsx
 			     (pattern-child pattern)

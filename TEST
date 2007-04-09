@@ -47,51 +47,43 @@
 047:  PASS: RNG-ERROR
 048:  PASS: RNG-ERROR
 049:  PASS
-049-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/049/1.v.xml> ]
+049-1.v: PASS
 050:  PASS
-050-1.v: FAIL: text node not valid
+050-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 20 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/050/1.v.xml> ]
 051:  PASS
 052:  PASS
 053:  FAIL: didn't detect invalid schema
 054:  PASS
-054-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/054/1.v.xml> ]
+054-1.v: PASS
 055:  PASS
-055-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/055/1.v.xml> ]
+055-1.v: PASS
 056:  FAIL: didn't detect invalid schema
 057:  FAIL: didn't detect invalid schema
 058:  FAIL: didn't detect invalid schema
 059:  PASS
-059-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/059/1.v.xml> ]
+059-1.v: PASS
 060:  FAIL: didn't detect invalid schema
 061:  FAIL: didn't detect invalid schema
 062:  FAIL: didn't detect invalid schema
 063:  FAIL: didn't detect invalid schema
 064:  PASS
-064-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/064/1.v.xml> ]
+064-1.v: PASS
 065:  PASS
-065-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/065/1.v.xml> ]
+065-1.v: PASS
 066:  PASS
-066-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/066/1.v.xml> ]
+066-1.v: PASS
 067:  FAIL: didn't detect invalid schema
 068:  FAIL: didn't detect invalid schema
 069:  PASS
-069-1.v: FAIL: element not valid
-  [ Error at line 4, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/069/1.v.xml> ]
+069-1.v: PASS
 070:  FAIL: didn't detect invalid schema
 071:  FAIL: didn't detect invalid schema
 072:  FAIL: didn't detect invalid schema
 073:  FAIL: didn't detect invalid schema
 074:  FAIL: didn't detect invalid schema
 075:  PASS
-075-1.v: FAIL: text node not valid
+075-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME ?? :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD #S(EMPTY) :NAME #)))
   [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/075/1.v.xml> ]
 076:  FAIL: didn't detect invalid schema
 077:  FAIL: didn't detect invalid schema
@@ -106,90 +98,70 @@
 086:  PASS: RNG-ERROR
 087:  PASS: RNG-ERROR
 088:  PASS
-088-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/088/1.v.xml> ]
+088-1.v: PASS
 089:  PASS
-089-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/089/1.v.xml> ]
+089-1.v: PASS
 090:  PASS
-090-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/090/1.v.xml> ]
+090-1.v: PASS
 091:  PASS
-091-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/091/1.v.xml> ]
+091-1.v: PASS
 092:  PASS
-092-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/092/1.v.xml> ]
+092-1.v: PASS
 093:  PASS
-093-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/093/1.v.xml> ]
+093-1.v: PASS
 094:  PASS
-094-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/094/1.v.xml> ]
+094-1.v: PASS
 095:  PASS
-095-1.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/095/1.v.xml> ]
+095-1.v: PASS
 095-2.i: PASS: RNG-ERROR
 096:  PASS
-096-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/096/1.v.xml> ]
+096-1.v: PASS
 097:  PASS
-097-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/097/1.v.xml> ]
+097-1.v: PASS
 098:  PASS
-098-1.v: FAIL: text node not valid
+098-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(REF :CRDEPTH T :TARGET #)))
   [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/098/1.v.xml> ]
 099:  PASS
-099-1.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/099/1.v.xml> ]
-099-2.v: FAIL: text node not valid
-  [ Error at line 6, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/099/2.v.xml> ]
-099-3.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/099/3.v.xml> ]
+099-1.v: PASS
+099-2.v: PASS
+099-3.v: PASS
 099-4.i: PASS: RNG-ERROR
 099-5.i: PASS: RNG-ERROR
 100:  PASS
-100-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/100/1.v.xml> ]
+100-1.v: PASS
 100-2.i: PASS: RNG-ERROR
 101:  PASS
-101-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/101/1.v.xml> ]
+101-1.v: PASS
 101-2.i: PASS: RNG-ERROR
 102:  FAIL: didn't detect invalid schema
 103:  PASS
-103-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/103/1.v.xml> ]
+103-1.v: PASS
 103-2.i: PASS: RNG-ERROR
 104:  PASS
-104-1.v: FAIL: text node not valid
+104-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/104/1.v.xml> ]
 104-2.i: PASS: RNG-ERROR
 105:  PASS: RNG-ERROR
 106:  PASS: RNG-ERROR
 107:  PASS: RNG-ERROR
 108:  PASS
-108-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/108/1.v.xml> ]
+108-1.v: PASS
 108-2.i: PASS: RNG-ERROR
 109:  PASS
-109-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/109/1.v.xml> ]
+109-1.v: PASS
 109-2.i: PASS: RNG-ERROR
 110:  PASS
-110-1.v: FAIL: text node not valid
+110-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/110/1.v.xml> ]
 110-2.i: PASS: RNG-ERROR
 111:  PASS
-111-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/111/1.v.xml> ]
+111-1.v: PASS
 111-2.i: PASS: RNG-ERROR
 112:  PASS: RNG-ERROR
 113:  PASS: RNG-ERROR
 114:  PASS: RNG-ERROR
 115:  PASS
-115-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/115/1.v.xml> ]
+115-1.v: PASS
 115-2.i: PASS: RNG-ERROR
 116:  PASS: RNG-ERROR
 117:  FAIL: no <start> in grammar
@@ -202,72 +174,72 @@
 119-1.v: FAIL: cannot run test
 119-2.i: FAIL: cannot run test
 120:  PASS
-120-1.v: FAIL: text node not valid
+120-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
   [ Error at line 3, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/1.v.xml> ]
-120-2.v: FAIL: text node not valid
+120-2.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
   [ Error at line 3, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/2.v.xml> ]
 120-3.i: PASS: RNG-ERROR
 121:  PASS: RNG-ERROR
 122:  PASS
-122-1.v: FAIL: text node not valid
+122-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI  :LNAME bar)) :B #S(EMPTY))
   [ Error at line 4, column 55 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/122/1.v.xml> ]
 122-2.i: PASS: RNG-ERROR
 123:  PASS
 123-1.i: PASS: RNG-ERROR
-123-2.v: FAIL: text node not valid
+123-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI  :LNAME bar)) :B #S(EMPTY))
   [ Error at line 4, column 52 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/123/2.v.xml> ]
 124:  PASS
-124-1.v: FAIL: text node not valid
+124-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
   [ Error at line 4, column 55 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/124/1.v.xml> ]
 124-2.i: PASS: RNG-ERROR
 125:  PASS
-125-1.v: FAIL: text node not valid
+125-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/125/1.v.xml> ]
 125-2.i: PASS: RNG-ERROR
 126:  PASS
-126-1.v: FAIL: text node not valid
+126-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 3, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/126/1.v.xml> ]
 126-2.i: PASS: RNG-ERROR
 127:  PASS
-127-1.v: FAIL: text node not valid
+127-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 3, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/127/1.v.xml> ]
 127-2.i: PASS: RNG-ERROR
 128:  PASS
-128-1.v: FAIL: text node not valid
+128-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
   [ Error at line 3, column 57 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/128/1.v.xml> ]
 128-2.i: PASS: RNG-ERROR
 129:  PASS: RNG-ERROR
 130:  PASS
-130-1.v: FAIL: text node not valid
+130-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/130/1.v.xml> ]
 130-2.i: PASS: RNG-ERROR
 131:  PASS
-131-1.v: FAIL: text node not valid
+131-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(ATTRIBUTE :CHILD #S(TEXT) :NAME #S(NAME :URI http://www.example.com :LNAME bar)) :B #S(EMPTY))
   [ Error at line 4, column 52 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/131/1.v.xml> ]
 131-2.i: PASS: RNG-ERROR
 132:  PASS
-132-1.v: FAIL: text node not valid
-  [ Error at line 4, column 21 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/132/1.v.xml> ]
+132-1.v: PASS
 132-2.i: PASS: RNG-ERROR
 133:  PASS
-133-1.v: FAIL: text node not valid
+133-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD #S(EMPTY) :NAME #)))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/133/1.v.xml> ]
 133-2.i: PASS: RNG-ERROR
 134:  PASS
-134-1.v: FAIL: element not valid
+134-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bars :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/134/1.v.xml> ]
 134-2.i: PASS: RNG-ERROR
 134-3.i: PASS: RNG-ERROR
 134-4.i: PASS: RNG-ERROR
-134-5.i: PASS: RNG-ERROR
+134-5.i: FAIL: incorrect condition type: There is no applicable method for the generic function
+                                           #<STANDARD-GENERIC-FUNCTION NULLABLE (13)>
+                                         when called with arguments
+                                           (#S(REF :CRDEPTH T :TARGET #)).
 134-6.i: PASS: RNG-ERROR
 134-7.i: PASS: RNG-ERROR
 134-8.i: PASS: RNG-ERROR
 135:  PASS
-135-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/135/1.v.xml> ]
-135-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/135/2.v.xml> ]
+135-1.v: PASS
+135-2.v: PASS
 135-3.i: PASS: RNG-ERROR
 135-4.i: PASS: RNG-ERROR
 135-5.i: PASS: RNG-ERROR
@@ -275,46 +247,37 @@
 135-7.i: PASS: RNG-ERROR
 135-8.i: PASS: RNG-ERROR
 136:  PASS
-136-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/136/1.v.xml> ]
-136-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/136/2.v.xml> ]
+136-1.v: PASS
+136-2.v: PASS
 136-3.i: PASS: RNG-ERROR
 136-4.i: PASS: RNG-ERROR
-136-5.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/136/5.v.xml> ]
+136-5.v: PASS
 136-6.i: PASS: RNG-ERROR
 136-7.i: PASS: RNG-ERROR
 136-8.i: PASS: RNG-ERROR
 137:  PASS
-137-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/137/1.v.xml> ]
+137-1.v: PASS
 137-2.i: PASS: RNG-ERROR
 137-3.i: PASS: RNG-ERROR
 137-4.i: PASS: RNG-ERROR
-137-5.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/137/5.v.xml> ]
+137-5.v: PASS
 137-6.i: PASS: RNG-ERROR
 137-7.i: PASS: RNG-ERROR
 137-8.i: PASS: RNG-ERROR
 138:  PASS
-138-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/138/1.v.xml> ]
+138-1.v: PASS
 138-2.i: PASS: RNG-ERROR
 139:  PASS
-139-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/139/1.v.xml> ]
+139-1.v: PASS
 139-2.i: PASS: RNG-ERROR
 139-3.i: PASS: RNG-ERROR
 139-4.i: PASS: RNG-ERROR
 139-5.i: PASS: RNG-ERROR
-139-6.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/139/6.v.xml> ]
+139-6.v: PASS
 139-7.i: PASS: RNG-ERROR
 139-8.i: PASS: RNG-ERROR
 140:  PASS
-140-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/140/1.v.xml> ]
+140-1.v: PASS
 140-2.i: PASS: RNG-ERROR
 140-3.i: PASS: RNG-ERROR
 140-4.i: PASS: RNG-ERROR
@@ -324,32 +287,25 @@
 140-8.i: PASS: RNG-ERROR
 141:  PASS
 141-1.v: PASS
-141-2.i: FAIL: didn't detect invalid document
-141-3.i: FAIL: didn't detect invalid document
-141-4.i: FAIL: didn't detect invalid document
+141-2.i: PASS: RNG-ERROR
+141-3.i: PASS: RNG-ERROR
+141-4.i: PASS: RNG-ERROR
 142:  PASS
-142-1.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/142/1.v.xml> ]
-142-2.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/142/2.v.xml> ]
+142-1.v: PASS
+142-2.v: PASS
 142-3.i: PASS: RNG-ERROR
 142-4.i: PASS: RNG-ERROR
 142-5.i: PASS: RNG-ERROR
 143:  PASS
-143-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/143/1.v.xml> ]
-143-2.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/143/2.v.xml> ]
+143-1.v: PASS
+143-2.v: PASS
 143-3.i: PASS: RNG-ERROR
 144:  PASS
-144-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/144/1.v.xml> ]
-144-2.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/144/2.v.xml> ]
+144-1.v: PASS
+144-2.v: PASS
 144-3.i: PASS: RNG-ERROR
 145:  PASS
-145-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/145/1.v.xml> ]
+145-1.v: PASS
 145-2.i: PASS: RNG-ERROR
 145-3.i: PASS: RNG-ERROR
 145-4.i: PASS: RNG-ERROR
@@ -358,67 +314,46 @@
 145-7.i: PASS: RNG-ERROR
 145-8.i: PASS: RNG-ERROR
 146:  PASS
-146-1.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/146/1.v.xml> ]
-146-2.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/146/2.v.xml> ]
-146-3.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/146/3.v.xml> ]
+146-1.v: PASS
+146-2.v: PASS
+146-3.v: PASS
 146-4.i: PASS: RNG-ERROR
 147:  PASS
-147-1.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/1.v.xml> ]
-147-2.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/2.v.xml> ]
-147-3.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/3.v.xml> ]
-147-4.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/4.v.xml> ]
-147-5.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/5.v.xml> ]
-147-6.v: FAIL: element not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/147/6.v.xml> ]
+147-1.v: PASS
+147-2.v: PASS
+147-3.v: PASS
+147-4.v: PASS
+147-5.v: PASS
+147-6.v: PASS
 147-7.i: PASS: RNG-ERROR
 147-8.i: PASS: RNG-ERROR
 148:  PASS
-148-1.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/148/1.v.xml> ]
+148-1.v: PASS
 148-2.i: PASS: RNG-ERROR
 149:  PASS
-149-1.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/149/1.v.xml> ]
+149-1.v: PASS
 149-2.i: PASS: RNG-ERROR
 150:  PASS
-150-1.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/150/1.v.xml> ]
+150-1.v: PASS
 150-2.i: PASS: RNG-ERROR
 151:  PASS
-151-1.v: FAIL: text node
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/151/1.v.xml> ]
-151-2.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/151/2.v.xml> ]
-151-3.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/151/3.v.xml> ]
-151-4.v: FAIL: text node
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/151/4.v.xml> ]
+151-1.v: FAIL: The function CHECK-ALLOWED is undefined.
+151-2.v: PASS
+151-3.v: PASS
+151-4.v: FAIL: The function CHECK-ALLOWED is undefined.
 151-5.i: PASS: RNG-ERROR
 151-6.i: PASS: RNG-ERROR
 152:  PASS
-152-1.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/152/1.v.xml> ]
-152-2.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/152/2.v.xml> ]
-152-3.i: PASS: RNG-ERROR
+152-1.v: PASS
+152-2.v: PASS
+152-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
 152-4.i: PASS: RNG-ERROR
 153:  PASS
-153-1.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/153/1.v.xml> ]
-153-2.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/153/2.v.xml> ]
-153-3.i: PASS: RNG-ERROR
+153-1.v: PASS
+153-2.v: PASS
+153-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
 153-4.i: PASS: RNG-ERROR
-153-5.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/153/5.v.xml> ]
+153-5.v: PASS
 154:  PASS: RNG-ERROR
 155:  PASS: RNG-ERROR
 156:  PASS: RNG-ERROR
@@ -429,8 +364,7 @@
 161:  PASS: RNG-ERROR
 162:  FAIL: didn't detect invalid schema
 163:  PASS
-163-1.v: FAIL: text node not valid
-  [ Error at line 3, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/163/1.v.xml> ]
+163-1.v: PASS
 164:  FAIL: didn't detect invalid schema
 165:  FAIL: didn't detect invalid schema
 166:  FAIL: didn't detect invalid schema
@@ -444,7 +378,7 @@
 174:  PASS: RNG-ERROR
 175:  FAIL: didn't detect invalid schema
 176:  PASS
-176-1.v: FAIL: text node not valid
+176-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 3, column 44 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/176/1.v.xml> ]
 177:  FAIL: didn't detect invalid schema
 178:  FAIL: didn't detect invalid schema
@@ -460,38 +394,32 @@
 188:  PASS: RNG-ERROR
 189:  PASS: RNG-ERROR
 190:  PASS
-190-1.v: FAIL: text node not valid
+190-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
   [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/1.v.xml> ]
-190-2.v: FAIL: text node not valid
+190-2.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
   [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/2.v.xml> ]
-190-3.v: FAIL: text node not valid
+190-3.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
   [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/3.v.xml> ]
 190-4.i: PASS: RNG-ERROR
 191:  PASS
-191-1.v: FAIL: text node not valid
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/191/1.v.xml> ]
-191-2.v: FAIL: text node not valid
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/191/2.v.xml> ]
-191-3.v: FAIL: text node not valid
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/191/3.v.xml> ]
+191-1.v: PASS
+191-2.v: PASS
+191-3.v: PASS
 191-4.i: PASS: RNG-ERROR
 192:  PASS: RNG-ERROR
 193:  PASS: RNG-ERROR
 194:  PASS
-194-1.v: FAIL: element not valid
+194-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/1.v.xml> ]
-194-2.v: FAIL: element not valid
+194-2.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/2.v.xml> ]
-194-3.v: FAIL: element not valid
+194-3.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/3.v.xml> ]
 194-4.i: PASS: RNG-ERROR
 195:  PASS
-195-1.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/195/1.v.xml> ]
-195-2.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/195/2.v.xml> ]
-195-3.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/195/3.v.xml> ]
+195-1.v: PASS
+195-2.v: PASS
+195-3.v: PASS
 195-4.i: PASS: RNG-ERROR
 196:  PASS: RNG-ERROR
 197:  PASS: RNG-ERROR
@@ -506,507 +434,382 @@
 206:  PASS: RNG-ERROR
 207:  PASS: RNG-ERROR
 208:  PASS
-208-1.v: FAIL: text node not valid
+208-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(REF :CRDEPTH T :TARGET #)))
   [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/208/1.v.xml> ]
 209:  PASS
-209-1.v: FAIL: element not valid
-  [ Error at line 3, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/209/1.v.xml> ]
+209-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD # :NAME #)))
+  [ Error at line 3, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/209/1.v.xml> ]
 209-2.i: PASS: RNG-ERROR
 210:  PASS
-210-1.v: FAIL: element not valid
-  [ Error at line 3, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/210/1.v.xml> ]
+210-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD # :NAME #)))
+  [ Error at line 3, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/210/1.v.xml> ]
 210-2.i: PASS: RNG-ERROR
 211:  PASS: RNG-ERROR
 212:  PASS
-212-1.v: FAIL: element not valid
+212-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bar :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/212/1.v.xml> ]
-212-2.v: FAIL: element not valid
+212-2.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bar :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/212/2.v.xml> ]
-212-3.i: PASS: RNG-ERROR
+212-3.i: FAIL: incorrect condition type: There is no applicable method for the generic function
+                                           #<STANDARD-GENERIC-FUNCTION NULLABLE (13)>
+                                         when called with arguments
+                                           (#S(REF :CRDEPTH T :TARGET #)).
 213:  PASS
-213-1.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/213/1.v.xml> ]
+213-1.v: PASS
 214:  PASS: RNG-ERROR
 215:  PASS
 215-1.v: PASS
-215-2.v: FAIL: text node not valid
+215-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/215/2.v.xml> ]
 216:  PASS
-216-1.i: FAIL: didn't detect invalid document
-216-2.v: FAIL: text node not valid
+216-1.i: PASS: RNG-ERROR
+216-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/216/2.v.xml> ]
 216-3.v: PASS
 217:  PASS
-217-1.i: FAIL: didn't detect invalid document
-217-2.v: FAIL: text node not valid
+217-1.i: PASS: RNG-ERROR
+217-2.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/217/2.v.xml> ]
 218:  PASS
-218-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/218/1.v.xml> ]
+218-1.v: PASS
 218-2.i: PASS: RNG-ERROR
 219:  PASS
 219-1.i: PASS: RNG-ERROR
 219-2.i: PASS: RNG-ERROR
 219-3.i: PASS: RNG-ERROR
-219-4.v: FAIL: text node not valid
+219-4.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/219/4.v.xml> ]
 220:  PASS
 220-1.i: PASS: RNG-ERROR
 220-2.i: PASS: RNG-ERROR
-220-3.v: FAIL: text node not valid
+220-3.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/220/3.v.xml> ]
 221:  PASS
 221-1.i: PASS: RNG-ERROR
 221-2.i: PASS: RNG-ERROR
-221-3.v: FAIL: text node not valid
+221-3.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/221/3.v.xml> ]
-221-4.v: FAIL: text node not valid
+221-4.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/221/4.v.xml> ]
 222:  PASS
-222-1.v: FAIL: text node not valid
+222-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(EMPTY) :B #S(EMPTY))
   [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/222/1.v.xml> ]
 222-2.i: PASS: RNG-ERROR
 222-3.i: PASS: RNG-ERROR
 222-4.i: PASS: RNG-ERROR
 223:  PASS
 223-1.i: PASS: RNG-ERROR
-223-2.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/223/2.v.xml> ]
+223-2.v: PASS
 223-3.i: PASS: RNG-ERROR
 223-4.i: PASS: RNG-ERROR
 224:  PASS
 224-1.i: PASS: RNG-ERROR
-224-2.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/224/2.v.xml> ]
-224-3.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/224/3.v.xml> ]
+224-2.v: PASS
+224-3.v: PASS
 225:  PASS
-225-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/225/1.v.xml> ]
-225-2.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/225/2.v.xml> ]
+225-1.v: PASS
+225-2.v: PASS
 225-3.i: PASS: RNG-ERROR
 226:  PASS
-226-1.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/226/1.v.xml> ]
-226-2.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/226/2.v.xml> ]
+226-1.v: PASS
+226-2.v: PASS
 226-3.i: PASS: RNG-ERROR
 226-4.i: PASS: RNG-ERROR
 226-5.i: PASS: RNG-ERROR
 226-6.i: PASS: RNG-ERROR
 226-7.i: PASS: RNG-ERROR
 227:  PASS
-227-1.v: FAIL: text node not valid
-  [ Error at line 4, column 25 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/227/1.v.xml> ]
-227-2.v: FAIL: text node not valid
-  [ Error at line 4, column 25 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/227/2.v.xml> ]
+227-1.v: PASS
+227-2.v: PASS
 227-3.i: PASS: RNG-ERROR
 227-4.i: PASS: RNG-ERROR
 227-5.i: PASS: RNG-ERROR
 227-6.i: PASS: RNG-ERROR
 227-7.i: PASS: RNG-ERROR
 228:  PASS
-228-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/228/1.v.xml> ]
-228-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/228/2.v.xml> ]
+228-1.v: PASS
+228-2.v: PASS
 228-3.i: PASS: RNG-ERROR
 228-4.i: PASS: RNG-ERROR
 228-5.i: PASS: RNG-ERROR
 228-6.i: PASS: RNG-ERROR
 228-7.i: PASS: RNG-ERROR
 229:  PASS
-229-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/229/1.v.xml> ]
+229-1.v: PASS
 229-2.i: PASS: RNG-ERROR
 229-3.i: PASS: RNG-ERROR
 229-4.i: PASS: RNG-ERROR
 229-5.i: PASS: RNG-ERROR
 229-6.i: PASS: RNG-ERROR
 230:  PASS
-230-1.v: FAIL: text node not valid
-  [ Error at line 4, column 23 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/230/1.v.xml> ]
+230-1.v: PASS
 230-2.i: PASS: RNG-ERROR
 231:  PASS
-231-1.v: FAIL: text node not valid
-  [ Error at line 4, column 23 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/231/1.v.xml> ]
+231-1.v: PASS
 231-2.i: PASS: RNG-ERROR
 231-3.i: PASS: RNG-ERROR
 231-4.i: PASS: RNG-ERROR
 232:  PASS
-232-1.v: FAIL: text node not valid
-  [ Error at line 4, column 23 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/232/1.v.xml> ]
+232-1.v: PASS
 232-2.i: PASS: RNG-ERROR
 232-3.i: PASS: RNG-ERROR
 232-4.i: PASS: RNG-ERROR
 233:  PASS
-233-1.v: FAIL: element not valid
-  [ Error at line 4, column 20 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/233/1.v.xml> ]
+233-1.v: PASS
 233-2.i: PASS: RNG-ERROR
 233-3.i: PASS: RNG-ERROR
 233-4.i: PASS: RNG-ERROR
 234:  PASS
-234-1.v: FAIL: element not valid
-  [ Error at line 4, column 20 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/234/1.v.xml> ]
+234-1.v: PASS
 234-2.i: PASS: RNG-ERROR
 234-3.i: PASS: RNG-ERROR
 234-4.i: PASS: RNG-ERROR
 235:  PASS
-235-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/235/1.v.xml> ]
-235-2.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/235/2.v.xml> ]
-235-3.v: FAIL: text node not valid
-  [ Error at line 7, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/235/3.v.xml> ]
-235-4.v: FAIL: text node not valid
-  [ Error at line 9, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/235/4.v.xml> ]
+235-1.v: PASS
+235-2.v: PASS
+235-3.v: PASS
+235-4.v: PASS
 235-5.i: PASS: RNG-ERROR
 235-6.i: PASS: RNG-ERROR
 235-7.i: PASS: RNG-ERROR
 236:  PASS
-236-1.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/236/1.v.xml> ]
-236-2.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/236/2.v.xml> ]
+236-1.v: PASS
+236-2.v: PASS
 236-3.i: PASS: RNG-ERROR
 237:  PASS
-237-1.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/237/1.v.xml> ]
-237-2.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/237/2.v.xml> ]
+237-1.v: PASS
+237-2.v: PASS
 237-3.i: PASS: RNG-ERROR
 237-4.i: PASS: RNG-ERROR
 237-5.i: PASS: RNG-ERROR
 238:  PASS
-238-1.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/238/1.v.xml> ]
-238-2.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/238/2.v.xml> ]
+238-1.v: PASS
+238-2.v: PASS
 238-3.i: PASS: RNG-ERROR
 239:  PASS
-239-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/239/1.v.xml> ]
-239-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/239/2.v.xml> ]
+239-1.v: PASS
+239-2.v: PASS
 239-3.i: PASS: RNG-ERROR
 239-4.i: PASS: RNG-ERROR
 240:  PASS
-240-1.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/240/1.v.xml> ]
-240-2.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/240/2.v.xml> ]
+240-1.v: PASS
+240-2.v: PASS
 240-3.i: PASS: RNG-ERROR
 240-4.i: PASS: RNG-ERROR
 241:  PASS
-241-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/241/1.v.xml> ]
-241-2.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/241/2.v.xml> ]
-241-3.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/241/3.v.xml> ]
-241-4.v: FAIL: text node not valid
-  [ Error at line 8, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/241/4.v.xml> ]
+241-1.v: PASS
+241-2.v: PASS
+241-3.v: PASS
+241-4.v: PASS
 241-5.i: PASS: RNG-ERROR
 242:  PASS
-242-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/242/1.v.xml> ]
-242-2.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/242/2.v.xml> ]
-242-3.v: FAIL: text node
-  [ Error at line 6, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/242/3.v.xml> ]
-242-4.v: FAIL: text node
-  [ Error at line 8, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/242/4.v.xml> ]
+242-1.v: PASS
+242-2.v: PASS
+242-3.v: FAIL: The function CHECK-ALLOWED is undefined.
+242-4.v: FAIL: The function CHECK-ALLOWED is undefined.
 242-5.i: PASS: RNG-ERROR
 242-6.i: PASS: RNG-ERROR
 243:  PASS
-243-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/243/1.v.xml> ]
-243-2.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/243/2.v.xml> ]
-243-3.i: PASS: RNG-ERROR
-243-4.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/243/4.v.xml> ]
+243-1.v: PASS
+243-2.v: PASS
+243-3.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
+243-4.v: PASS
 243-5.i: PASS: RNG-ERROR
-243-6.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/243/6.v.xml> ]
+243-6.v: PASS
 244:  PASS
-244-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/1.v.xml> ]
-244-2.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/2.v.xml> ]
-244-3.v: FAIL: text node
-  [ Error at line 6, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/3.v.xml> ]
-244-4.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/4.v.xml> ]
+244-1.v: PASS
+244-2.v: PASS
+244-3.v: FAIL: The function CHECK-ALLOWED is undefined.
+244-4.v: PASS
 244-5.i: PASS: RNG-ERROR
-244-6.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/6.v.xml> ]
-244-7.v: FAIL: text node
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/244/7.v.xml> ]
-244-8.i: PASS: RNG-ERROR
+244-6.v: PASS
+244-7.v: FAIL: The function CHECK-ALLOWED is undefined.
+244-8.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
 245:  PASS
-245-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/245/1.v.xml> ]
-245-2.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/245/2.v.xml> ]
-245-3.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/245/3.v.xml> ]
+245-1.v: PASS
+245-2.v: PASS
+245-3.v: PASS
 245-4.i: PASS: RNG-ERROR
 245-5.i: PASS: RNG-ERROR
 246:  PASS
-246-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/246/1.v.xml> ]
-246-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/246/2.v.xml> ]
-246-3.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/246/3.v.xml> ]
+246-1.v: PASS
+246-2.v: PASS
+246-3.v: PASS
 246-4.i: PASS: RNG-ERROR
 247:  PASS
-247-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/247/1.v.xml> ]
-247-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/247/2.v.xml> ]
-247-3.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/247/3.v.xml> ]
+247-1.v: PASS
+247-2.v: PASS
+247-3.v: PASS
 247-4.i: PASS: RNG-ERROR
 247-5.i: PASS: RNG-ERROR
 247-6.i: PASS: RNG-ERROR
 248:  PASS
-248-1.v: FAIL: text node not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/248/1.v.xml> ]
-248-2.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/248/2.v.xml> ]
-248-3.v: FAIL: text node not valid
-  [ Error at line 4, column 22 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/248/3.v.xml> ]
+248-1.v: PASS
+248-2.v: PASS
+248-3.v: PASS
 248-4.i: PASS: RNG-ERROR
 248-5.i: PASS: RNG-ERROR
 248-6.i: PASS: RNG-ERROR
 249:  PASS
-249-1.v: FAIL: element not valid
-  [ Error at line 4, column 19 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/249/1.v.xml> ]
-249-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/249/2.v.xml> ]
-249-3.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/249/3.v.xml> ]
+249-1.v: PASS
+249-2.v: PASS
+249-3.v: PASS
 249-4.i: PASS: RNG-ERROR
 250:  PASS
-250-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/250/1.v.xml> ]
-250-2.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/250/2.v.xml> ]
+250-1.v: PASS
+250-2.v: PASS
 250-3.i: PASS: RNG-ERROR
 250-4.i: PASS: RNG-ERROR
 250-5.i: PASS: RNG-ERROR
 250-6.i: PASS: RNG-ERROR
 251:  PASS
-251-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/251/1.v.xml> ]
-251-2.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/251/2.v.xml> ]
-251-3.v: FAIL: element not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/251/3.v.xml> ]
+251-1.v: PASS
+251-2.v: PASS
+251-3.v: PASS
 251-4.i: PASS: RNG-ERROR
 251-5.i: PASS: RNG-ERROR
 251-6.i: PASS: RNG-ERROR
 251-7.i: PASS: RNG-ERROR
 251-8.i: PASS: RNG-ERROR
 252:  PASS
-252-1.v: FAIL: text node not valid
-  [ Error at line 4, column 21 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/252/1.v.xml> ]
+252-1.v: PASS
 252-2.i: PASS: RNG-ERROR
 252-3.i: PASS: RNG-ERROR
 252-4.i: PASS: RNG-ERROR
 252-5.i: PASS: RNG-ERROR
 253:  PASS
-253-1.v: FAIL: element not valid
-  [ Error at line 4, column 19 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/253/1.v.xml> ]
+253-1.v: PASS
 253-2.i: PASS: RNG-ERROR
 253-3.i: PASS: RNG-ERROR
 253-4.i: PASS: RNG-ERROR
 253-5.i: PASS: RNG-ERROR
 254:  PASS
-254-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/254/1.v.xml> ]
+254-1.v: PASS
 254-2.i: PASS: RNG-ERROR
 254-3.i: PASS: RNG-ERROR
 254-4.i: PASS: RNG-ERROR
 254-5.i: PASS: RNG-ERROR
 254-6.i: PASS: RNG-ERROR
 255:  PASS
-255-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/255/1.v.xml> ]
-255-2.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/255/2.v.xml> ]
+255-1.v: PASS
+255-2.v: PASS
 255-3.i: PASS: RNG-ERROR
 255-4.i: PASS: RNG-ERROR
 255-5.i: PASS: RNG-ERROR
 255-6.i: PASS: RNG-ERROR
 255-7.i: PASS: RNG-ERROR
 256:  PASS
-256-1.v: FAIL: text node not valid
-  [ Error at line 4, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/256/1.v.xml> ]
+256-1.v: PASS
 256-2.i: PASS: RNG-ERROR
 256-3.i: PASS: RNG-ERROR
 257:  PASS
-257-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/257/1.v.xml> ]
-257-2.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/257/2.v.xml> ]
-257-3.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/257/3.v.xml> ]
+257-1.v: PASS
+257-2.v: PASS
+257-3.v: PASS
 257-4.i: PASS: RNG-ERROR
 257-5.i: PASS: RNG-ERROR
 258:  PASS
-258-1.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/258/1.v.xml> ]
+258-1.v: PASS
 258-2.i: PASS: RNG-ERROR
 258-3.i: PASS: RNG-ERROR
 259:  PASS
-259-1.v: FAIL: text node not valid
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/259/1.v.xml> ]
-259-2.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/259/2.v.xml> ]
+259-1.v: PASS
+259-2.v: PASS
 259-3.i: PASS: RNG-ERROR
 260:  PASS
 260-1.i: PASS: RNG-ERROR
 260-2.i: PASS: RNG-ERROR
-260-3.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/260/3.v.xml> ]
-260-4.v: FAIL: text node not valid
+260-3.v: PASS
+260-4.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(DATA :DATATYPE-LIBRARY  :TYPE token :PARAMS NIL :EXCEPT NIL)) :B #S(EMPTY))
   [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/260/4.v.xml> ]
 260-5.i: PASS: RNG-ERROR
 261:  PASS
-261-1.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/1.v.xml> ]
-261-2.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/2.v.xml> ]
-261-3.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/3.v.xml> ]
-261-4.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/4.v.xml> ]
-261-5.i: PASS: RNG-ERROR
-261-6.i: PASS: RNG-ERROR
-261-7.i: PASS: RNG-ERROR
+261-1.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-2.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-3.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-4.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-5.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-6.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261-7.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
 262:  PASS
-262-1.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/262/1.v.xml> ]
-262-2.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/262/2.v.xml> ]
+262-1.v: PASS
+262-2.v: PASS
 262-3.i: PASS: RNG-ERROR
-262-4.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/262/4.v.xml> ]
-262-5.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/262/5.v.xml> ]
-262-6.i: PASS: RNG-ERROR
+262-4.v: PASS
+262-5.v: PASS
+262-6.i: FAIL: incorrect condition type: The function CHECK-ALLOWED is undefined.
 262-7.i: PASS: RNG-ERROR
 262-8.i: PASS: RNG-ERROR
 263:  PASS
-263-1.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/1.v.xml> ]
-263-2.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/2.v.xml> ]
+263-1.v: PASS
+263-2.v: PASS
 263-3.i: PASS: RNG-ERROR
-263-4.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/4.v.xml> ]
-263-5.v: FAIL: element not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/5.v.xml> ]
-263-6.v: FAIL: text node
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/6.v.xml> ]
+263-4.v: PASS
+263-5.v: PASS
+263-6.v: FAIL: The function CHECK-ALLOWED is undefined.
 263-7.i: PASS: RNG-ERROR
-263-8.v: FAIL: element not valid
-  [ Error at line 3, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/263/8.v.xml> ]
+263-8.v: PASS
 264:  PASS
-264-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/264/1.v.xml> ]
+264-1.v: PASS
 264-2.i: PASS: RNG-ERROR
 264-3.i: PASS: RNG-ERROR
 264-4.i: PASS: RNG-ERROR
 265:  PASS
-265-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/265/1.v.xml> ]
+265-1.v: PASS
 266:  PASS
-266-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/266/1.v.xml> ]
+266-1.v: PASS
 267:  PASS
 267-1.i: PASS: RNG-ERROR
-267-2.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/267/2.v.xml> ]
+267-2.v: PASS
 268:  PASS
-268-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/268/1.v.xml> ]
-268-2.v: FAIL: text node not valid
-  [ Error at line 10, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/268/2.v.xml> ]
-268-3.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/268/3.v.xml> ]
-268-4.v: FAIL: text node not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/268/4.v.xml> ]
+268-1.v: PASS
+268-2.v: PASS
+268-3.v: PASS
+268-4.v: PASS
 268-5.i: PASS: RNG-ERROR
 268-6.i: PASS: RNG-ERROR
 269:  PASS
-269-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/269/1.v.xml> ]
-269-2.v: FAIL: text node not valid
-  [ Error at line 10, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/269/2.v.xml> ]
-269-3.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/269/3.v.xml> ]
-269-4.v: FAIL: text node not valid
-  [ Error at line 5, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/269/4.v.xml> ]
+269-1.v: PASS
+269-2.v: PASS
+269-3.v: PASS
+269-4.v: PASS
 269-5.i: PASS: RNG-ERROR
 269-6.i: PASS: RNG-ERROR
 270:  PASS
-270-1.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/270/1.v.xml> ]
+270-1.v: PASS
 270-2.i: PASS: RNG-ERROR
 270-3.i: PASS: RNG-ERROR
 270-4.i: PASS: RNG-ERROR
 271:  PASS
-271-1.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/271/1.v.xml> ]
+271-1.v: PASS
 271-2.i: PASS: RNG-ERROR
 271-3.i: PASS: RNG-ERROR
 271-4.i: PASS: RNG-ERROR
 272:  PASS
-272-1.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/272/1.v.xml> ]
-272-2.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/272/2.v.xml> ]
-272-3.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/272/3.v.xml> ]
-272-4.v: FAIL: text node not valid
-  [ Error at line 5, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/272/4.v.xml> ]
+272-1.v: PASS
+272-2.v: PASS
+272-3.v: PASS
+272-4.v: PASS
 272-5.i: PASS: RNG-ERROR
 272-6.i: PASS: RNG-ERROR
 273:  PASS
-273-1.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/273/1.v.xml> ]
-273-2.v: FAIL: text node not valid
-  [ Error at line 3, column 19 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/273/2.v.xml> ]
-273-3.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/273/3.v.xml> ]
+273-1.v: PASS
+273-2.v: PASS
+273-3.v: PASS
 273-4.i: PASS: RNG-ERROR
 274:  PASS
-274-1.v: FAIL: text node not valid
-  [ Error at line 3, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/274/1.v.xml> ]
-274-2.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/274/2.v.xml> ]
-274-3.v: FAIL: text node not valid
-  [ Error at line 3, column 14 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/274/3.v.xml> ]
-274-4.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/274/4.v.xml> ]
+274-1.v: PASS
+274-2.v: PASS
+274-3.v: PASS
+274-4.v: PASS
 274-5.i: PASS: RNG-ERROR
 274-6.i: PASS: RNG-ERROR
 275:  PASS
-275-1.v: FAIL: text node not valid
-  [ Error at line 3, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/275/1.v.xml> ]
-275-2.v: FAIL: text node not valid
-  [ Error at line 3, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/275/2.v.xml> ]
-275-3.v: FAIL: text node not valid
-  [ Error at line 3, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/275/3.v.xml> ]
-275-4.v: FAIL: text node not valid
-  [ Error at line 3, column 20 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/275/4.v.xml> ]
-275-5.v: FAIL: text node not valid
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/275/5.v.xml> ]
+275-1.v: PASS
+275-2.v: PASS
+275-3.v: PASS
+275-4.v: PASS
+275-5.v: PASS
 275-6.i: PASS: RNG-ERROR
 275-7.i: PASS: RNG-ERROR
 276:  FAIL: didn't detect invalid schema
@@ -1014,29 +817,24 @@
 278:  FAIL: didn't detect invalid schema
 279:  FAIL: didn't detect invalid schema
 280:  PASS
-280-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/280/1.v.xml> ]
-280-2.v: FAIL: text node not valid
+280-1.v: PASS
+280-2.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(VALUE :DATATYPE-LIBRARY #1= :TYPE string :NS #1# :STRING x)) :B #S(EMPTY))
   [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/280/2.v.xml> ]
 280-3.i: PASS: RNG-ERROR
 281:  PASS
-281-1.v: FAIL: text node not valid
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/281/1.v.xml> ]
-281-2.v: FAIL: text node not valid
+281-1.v: PASS
+281-2.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(ONE-OR-MORE :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 21 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/281/2.v.xml> ]
 281-3.i: PASS: RNG-ERROR
 281-4.i: PASS: RNG-ERROR
 282:  PASS
-282-1.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/282/1.v.xml> ]
-282-2.v: FAIL: text node not valid
-  [ Error at line 4, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/282/2.v.xml> ]
-282-3.v: FAIL: text node not valid
+282-1.v: PASS
+282-2.v: PASS
+282-3.v: FAIL: text node not valid, was expecting a #S(AFTER :A #S(LIST-PATTERN :CHILD #S(GROUP :A # :B #)) :B #S(EMPTY))
   [ Error at line 5, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/282/3.v.xml> ]
 282-4.i: PASS: RNG-ERROR
 283:  PASS
-283-1.v: FAIL: text node not valid
-  [ Error at line 4, column 15 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/283/1.v.xml> ]
+283-1.v: PASS
 283-2.i: PASS: RNG-ERROR
 283-3.i: PASS: RNG-ERROR
 284:  PASS
@@ -1085,43 +883,33 @@
 326:  FAIL: didn't detect invalid schema
 327:  FAIL: didn't detect invalid schema
 328:  PASS
-328-1.v: FAIL: text node not valid
-  [ Error at line 4, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/328/1.v.xml> ]
+328-1.v: PASS
 329:  FAIL: didn't detect invalid schema
 330:  PASS
-330-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/330/1.v.xml> ]
+330-1.v: PASS
 331:  PASS
-331-1.v: FAIL: text node not valid
-  [ Error at line 4, column 17 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/331/1.v.xml> ]
+331-1.v: PASS
 332:  PASS
-332-1.v: FAIL: text node not valid
-  [ Error at line 4, column 35 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/332/1.v.xml> ]
+332-1.v: PASS
 333:  PASS
-333-1.v: FAIL: text node not valid
-  [ Error at line 4, column 35 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/333/1.v.xml> ]
+333-1.v: PASS
 334:  PASS
-334-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/334/1.v.xml> ]
+334-1.v: PASS
 335:  FAIL: didn't detect invalid schema
 336:  PASS
-336-1.v: FAIL: text node not valid
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/336/1.v.xml> ]
+336-1.v: PASS
 337:  FAIL: didn't detect invalid schema
 338:  FAIL: didn't detect invalid schema
 339:  FAIL: didn't detect invalid schema
 340:  PASS
-340-1.v: FAIL: text node not valid
-  [ Error at line 4, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/340/1.v.xml> ]
+340-1.v: PASS
 341:  FAIL: didn't detect invalid schema
 342:  FAIL: didn't detect invalid schema
 343:  FAIL: didn't detect invalid schema
 344:  FAIL: didn't detect invalid schema
 345:  PASS
-345-1.v: FAIL: text node not valid
-  [ Error at line 4, column 36 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/345/1.v.xml> ]
-345-2.v: FAIL: text node not valid
-  [ Error at line 4, column 24 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/345/2.v.xml> ]
+345-1.v: PASS
+345-2.v: PASS
 345-3.i: PASS: RNG-ERROR
 345-4.i: PASS: RNG-ERROR
 345-5.i: PASS: RNG-ERROR
@@ -1133,17 +921,14 @@
 351:  FAIL: didn't detect invalid schema
 352:  FAIL: didn't detect invalid schema
 353:  PASS
-353-1.v: FAIL: text node not valid
-  [ Error at line 4, column 25 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/353/1.v.xml> ]
+353-1.v: PASS
 353-2.i: PASS: RNG-ERROR
-353-3.v: FAIL: text node not valid
-  [ Error at line 4, column 61 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/353/3.v.xml> ]
+353-3.v: PASS
 354:  PASS
-354-1.v: FAIL: text node not valid
+354-1.v: FAIL: attributes not valid, was expecting a #S(AFTER :A #S(GROUP :A #S(ONE-OR-MORE :CHILD #) :B #S(ONE-OR-MORE :CHILD #)) :B #S(EMPTY))
   [ Error at line 4, column 103 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/354/1.v.xml> ]
 355:  PASS
-355-1.v: FAIL: text node not valid
-  [ Error at line 4, column 16 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/355/1.v.xml> ]
+355-1.v: PASS
 356:  FAIL: didn't detect invalid schema
 357:  FAIL: didn't detect invalid schema
 358:  FAIL: didn't detect invalid schema
@@ -1157,16 +942,13 @@
 366:  FAIL: didn't detect invalid schema
 367:  FAIL: didn't detect invalid schema
 368:  PASS
-368-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/368/1.v.xml> ]
+368-1.v: PASS
 369:  PASS
-369-1.v: FAIL: element not valid
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/369/1.v.xml> ]
+369-1.v: PASS
 370:  FAIL: didn't detect invalid schema
 371:  FAIL: didn't detect invalid schema
 372:  PASS
-372-1.v: FAIL: element not valid
-  [ Error at line 4, column 21 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/372/1.v.xml> ]
+372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 502/902 tests.
+Passed 710/902 tests.

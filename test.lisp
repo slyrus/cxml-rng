@@ -33,7 +33,8 @@
   (dribble "/home/david/src/lisp/cxml-rng/TEST" :if-exists :rename-and-delete)
   (let ((pass 0)
 	(total 0)
-	(*package* (find-package :cxml-rng)))
+	(*package* (find-package :cxml-rng))
+	(*print-level* 3))
     (dolist (d (directory p))
       (let ((name (car (last (pathname-directory d)))))
 	(when (parse-integer name :junk-allowed t)
@@ -54,7 +55,9 @@
 (defun run-validation-test
     (m n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
   (let ((d (merge-pathnames (format nil "~3,'0D/" m) p))
-	(*break-on-signals* 'error))
+	(*break-on-signals* 'error)
+	(*debug* t)
+	(*print-level* 3))
     (run-validation-tests m
 			  (nth-value 1 (test1 d))
 			  (list (let ((v (merge-pathnames
