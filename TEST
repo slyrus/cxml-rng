@@ -82,8 +82,7 @@
 073:  FAIL: didn't detect invalid schema
 074:  FAIL: didn't detect invalid schema
 075:  PASS
-075-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME ?? :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD #S(EMPTY) :NAME #)))
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/075/1.v.xml> ]
+075-1.v: PASS
 076:  FAIL: didn't detect invalid schema
 077:  FAIL: didn't detect invalid schema
 078:  FAIL: didn't detect invalid schema
@@ -118,8 +117,7 @@
 097:  PASS
 097-1.v: PASS
 098:  PASS
-098-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(REF :CRDEPTH T :TARGET #)))
-  [ Error at line 4, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/098/1.v.xml> ]
+098-1.v: PASS
 099:  PASS
 099-1.v: PASS
 099-2.v: PASS
@@ -171,10 +169,8 @@
 119-1.v: FAIL: cannot run test
 119-2.i: FAIL: cannot run test
 120:  PASS
-120-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
-  [ Error at line 3, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/1.v.xml> ]
-120-2.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
-  [ Error at line 3, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/120/2.v.xml> ]
+120-1.v: PASS
+120-2.v: PASS
 120-3.i: PASS: RNG-ERROR
 121:  PASS: RNG-ERROR
 122:  PASS
@@ -210,19 +206,14 @@
 132-1.v: PASS
 132-2.i: PASS: RNG-ERROR
 133:  PASS
-133-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD #S(EMPTY) :NAME #)))
-  [ Error at line 4, column 38 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/133/1.v.xml> ]
+133-1.v: PASS
 133-2.i: PASS: RNG-ERROR
 134:  PASS
-134-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bars :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/134/1.v.xml> ]
+134-1.v: PASS
 134-2.i: PASS: RNG-ERROR
 134-3.i: PASS: RNG-ERROR
 134-4.i: PASS: RNG-ERROR
-134-5.i: FAIL: incorrect condition type: There is no applicable method for the generic function
-                                           #<STANDARD-GENERIC-FUNCTION NULLABLE (13)>
-                                         when called with arguments
-                                           (#S(REF :CRDEPTH T :TARGET #)).
+134-5.i: PASS: RNG-ERROR
 134-6.i: PASS: RNG-ERROR
 134-7.i: PASS: RNG-ERROR
 134-8.i: PASS: RNG-ERROR
@@ -382,12 +373,9 @@
 188:  PASS: RNG-ERROR
 189:  PASS: RNG-ERROR
 190:  PASS
-190-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/1.v.xml> ]
-190-2.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/2.v.xml> ]
-190-3.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD CHOICE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(CHOICE :A # :B #)))
-  [ Error at line 4, column 8 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/190/3.v.xml> ]
+190-1.v: PASS
+190-2.v: PASS
+190-3.v: PASS
 190-4.i: PASS: RNG-ERROR
 191:  PASS
 191-1.v: PASS
@@ -397,12 +385,9 @@
 192:  PASS: RNG-ERROR
 193:  PASS: RNG-ERROR
 194:  PASS
-194-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/1.v.xml> ]
-194-2.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/2.v.xml> ]
-194-3.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME x :COMBINE-METHOD INTERLEAVE :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 13 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/194/3.v.xml> ]
+194-1.v: PASS
+194-2.v: PASS
+194-3.v: PASS
 194-4.i: PASS: RNG-ERROR
 195:  PASS
 195-1.v: PASS
@@ -422,26 +407,18 @@
 206:  PASS: RNG-ERROR
 207:  PASS: RNG-ERROR
 208:  PASS
-208-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(REF :CRDEPTH T :TARGET #)))
-  [ Error at line 3, column 7 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/208/1.v.xml> ]
+208-1.v: PASS
 209:  PASS
-209-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD # :NAME #)))
-  [ Error at line 3, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/209/1.v.xml> ]
+209-1.v: PASS
 209-2.i: PASS: RNG-ERROR
 210:  PASS
-210-1.v: FAIL: element not valid, was expecting a #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME foo :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #S(ELEMENT :CHILD # :NAME #)))
-  [ Error at line 3, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/210/1.v.xml> ]
+210-1.v: PASS
 210-2.i: PASS: RNG-ERROR
 211:  PASS: RNG-ERROR
 212:  PASS
-212-1.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bar :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 12 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/212/1.v.xml> ]
-212-2.v: FAIL: element not valid, was expecting a #S(AFTER :A #S(REF :CRDEPTH T :TARGET #S(DEFINITION :NAME bar :COMBINE-METHOD NIL :HEAD-P T :REDEFINITION NOT-BEING-REDEFINED :CHILD #)) :B #S(EMPTY))
-  [ Error at line 4, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/212/2.v.xml> ]
-212-3.i: FAIL: incorrect condition type: There is no applicable method for the generic function
-                                           #<STANDARD-GENERIC-FUNCTION NULLABLE (13)>
-                                         when called with arguments
-                                           (#S(REF :CRDEPTH T :TARGET #)).
+212-1.v: PASS
+212-2.v: PASS
+212-3.i: PASS: RNG-ERROR
 213:  PASS
 213-1.v: PASS
 214:  PASS: RNG-ERROR
@@ -930,4 +907,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 742/902 tests.
+Passed 761/902 tests.

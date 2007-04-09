@@ -35,9 +35,13 @@
 
 
 (defun make-validator (grammar)
-  (make-instance 'text-normalizer
-		 :chained-handler
-		 (make-instance 'validator :current-pattern grammar)))
+  (let* ((table (ensure-registratur grammar))
+	 (start (parsed-grammar-interned-start grammar))
+	 (validator
+	  (make-instance 'validator
+			 :registratur table
+			 :current-pattern start)))
+    (make-instance 'text-normalizer :chained-handler validator)))
 
 
 ;;;; CONTAINS
@@ -103,7 +107,7 @@
   ((current-pattern :initarg :current-pattern :accessor current-pattern)
    (after-start-tag-p :accessor after-start-tag-p)
    (pending-text-node :initform nil :accessor pending-text-node)
-   (registratur :initform (make-hash-table :test 'equal) :reader registratur)))
+   (registratur :initarg :registratur :accessor registratur)))
 
 (defun advance (hsx pattern message)
   (when (typep pattern 'not-allowed)
@@ -269,7 +273,7 @@
 (defmethod intern-choice (hsx a (b not-allowed)) a)
 (defmethod intern-choice (hsx (a not-allowed) b) b)
 (defmethod intern-choice (hsx a b)
-  (ensuref (list :choice a b) (registratur hsx) (make-choice a b)))
+  (ensuref (list 'choice a b) (registratur hsx) (make-choice a b)))
 
 (defgeneric intern-group (handler a b))
 (defmethod intern-group (hsx (a pattern) (b not-allowed)) b)
@@ -277,7 +281,7 @@
 (defmethod intern-group (hsx a (b empty)) a)
 (defmethod intern-group (hsx (a empty) b) b)
 (defmethod intern-group (hsx a b)
-  (ensuref (list :group a b) (registratur hsx) (make-group a b)))
+  (ensuref (list 'group a b) (registratur hsx) (make-group a b)))
 
 (defgeneric intern-interleave (handler a b))
 (defmethod intern-interleave (hsx (a pattern) (b not-allowed)) b)
@@ -285,18 +289,89 @@
 (defmethod intern-interleave (hsx a (b empty)) a)
 (defmethod intern-interleave (hsx (a empty) b) b)
 (defmethod intern-interleave (hsx a b)
-  (ensuref (list :interleave a b) (registratur hsx) (make-interleave a b)))
+  (ensuref (list 'interleave a b) (registratur hsx) (make-interleave a b)))
 
 (defgeneric intern-after (handler a b))
 (defmethod intern-after (hsx (a pattern) (b not-allowed)) b)
 (defmethod intern-after (hsx (a not-allowed) (b pattern)) a)
 (defmethod intern-after (hsx a b)
-  (ensuref (list :after a b) (registratur hsx) (make-after a b)))
+  (ensuref (list 'after a b) (registratur hsx) (make-after a b)))
 
 (defgeneric intern-one-or-more (handler c))
 (defmethod intern-one-or-more (hsx (c not-allowed)) c)
 (defmethod intern-one-or-more (hsx c)
-  (ensuref (list :one-or-more c) (registratur hsx) (make-one-or-more c)))
+  (ensuref (list 'one-or-more c) (registratur hsx) (make-one-or-more c)))
+
+
+;;;; ENSURE-REGISTRATUR
+
+(defvar *seen-elements*)
+
+(defun ensure-registratur (grammar)
+  (or (parsed-grammar-registratur grammar)
+      (setf (parsed-grammar-registratur grammar)
+	    (let ((table (make-hash-table :test 'equal))
+		  (*seen-elements* '())
+		  (done-elements '()))
+	      (setf (parsed-grammar-interned-start grammar)
+		    (intern-pattern (parsed-grammar-pattern grammar) table))
+	      (loop
+		 for elements = *seen-elements*
+		 while elements do
+		 (setf *seen-elements* nil)
+		 (dolist (pattern elements)
+		   (unless (find pattern done-elements)
+		     (push pattern done-elements)
+		     (setf (pattern-child pattern)
+			   (intern-pattern (pattern-child pattern) table)))))
+	      table))))
+
+;;; FIXME: misnamed.  we don't really intern the originals pattern yet.
+
+(defgeneric intern-pattern (pattern table))
+
+(defmethod intern-pattern ((pattern element) table)
+  (pushnew pattern *seen-elements*)
+  pattern)
+
+(defmethod intern-pattern ((pattern %parent) table)
+  (let ((c (intern-pattern (pattern-child pattern) table)))
+    (if (eq c (pattern-child pattern))
+	pattern
+	(let ((copy (copy-structure pattern)))
+	  (setf (pattern-child copy) c)
+	  copy))))
+
+(defmethod intern-pattern ((pattern %combination) table)
+  (let ((a (intern-pattern (pattern-a pattern) table))
+	(b (intern-pattern (pattern-b pattern) table)))
+    (if (and (eq a (pattern-a pattern)) (eq b (pattern-b pattern)))
+	pattern
+	(let ((copy (copy-structure pattern)))
+	  (setf (pattern-a copy) a)
+	  (setf (pattern-b copy) b)
+	  copy))))
+
+(defmethod intern-pattern ((pattern data) table)
+  (let ((e (when (pattern-except pattern)
+	     (intern-pattern (pattern-except pattern) table))))
+    (if (eq e (pattern-except pattern))
+	pattern
+	(let ((copy (copy-structure pattern)))
+	  (setf (pattern-except copy) e)
+	  copy))))
+
+(defmethod intern-pattern ((pattern ref) table)
+  (intern-pattern (defn-child (pattern-target pattern)) table))
+
+(defmethod intern-pattern ((pattern empty) table)
+  *empty*)
+
+(defmethod intern-pattern ((pattern not-allowed) table)
+  *not-allowed*)
+
+(defmethod intern-pattern ((pattern %leaf) table)
+  pattern)
 
 
 ;;;; built-in data type library

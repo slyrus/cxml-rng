@@ -66,6 +66,11 @@
 
 (defvar *debug* nil)
 
+(defstruct (parsed-grammar (:constructor make-parsed-grammar (pattern)))
+  (pattern (missing) :type pattern)
+  (interned-start nil :type (or null pattern))
+  (registratur nil :type (or null hash-table)))
+
 (defun invoke-with-klacks-handler (fn source)
   (if *debug*
       (funcall fn)
@@ -94,7 +99,7 @@
 	 (check-recursion result 0)
 	 (setf result (fold-not-allowed result))
 	 (setf result (fold-empty result))
-	 result))
+	 (make-parsed-grammar result)))
       source)))
 
 
@@ -850,7 +855,7 @@
 	  (*seen-names* (make-hash-table :test 'equal)))
       (cxml:with-element "grammar"
 	(cxml:with-element "start"
-	  (serialize-pattern grammar))
+	  (serialize-pattern (parsed-grammar-pattern grammar)))
 	(loop for defn being each hash-key in *definitions-to-names* do
 	      (serialize-definition defn))))))
 
