@@ -135,7 +135,7 @@
 	 (p1 (open-start-tag\' hsx p0 uri lname))
 	 (p2 (progn
 	       (check-allowed hsx "element not valid")
-	       (attributes\' hsx p1 uri lname)))
+	       (attributes\' hsx p1 attributes)))
 	 (p3 (progn
 	       (check-allowed hsx "attributes not valid")
 	       (close-start-tag\' hsx p2))))
