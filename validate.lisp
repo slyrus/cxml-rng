@@ -232,15 +232,12 @@
   (if ok *empty* *not-allowed*))
 
 (defmethod text\' (hsx (pattern value) data)
-  (eat (equal* (pattern-datatype-library pattern)
-	       (pattern-type pattern)
-	       (pattern-string pattern)
-	       data)))
+  (eat (cxml-types:equal* (pattern-type pattern)
+			  (pattern-string pattern)
+			  data)))
 
 (defmethod text\' (hsx (pattern data) data)
-  (eat (and (typep* (pattern-datatype-library pattern)
-		    (pattern-type pattern)
-		    data)
+  (eat (and (cxml-types:typep* (pattern-type pattern) data)
 	    (let ((except (pattern-except pattern)))
 	      (not (and except (nullable (text\' hsx except data))))))))
 
@@ -373,30 +370,6 @@
 
 (defmethod intern-pattern ((pattern %leaf) table)
   pattern)
-
-
-;;;; built-in data type library
-
-;;; FIXME
-
-(defun equal* (dl type a b)
-  (unless (equal dl "")
-    (error "data type library not found: ~A" dl))
-  (ecase (find-symbol type :keyword)
-    (:|string| (equal a b))
-    (:|token| (equal (normalize-whitespace a) (normalize-whitespace b)))))
-
-(defun typep* (dl type str)
-  (declare (ignore str))
-  (unless (equal dl "")
-    (error "data type library not found: ~A" dl))
-  (ecase (find-symbol type :keyword)
-    ((:|string| :|token|) t)))
-
-(defun normalize-whitespace (str)
-  (cl-ppcre:regex-replace-all #.(format nil "[~A]+" *whitespace*)
-                              (string-trim *whitespace* str)
-                              " "))
 
 
 ;;;; APPLY-AFTER

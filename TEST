@@ -37,8 +37,8 @@
 037:  FAIL: didn't detect invalid schema
 038:  FAIL: didn't detect invalid schema
 039:  PASS: RNG-ERROR
-040:  FAIL: didn't detect invalid schema
-041:  FAIL: didn't detect invalid schema
+040:  PASS: RNG-ERROR
+041:  FAIL: incorrect condition type: The value NIL is not of type STRING.
 042:  PASS: RNG-ERROR
 043:  PASS: RNG-ERROR
 044:  PASS: RNG-ERROR
@@ -357,15 +357,15 @@
 175:  FAIL: didn't detect invalid schema
 176:  PASS
 176-1.v: PASS
-177:  FAIL: didn't detect invalid schema
-178:  FAIL: didn't detect invalid schema
-179:  FAIL: didn't detect invalid schema
-180:  FAIL: didn't detect invalid schema
-181:  FAIL: didn't detect invalid schema
-182:  FAIL: didn't detect invalid schema
-183:  FAIL: didn't detect invalid schema
-184:  FAIL: didn't detect invalid schema
-185:  FAIL: didn't detect invalid schema
+177:  PASS: RNG-ERROR
+178:  PASS: RNG-ERROR
+179:  PASS: RNG-ERROR
+180:  PASS: RNG-ERROR
+181:  PASS: RNG-ERROR
+182:  PASS: RNG-ERROR
+183:  PASS: RNG-ERROR
+184:  PASS: RNG-ERROR
+185:  PASS: RNG-ERROR
 186:  PASS: RNG-ERROR
 187:  PASS: RNG-ERROR
 188:  PASS: RNG-ERROR
@@ -677,14 +677,15 @@
 260-3.v: PASS
 260-4.v: PASS
 260-5.i: PASS: RNG-ERROR
-261:  PASS
-261-1.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-2.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-3.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-4.v: FAIL: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-5.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-6.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
-261-7.i: FAIL: incorrect condition type: data type library not found: http://www.w3.org/2001/XMLSchema-datatypes
+261:  FAIL: type not found: string/http://www.w3.org/2001/XMLSchema-datatypes
+  [ Error at line 7, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/c.rng> ]
+261-1.v: FAIL: cannot run test
+261-2.v: FAIL: cannot run test
+261-3.v: FAIL: cannot run test
+261-4.v: FAIL: cannot run test
+261-5.i: FAIL: cannot run test
+261-6.i: FAIL: cannot run test
+261-7.i: FAIL: cannot run test
 262:  PASS
 262-1.v: PASS
 262-2.v: PASS
@@ -766,10 +767,10 @@
 275-5.v: PASS
 275-6.i: PASS: RNG-ERROR
 275-7.i: PASS: RNG-ERROR
-276:  FAIL: didn't detect invalid schema
-277:  FAIL: didn't detect invalid schema
-278:  FAIL: didn't detect invalid schema
-279:  FAIL: didn't detect invalid schema
+276:  PASS: RNG-ERROR
+277:  PASS: RNG-ERROR
+278:  PASS: RNG-ERROR
+279:  PASS: RNG-ERROR
 280:  PASS
 280-1.v: PASS
 280-2.v: PASS
@@ -901,4 +902,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 770/902 tests.
+Passed 783/902 tests.

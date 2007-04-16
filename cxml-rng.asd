@@ -19,4 +19,4 @@
      (:file "parse")
      (:file "validate")
      (:file "test"))
-    :depends-on (:cxml :cl-ppcre))
+    :depends-on (:cxml :cxml-types :cl-ppcre))

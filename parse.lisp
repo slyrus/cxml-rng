@@ -151,7 +151,6 @@
 (defstruct (text (:include %leaf) (:conc-name "PATTERN-")))
 
 (defstruct (%typed-pattern (:include %leaf) (:conc-name "PATTERN-"))
-  datatype-library
   type)
 
 (defstruct (value (:include %typed-pattern) (:conc-name "PATTERN-"))
@@ -454,32 +453,61 @@
       (unless type
 	(setf type "token")
 	(setf dl ""))
-      (make-value :string string :type type :ns ns :datatype-library dl))))
+      (let ((ti
+	     (cxml-types:find-type (and dl (find-symbol dl :keyword)) type)))
+	(unless ti
+	  (rng-error source "type not found: ~A/~A" type dl))
+	(make-value :string string :type ti :ns ns)))))
 
 (defun p/data (source)
   (klacks:expecting-element (source "data")
     (let* ((type (ntc "type" source))
-	   (result (make-data :type type
-			      :datatype-library *datatype-library*
-			     ))
-	   (params '()))
+	   (params '())
+	   (except nil))
       (loop
-	(multiple-value-bind (key uri lname)
-	    (klacks:peek-next source)
-	  uri
-	  (case key
-	    (:start-element
+	 (multiple-value-bind (key uri lname)
+	     (klacks:peek-next source)
+	   uri
+	   (case key
+	     (:start-element
 	      (case (find-symbol lname :keyword)
 		(:|param| (push (p/param source) params))
 		(:|except|
-		  (setf (pattern-except result) (p/except-pattern source))
+		  (setf except (p/except-pattern source))
 		  (skip-to-native source)
 		  (return))
 		(t (skip-foreign source))))
-	    (:end-element
+	     (:end-element
 	      (return)))))
-      (setf (pattern-params result) (nreverse params))
-      result)))
+      (setf params (nreverse params))
+      (let* ((dl *datatype-library*)
+	     (ti (apply #'cxml-types:find-type
+			(and dl (find-symbol dl :keyword))
+			type
+			(loop
+			   for p in params
+			   collect (find-symbol (string-invertcase
+						 (param-name p))
+						:keyword)
+			   collect (param-string p)))))
+	(unless ti
+	  (rng-error source "type not found: ~A/~A" type dl))
+	(make-data
+	 :type ti
+	 :params params
+	 :except except)))))
+
+(defun string-invertcase (str)
+  (loop
+     with result = (copy-seq str)
+     for c across str
+     for i from 0
+     do
+       (setf (char result i)
+	     (if (lower-case-p c)
+		 (char-upcase c)
+		 (char-downcase c)))
+     finally (return result)))
 
 (defun p/param (source)
   (klacks:expecting-element (source "param")
@@ -899,16 +927,18 @@
       (cxml:with-element "text"))
     (value
       (cxml:with-element "value"
-	(cxml:attribute "datatype-library"
-			(pattern-datatype-library pattern))
-	(cxml:attribute "type" (pattern-type pattern))
+	(let ((type (pattern-type pattern)))
+	  (cxml:attribute "datatype-library"
+			  (symbol-name (cxml-types:type-library type)))
+	  (cxml:attribute "type" (cxml-types:type-name type)))
 	(cxml:attribute "ns" (pattern-ns pattern))
 	(cxml:text (pattern-string pattern))))
     (data
       (cxml:with-element "value"
-	(cxml:attribute "datatype-library"
-			(pattern-datatype-library pattern))
-	(cxml:attribute "type" (pattern-type pattern))
+	(let ((type (pattern-type pattern)))
+	  (cxml:attribute "datatype-library"
+			  (symbol-name (cxml-types:type-library type)))
+	  (cxml:attribute "type" (cxml-types:type-name type)))
 	(dolist (param (pattern-params pattern))
 	  (cxml:with-element "param"
 	    (cxml:attribute "name" (param-name param))
