@@ -72,6 +72,9 @@
   (interned-start nil :type (or null pattern))
   (registratur nil :type (or null hash-table)))
 
+(defmethod print-object ((object parsed-grammar) stream)
+  (print-unreadable-object (object stream :type t :identity t)))
+
 (defun invoke-with-klacks-handler (fn source)
   (if *debug*
       (funcall fn)
@@ -155,7 +158,8 @@
 
 (defstruct (value (:include %typed-pattern) (:conc-name "PATTERN-"))
   ns
-  string)
+  string
+  value)
 
 (defstruct (data (:include %typed-pattern) (:conc-name "PATTERN-"))
   params
@@ -453,11 +457,14 @@
       (unless type
 	(setf type "token")
 	(setf dl ""))
-      (let ((ti
+      (let ((data-type
 	     (cxml-types:find-type (and dl (find-symbol dl :keyword)) type)))
-	(unless ti
+	(unless data-type
 	  (rng-error source "type not found: ~A/~A" type dl))
-	(make-value :string string :type ti :ns ns)))))
+	(make-value :string string
+		    :value (cxml-types:parse data-type string)
+		    :type data-type
+		    :ns ns)))))
 
 (defun p/data (source)
   (klacks:expecting-element (source "data")
@@ -481,19 +488,19 @@
 	      (return)))))
       (setf params (nreverse params))
       (let* ((dl *datatype-library*)
-	     (ti (apply #'cxml-types:find-type
-			(and dl (find-symbol dl :keyword))
-			type
-			(loop
-			   for p in params
-			   collect (find-symbol (string-invertcase
-						 (param-name p))
-						:keyword)
-			   collect (param-string p)))))
-	(unless ti
+	     (data-type (apply #'cxml-types:find-type
+			       (and dl (find-symbol dl :keyword))
+			       type
+			       (loop
+				  for p in params
+				  collect (find-symbol (string-invertcase
+							(param-name p))
+						       :keyword)
+				  collect (param-string p)))))
+	(unless data-type
 	  (rng-error source "type not found: ~A/~A" type dl))
 	(make-data
-	 :type ti
+	 :type data-type
 	 :params params
 	 :except except)))))
 

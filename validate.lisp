@@ -232,12 +232,14 @@
   (if ok *empty* *not-allowed*))
 
 (defmethod text\' (hsx (pattern value) data)
-  (eat (cxml-types:equal* (pattern-type pattern)
-			  (pattern-string pattern)
-			  data)))
+  (let ((data-type (pattern-type pattern)))
+    (eat (cxml-types:equal-using-type
+	  data-type
+	  (pattern-value pattern)
+	  (cxml-types:parse data-type data)))))
 
 (defmethod text\' (hsx (pattern data) data)
-  (eat (and (cxml-types:typep* (pattern-type pattern) data)
+  (eat (and (cxml-types:validp (pattern-type pattern) data)
 	    (let ((except (pattern-except pattern)))
 	      (not (and except (nullable (text\' hsx except data))))))))
 

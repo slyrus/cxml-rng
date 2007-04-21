@@ -8,7 +8,7 @@
 (defmethod perform :around ((o compile-op) (s closure-source-file))
   ;; shut up already.  Correctness first.
   (handler-bind ((sb-ext:compiler-note #'muffle-warning))
-    (let (#+sbcl (*compile-print* nil))
+    (let ((*compile-print* nil))
       (call-next-method))))
 
 (defsystem :cxml-rng
@@ -16,7 +16,8 @@
     :serial t
     :components
     ((:file "package")
+     (:file "types")
      (:file "parse")
      (:file "validate")
      (:file "test"))
-    :depends-on (:cxml :cxml-types :cl-ppcre))
+    :depends-on (:cxml :cl-ppcre))
