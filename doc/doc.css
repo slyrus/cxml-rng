@@ -68,7 +68,8 @@ div.sidebar ul.sub {
 body {
   color: #000000;
   background-color: #ffffff;
-  margin-right: 0pt;
+  margin-top: 2em;
+  margin-right: 20pt;
   margin-bottom: 10%;
   font-family: verdana, arial;
 //   background-image: url(bg.png);
@@ -143,4 +144,5 @@ h1,h2 {
   border-bottom: 1px solid black;
   font-family: verdana, arial;
   font-size: 12pt;
+  padding-bottom: 1px;
 }

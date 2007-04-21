@@ -58,9 +58,9 @@
 
 	  <h3>Implementation-specific notes</h3>
 	  <p>
-	    At this point, cxml-rng is written to use Lisp strings (as opposed
-	    to runes), and as meant to be used on Lisp implementations
-	    with Unicode support.
+	    At this point, cxml-rng is written to work with Lisp strings
+	    (as opposed to runes and rods), and is meant to be used on
+	    Lisp implementations with Unicode support.
 	  </p>
 
 	  <h3>Example</h3>

@@ -68,6 +68,7 @@ div.sidebar ul.sub {
 body {
   color: #000000;
   background-color: #ffffff;
+  margin-top: 2em;
   margin-right: 0pt;
   margin-bottom: 10%;
   font-family: verdana, arial;
@@ -84,14 +85,9 @@ body {
 }
 
 h1,h2,h3 {
+  color: #000077;
   margin-top: 2em;
   margin-left: -30px;
-}
-
-.code {
-  border: solid 1px #d0d0d0;
-  padding: 1em;
-  margin-right: 10%;
 }
 
 .def {
@@ -141,6 +137,7 @@ h1,h2,h3 {
 
 #header {
   margin-right: 22px;
+  padding-bottom: 1px;
   border-bottom: 1px solid black;
   font-family: verdana, arial;
   font-size: 12pt;
@@ -150,5 +147,4 @@ h1,h2,h3 {
   background-color: #eeeeee;
   border: solid 1px #d0d0d0;
   padding: 1em;
-  margin-right: 10%;
 }
