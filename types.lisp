@@ -308,7 +308,9 @@
        (equal (qname-lname u) (qname-lname v))))
 
 (defun namep (str)
-  (every #'cxml::name-rune-p str))
+  (and (not (zerop (length str)))
+       (cxml::name-start-rune-p (elt str 0))
+       (every #'cxml::name-rune-p str)))
 
 (defmethod %parse ((type qname-type) e context)
   (setf e (normalize-whitespace e))
