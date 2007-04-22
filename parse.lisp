@@ -318,10 +318,12 @@
 	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*))
 	 (*namespace-uri* (or ns *namespace-uri*))
 	 (*ns* ns))
-    #+(or)
     (when (and dl
-	       (not (cxml-types:find-type *datatype-library* :probe)))
-      (rng-error nil "data type library not known: ~A" *datatype-library*))
+	       (not (zerop (length *datatype-library*)))
+	       (not (cl-ppcre:all-matches
+		     "^[a-zA-Z][a-zA-Z0-9+.-]*:"
+		     *datatype-library*)))
+      (rng-error nil "malformed datatypeLibrary: ~A" *datatype-library*))
     (funcall fn)))
 
 (defun p/pattern (source)
