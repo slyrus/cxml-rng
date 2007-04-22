@@ -845,10 +845,10 @@
 333-1.v: PASS
 334:  PASS
 334-1.v: PASS
-335:  FAIL: didn't detect invalid schema
+335:  PASS: RNG-ERROR
 336:  PASS
 336-1.v: PASS
-337:  FAIL: didn't detect invalid schema
+337:  PASS: RNG-ERROR
 338:  FAIL: didn't detect invalid schema
 339:  FAIL: didn't detect invalid schema
 340:  PASS
@@ -889,7 +889,7 @@
 364:  FAIL: didn't detect invalid schema
 365:  FAIL: didn't detect invalid schema
 366:  FAIL: didn't detect invalid schema
-367:  FAIL: didn't detect invalid schema
+367:  PASS: RNG-ERROR
 368:  PASS
 368-1.v: PASS
 369:  PASS
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 851/902 tests.
+Passed 854/902 tests.
