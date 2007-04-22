@@ -236,17 +236,26 @@
 ;;; XML Schema Part 2: Datatypes Second Edition
 
 (defclass xsd-type (data-type)
-  ((min-length :initarg :min-length :accessor min-length)))
+  ((min-length :initarg :min-length :accessor min-length)
+   (max-length :initarg :max-length :accessor max-length)
+   (exact-length :initarg :exact-length :accessor exact-length)))
 
 (defmethod initialize-instance ((instance xsd-type)
 				&rest args
-				&key ((:min\length min-length))
-				     ((:max\length max-length)))
+				&key ((:|minLength| min-length))
+				     ((:|maxLength| max-length))
+				     ((:|length| exact-length)))
   (apply #'call-next-method
 	 instance
 	 :min-length (when min-length
 		       ;; fixme: richtigen fehler
 		       (parse-integer min-length))
+	 :max-length (when max-length
+		       ;; fixme: richtigen fehler
+		       (parse-integer max-length))
+	 :exact-length (when exact-length
+			 ;; fixme: richtigen fehler
+			 (parse-integer exact-length))
 	 args))
 
 (defmethod type-library ((type xsd-type))
@@ -359,6 +368,8 @@
   (equal u v))
 
 (defmethod %parse ((type xsd-string-type) e context)
-  (if (and (min-length type) (< (length e) (min-length type)))
+  (if (or (and (min-length type) (< (length e) (min-length type)))
+	  (and (max-length type) (> (length e) (max-length type)))
+	  (and (exact-length type) (/= (length e) (exact-length type))))
       :error
       e))

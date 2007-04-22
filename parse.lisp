@@ -511,8 +511,7 @@
 			       type
 			       (loop
 				  for p in params
-				  collect (find-symbol (string-invertcase
-							(param-name p))
+				  collect (find-symbol (param-name p)
 						       :keyword)
 				  collect (param-string p)))))
 	(unless data-type
@@ -521,18 +520,6 @@
 	 :type data-type
 	 :params params
 	 :except except)))))
-
-(defun string-invertcase (str)
-  (loop
-     with result = (copy-seq str)
-     for c across str
-     for i from 0
-     do
-       (setf (char result i)
-	     (if (lower-case-p c)
-		 (char-upcase c)
-		 (char-downcase c)))
-     finally (return result)))
 
 (defun p/param (source)
   (klacks:expecting-element (source "param")
