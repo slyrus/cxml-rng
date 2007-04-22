@@ -816,25 +816,25 @@
 309:  PASS: RNG-ERROR
 310:  PASS: RNG-ERROR
 311:  PASS: RNG-ERROR
-312:  FAIL: didn't detect invalid schema
-313:  FAIL: didn't detect invalid schema
-314:  FAIL: didn't detect invalid schema
-315:  FAIL: didn't detect invalid schema
-316:  FAIL: didn't detect invalid schema
-317:  FAIL: didn't detect invalid schema
-318:  FAIL: didn't detect invalid schema
-319:  FAIL: didn't detect invalid schema
-320:  FAIL: didn't detect invalid schema
-321:  FAIL: didn't detect invalid schema
+312:  PASS: RNG-ERROR
+313:  PASS: RNG-ERROR
+314:  PASS: RNG-ERROR
+315:  PASS: RNG-ERROR
+316:  PASS: RNG-ERROR
+317:  PASS: RNG-ERROR
+318:  PASS: RNG-ERROR
+319:  PASS: RNG-ERROR
+320:  PASS: RNG-ERROR
+321:  PASS: RNG-ERROR
 322:  FAIL: didn't detect invalid schema
 323:  FAIL: didn't detect invalid schema
-324:  FAIL: didn't detect invalid schema
-325:  FAIL: didn't detect invalid schema
-326:  FAIL: didn't detect invalid schema
-327:  FAIL: didn't detect invalid schema
+324:  PASS: RNG-ERROR
+325:  PASS: RNG-ERROR
+326:  PASS: RNG-ERROR
+327:  PASS: RNG-ERROR
 328:  PASS
 328-1.v: PASS
-329:  FAIL: didn't detect invalid schema
+329:  PASS: RNG-ERROR
 330:  PASS
 330-1.v: PASS
 331:  PASS
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 836/902 tests.
+Passed 851/902 tests.

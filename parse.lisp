@@ -1275,6 +1275,8 @@
     (rng-error nil "attribute in list not allowed"))
   (when *in-data-except-p*
     (rng-error nil "attribute in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "attribute in start not allowed"))
   (let ((*in-attribute-p* t))
     (check-restrictions (pattern-child pattern))))
 
@@ -1289,12 +1291,18 @@
 (defmethod check-restrictions ((pattern one-or-more))
   (when *in-data-except-p*
     (rng-error nil "oneOrMore in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "one-or-more in start not allowed"))
   (let ((*in-one-or-more-p* t))
     (check-restrictions (pattern-child pattern))))
 
 (defmethod check-restrictions ((pattern group))
   (when *in-data-except-p*
     (rng-error nil "group in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "group in start not allowed"))
+  (when *in-start-p*
+    (rng-error nil "interleave in start not allowed"))
   (let ((*in-one-or-more//group-or-interleave-p*
 	 *in-one-or-more-p*))
     (check-restrictions (pattern-a pattern))
@@ -1316,22 +1324,34 @@
   (when *in-data-except-p*
     (rng-error nil "list in data/except not allowed"))
   (let ((*in-list-p* t))
-    (check-restrictions (pattern-child pattern))))
+    (check-restrictions (pattern-child pattern)))
+  (when *in-start-p*
+    (rng-error nil "list in start not allowed")))
 
 (defmethod check-restrictions ((pattern text))
   (when *in-list-p*
     (rng-error nil "text in list not allowed"))
   (when *in-data-except-p*
-    (rng-error nil "text in data/except not allowed")))
+    (rng-error nil "text in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "text in start not allowed")))
 
 (defmethod check-restrictions ((pattern data))
+  (when *in-start-p*
+    (rng-error nil "data in start not allowed"))
   (when (pattern-except pattern)
     (let ((*in-data-except-p* t))
       (check-restrictions (pattern-except pattern)))))
 
+(defmethod check-restrictions ((pattern value))
+  (when *in-start-p*
+    (rng-error nil "value in start not allowed")))
+
 (defmethod check-restrictions ((pattern empty))
   (when *in-data-except-p*
-    (rng-error nil "empty in data/except not allowed")))
+    (rng-error nil "empty in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "empty in start not allowed")))
 
 (defmethod check-restrictions ((pattern %parent))
   (check-restrictions (pattern-child pattern)))
