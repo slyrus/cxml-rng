@@ -1281,22 +1281,6 @@
   (let ((*in-start-p* t))
     (check-restrictions pattern)))
 
-;; oh weh, oh weh, haetten wir bloss komplett vereinfacht
-(defmethod check-restrictions ((pattern element))
-  (when *in-attribute-p*
-    (rng-error nil "ref in attribute not allowed"))
-  (when *in-list-p*
-    (rng-error nil "ref in list not allowed"))
-  (when *in-data-except-p*
-    (rng-error nil "ref in data/except not allowed"))
-  (let ((*in-attribute-p* nil)
-	(*in-one-or-more-p* nil)
-	(*in-one-or-more//group-or-interleave-p* nil)
-	(*in-list-p* nil)
-	(*in-data-except-p* nil)
-	(*in-start-p* nil))
-    (check-restrictions (pattern-child pattern))))
-
 (defmethod check-restrictions ((pattern attribute))
   (when *in-attribute-p*
     (rng-error nil "nested attribute not allowed"))
