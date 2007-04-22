@@ -130,3 +130,81 @@
 	  (error (c)
 	    (format t " FAIL: incorrect condition type: ~A~%" c)
 	    nil)))))
+
+(defun run-nist-tests
+    (&optional (p #p"/home/david/NISTSchemaTests/NISTXMLSchemaTestSuite.xml"))
+  (dribble "/home/david/src/lisp/cxml-rng/NIST" :if-exists :rename-and-delete)
+  (klacks:with-open-source (s (cxml:make-source p))
+    (let ((total 0)
+	  (pass 0))
+      (loop
+	 while (klacks:find-element s "Link")
+	 do
+	   (multiple-value-bind (n i)
+	       (run-nist-tests/link (klacks:get-attribute s "href") p)
+	     (incf total n)
+	     (incf pass i))
+	   (klacks:consume s))
+      (format t "Passed ~D/~D tests.~%" pass total)))
+  (dribble))
+
+(defun run-nist-tests/link (href base)
+  (klacks:with-open-source (r (cxml:make-source (merge-pathnames href base)))
+    (let ((total 0)
+	  (pass 0))
+      (let (schema)
+	(loop
+	   (multiple-value-bind (key uri lname)
+	       (klacks:peek-next r)
+	     uri
+	     (unless key
+	       (return)) 
+	     (when (eq key :start-element)
+	       (cond
+		 ((equal lname "Schema")
+		  (incf total)
+		  (setf schema
+			(read-nist-grammar (klacks:get-attribute r "href")
+					   base))
+		  (when schema
+		    (incf total)))
+		 ((equal lname "Instance")
+		  (incf total)
+		  (when (run-nist-test/Instance schema
+						(klacks:get-attribute r "href")
+						base)
+		    (incf pass))))))))
+      (values total pass))))
+
+(defun run-nist-test/Instance (schema href base)
+  (cond
+    (schema
+     (handler-case
+	 (progn
+	   (cxml:parse-file (merge-pathnames href base)
+			    (make-validator schema))
+	   (format t "PASS INSTANCE ~A~%" href)
+	   t)
+       (rng-error (c)
+	 (format t "FAIL INSTANCE ~A: failed to validate:~_ ~A~%" href c)
+	 nil)
+       (error (c)
+	 (format t "FAIL INSTANCE ~A: (BOGUS CONDITON) failed to validate:~_ ~A~%" href c)
+	 nil)))
+    (t
+     (format t "FAIL ~A: no schema~%" href)
+     nil)))
+
+(defun read-nist-grammar (href base)
+  (let ((p (make-pathname :type "rng" :defaults href)))
+    (handler-case
+	(prog1
+	    (parse-relax-ng (merge-pathnames p base))
+	  (format t "PASS ~A~%" href)
+	  t)
+      (rng-error (c)
+	(format t "FAIL ~A: failed to parse:~_ ~A~%" href c)
+	nil)
+      (error (c)
+	(format t "FAIL ~A: (BOGUS CONDITION) failed to parse:~_ ~A~%" href c)
+	nil))))
