@@ -324,9 +324,9 @@
 	       (or (not (cl-ppcre:all-matches
 			 "^[a-zA-Z][a-zA-Z0-9+.-]*:.+"
 			 *datatype-library*))
-		   ;; keine kaputten %te
+		   ;; keine kaputten %te, keine #
 		   (cl-ppcre:all-matches
-		    "(%$|%.$|%[^0-9A-Fa-f][^0-9A-Fa-f])"
+		    "(%$|%.$|%[^0-9A-Fa-f][^0-9A-Fa-f]|#)"
 		    *datatype-library*)))
       (rng-error nil "malformed datatypeLibrary: ~A" *datatype-library*))
     (funcall fn)))
