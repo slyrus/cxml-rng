@@ -405,7 +405,8 @@
       (consume-and-skip-to-native source)
       (if name
 	  (setf (pattern-name result)
-		(let ((*namespace-uri* (or *ns* "")))
+		(let ((*namespace-uri* (or *ns* ""))
+		      (*attribute-namespace-p* t))
 		  (destructure-name source name)))
 	  (setf (pattern-name result)
 		(let ((*attribute-namespace-p* t))
