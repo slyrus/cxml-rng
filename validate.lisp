@@ -317,12 +317,12 @@
 	      (loop
 		 for elements = *seen-elements*
 		 while elements do
-		 (setf *seen-elements* nil)
-		 (dolist (pattern elements)
-		   (unless (find pattern done-elements)
-		     (push pattern done-elements)
-		     (setf (pattern-child pattern)
-			   (intern-pattern (pattern-child pattern) table)))))
+		   (setf *seen-elements* nil)
+		   (dolist (pattern elements)
+		     (unless (find pattern done-elements)
+		       (push pattern done-elements)
+		       (setf (pattern-child pattern)
+			     (intern-pattern (pattern-child pattern) table)))))
 	      table))))
 
 ;;; FIXME: misnamed.  we don't really intern the originals pattern yet.
