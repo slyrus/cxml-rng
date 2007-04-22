@@ -571,12 +571,17 @@
 (defun safe-parse-uri (source str &optional base)
   (when (zerop (length str))
     (rng-error source "missing URI"))
-  (handler-case
-      (if base
-	  (puri:merge-uris str base)
-	  (puri:parse-uri str))
-    (puri:uri-parse-error ()
-      (rng-error source "invalid URI: ~A" str))))
+  (let ((uri
+	 (handler-case
+	     (if base
+		 (puri:merge-uris str base)
+		 (puri:parse-uri str))
+	   (puri:uri-parse-error ()
+	     (rng-error source "invalid URI: ~A" str)))))
+    (when (and (eq (puri:uri-scheme uri) :file)
+	       (puri:uri-fragment uri))
+      (rng-error source "Forbidden fragment in URI: ~A" str))
+    uri))
 
 (defun p/external-ref (source)
   (klacks:expecting-element (source "externalRef")

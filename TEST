@@ -130,7 +130,7 @@
 101:  PASS
 101-1.v: PASS
 101-2.i: PASS: RNG-ERROR
-102:  FAIL: didn't detect invalid schema
+102:  PASS: RNG-ERROR
 103:  PASS
 103-1.v: PASS
 103-2.i: PASS: RNG-ERROR
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 893/902 tests.
+Passed 894/902 tests.
