@@ -321,7 +321,7 @@
     (when (and dl
 	       (not (zerop (length *datatype-library*)))
 	       (not (cl-ppcre:all-matches
-		     "^[a-zA-Z][a-zA-Z0-9+.-]*:"
+		     "^[a-zA-Z][a-zA-Z0-9+.-]*:.+"
 		     *datatype-library*)))
       (rng-error nil "malformed datatypeLibrary: ~A" *datatype-library*))
     (funcall fn)))
