@@ -163,10 +163,9 @@
 117-1.v: PASS
 117-2.i: PASS: RNG-ERROR
 118:  PASS: RNG-ERROR
-119:  FAIL: unresolved reference to foo
-  [ Error at line 8, column 11 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/119/x> ]
-119-1.v: FAIL: cannot run test
-119-2.i: FAIL: cannot run test
+119:  PASS
+119-1.v: PASS
+119-2.i: PASS: RNG-ERROR
 120:  PASS
 120-1.v: PASS
 120-2.v: PASS
@@ -902,4 +901,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 798/902 tests.
+Passed 801/902 tests.

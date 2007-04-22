@@ -590,8 +590,8 @@
       (process-grammar-content* source)
       (unless (or includep (grammar-start *grammar*))
 	(rng-error source "no <start> in grammar"))
-      (check-pattern-definitions source *grammar*)
       (unless includep
+	(check-pattern-definitions source *grammar*)
 	(defn-child (grammar-start *grammar*))))))
 
 (defvar *include-start*)
@@ -784,12 +784,17 @@
 	       (let ((*datatype-library* ""))
 		 (p/grammar source *grammar*)))
 	     source))
-	  (check-pattern-definitions source *grammar*)
 	  (when tmp-start
+	    (when (eq (defn-redefinition *include-start*)
+		      :being-redefined-and-no-original)
+	      (rng-error source "start not found in redefinition of grammar"))
 	    (restore-definition *include-start* tmp-start))
 	  (dolist (copy tmp-defns)
 	    (let ((defn (gethash (defn-name copy)
 				 (grammar-definitions *grammar*))))
+	      (when (eq (defn-redefinition defn)
+			:being-redefined-and-no-original)
+		(rng-error source "redefinition not found in grammar"))
 	      (restore-definition defn copy)))
 	  nil)))))
 
