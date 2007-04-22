@@ -278,13 +278,13 @@
   (and (equal (qname-uri u) (qname-uri v))
        (equal (qname-lname u) (qname-lname v))))
 
-(defun nc-name-p (str)
-  (and (every #'cxml::name-rune-p str)
-       (cxml::nc-name-p str)))
+(defun namep (str)
+  (every #'cxml::name-rune-p str))
 
 (defmethod %parse ((type qname-type) e context)
+  (setf e (normalize-whitespace e))
   (handler-case
-      (if (nc-name-p e)
+      (if (namep e)
 	  (multiple-value-bind (prefix local-name) (cxml::split-qname e)
 	    (let ((uri (when prefix
 			 (context-find-namespace-binding context prefix))))
@@ -306,7 +306,11 @@
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
 
+(defun nc-name-p (str)
+  (and (namep str) (cxml::nc-name-p str)))
+
 (defmethod %parse ((type ncname-type) e context)
+  (setf e (normalize-whitespace e))
   (if (nc-name-p e)
       e
       :error))
@@ -323,4 +327,5 @@
   (equal u v))
 
 (defmethod %parse ((type any-uri-type) e context)
+  (setf e (normalize-whitespace e))
   (cxml-rng::escape-uri e))

@@ -6,19 +6,19 @@
 006:  PASS: RNG-ERROR
 007:  PASS: RNG-ERROR
 008:  PASS: RNG-ERROR
-009:  FAIL: didn't detect invalid schema
-010:  FAIL: didn't detect invalid schema
+009:  PASS: RNG-ERROR
+010:  PASS: RNG-ERROR
 011:  PASS: RNG-ERROR
 012:  PASS: RNG-ERROR
 013:  PASS: RNG-ERROR
 014:  PASS: RNG-ERROR
 015:  PASS: RNG-ERROR
-016:  FAIL: didn't detect invalid schema
-017:  FAIL: didn't detect invalid schema
+016:  PASS: RNG-ERROR
+017:  PASS: RNG-ERROR
 018:  PASS: RNG-ERROR
 019:  PASS: RNG-ERROR
-020:  FAIL: didn't detect invalid schema
-021:  FAIL: didn't detect invalid schema
+020:  PASS: RNG-ERROR
+021:  PASS: RNG-ERROR
 022:  PASS: RNG-ERROR
 023:  PASS: RNG-ERROR
 024:  PASS: RNG-ERROR
@@ -34,16 +34,16 @@
 034:  PASS: RNG-ERROR
 035:  PASS: RNG-ERROR
 036:  PASS: RNG-ERROR
-037:  FAIL: didn't detect invalid schema
-038:  FAIL: didn't detect invalid schema
+037:  PASS: RNG-ERROR
+038:  PASS: RNG-ERROR
 039:  PASS: RNG-ERROR
 040:  PASS: RNG-ERROR
-041:  FAIL: incorrect condition type: The value NIL is not of type STRING.
+041:  PASS: RNG-ERROR
 042:  PASS: RNG-ERROR
 043:  PASS: RNG-ERROR
 044:  PASS: RNG-ERROR
 045:  PASS: RNG-ERROR
-046:  FAIL: didn't detect invalid schema
+046:  PASS: RNG-ERROR
 047:  PASS: RNG-ERROR
 048:  PASS: RNG-ERROR
 049:  PASS
@@ -80,19 +80,19 @@
 071:  FAIL: didn't detect invalid schema
 072:  FAIL: didn't detect invalid schema
 073:  FAIL: didn't detect invalid schema
-074:  FAIL: didn't detect invalid schema
+074:  PASS: RNG-ERROR
 075:  PASS
 075-1.v: PASS
-076:  FAIL: didn't detect invalid schema
-077:  FAIL: didn't detect invalid schema
-078:  FAIL: didn't detect invalid schema
+076:  PASS: RNG-ERROR
+077:  PASS: RNG-ERROR
+078:  PASS: RNG-ERROR
 079:  PASS: RNG-ERROR
 080:  PASS: RNG-ERROR
 081:  PASS: RNG-ERROR
 082:  PASS: RNG-ERROR
 083:  PASS: RNG-ERROR
 084:  PASS: RNG-ERROR
-085:  FAIL: didn't detect invalid schema
+085:  PASS: RNG-ERROR
 086:  PASS: RNG-ERROR
 087:  PASS: RNG-ERROR
 088:  PASS
@@ -902,4 +902,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 783/902 tests.
+Passed 798/902 tests.

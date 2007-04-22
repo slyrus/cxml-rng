@@ -83,8 +83,25 @@
 	(cxml:xml-parse-error (c)
 	  (rng-error source "Cannot parse schema: ~A" c)))))
 
+(defvar *validate-grammar* t)
+(defparameter *relax-ng-grammar* nil)
+
+(defun make-validating-source (input)
+  (let ((upstream (cxml:make-source input)))
+    (if *validate-grammar*
+	(klacks:make-tapping-source upstream
+				    (make-validator *relax-ng-grammar*))
+	upstream)))
+
 (defun parse-relax-ng (input &key entity-resolver)
-  (klacks:with-open-source (source (cxml:make-source input))
+  (when *validate-grammar*
+    (unless *relax-ng-grammar*
+      (setf *relax-ng-grammar*
+	    (let* ((*validate-grammar* nil)
+		   (d (slot-value (asdf:find-system :cxml-rng)
+				  'asdf::relative-pathname)))
+	      (parse-relax-ng (merge-pathnames "rng.rng" d))))))
+  (klacks:with-open-source (source (make-validating-source input))
     (invoke-with-klacks-handler
      (lambda ()
        (klacks:find-event source :start-element)
@@ -104,7 +121,7 @@
 	 (setf result (fold-not-allowed result))
 	 (setf result (fold-empty result))
 	 (make-parsed-grammar result)))
-      source)))
+     source)))
 
 
 ;;;; pattern structures
@@ -458,11 +475,12 @@
 	(setf type "token")
 	(setf dl ""))
       (let ((data-type
-	     (cxml-types:find-type (and dl (find-symbol dl :keyword)) type)))
+	     (cxml-types:find-type (and dl (find-symbol dl :keyword)) type))
+	    (vc (cxml-types:make-klacks-validation-context source)))
 	(unless data-type
 	  (rng-error source "type not found: ~A/~A" type dl))
 	(make-value :string string
-		    :value (cxml-types:parse data-type string)
+		    :value (cxml-types:parse data-type string vc)
 		    :type data-type
 		    :ns ns)))))
 
@@ -555,7 +573,7 @@
 	  (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 		 (xstream
 		  (cxml::xstream-open-extid* *entity-resolver* nil uri)))
-	    (klacks:with-open-source (source (cxml:make-source xstream))
+	    (klacks:with-open-source (source (make-validating-source xstream))
 	      (invoke-with-klacks-handler
 	       (lambda ()
 		 (klacks:find-event source :start-element)
@@ -759,7 +777,7 @@
 	  (rng-error source "looping include"))
 	(let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 	       (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri)))
-	  (klacks:with-open-source (source (cxml:make-source xstream))
+	  (klacks:with-open-source (source (make-validating-source xstream))
 	    (invoke-with-klacks-handler
 	     (lambda ()
 	       (klacks:find-event source :start-element)

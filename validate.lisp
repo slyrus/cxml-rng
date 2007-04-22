@@ -103,7 +103,8 @@
 
 ;;;; VALIDATOR
 
-(defclass validator (sax:sax-parser-mixin)
+(defclass validator (sax:sax-parser-mixin
+		     cxml-types:sax-validation-context-mixin)
   ((current-pattern :initarg :current-pattern :accessor current-pattern)
    (after-start-tag-p :accessor after-start-tag-p)
    (pending-text-node :initform nil :accessor pending-text-node)
@@ -236,10 +237,10 @@
     (eat (cxml-types:equal-using-type
 	  data-type
 	  (pattern-value pattern)
-	  (cxml-types:parse data-type data)))))
+	  (cxml-types:parse data-type data hsx)))))
 
 (defmethod text\' (hsx (pattern data) data)
-  (eat (and (cxml-types:validp (pattern-type pattern) data)
+  (eat (and (cxml-types:validp (pattern-type pattern) data hsx)
 	    (let ((except (pattern-except pattern)))
 	      (not (and except (nullable (text\' hsx except data))))))))
 
