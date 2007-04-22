@@ -357,17 +357,6 @@
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
 
-;;; all highly dubious.  The XSD spec seems to suggests not testing for
-;;; valid URI syntax at all.  The Relax NG spec has some test cases
-;;; we want to pass.  Was tun?
-
-;;; (defmethod %parse ((type any-uri-type) e context)
-;;;   (setf e (normalize-whitespace e))
-;;;   (setf e (cxml-rng::escape-uri e))
-;;;   (if (cl-ppcre:all-matches "(^[a-zA-Z][a-zA-Z0-9+.-]*:|^[^:]*$)" e)
-;;;       e
-;;;       :error))
-
 (defmethod %parse ((type any-uri-type) e context)
   (cxml-rng::escape-uri (normalize-whitespace e)))
 

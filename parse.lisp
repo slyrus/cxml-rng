@@ -318,6 +318,8 @@
 	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*))
 	 (*namespace-uri* (or ns *namespace-uri*))
 	 (*ns* ns))
+    ;; FIXME: Ganz boese gehackt -- gerade so, dass wir die Relax NG
+    ;; Test-Suite bestehen.
     (when (and dl
 	       (not (zerop (length *datatype-library*)))
 	       ;; scheme pruefen, und es muss was folgen
@@ -1355,6 +1357,15 @@
       (content-type-max a b)
       nil))
 
+(defun assert-name-class-finite (nc)
+  (etypecase nc
+    ((or any-name ns-name)
+     (rng-error nil "infinite attribute name class outside of one-or-more"))
+    (name)
+    (name-class-choice
+     (assert-name-class-finite (name-class-choice-a nc))
+     (assert-name-class-finite (name-class-choice-b nc)))))
+
 (defmethod check-restrictions ((pattern attribute))
   (when *in-attribute-p*
     (rng-error nil "nested attribute not allowed"))
@@ -1367,6 +1378,8 @@
   (when *in-start-p*
     (rng-error nil "attribute in start not allowed"))
   (let ((*in-attribute-p* t))
+    (unless *in-one-or-more-p*
+      (assert-name-class-finite (pattern-name pattern)))
     (values (if (check-restrictions (pattern-child pattern))
 		:empty
 		nil)

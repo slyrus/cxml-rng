@@ -879,8 +879,8 @@
 355:  PASS
 355-1.v: PASS
 356:  PASS: RNG-ERROR
-357:  FAIL: didn't detect invalid schema
-358:  FAIL: didn't detect invalid schema
+357:  PASS: RNG-ERROR
+358:  PASS: RNG-ERROR
 359:  PASS: RNG-ERROR
 360:  PASS: RNG-ERROR
 361:  PASS: RNG-ERROR
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 900/902 tests.
+Passed 902/902 tests.
