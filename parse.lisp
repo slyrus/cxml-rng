@@ -113,25 +113,27 @@
 	      (*external-href-stack* '())
 	      (*include-uri-stack* '())
 	      (*grammar* (make-grammar nil))
-	      (result (p/pattern source)))
-	 (unless result
+	      (start (p/pattern source)))
+	 (unless start
 	   (rng-error nil "empty grammar"))
 	 (setf (grammar-start *grammar*)
-	       (make-definition :name :start :child result))
+	       (make-definition :name :start :child start))
 	 (check-pattern-definitions source *grammar*)
-	 (check-recursion result 0)
-	 (let ((defns (finalize-definitions result)))
-	   (setf result (fold-not-allowed result))
+	 (check-recursion start 0)
+	 (multiple-value-bind (new-start defns)
+	     (finalize-definitions start)
+	   (setf start (fold-not-allowed new-start))
 	   (dolist (defn defns)
 	     (setf (defn-child defn) (fold-not-allowed (defn-child defn))))
-	   (setf result (fold-empty result))
+	   (setf start (fold-empty start))
 	   (dolist (defn defns)
 	     (setf (defn-child defn) (fold-empty (defn-child defn)))))
-	 (let ((defns (finalize-definitions result)))
-	   (check-start-restrictions result)
+	 (multiple-value-bind (new-start defns)
+	     (finalize-definitions start)
+	   (check-start-restrictions new-start)
 	   (dolist (defn defns)
 	     (check-restrictions (defn-child defn)))
-	   (make-parsed-grammar result defns))))
+	   (make-parsed-grammar new-start defns))))
      source)))
 
 
@@ -1226,6 +1228,40 @@
   pattern)
 
 
+;;;; name class overlap
+
+;;; fixme: memorize this stuff?
+
+(defparameter !uri (string (code-char 1)))
+(defparameter !lname "")
+
+(defun classes-overlap-p (nc1 nc2)
+  (flet ((both-contain (x)
+	   (and (contains nc1 (car x) (cdr x))
+		(contains nc2 (car x) (cdr x)))))
+    (or (some #'both-contain (representatives nc1))
+	(some #'both-contain (representatives nc2)))))
+
+(defmethod representatives ((nc any-name))
+  (cons (cons !uri !lname)
+	(if (any-name-except nc)
+	    (representatives (any-name-except nc))
+	    nil)))
+
+(defmethod representatives ((nc ns-name))
+  (cons (cons (ns-name-uri nc) !lname)
+	(if (ns-name-except nc)
+	    (representatives (ns-name-except nc))
+	    nil)))
+
+(defmethod representatives ((nc name))
+  (list (cons (name-uri nc) (name-lname nc))))
+
+(defmethod representatives ((nc name-class-choice))
+  (nconc (representatives (name-class-choice-a nc))
+	 (representatives (name-class-choice-b nc))))
+
+
 ;;;; 7.1
 
 (defun finalize-definitions (pattern)
@@ -1252,10 +1288,11 @@
 		     (setf (pattern-b p) (recurse (pattern-b p))))
 		    (%leaf))
 		  p))))
-      (recurse pattern))
-    (loop
-       for defn being each hash-key in defns
-       collect defn)))
+      (values
+       (recurse pattern)
+       (loop
+	  for defn being each hash-key in defns
+	  collect defn)))))
 
 (defun copy-pattern-tree (pattern)
   (labels ((recurse (p)
@@ -1313,9 +1350,11 @@
   (when *in-start-p*
     (rng-error nil "attribute in start not allowed"))
   (let ((*in-attribute-p* t))
-    (if (check-restrictions (pattern-child pattern))
-	:empty
-	nil)))
+    (values (if (check-restrictions (pattern-child pattern))
+		:empty
+		nil)
+	    (list (pattern-name pattern))
+	    nil)))
 
 (defmethod check-restrictions ((pattern ref))
   (when *in-attribute-p*
@@ -1324,42 +1363,75 @@
     (rng-error nil "ref in list not allowed"))
   (when *in-data-except-p*
     (rng-error nil "ref in data/except not allowed"))
-  :complex)
+  (values :complex
+	  nil
+	  (list (pattern-name (defn-child (pattern-target pattern))))
+	  nil))
 
 (defmethod check-restrictions ((pattern one-or-more))
   (when *in-data-except-p*
     (rng-error nil "oneOrMore in data/except not allowed"))
   (when *in-start-p*
     (rng-error nil "one-or-more in start not allowed"))
-  (let* ((*in-one-or-more-p* t)
-	 (x (check-restrictions (pattern-child pattern))))
-    (groupable-max x x)))
+  (let* ((*in-one-or-more-p* t))
+    (multiple-value-bind (x a e textp)
+	(check-restrictions (pattern-child pattern))
+      (values (groupable-max x x) a e textp))))
 
 (defmethod check-restrictions ((pattern group))
   (when *in-data-except-p*
     (rng-error nil "group in data/except not allowed"))
   (when *in-start-p*
     (rng-error nil "group in start not allowed"))
-  (when *in-start-p*
-    (rng-error nil "interleave in start not allowed"))
   (let ((*in-one-or-more//group-or-interleave-p*
 	 *in-one-or-more-p*))
-    (groupable-max (check-restrictions (pattern-a pattern))
-		   (check-restrictions (pattern-b pattern)))))
+    (multiple-value-bind (x a e tp) (check-restrictions (pattern-a pattern))
+      (multiple-value-bind (y b f tq) (check-restrictions (pattern-b pattern))
+	(dolist (nc1 a)
+	  (dolist (nc2 b)
+	    (when (classes-overlap-p nc1 nc2)
+	      (rng-error nil "attribute name overlap in group: ~A ~A"
+			 nc1 nc2))))
+	(values (groupable-max x y)
+		(append a b)
+		(append e f)
+		(or tp tq))))))
 
 (defmethod check-restrictions ((pattern interleave))
   (when *in-list-p*
     (rng-error nil "interleave in list not allowed"))
   (when *in-data-except-p*
     (rng-error nil "interleave in data/except not allowed"))
+  (when *in-start-p*
+    (rng-error nil "interleave in start not allowed"))
   (let ((*in-one-or-more//group-or-interleave-p*
 	 *in-one-or-more-p*))
-    (groupable-max (check-restrictions (pattern-a pattern))
-		   (check-restrictions (pattern-b pattern)))))
+    (multiple-value-bind (x a e tp) (check-restrictions (pattern-a pattern))
+      (multiple-value-bind (y b f tq) (check-restrictions (pattern-b pattern))
+	(dolist (nc1 a)
+	  (dolist (nc2 b)
+	    (when (classes-overlap-p nc1 nc2)
+	      (rng-error nil "attribute name overlap in interleave: ~A ~A"
+			 nc1 nc2))))
+	(dolist (nc1 e)
+	  (dolist (nc2 f)
+	    (when (classes-overlap-p nc1 nc2)
+	      (rng-error nil "element name overlap in interleave: ~A ~A"
+			 nc1 nc2))))
+	(when (and tp tq)
+	  (rng-error nil "multiple text permitted by interleave"))
+	(values (groupable-max x y)
+		(append a b)
+		(append e f)
+		(or tp tq))))))
 
 (defmethod check-restrictions ((pattern choice))
-  (content-type-max (check-restrictions (pattern-a pattern))
-		    (check-restrictions (pattern-b pattern))))
+  (multiple-value-bind (x a e tp) (check-restrictions (pattern-a pattern))
+    (multiple-value-bind (y b f tq) (check-restrictions (pattern-b pattern))
+      (values (content-type-max x y)
+	      (append a b)
+	      (append e f)
+	      (or tp tq)))))
 
 (defmethod check-restrictions ((pattern list-pattern))
   (when *in-list-p*
@@ -1379,7 +1451,7 @@
     (rng-error nil "text in data/except not allowed"))
   (when *in-start-p*
     (rng-error nil "text in start not allowed"))
-  :complex)
+  (values :complex nil nil t))
 
 (defmethod check-restrictions ((pattern data))
   (when *in-start-p*

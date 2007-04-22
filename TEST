@@ -826,8 +826,8 @@
 319:  PASS: RNG-ERROR
 320:  PASS: RNG-ERROR
 321:  PASS: RNG-ERROR
-322:  FAIL: didn't detect invalid schema
-323:  FAIL: didn't detect invalid schema
+322:  PASS: RNG-ERROR
+323:  PASS: RNG-ERROR
 324:  PASS: RNG-ERROR
 325:  PASS: RNG-ERROR
 326:  PASS: RNG-ERROR
@@ -849,27 +849,27 @@
 336:  PASS
 336-1.v: PASS
 337:  PASS: RNG-ERROR
-338:  FAIL: didn't detect invalid schema
-339:  FAIL: didn't detect invalid schema
+338:  PASS: RNG-ERROR
+339:  PASS: RNG-ERROR
 340:  PASS
 340-1.v: PASS
-341:  FAIL: didn't detect invalid schema
-342:  FAIL: didn't detect invalid schema
-343:  FAIL: didn't detect invalid schema
-344:  FAIL: didn't detect invalid schema
+341:  PASS: RNG-ERROR
+342:  PASS: RNG-ERROR
+343:  PASS: RNG-ERROR
+344:  PASS: RNG-ERROR
 345:  PASS
 345-1.v: PASS
 345-2.v: PASS
 345-3.i: PASS: RNG-ERROR
 345-4.i: PASS: RNG-ERROR
 345-5.i: PASS: RNG-ERROR
-346:  FAIL: didn't detect invalid schema
-347:  FAIL: didn't detect invalid schema
-348:  FAIL: didn't detect invalid schema
-349:  FAIL: didn't detect invalid schema
-350:  FAIL: didn't detect invalid schema
-351:  FAIL: didn't detect invalid schema
-352:  FAIL: didn't detect invalid schema
+346:  PASS: RNG-ERROR
+347:  PASS: RNG-ERROR
+348:  PASS: RNG-ERROR
+349:  PASS: RNG-ERROR
+350:  PASS: RNG-ERROR
+351:  PASS: RNG-ERROR
+352:  PASS: RNG-ERROR
 353:  PASS
 353-1.v: PASS
 353-2.i: PASS: RNG-ERROR
@@ -878,26 +878,26 @@
 354-1.v: PASS
 355:  PASS
 355-1.v: PASS
-356:  FAIL: didn't detect invalid schema
+356:  PASS: RNG-ERROR
 357:  FAIL: didn't detect invalid schema
 358:  FAIL: didn't detect invalid schema
 359:  PASS: RNG-ERROR
-360:  FAIL: didn't detect invalid schema
-361:  FAIL: didn't detect invalid schema
-362:  FAIL: didn't detect invalid schema
-363:  FAIL: didn't detect invalid schema
-364:  FAIL: didn't detect invalid schema
-365:  FAIL: didn't detect invalid schema
-366:  FAIL: didn't detect invalid schema
+360:  PASS: RNG-ERROR
+361:  PASS: RNG-ERROR
+362:  PASS: RNG-ERROR
+363:  PASS: RNG-ERROR
+364:  PASS: RNG-ERROR
+365:  PASS: RNG-ERROR
+366:  PASS: RNG-ERROR
 367:  PASS: RNG-ERROR
 368:  PASS
 368-1.v: PASS
 369:  PASS
 369-1.v: PASS
-370:  FAIL: didn't detect invalid schema
-371:  FAIL: didn't detect invalid schema
+370:  PASS: RNG-ERROR
+371:  PASS: RNG-ERROR
 372:  PASS
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 854/902 tests.
+Passed 879/902 tests.
