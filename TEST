@@ -789,8 +789,8 @@
 283-3.i: PASS: RNG-ERROR
 284:  PASS
 284-1.i: PASS: RNG-ERROR
-285:  FAIL: didn't detect invalid schema
-286:  FAIL: didn't detect invalid schema
+285:  PASS: RNG-ERROR
+286:  PASS: RNG-ERROR
 287:  PASS: RNG-ERROR
 288:  PASS: RNG-ERROR
 289:  PASS: RNG-ERROR
@@ -801,8 +801,8 @@
 294:  PASS: RNG-ERROR
 295:  PASS: RNG-ERROR
 296:  PASS: RNG-ERROR
-297:  FAIL: didn't detect invalid schema
-298:  FAIL: didn't detect invalid schema
+297:  PASS: RNG-ERROR
+298:  PASS: RNG-ERROR
 299:  PASS: RNG-ERROR
 300:  PASS: RNG-ERROR
 301:  PASS: RNG-ERROR
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 832/902 tests.
+Passed 836/902 tests.

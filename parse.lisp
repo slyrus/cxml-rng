@@ -118,9 +118,16 @@
 	       (make-definition :name :start :child result))
 	 (check-pattern-definitions source *grammar*)
 	 (check-recursion result 0)
-	 (setf result (fold-not-allowed result))
-	 (setf result (fold-empty result))
-	 (check-restrictions result)
+	 (let ((defns (collect-definitions result)))
+	   (setf result (fold-not-allowed result))
+	   (dolist (defn defns)
+	     (setf (defn-child defn) (fold-not-allowed (defn-child defn))))
+	   (setf result (fold-empty result))
+	   (dolist (defn defns)
+	     (setf (defn-child defn) (fold-empty (defn-child defn))))
+	   (check-start-restrictions result)
+	   (dolist (defn defns)
+	     (check-restrictions (defn-child defn))))
 	 (make-parsed-grammar result)))
      source)))
 
@@ -929,7 +936,7 @@
 	(serialize-pattern (pattern-a pattern))
 	(serialize-pattern (pattern-b pattern))))
     (one-or-more
-      (cxml:with-element "oneOrmore"
+      (cxml:with-element "oneOrMore"
 	(serialize-pattern (pattern-child pattern))))
     (list-pattern
       (cxml:with-element "list"
@@ -992,7 +999,7 @@
 
 (defun serialize-except-name (spec)
   (cxml:with-element "except"
-    (serialize-name (cdr spec))))
+    (serialize-name spec)))
 
 
 ;;;; simplification
@@ -1212,17 +1219,58 @@
 
 ;;;; 7.1
 
-(defvar *in-attribute-p* nil)
-(defvar *in-one-or-more-p* nil)
-(defvar *in-one-or-more//group-or-interleave-p* nil)
-(defvar *in-list-p* nil)
-(defvar *in-data-except-p* nil)
+(defun collect-definitions (pattern)
+  (let ((defns (make-hash-table)))
+    (labels ((recurse (p)
+	       (etypecase p
+		 (ref
+		  (let ((target (pattern-target p)))
+		    (unless (gethash target defns)
+		      (setf (gethash target defns) t)
+		      (recurse (defn-child target)))))
+		 (%parent
+		  (recurse (pattern-child p)))
+		 (%combination
+		  (recurse (pattern-a p))
+		  (recurse (pattern-b p)))
+		 (%leaf))))
+      (recurse pattern))
+    (loop
+       for defn being each hash-key in defns
+       collect defn)))
+
+(defparameter *in-attribute-p* nil)
+(defparameter *in-one-or-more-p* nil)
+(defparameter *in-one-or-more//group-or-interleave-p* nil)
+(defparameter *in-list-p* nil)
+(defparameter *in-data-except-p* nil)
+(defparameter *in-start-p* nil)
+
+(defun check-start-restrictions (pattern)
+  (let ((*in-start-p* t))
+    (check-restrictions pattern)))
+
+;; oh weh, oh weh, haetten wir bloss komplett vereinfacht
+(defmethod check-restrictions ((pattern element))
+  (when *in-attribute-p*
+    (rng-error nil "ref in attribute not allowed"))
+  (when *in-list-p*
+    (rng-error nil "ref in list not allowed"))
+  (when *in-data-except-p*
+    (rng-error nil "ref in data/except not allowed"))
+  (let ((*in-attribute-p* nil)
+	(*in-one-or-more-p* nil)
+	(*in-one-or-more//group-or-interleave-p* nil)
+	(*in-list-p* nil)
+	(*in-data-except-p* nil)
+	(*in-start-p* nil))
+    (check-restrictions (pattern-child pattern))))
 
 (defmethod check-restrictions ((pattern attribute))
   (when *in-attribute-p*
     (rng-error nil "nested attribute not allowed"))
   (when *in-one-or-more//group-or-interleave-p*
-    (rng-error nil "attribute not in oneOrMore//group, oneOrMore//interleave"))
+    (rng-error nil "attribute not allowed in oneOrMore//group, oneOrMore//interleave"))
   (when *in-list-p*
     (rng-error nil "attribute in list not allowed"))
   (when *in-data-except-p*
@@ -1293,3 +1341,4 @@
 (defmethod check-restrictions ((pattern %combination))
   (check-restrictions (pattern-a pattern))
   (check-restrictions (pattern-b pattern)))
+
