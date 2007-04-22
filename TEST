@@ -52,7 +52,7 @@
 050-1.v: PASS
 051:  PASS
 052:  PASS
-053:  FAIL: didn't detect invalid schema
+053:  PASS: RNG-ERROR
 054:  PASS
 054-1.v: PASS
 055:  PASS
@@ -63,9 +63,9 @@
 059:  PASS
 059-1.v: PASS
 060:  FAIL: didn't detect invalid schema
-061:  FAIL: didn't detect invalid schema
-062:  FAIL: didn't detect invalid schema
-063:  FAIL: didn't detect invalid schema
+061:  PASS: RNG-ERROR
+062:  PASS: RNG-ERROR
+063:  PASS: RNG-ERROR
 064:  PASS
 064-1.v: PASS
 065:  PASS
@@ -900,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 879/902 tests.
+Passed 883/902 tests.

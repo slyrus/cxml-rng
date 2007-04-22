@@ -196,6 +196,7 @@
 
 (defmethod find-type ((library (eql :||)) name &rest args &key)
   (cond
+    ((eq name :probe) t)
     (args nil)
     ((equal name "string") *string-data-type*)
     ((equal name "token") *token-data-type*)
@@ -266,16 +267,18 @@
      name
      &rest args &key)
   args					;fixme
-  (let ((class
-	 (case (find-symbol name :keyword)
-	   (:|QName| 'qname-type)
-	   (:|NCName| 'ncname-type)
-	   (:|anyURI| 'any-uri-type)
-	   (:|string| 'xsd-string-type)
-	   (t nil))))
-    (if class
-	(apply #'make-instance class args)
-	nil)))
+  (if (eq name :probe)
+      t
+      (let ((class
+	     (case (find-symbol name :keyword)
+	       (:|QName| 'qname-type)
+	       (:|NCName| 'ncname-type)
+	       (:|anyURI| 'any-uri-type)
+	       (:|string| 'xsd-string-type)
+	       (t nil))))
+	(if class
+	    (apply #'make-instance class args)
+	    nil))))
 
 (defgeneric %parse (type e context))
 
@@ -352,9 +355,16 @@
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
 
+;;; all highly dubious.  The XSD spec seems to suggests not testing for
+;;; valid URI syntax at all.  The Relax NG spec has some test cases
+;;; we want to pass.  Was tun?
+
 (defmethod %parse ((type any-uri-type) e context)
   (setf e (normalize-whitespace e))
-  (cxml-rng::escape-uri e))
+  (setf e (cxml-rng::escape-uri e))
+  (if (cl-ppcre:all-matches "(^[a-zA-Z][a-zA-Z0-9+.-]*:|^[^:]*$)" e)
+      e
+      :error))
 
 
 ;;; string

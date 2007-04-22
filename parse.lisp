@@ -318,6 +318,10 @@
 	 (*datatype-library* (if dl (escape-uri dl) *datatype-library*))
 	 (*namespace-uri* (or ns *namespace-uri*))
 	 (*ns* ns))
+    #+(or)
+    (when (and dl
+	       (not (cxml-types:find-type *datatype-library* :probe)))
+      (rng-error nil "data type library not known: ~A" *datatype-library*))
     (funcall fn)))
 
 (defun p/pattern (source)
