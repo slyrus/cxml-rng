@@ -65,7 +65,6 @@
       @aboutfun{type-library}
       @aboutfun{type-context-dependent-p}
     @end{section}
-
     @begin[Using types]{section}
       Types allow strings to be tested for validity and equality.
       @fun{validp} checks whether a string can be parsed.  If it is valid,
@@ -78,7 +77,6 @@
       @aboutfun{parse}
       @aboutfun{equal-using-type}
     @end{section}
-
     @begin[The validation context]{section}
       Some types are context dependent, as indicated by
       @fun{type-context-dependent-p}.  Those type need access to state
@@ -87,7 +85,7 @@
 
       An abstract class @class{validation-context} is defined.
       Users of this API can implement a subclass of @class{validation-context}
-      and define method for the generic functions listed below.
+      and define methods for the generic functions listed below.
 
       In addition, two pre-defined validation context implementations are
       provided, one for use with SAX, the other based on Klacks.

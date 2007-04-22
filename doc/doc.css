@@ -25,6 +25,14 @@ a:hover {
   border: 1px solid black;
 }
 
+#headerlink {
+  border: none;
+}
+
+#headerlink:hover {
+  border: none;
+}
+
 div.sidebar-title {
   font-weight: bold;
   color: #ffffff;

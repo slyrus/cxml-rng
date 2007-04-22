@@ -78,9 +78,20 @@
 	    function generating such events, in particular
 	    with <a href="http://common-lisp.net/project/cxml/sax.html#parser">cxml:parse-file</a>.
 	  </p>
-<pre class="code">(cxml:parse-file "test.xml"
+<pre class="code">(cxml:parse-file "example.xml"
                  (cxml-rng:make-validator
-                  (cxml-rng:parse-relax-ng #p"test.rng")))</pre>
+                  (cxml-rng:parse-relax-ng #p"example.rng")))</pre>
+<p>
+	    In order to validate while also processing events with
+	    another handler, use a broadcast handler.  For example, to
+	    parse XML into DOM while also validating it, broadcast to
+	    the validator and DOM builder (in that order):
+	  </p>
+<pre class="code">(cxml:parse-file "example.xml"
+		 (cxml:make-broadcast-handler
+		  (cxml-rng:make-validator
+		   (cxml-rng:parse-relax-ng #p"example.rng"))
+		  (cxml-dom:make-dom-builder)))</pre>
 <h3>Documentation</h3>
 <p>
 	    Detailed <a href="doc/index.html">API documentation</a>

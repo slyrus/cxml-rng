@@ -120,7 +120,7 @@
       as defined by the data type.}
 
     The @code{context} argument is required if @fun{type-context-dependent-p}
-    is thrue for @code{type}, and will be ignored otherwise.
+    is true for @code{type}, and will be ignored otherwise.
 
     @see{equal-using-type}
     @see{validp}"))
@@ -135,7 +135,7 @@
     for a type.}
 
     The @code{context} argument is required if @fun{type-context-dependent-p}
-    is thrue for @code{type}, and will be ignored otherwise.
+    is true for @code{type}, and will be ignored otherwise.
 
     @see{parse}
     @see{equal-using-type}"))

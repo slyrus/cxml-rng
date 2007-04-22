@@ -532,7 +532,9 @@
       <table cellspacing="0" cellpadding="0" width="100%">
 	<tr>
 	  <td width="176">
-	    <img src="{$base}logo.png"/>
+	    <a id="headerlink" href="{$base}../index.html">
+	      <img src="{$base}logo.png" border="0"/>
+	    </a>
 	  </td>
 	  <td valign="center">
 	    &#x2014;
