@@ -67,8 +67,10 @@
 
 (defvar *debug* nil)
 
-(defstruct (parsed-grammar (:constructor make-parsed-grammar (pattern)))
+(defstruct (parsed-grammar
+	     (:constructor make-parsed-grammar (pattern definitions)))
   (pattern (missing) :type pattern)
+  (definitions (missing) :type list)
   (interned-start nil :type (or null pattern))
   (registratur nil :type (or null hash-table)))
 
@@ -118,7 +120,7 @@
 	       (make-definition :name :start :child result))
 	 (check-pattern-definitions source *grammar*)
 	 (check-recursion result 0)
-	 (let ((defns (collect-definitions result)))
+	 (let ((defns (finalize-definitions result)))
 	   (setf result (fold-not-allowed result))
 	   (dolist (defn defns)
 	     (setf (defn-child defn) (fold-not-allowed (defn-child defn))))
@@ -127,14 +129,18 @@
 	     (setf (defn-child defn) (fold-empty (defn-child defn))))
 	   (check-start-restrictions result)
 	   (dolist (defn defns)
-	     (check-restrictions (defn-child defn))))
-	 (make-parsed-grammar result)))
+	     (check-restrictions (defn-child defn)))
+	   (make-parsed-grammar result defns))))
      source)))
 
 
 ;;;; pattern structures
 
 (defstruct pattern)
+
+(defmethod print-object :around ((object pattern) stream)
+  (let ((*print-circle* t))
+    (call-next-method)))
 
 (defstruct (%parent (:include pattern) (:conc-name "PATTERN-"))
   child)
@@ -366,14 +372,14 @@
 
 (defun p/element (source name)
   (klacks:expecting-element (source "element")
-    (let ((result (make-element)))
+    (let ((elt (make-element)))
       (consume-and-skip-to-native source)
       (if name
-	  (setf (pattern-name result) (destructure-name source name))
-	  (setf (pattern-name result) (p/name-class source)))
+	  (setf (pattern-name elt) (destructure-name source name))
+	  (setf (pattern-name elt) (p/name-class source)))
       (skip-to-native source)
-      (setf (pattern-child result) (groupify (p/pattern+ source)))
-      result)))
+      (setf (pattern-child elt) (groupify (p/pattern+ source)))
+      (make-ref (make-definition :name (gensym "ANONYMOUS") :child elt)))))
 
 (defvar *attribute-namespace-p* nil)
 
@@ -1219,25 +1225,50 @@
 
 ;;;; 7.1
 
-(defun collect-definitions (pattern)
+(defun finalize-definitions (pattern)
   (let ((defns (make-hash-table)))
     (labels ((recurse (p)
-	       (etypecase p
-		 (ref
+	       (cond
+		 ((typep p 'ref)
 		  (let ((target (pattern-target p)))
 		    (unless (gethash target defns)
 		      (setf (gethash target defns) t)
-		      (recurse (defn-child target)))))
-		 (%parent
-		  (recurse (pattern-child p)))
-		 (%combination
-		  (recurse (pattern-a p))
-		  (recurse (pattern-b p)))
-		 (%leaf))))
+		      (setf (defn-child target) (recurse (defn-child target))))
+		    (if (typep (defn-child target) 'element)
+			p
+			(copy-pattern-tree (defn-child target)))))
+		 (t
+		  (etypecase p
+		    (data
+		     (when (pattern-except p)
+		       (setf (pattern-except p) (recurse (pattern-except p)))))
+		    (%parent
+		     (setf (pattern-child p) (recurse (pattern-child p))))
+		    (%combination
+		     (setf (pattern-a p) (recurse (pattern-a p)))
+		     (setf (pattern-b p) (recurse (pattern-b p))))
+		    (%leaf))
+		  p))))
       (recurse pattern))
     (loop
        for defn being each hash-key in defns
        collect defn)))
+
+(defun copy-pattern-tree (pattern)
+  (labels ((recurse (p)
+	     (let ((q (copy-structure p)))
+	       (etypecase p
+		 (data
+		  (when (pattern-except p)
+		    (setf (pattern-except q) (recurse (pattern-except p)))))
+		 (%parent
+		  (setf (pattern-child q) (recurse (pattern-child p))))
+		 (%combination
+		  (setf (pattern-a q) (recurse (pattern-a p)))
+		  (setf (pattern-b q) (recurse (pattern-b p))))
+		 ((or %leaf ref)))
+	       q)))
+    (recurse pattern)))
 
 (defparameter *in-attribute-p* nil)
 (defparameter *in-one-or-more-p* nil)
