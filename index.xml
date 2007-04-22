@@ -1,21 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>
-	  cxml-rng: Relax NG for Closure XML
-	</title>
-<link rel="stylesheet" type="text/css" href="index.css">
-</head>
-<body style="width: 60%">
-<div id="header"><table cellspacing="0" cellpadding="0" width="100%"><tr>
-<td width="176"><img src="doc/logo.png"></td>
-<td valign="center">
-	    —
-	    <b> Relax NG for Closure XML</b>
-</td>
-</tr></table></div>
-<div id="homepage" class="main">
+<page>
   <p>
     An implementation
     of <a href="http://relaxng.org/spec-20011203.html">Relax
@@ -40,7 +23,8 @@
 
   <p>
     Download
-    cxml-rng <a href="http://www.lichteblau.com/cxml-rng/download/">tarballs</a>
+    cxml-rng <a
+		href="http://www.lichteblau.com/cxml-rng/download/">tarballs</a>
     or get it from
     git: <tt>http://www.lichteblau.com/git/cxml-rng.git</tt>
   </p>
@@ -66,7 +50,8 @@
   <p>
     Use <a href="doc/pages/cxml-rng__parse-relax-ng.html">cxml-rng:parse-relax-ng</a>
     to parse a Relax NG schema file.  The
-    resulting <a href="doc/pages/cxml-rng__parsed-grammar.html">parsed-grammar</a>
+    resulting <a
+		 href="doc/pages/cxml-rng__parsed-grammar.html">parsed-grammar</a>
     object is a representation of a simplified schema using Lisp
     objects, which has gone through most stages of simplification as
     described the Relax NG
@@ -81,11 +66,12 @@
     The validation
     handler processes SAX events and can be used with any
     function generating such events, in particular
-    with <a href="http://common-lisp.net/project/cxml/sax.html#parser">cxml:parse-file</a>.
+    with <a
+	    href="http://common-lisp.net/project/cxml/sax.html#parser">cxml:parse-file</a>.
   </p>
   <pre class="code">(cxml:parse-file "example.xml"
-                 <span style="color: black">(cxml-rng:make-validator
-                  (cxml-rng:parse-relax-ng #p"example.rng"))</span>)</pre>
+                 <blau>(cxml-rng:make-validator
+                  (cxml-rng:parse-relax-ng #p"example.rng"))</blau>)</pre>
   <p>
     In order to validate while also processing events with
     another handler, use a broadcast handler.  For example, to
@@ -93,18 +79,18 @@
     the validator and DOM builder (in that order):
   </p>
   <pre class="code" style="color: #777777">(cxml:parse-file "example.xml"
-                 <span style="color: black">(cxml:make-broadcast-handler</span>
+                 <blau>(cxml:make-broadcast-handler</blau>
                   (cxml-rng:make-validator
                    (cxml-rng:parse-relax-ng #p"example.rng"))
-                  <span style="color: black">(cxml-dom:make-dom-builder))</span>)</pre>
+                  <blau>(cxml-dom:make-dom-builder))</blau>)</pre>
   <p>
     To validate with the klacks parser, use a tapping source.
   </p>
   <pre class="code" style="color: #777777">(klacks:with-open-source
-    (s <span style="color: black">(klacks:make-tapping-source</span>
+    (s <blau>(klacks:make-tapping-source</blau>
         (cxml:make-source #p"example.xml")
-        <span style="color: black">(cxml-rng:make-validator 
-         (cxml-rng:parse-relax-ng #p"example.rng"))</span>))
+        <blau>(cxml-rng:make-validator 
+         (cxml-rng:parse-relax-ng #p"example.rng"))</blau>))
   (loop for key = (klacks:peek-next s) while key do (print key)))</pre>
 
   <h3>Documentation</h3>
@@ -112,6 +98,4 @@
     Detailed <a href="doc/index.html">API documentation</a>
     is available.
   </p>
-</div>
-</body>
-</html>
+</page>

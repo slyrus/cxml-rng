@@ -1,8 +1,7 @@
 all: index.html doc
 
-.PHONY: index.html
-index.html:
-	echo '<empty/>' | xsltproc index.xsl - >index.html
+index.html: index.xml index.xsl
+	xsltproc index.xsl $< >index.html
 
 .PHONY: doc
 doc:
