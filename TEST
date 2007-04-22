@@ -676,15 +676,14 @@
 260-3.v: PASS
 260-4.v: PASS
 260-5.i: PASS: RNG-ERROR
-261:  FAIL: type not found: string/http://www.w3.org/2001/XMLSchema-datatypes
-  [ Error at line 7, column 9 in #<URI file://+/home/david/src/lisp/cxml-rng/spec-split/261/c.rng> ]
-261-1.v: FAIL: cannot run test
-261-2.v: FAIL: cannot run test
-261-3.v: FAIL: cannot run test
-261-4.v: FAIL: cannot run test
-261-5.i: FAIL: cannot run test
-261-6.i: FAIL: cannot run test
-261-7.i: FAIL: cannot run test
+261:  PASS
+261-1.v: PASS
+261-2.v: PASS
+261-3.v: PASS
+261-4.v: PASS
+261-5.i: PASS: RNG-ERROR
+261-6.i: PASS: RNG-ERROR
+261-7.i: PASS: RNG-ERROR
 262:  PASS
 262-1.v: PASS
 262-2.v: PASS
@@ -901,4 +900,4 @@
 372-1.v: PASS
 373:  PASS
 373-1.i: PASS: RNG-ERROR
-Passed 801/902 tests.
+Passed 809/902 tests.

@@ -235,7 +235,19 @@
 
 ;;; XML Schema Part 2: Datatypes Second Edition
 
-(defclass xsd-type (data-type) ())
+(defclass xsd-type (data-type)
+  ((min-length :initarg :min-length :accessor min-length)))
+
+(defmethod initialize-instance ((instance xsd-type)
+				&rest args
+				&key ((:min\length min-length))
+				     ((:max\length max-length)))
+  (apply #'call-next-method
+	 instance
+	 :min-length (when min-length
+		       ;; fixme: richtigen fehler
+		       (parse-integer min-length))
+	 args))
 
 (defmethod type-library ((type xsd-type))
   :|http://www.w3.org/2001/XMLSchema-datatypes|)
@@ -245,11 +257,16 @@
      name
      &rest args &key)
   args					;fixme
-  (case (find-symbol name :keyword)
-    (:|QName| (make-instance 'qname-type))
-    (:|NCName| (make-instance 'ncname-type))
-    (:|anyURI| (make-instance 'any-uri-type))
-    (t nil)))
+  (let ((class
+	 (case (find-symbol name :keyword)
+	   (:|QName| 'qname-type)
+	   (:|NCName| 'ncname-type)
+	   (:|anyURI| 'any-uri-type)
+	   (:|string| 'xsd-string-type)
+	   (t nil))))
+    (if class
+	(apply #'make-instance class args)
+	nil)))
 
 (defgeneric %parse (type e context))
 
@@ -329,3 +346,19 @@
 (defmethod %parse ((type any-uri-type) e context)
   (setf e (normalize-whitespace e))
   (cxml-rng::escape-uri e))
+
+
+;;; string
+
+(defclass xsd-string-type (xsd-type) ())
+
+(defmethod type-name ((type xsd-string-type))
+  "string")
+
+(defmethod equal-using-type ((type xsd-string-type) u v)
+  (equal u v))
+
+(defmethod %parse ((type xsd-string-type) e context)
+  (if (and (min-length type) (< (length e) (min-length type)))
+      :error
+      e))

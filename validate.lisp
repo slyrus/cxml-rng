@@ -115,8 +115,6 @@
     (rng-error hsx "~A, was expecting a ~A"
 	       message
 	       (replace-scary-characters (current-pattern hsx))))
-  (when *debug*
-    (write-line (replace-scary-characters (current-pattern hsx))))
   (setf (current-pattern hsx) pattern))
 
 ;; make sure slime doesn't die
