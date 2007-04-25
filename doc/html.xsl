@@ -82,24 +82,22 @@
 	<xsl:value-of select="@name"/>
       </h1>
       <xsl:apply-templates select="documentation-string"/>
-      <table cellspacing="0" cellpadding="0">
-	<tr>
-	  <td valign="top" width="60%">
-	    <xsl:if test="sections">
-	      <div style="margin-left: -30px">
-		<h3>About This Package</h3>
-	      </div>
-	      <xsl:apply-templates select="sections/section" mode="toc"/>
-	      <br/>
-	      <xsl:apply-templates select="sections"/>
-	    </xsl:if>
-	  </td>
-	  <td valign="top">
-	    <h3><a name="index"></a>Symbol Index</h3>
-	    <xsl:apply-templates select="symbols" mode="symbol-index"/>
-	  </td>
-	</tr>
-      </table>
+      <columns>
+	<column width="60%">
+	  <xsl:if test="sections">
+	    <div style="margin-left: -30px">
+	      <h3>About This Package</h3>
+	    </div>
+	    <xsl:apply-templates select="sections/section" mode="toc"/>
+	    <br/>
+	    <xsl:apply-templates select="sections"/>
+	  </xsl:if>
+	</column>
+	<column>
+	  <h3><a name="index"></a>Symbol Index</h3>
+	  <xsl:apply-templates select="symbols" mode="symbol-index"/>
+	</column>
+      </columns>
     </page>
   </xsl:template>
 
@@ -118,19 +116,17 @@
       </h2>
       <xsl:choose>
 	<xsl:when test="see-also">
-	  <table cellspacing="0" cellpadding="0" width="100%">
-	    <tr>
-	      <td valign="top" width="60%">
-		<xsl:call-template name="class-left"/>
-	      </td>
-	      <td valign="top" width="5%">
-		&#160;
-	      </td>
-	      <td valign="top" width="35%">
-		<xsl:call-template name="main-right"/>
-	      </td>
-	    </tr>
-	  </table>
+	  <columns width="100%">
+	    <column width="60%">
+	      <xsl:call-template name="class-left"/>
+	    </column>
+	    <column width="5%">
+	      &#160;
+	    </column>
+	    <column width="35%">
+	      <xsl:call-template name="main-right"/>
+	    </column>
+	  </columns>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="class-left"/>
@@ -155,19 +151,17 @@
       </h2>
       <xsl:choose>
 	<xsl:when test="see-also">
-	  <table cellspacing="0" cellpadding="0">
-	    <tr>
-	      <td valign="top" width="60%">
-		<xsl:call-template name="function-left"/>
-	      </td>
-	      <td valign="top" width="5%">
-		&#160;
-	      </td>
-	      <td valign="top" width="35%">
-		<xsl:call-template name="main-right"/>
-	      </td>
-	    </tr>
-	  </table>
+	  <columns>
+	    <column width="60%">
+	      <xsl:call-template name="function-left"/>
+	    </column>
+	    <column width="5%">
+	      &#160;
+	    </column>
+	    <column width="35%">
+	      <xsl:call-template name="main-right"/>
+	    </column>
+	  </columns>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="function-left"/>
@@ -250,25 +244,25 @@
     <xsl:if test="see-also/constructor">
       <h3>Returned by</h3>
       <div class="indent">
-	<table cellspacing="0" cellpadding="0">
+	<simple-table>
 	  <xsl:apply-templates select="see-also/constructor/see"/>
-	</table>
+	</simple-table>
       </div>
     </xsl:if>
     <xsl:if test="see-also/slot">
       <h3>Slot Access Functions</h3>
       <div class="indent">
-	<table cellspacing="0" cellpadding="0">
+	<simple-table>
 	  <xsl:apply-templates select="see-also/slot/see"/>
-	</table>
+	</simple-table>
       </div>
     </xsl:if>
     <xsl:if test="see-also/other">
       <h3>See also</h3>
       <div class="indent">
-	<table cellspacing="0" cellpadding="0">
+	<simple-table>
 	  <xsl:apply-templates select="see-also/other/see"/>
-	</table>
+	</simple-table>
       </div>
     </xsl:if>
   </xsl:template>
@@ -276,19 +270,17 @@
   <xsl:template name="main">
     <xsl:choose>
       <xsl:when test="see-also">
-	<table cellspacing="0" cellpadding="0">
-	  <tr>
-	    <td valign="top" width="60%">
-	      <xsl:call-template name="main-left"/>
-	    </td>
-	    <td valign="top" width="5%">
-	      &#160;
-	    </td>
-	    <td valign="top" width="35%">
-	      <xsl:call-template name="main-right"/>
-	    </td>
-	  </tr>
-	</table>
+	<columns>
+	  <column width="60%">
+	    <xsl:call-template name="main-left"/>
+	  </column>
+	  <column width="5%">
+	    &#160;
+	  </column>
+	  <column width="35%">
+	    <xsl:call-template name="main-right"/>
+	  </column>
+	</columns>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="main-left"/>

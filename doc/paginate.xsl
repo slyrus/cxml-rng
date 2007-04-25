@@ -52,6 +52,43 @@
     </html>
   </xsl:template>
 
+  <xsl:template match="columns">
+    <table cellspacing="0" cellpadding="0">
+      <xsl:apply-templates select="@*"/>
+      <tr>
+	<xsl:apply-templates/>
+      </tr>
+    </table>
+  </xsl:template>
+
+  <xsl:template match="column">
+    <td valign="top">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </td>
+  </xsl:template>
+
+  <xsl:template match="simple-table">
+    <table cellspacing="0" cellpadding="0">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </table>
+  </xsl:template>
+
+  <xsl:template match="row">
+    <tr>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </tr>
+  </xsl:template>
+
+  <xsl:template match="cell">
+    <td valign="top">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </td>
+  </xsl:template>
+
   <xsl:template name="header">
     <xsl:param name="base"/>
     <div id="header">
