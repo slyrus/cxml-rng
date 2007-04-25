@@ -1,5 +1,7 @@
 .PHONY: index.html
 
 index.html: doc.xml
-	xsltproc cleanup.xsl doc.xml | \
-		xsltproc html.xsl - >index.html
+	xsltproc cleanup.xsl doc.xml \
+		| xsltproc html.xsl - \
+		| tee debug.xml \
+		| xsltproc paginate.xsl - >index.html

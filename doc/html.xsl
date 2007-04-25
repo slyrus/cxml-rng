@@ -1,26 +1,216 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:output method="html"
-	      indent="yes"
-	      doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-	      doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
+  <xsl:output method="xml" indent="yes"/>
+
+  <xsl:template match="/">
+    <pages>
+      <xsl:apply-templates select="documentation"/>
+      <xsl:apply-templates select="documentation/package"/>
+      <xsl:apply-templates select="documentation/package/symbols"/>
+    </pages>
+  </xsl:template>
+
+  <xsl:template match="symbols">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <xsl:template match="documentation">
-    <html>
-      <head>
-	<title>
-	  <xsl:value-of select="@title"/>
-	</title>
-	<link rel="stylesheet" type="text/css" href="doc.css"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-      </head>
-      <body>
-	<xsl:call-template name="header"/>
-	<div class="main">
-	  Index of packages:
-	  <xsl:apply-templates/>
+    <main-page title="@title">
+      Index of packages:
+
+      <xsl:for-each select="package">
+	<h2>
+	  <a href="pages/{@id}.html">
+	    Package
+	    <xsl:value-of select="@name"/>
+	  </a>
+	</h2>
+	<div style="left: 100px">
+	  <xsl:apply-templates select="documentation-string"/>
 	</div>
-      </body>
-    </html>
+      </xsl:for-each>
+    </main-page>
+  </xsl:template>
+
+  <xsl:template match="class" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, class</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="function" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, function</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="macro" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, macro</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="variable" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, variable</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="package">
+    <page base="../"
+	  pathname="pages/{@id}.html"
+	  title="Package {@name}">
+      <p class="noindent">
+	Up:
+	<a href="../index.html">
+	  <xsl:value-of select="/documentation/@title"/>
+	</a>
+      </p>
+      <h1>
+	Package
+	<xsl:value-of select="@name"/>
+      </h1>
+      <xsl:apply-templates select="documentation-string"/>
+      <table cellspacing="0" cellpadding="0">
+	<tr>
+	  <td valign="top" width="60%">
+	    <xsl:if test="sections">
+	      <div style="margin-left: -30px">
+		<h3>About This Package</h3>
+	      </div>
+	      <xsl:apply-templates select="sections/section" mode="toc"/>
+	      <br/>
+	      <xsl:apply-templates select="sections"/>
+	    </xsl:if>
+	  </td>
+	  <td valign="top">
+	    <h3><a name="index"></a>Symbol Index</h3>
+	    <xsl:apply-templates select="symbols" mode="symbol-index"/>
+	  </td>
+	</tr>
+      </table>
+    </page>
+  </xsl:template>
+
+  <xsl:template match="class">
+    <page base="../"
+	  pathname="pages/{@id}.html"
+	  title="Class {@name}">
+      <p class="noindent">
+	Package:
+	<a href="{../../@id}.html">
+	  <xsl:value-of select="../../@name"/>
+	</a>
+      </p>
+      <h2>
+	Class <xsl:value-of select="@name"/>
+      </h2>
+      <xsl:choose>
+	<xsl:when test="see-also">
+	  <table cellspacing="0" cellpadding="0" width="100%">
+	    <tr>
+	      <td valign="top" width="60%">
+		<xsl:call-template name="class-left"/>
+	      </td>
+	      <td valign="top" width="5%">
+		&#160;
+	      </td>
+	      <td valign="top" width="35%">
+		<xsl:call-template name="main-right"/>
+	      </td>
+	    </tr>
+	  </table>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="class-left"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </page>
+  </xsl:template>
+
+  <xsl:template match="function">
+    <page base="../"
+	  pathname="pages/{@id}.html"
+	  title="Function {@name}">
+      <p class="noindent">
+	Package:
+	<a href="{../../@id}.html">
+	  <xsl:value-of select="../../@name"/>
+	</a>
+      </p>
+      <h2>
+	Function
+	<xsl:value-of select="@name"/>
+      </h2>
+      <xsl:choose>
+	<xsl:when test="see-also">
+	  <table cellspacing="0" cellpadding="0">
+	    <tr>
+	      <td valign="top" width="60%">
+		<xsl:call-template name="function-left"/>
+	      </td>
+	      <td valign="top" width="5%">
+		&#160;
+	      </td>
+	      <td valign="top" width="35%">
+		<xsl:call-template name="main-right"/>
+	      </td>
+	    </tr>
+	  </table>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="function-left"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </page>
+  </xsl:template>
+
+  <xsl:template match="macro">
+    <page base="../"
+	  pathname="pages/{@id}.html"
+	  title="Macro {@name}">
+      <p class="noindent">
+	Package:
+	<a href="{../../@id}.html">
+	  <xsl:value-of select="../../@name"/>
+	</a>
+      </p>
+      <h2>
+	Macro
+	<xsl:value-of select="@name"/>
+      </h2>
+      <xsl:apply-templates select="lambda-list"/>
+      <xsl:call-template name="main"/>
+    </page>
+  </xsl:template>
+
+  <xsl:template match="variable">
+    <page base="../"
+	  pathname="pages/{@id}.html"
+	  title="Variable {@name}">
+      <p class="noindent">
+	Package:
+	<a href="{../../@id}.html">
+	  <xsl:value-of select="../../@name"/>
+	</a>
+      </p>
+      <h2>
+	Variable
+	<xsl:value-of select="@name"/>
+      </h2>
+      <xsl:call-template name="main"/>
+    </page>
   </xsl:template>
 
   <xsl:template match="arguments">
@@ -106,67 +296,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="package">
-    <h2>
-      <a href="pages/{@id}.html">
-	Package
-	<xsl:value-of select="@name"/>
-      </a>
-    </h2>
-    <div style="left: 100px">
-      <xsl:apply-templates select="documentation-string"/>
-    </div>
-    <xsl:document href="pages/{@id}.html"
-		  method="html"
-		  indent="yes"
-		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
-      <html>
-	<head>
-	  <title>
-	    <xsl:text>Package </xsl:text>
-	    <xsl:value-of select="@name"/>
-	  </title>
-	  <link rel="stylesheet" type="text/css" href="../doc.css"/>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</head>
-	<body>
-	  <xsl:call-template name="page-header"/>
-	  <div class="main">
-	    <p class="noindent">
-	      Up:
-	      <a href="../index.html">
-		<xsl:value-of select="/documentation/@title"/>
-	      </a>
-	    </p>
-	    <h1>
-	      Package
-	      <xsl:value-of select="@name"/>
-	    </h1>
-	    <xsl:apply-templates select="documentation-string"/>
-	    <table cellspacing="0" cellpadding="0">
-	      <tr>
-		<td valign="top">
-		  <xsl:if test="sections">
-		    <div style="margin-left: -30px">
-		      <h3>About This Package</h3>
-		    </div>
-		    <xsl:apply-templates select="sections/section" mode="toc"/>
-		    <br/>
-		    <xsl:apply-templates select="sections"/>
-		  </xsl:if>
-		</td>
-		<td valign="top">
-		  <h3><a name="index"></a>Symbol Index</h3>
-		  <xsl:apply-templates select="symbols" mode="symbol-index"/>
-		</td>
-	      </tr>
-	    </table>
-	  </div>
-	</body>
-      </html>
-    </xsl:document>
-  </xsl:template>
+
 
   <xsl:template match="*" mode="symbol-index"/>
 
@@ -176,120 +306,6 @@
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="class" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, class</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-
-    <xsl:document href="{@id}.html"
-		  method="html"
-		  indent="yes"
-		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
-      <html>
-	<head>
-	  <title>
-	    <xsl:text>Class </xsl:text>
-	    <xsl:value-of select="@name"/>
-	  </title>
-	  <link rel="stylesheet" type="text/css" href="../doc.css"/>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</head>
-	<body>
-	  <xsl:call-template name="page-header"/>
-	  <div class="main">
-	    <p class="noindent">
-	      Package:
-	      <a href="{../../@id}.html">
-		<xsl:value-of select="../../@name"/>
-	      </a>
-	    </p>
-	    <xsl:apply-templates select="." mode="page"/>
-	  </div>
-	</body>
-      </html>
-    </xsl:document>
-  </xsl:template>
-
-  <xsl:template match="function" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, function</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-
-    <xsl:document href="{@id}.html"
-		  method="html"
-		  indent="yes"
-		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
-      <html>
-	<head>
-	  <title>
-	    <xsl:text>Function </xsl:text>
-	    <xsl:value-of select="@name"/>
-	  </title>
-	  <link rel="stylesheet" type="text/css" href="../doc.css"/>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</head>
-	<body>
-	  <xsl:call-template name="page-header"/>
-	  <div class="main">
-	    <p class="noindent">
-	      Package:
-	      <a href="{../../@id}.html">
-		<xsl:value-of select="../../@name"/>
-	      </a>
-	    </p>
-	    <xsl:apply-templates select="." mode="page"/>
-	  </div>
-	</body>
-      </html>
-    </xsl:document>
-  </xsl:template>
-
-  <xsl:template match="macro" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, macro</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-
-    <xsl:document href="{@id}.html"
-		  method="html"
-		  indent="yes"
-		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
-      <html>
-	<head>
-	  <title>
-	    <xsl:text>Macro </xsl:text>
-	    <xsl:value-of select="@name"/>
-	  </title>
-	  <link rel="stylesheet" type="text/css" href="../doc.css"/>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</head>
-	<body>
-	  <xsl:call-template name="page-header"/>
-	  <div class="main">
-	    <p class="noindent">
-	      Package:
-	      <a href="{../../@id}.html">
-		<xsl:value-of select="../../@name"/>
-	      </a>
-	    </p>
-	    <xsl:apply-templates select="." mode="page"/>
-	  </div>
-	</body>
-      </html>
-    </xsl:document>
-  </xsl:template>
-
   <xsl:template name="undocumented">
     <xsl:if test="not(documentation-string)">
       <xsl:text>&#160;</xsl:text>
@@ -297,70 +313,6 @@
 	(undocumented)
       </span>
     </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="variable" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, variable</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-
-    <xsl:document href="{@id}.html"
-		  method="html"
-		  indent="yes"
-		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
-		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
-      <html>
-	<head>
-	  <title>
-	    <xsl:text>Variable </xsl:text>
-	    <xsl:value-of select="@name"/>
-	  </title>
-	  <link rel="stylesheet" type="text/css" href="../doc.css"/>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	</head>
-	<body>
-	  <xsl:call-template name="page-header"/>
-	  <div class="main">
-	    <p class="noindent">
-	      Package:
-	      <a href="{../../@id}.html">
-		<xsl:value-of select="../../@name"/>
-	      </a>
-	    </p>
-	    <xsl:apply-templates select="." mode="page"/>
-	  </div>
-	</body>
-      </html>
-    </xsl:document>
-  </xsl:template>
-
-  <xsl:template match="class" mode="page">
-    <h2>
-      Class <xsl:value-of select="@name"/>
-    </h2>
-    <xsl:choose>
-      <xsl:when test="see-also">
-	<table cellspacing="0" cellpadding="0" width="100%">
-	  <tr>
-	    <td valign="top" width="60%">
-	      <xsl:call-template name="class-left"/>
-	    </td>
-	    <td valign="top" width="5%">
-	      &#160;
-	    </td>
-	    <td valign="top" width="35%">
-	      <xsl:call-template name="main-right"/>
-	    </td>
-	  </tr>
-	</table>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:call-template name="class-left"/>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="class-left">
@@ -420,33 +372,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="function" mode="page">
-    <h2>
-      Function
-      <xsl:value-of select="@name"/>
-    </h2>
-    <xsl:choose>
-      <xsl:when test="see-also">
-	<table cellspacing="0" cellpadding="0">
-	  <tr>
-	    <td valign="top" width="60%">
-	      <xsl:call-template name="function-left"/>
-	    </td>
-	    <td valign="top" width="5%">
-	      &#160;
-	    </td>
-	    <td valign="top" width="35%">
-	      <xsl:call-template name="main-right"/>
-	    </td>
-	  </tr>
-	</table>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:call-template name="function-left"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
   <xsl:template name="function-left">
     <h3>Lambda List</h3>
     <div class="indent">
@@ -454,23 +379,6 @@
     </div>
     <xsl:apply-templates select="return"/>
     <xsl:call-template name="main-left"/>
-  </xsl:template>
-
-  <xsl:template match="macro" mode="page">
-    <h2>
-      Macro
-      <xsl:value-of select="@name"/>
-    </h2>
-    <xsl:apply-templates select="lambda-list"/>
-    <xsl:call-template name="main"/>
-  </xsl:template>
-
-  <xsl:template match="variable" mode="page">
-    <h2>
-      Variable
-      <xsl:value-of select="@name"/>
-    </h2>
-    <xsl:call-template name="main"/>
   </xsl:template>
 
   <xsl:template match="lambda-list">
@@ -530,7 +438,7 @@
     </tt>
   </xsl:template>
 
-  <xsl:template match="fun">
+  <xsl:template match="fun[@fun]">
     <a href="{@id}.html">
       <tt>
 	<xsl:apply-templates/>
@@ -544,7 +452,7 @@
     </a>
   </xsl:template>
 
-  <xsl:template match="class">
+  <xsl:template match="class[@class]">
     <a href="{@id}.html">
       <tt>
 	<xsl:apply-templates/>
@@ -552,7 +460,7 @@
     </a>
   </xsl:template>
 
-  <xsl:template match="variable">
+  <xsl:template match="variable[@variable]">
     <a href="{@id}.html">
       <tt>
 	<xsl:apply-templates/>
@@ -673,33 +581,5 @@
       </xsl:choose>
     </div>
     <br/>
-  </xsl:template>
-
-  <xsl:template name="page-header">
-    <xsl:call-template name="header">
-      <xsl:with-param name="base" select="'../'"/>
-    </xsl:call-template>
-  </xsl:template>
-
-  <xsl:template name="header">
-    <xsl:param name="base"/>
-    <div id="header">
-      <table cellspacing="0" cellpadding="0" width="100%">
-	<tr>
-	  <td width="176">
-	    <a id="headerlink" href="{$base}../index.html">
-	      <img src="{$base}logo.png" border="0"/>
-	    </a>
-	  </td>
-	  <td valign="center">
-	    &#x2014;
-	    <b> Relax NG for Closure XML</b>
-	  </td>
-	  <td valign="center" align="right">
-            <b>API documentation</b>
-	  </td>
-	</tr>
-      </table>
-    </div>
   </xsl:template>
 </xsl:stylesheet>

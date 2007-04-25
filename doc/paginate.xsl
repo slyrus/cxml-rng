@@ -1,0 +1,76 @@
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:output method="html"
+	      indent="yes"
+	      doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
+	      doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
+
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="/">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="pages">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="main-page">
+    <xsl:call-template name="page"/>
+  </xsl:template>
+
+  <xsl:template match="page">
+    <xsl:document href="{@pathname}"
+		  method="html"
+		  indent="yes"
+		  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
+		  doctype-system="http://www.w3.org/TR/html4/loose.dtd">
+      <xsl:call-template name="page"/>
+    </xsl:document>
+  </xsl:template>
+  
+  <xsl:template name="page">
+    <html>
+      <head>
+	<title>
+	  <xsl:value-of select="@title"/>
+	</title>
+	<link rel="stylesheet" type="text/css" href="{@base}doc.css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      </head>
+      <body>
+	<xsl:call-template name="header">
+	  <xsl:with-param name="base" select="@base"/>
+	</xsl:call-template>
+	<div class="main">
+	  <xsl:apply-templates/>
+	</div>
+      </body>
+    </html>
+  </xsl:template>
+
+  <xsl:template name="header">
+    <xsl:param name="base"/>
+    <div id="header">
+      <table cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+	  <td width="176">
+	    <a id="headerlink" href="{$base}../index.html">
+	      <img src="{$base}logo.png" border="0"/>
+	    </a>
+	  </td>
+	  <td valign="center">
+	    &#x2014;
+	    <b> Relax NG for Closure XML</b>
+	  </td>
+	  <td valign="center" align="right">
+            <b>API documentation</b>
+	  </td>
+	</tr>
+      </table>
+    </div>
+  </xsl:template>
+</xsl:stylesheet>
