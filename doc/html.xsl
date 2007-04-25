@@ -23,16 +23,25 @@
     </html>
   </xsl:template>
 
+  <xsl:template match="arguments">
+    <h3>Arguments</h3>
+    <div class="indent">
+      <ul>
+	<xsl:for-each select="arg">
+	  <li>
+	    <tt>
+	      <xsl:value-of select="@arg"/>
+	    </tt>
+	    <xsl:text> -- </xsl:text>
+	    <xsl:apply-templates/>
+	  </li>
+	</xsl:for-each>
+      </ul>
+    </div>
+  </xsl:template>
+
   <xsl:template name="main-left">
-    <xsl:if test="documentation-string//arg">
-      <h3>Arguments</h3>
-      <div class="indent">
-	<ul>
-	  <xsl:apply-templates select="documentation-string//arg"
-			       mode="meta"/>
-	</ul>
-      </div>
-    </xsl:if>
+    <xsl:apply-templates select="arguments"/>
     <xsl:choose>
       <xsl:when test="documentation-string">
 	<h3>Details<a name="details"/></h3>
@@ -44,48 +53,39 @@
 	</p>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="documentation-string//implementation-note">
-      <h3>Implementation notes</h3>
-      <xsl:apply-templates
-	 select="documentation-string//implementation-note"
-	 mode="meta"/>
-    </xsl:if>
+    <xsl:apply-templates select="implementation-note"/>
   </xsl:template>
 
   <xsl:template name="main-right">
-    <h3>Returned by</h3>
-    <div class="indent">
-      <table cellspacing="0" cellpadding="0">
-	<xsl:for-each select="documentation-string//see-constructor">
-	  <xsl:call-template name="see"/>
-	</xsl:for-each>
-      </table>
-    </div>
-    <h3>Slot Access Functions</h3>
-    <div class="indent">
-      <table cellspacing="0" cellpadding="0">
-	<xsl:for-each select="documentation-string//see-slot">
-	  <xsl:call-template name="see"/>
-	</xsl:for-each>
-      </table>
-    </div>
-    <h3>See also</h3>
-    <div class="indent">
-      <xsl:if test="documentation-string//see">
+    <xsl:if test="see-also/constructor">
+      <h3>Returned by</h3>
+      <div class="indent">
 	<table cellspacing="0" cellpadding="0">
-	  <xsl:for-each select="documentation-string//see">
-	    <xsl:call-template name="see"/>
-	  </xsl:for-each>
+	  <xsl:apply-templates select="see-also/constructor/see"/>
 	</table>
-      </xsl:if>
-    </div>
+      </div>
+    </xsl:if>
+    <xsl:if test="see-also/slot">
+      <h3>Slot Access Functions</h3>
+      <div class="indent">
+	<table cellspacing="0" cellpadding="0">
+	  <xsl:apply-templates select="see-also/slot/see"/>
+	</table>
+      </div>
+    </xsl:if>
+    <xsl:if test="see-also/other">
+      <h3>See also</h3>
+      <div class="indent">
+	<table cellspacing="0" cellpadding="0">
+	  <xsl:apply-templates select="see-also/other/see"/>
+	</table>
+      </div>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="main">
     <xsl:choose>
-      <xsl:when test="documentation-string//see-slot
-		      or documentation-string//see
-		      or documentation-string//see-constructor">
+      <xsl:when test="see-also">
 	<table cellspacing="0" cellpadding="0">
 	  <tr>
 	    <td valign="top" width="60%">
@@ -144,16 +144,14 @@
 	      <xsl:value-of select="@name"/>
 	    </h1>
 	    <xsl:apply-templates select="documentation-string"/>
-	    <xsl:if test="documentation-string//section">
+	    <xsl:if test="sections">
 	      <h2>Contents</h2>
-	      <xsl:apply-templates select="documentation-string//section"
-				   mode="toc"/>
+	      <xsl:apply-templates select="sections/section" mode="toc"/>
 	      <br/>
 	      <a href="#index" style="font-weight: bold">
 		Index
 	      </a>
-	      <xsl:apply-templates select="documentation-string//section"
-				   mode="meta"/>
+	      <xsl:apply-templates select="sections"/>
 	    </xsl:if>
 	    <h2><a name="index"></a>Index</h2>
 	    <xsl:apply-templates select="symbols" mode="symbol-index"/>
@@ -337,9 +335,7 @@
       Class <xsl:value-of select="@name"/>
     </h2>
     <xsl:choose>
-      <xsl:when test="documentation-string//see-slot
-		      or documentation-string//see
-		      or documentation-string//see-constructor">
+      <xsl:when test="see-also">
 	<table cellspacing="0" cellpadding="0" width="100%">
 	  <tr>
 	    <td valign="top" width="60%">
@@ -423,9 +419,7 @@
       <xsl:value-of select="@name"/>
     </h2>
     <xsl:choose>
-      <xsl:when test="documentation-string//see-slot
-		      or documentation-string//see
-		      or documentation-string//see-constructor">
+      <xsl:when test="see-also">
 	<table cellspacing="0" cellpadding="0">
 	  <tr>
 	    <td valign="top" width="60%">
@@ -449,15 +443,9 @@
   <xsl:template name="function-left">
     <h3>Lambda List</h3>
     <div class="indent">
-      <xsl:apply-templates select="arguments"/>
+      <xsl:apply-templates select="lambda-list"/>
     </div>
-    <xsl:if test="documentation-string//return">
-      <h3>Returns</h3>
-      <div class="indent">
-	<xsl:apply-templates select="documentation-string//return"
-			     mode="meta"/>
-      </div>
-    </xsl:if>
+    <xsl:apply-templates select="return"/>
     <xsl:call-template name="main-left"/>
   </xsl:template>
 
@@ -466,7 +454,7 @@
       Macro
       <xsl:value-of select="@name"/>
     </h2>
-    <xsl:apply-templates select="arguments"/>
+    <xsl:apply-templates select="lambda-list"/>
     <xsl:call-template name="main"/>
   </xsl:template>
 
@@ -478,37 +466,33 @@
     <xsl:call-template name="main"/>
   </xsl:template>
 
-  <xsl:template match="arguments">
+  <xsl:template match="lambda-list">
     <tt><xsl:value-of select="../@name"/></tt>
     <xsl:text> (</xsl:text>
-    <xsl:apply-templates/>
+    <xsl:for-each select="elt">
+      <xsl:if test="position() != 1">
+	<xsl:text>&#160;</xsl:text>
+      </xsl:if>
+      <b><xsl:value-of select="text()"/></b>
+    </xsl:for-each>
     <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <xsl:template match="argument">
-    <xsl:if test="position() != 1">
-      <xsl:text>&#160;</xsl:text>
-    </xsl:if>
-    <b><xsl:value-of select="text()"/></b>
-  </xsl:template>
-
-  <xsl:template mode="about-arguments" match="arguments">
+  <xsl:template mode="about-arguments" match="lambda-list">
     <div class="def">
       <a href="{../@id}.html">
 	Function
 	<xsl:value-of select="../@name"/>
 	<xsl:text> (</xsl:text>
-	<xsl:apply-templates mode="about-arguments"/>
+	<xsl:for-each select="elt">
+	  <xsl:if test="position() != 1">
+	    <xsl:text>&#160;</xsl:text>
+	  </xsl:if>
+	  <xsl:value-of select="text()"/>
+	</xsl:for-each>
 	<xsl:text>)</xsl:text>
       </a>
     </div>
-  </xsl:template>
-
-  <xsl:template mode="about-arguments" match="argument">
-    <xsl:if test="position() != 1">
-      <xsl:text>&#160;</xsl:text>
-    </xsl:if>
-    <xsl:value-of select="text()"/>
   </xsl:template>
 
   <xsl:template match="documentation-string">
@@ -581,14 +565,7 @@
     </li>
   </xsl:template>
 
-  <xsl:template match="see"/>
-  <xsl:template match="see-slot"/>
-  <xsl:template match="see-constructor"/>
-  <xsl:template match="arg"/>
-  <xsl:template match="return"/>
-  <xsl:template match="implementation-note"/>
-
-  <xsl:template name="see">
+  <xsl:template match="see">
     <tr>
       <td>
 	<a href="{@id}.html">
@@ -608,21 +585,15 @@
     </tr>
   </xsl:template>
 
-  <xsl:template match="arg" mode="meta">
-    <li>
-      <tt>
-	<xsl:value-of select="@arg"/>
-      </tt>
-      <xsl:text> -- </xsl:text>
+  <xsl:template match="return">
+    <h3>Returns</h3>
+    <div class="indent">
       <xsl:apply-templates/>
-    </li>
+    </div>
   </xsl:template>
 
-  <xsl:template match="return" mode="meta">
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="implementation-note" mode="meta">
+  <xsl:template match="implementation-note">
+    <h3>Implementation notes</h3>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -630,14 +601,14 @@
     <br/><br/>
   </xsl:template>
 
-  <xsl:template match="section"/>
-
-  <xsl:template match="section" mode="meta">
-    <h2>
-      <a name="{generate-id()}"/>
-      <xsl:value-of select="@section"/>
-    </h2>
-    <xsl:apply-templates/>
+  <xsl:template match="sections">
+    <xsl:for-each select="section">
+      <h2>
+	<a name="{generate-id()}"/>
+	<xsl:value-of select="@section"/>
+      </h2>
+      <xsl:apply-templates/>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="section" mode="toc">
@@ -650,7 +621,7 @@
   <xsl:template match="aboutfun">
     <xsl:variable name="fun" select="text()"/>
     <xsl:apply-templates mode="about-arguments"
-			 select="//function[@name=$fun]/arguments"/>
+			 select="//function[@name=$fun]/lambda-list"/>
     <div style="margin-left: 3em">
       <xsl:choose>
 	<xsl:when test="//function[@name=$fun]/documentation-string//short">
