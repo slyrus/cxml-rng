@@ -1,3 +1,16 @@
+<!--
+    This this the main stylesheet.
+    Input must have been cleaned up using cleanup.xsl already.
+
+    This stylesheet does nearly all of the formatting work, but still keeps
+    all data together in one big XML document.
+
+    A <page> element is produced for each package and symbol.
+
+    The contents of each <page> will be mostly HTML, with the exception
+    of a few formatting elements like <columns> that are replaced later.
+
+  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output method="xml" indent="yes"/>
 
@@ -12,6 +25,11 @@
   <xsl:template match="symbols">
     <xsl:apply-templates/>
   </xsl:template>
+
+
+  <!--
+      page generation templates
+    -->
 
   <xsl:template match="documentation">
     <main-page title="@title">
@@ -29,42 +47,6 @@
 	</div>
       </xsl:for-each>
     </main-page>
-  </xsl:template>
-
-  <xsl:template match="class" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, class</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-  </xsl:template>
-
-  <xsl:template match="function" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, function</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-  </xsl:template>
-
-  <xsl:template match="macro" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, macro</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
-  </xsl:template>
-
-  <xsl:template match="variable" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
-    </a>
-    <xsl:text>, variable</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
   </xsl:template>
 
   <xsl:template match="package">
@@ -206,6 +188,51 @@
       <xsl:call-template name="main"/>
     </page>
   </xsl:template>
+
+
+  <!--
+      Symbol index
+    -->
+  <xsl:template match="class" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, class</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="function" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, function</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="macro" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, macro</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+  <xsl:template match="variable" mode="symbol-index">
+    <a href="{@id}.html">
+      <tt><xsl:value-of select="@name"/></tt>
+    </a>
+    <xsl:text>, variable</xsl:text>
+    <xsl:call-template name="undocumented"/>
+    <br/>
+  </xsl:template>
+
+
+  <!--
+      Other templates
+    -->
 
   <xsl:template match="arguments">
     <h3>Arguments</h3>

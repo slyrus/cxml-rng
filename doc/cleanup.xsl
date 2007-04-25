@@ -1,3 +1,40 @@
+<!--
+    The first stylesheet to be used, this file cleans up the structure
+    of the Lisp-generated XML file by extracting elements from all
+    docstrings into their parent elements, so that only the textual
+    description remains in the <documentation-string>.
+
+    Example (input):
+
+    <class name="foo">
+      <cpl>...</cpl>
+
+      <documentation-string>
+	The foo class.
+	<see-slot id="foo">See also the foo function.</see-slot>
+	Beware bugs.
+      </documentation-string>
+    </class>
+
+    Output:
+
+    <class name="foo">
+      <cpl>...</cpl>
+
+      <see-also>
+	<slot>
+	  <see id="foo">See also the foo function.</see>
+	</slot>
+      </see-also>
+
+      <documentation-string>
+	The foo class.
+	Beware bugs.
+      </documentation-string>
+    </class>
+
+  -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output method="xml" indent="yes"/>
 
