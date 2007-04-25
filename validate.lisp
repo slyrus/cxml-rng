@@ -36,7 +36,7 @@
 
 (defun make-validator (grammar)
   (let* ((table (ensure-registratur grammar))
-	 (start (parsed-grammar-interned-start grammar))
+	 (start (schema-interned-start grammar))
 	 (validator
 	  (make-instance 'validator
 			 :registratur table
@@ -307,13 +307,13 @@
 (defvar *seen-elements*)
 
 (defun ensure-registratur (grammar)
-  (or (parsed-grammar-registratur grammar)
-      (setf (parsed-grammar-registratur grammar)
+  (or (schema-registratur grammar)
+      (setf (schema-registratur grammar)
 	    (let ((table (make-hash-table :test 'equal))
 		  (*seen-elements* '())
 		  (done-elements '()))
-	      (setf (parsed-grammar-interned-start grammar)
-		    (intern-pattern (parsed-grammar-pattern grammar) table))
+	      (setf (schema-interned-start grammar)
+		    (intern-pattern (schema-start grammar) table))
 	      (loop
 		 for elements = *seen-elements*
 		 while elements do

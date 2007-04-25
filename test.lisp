@@ -105,7 +105,7 @@
 	 (rng (if (probe-file c) c i)))
     (format t "~A: " (car (last (pathname-directory d))))
     (print rng)
-    (parse-relax-ng rng)))
+    (parse-schema rng)))
 
 (defun test1 (d)
   (let* ((i (merge-pathnames "i.rng" d))
@@ -113,7 +113,7 @@
     (format t "~A: " (car (last (pathname-directory d))))
     (if (probe-file c)
 	(handler-case
-	    (let ((grammar (parse-relax-ng c)))
+	    (let ((grammar (parse-schema c)))
 	      (format t " PASS~%")
 	      (values t grammar))
 	  (error (c)
@@ -121,7 +121,7 @@
 	    nil))
 	(handler-case
 	    (progn
-	      (parse-relax-ng i)
+	      (parse-schema i)
 	      (format t " FAIL: didn't detect invalid schema~%")
 	      nil)
 	  (rng-error (c)
@@ -199,7 +199,7 @@
   (let ((p (make-pathname :type "rng" :defaults href)))
     (handler-case
 	(prog1
-	    (parse-relax-ng (merge-pathnames p base))
+	    (parse-schema (merge-pathnames p base))
 	  (format t "PASS ~A~%" href)
 	  t)
       (rng-error (c)

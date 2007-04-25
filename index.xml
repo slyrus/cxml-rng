@@ -48,10 +48,10 @@
 
   <h3>Example</h3>
   <p>
-    Use <a href="doc/pages/cxml-rng__parse-relax-ng.html">cxml-rng:parse-relax-ng</a>
+    Use <a href="doc/pages/cxml-rng__parse-schema.html">cxml-rng:parse-schema</a>
     to parse a Relax NG schema file.  The
     resulting <a
-		 href="doc/pages/cxml-rng__parsed-grammar.html">parsed-grammar</a>
+		 href="doc/pages/cxml-rng__schema.html">schema</a>
     object is a representation of a simplified schema using Lisp
     objects, which has gone through most stages of simplification as
     described the Relax NG
@@ -71,7 +71,7 @@
   </p>
   <pre class="code">(cxml:parse-file "example.xml"
                  <blau>(cxml-rng:make-validator
-                  (cxml-rng:parse-relax-ng #p"example.rng"))</blau>)</pre>
+                  (cxml-rng:parse-schema #p"example.rng"))</blau>)</pre>
   <p>
     In order to validate while also processing events with
     another handler, use a broadcast handler.  For example, to
@@ -81,7 +81,7 @@
   <pre class="code" style="color: #777777">(cxml:parse-file "example.xml"
                  <blau>(cxml:make-broadcast-handler</blau>
                   (cxml-rng:make-validator
-                   (cxml-rng:parse-relax-ng #p"example.rng"))
+                   (cxml-rng:parse-schema #p"example.rng"))
                   <blau>(cxml-dom:make-dom-builder))</blau>)</pre>
   <p>
     To validate with the klacks parser, use a tapping source.
@@ -90,7 +90,7 @@
     (s <blau>(klacks:make-tapping-source</blau>
         (cxml:make-source #p"example.xml")
         <blau>(cxml-rng:make-validator 
-         (cxml-rng:parse-relax-ng #p"example.rng"))</blau>))
+         (cxml-rng:parse-schema #p"example.rng"))</blau>))
   (loop for key = (klacks:peek-next s) while key do (print key)))</pre>
 
   <h3>Documentation</h3>

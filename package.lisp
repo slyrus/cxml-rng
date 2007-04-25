@@ -1,12 +1,13 @@
 (defpackage :cxml-rng
   (:use :cl)
   (:export #:rng-error
-	   #:parsed-grammar
-	   #:parse-relax-ng
-	   #:serialize-grammar
-	   #:make-validator
 
-	   #:parsed-grammar-pattern
+	   #:schema
+	   #:schema-start
+
+	   #:parse-schema
+	   #:serialize-schema
+	   #:make-validator
 
 	   #:pattern
 	   #:element
@@ -41,7 +42,7 @@
     @begin{code}
     (cxml:parse-file \"test.xml\"
                      (cxml-rng:make-validator
-                      (cxml-rng:parse-relax-ng #p\"test.rng\")))
+                      (cxml-rng:parse-schema #p\"test.rng\")))
     @end{code}
     @end{section}
     @begin[Classes]{section}
@@ -49,7 +50,7 @@
     @aboutclass{rng-error}
     @end{section}
     @begin[Parsing and validating]{section}
-    @aboutfun{parse-relax-ng}
+    @aboutfun{parse-schema}
     @aboutfun{make-validator}
     @aboutfun{serialize-grammar}
     @end{section}

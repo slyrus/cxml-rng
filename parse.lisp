@@ -68,26 +68,26 @@
 
 (defvar *debug* nil)
 
-(defstruct (parsed-grammar
-	     (:constructor make-parsed-grammar (pattern definitions)))
+(defstruct (schema
+	     (:constructor make-schema (start definitions)))
   "An instance of this class represents a Relax NG grammar that has
    been parsed and simplified.
-   @see-slot{parsed-grammar-pattern}
-   @see-constructor{parse-relax-ng}
+   @see-slot{schema-start}
+   @see-constructor{parse-schema}
    @see{make-validator}
-   @see{serialize-grammar} "
-  (pattern (missing) :type pattern)
+   @see{serialize-schema} "
+  (start (missing) :type pattern)
   (definitions (missing) :type list)
   (interned-start nil :type (or null pattern))
   (registratur nil :type (or null hash-table)))
 
-(setf (documentation 'parsed-grammar-pattern 'function)
-      "@arg[instance]{an instance of @class{parsed-grammar}}
+(setf (documentation 'schema-start 'function)
+      "@arg[instance]{an instance of @class{schema}}
        @return{the start pattern, an instance of @class{pattern}}
        Reader function for the grammar's start pattern, from which all
        of the grammar's patters are reachable.")
 
-(defmethod print-object ((object parsed-grammar) stream)
+(defmethod print-object ((object schema) stream)
   (print-unreadable-object (object stream :type t :identity t)))
 
 (defun invoke-with-klacks-handler (fn source)
@@ -108,14 +108,14 @@
 				    (make-validator *relax-ng-grammar*))
 	upstream)))
 
-(defun parse-relax-ng (input &key entity-resolver)
+(defun parse-schema (input &key entity-resolver)
   (when *validate-grammar*
     (unless *relax-ng-grammar*
       (setf *relax-ng-grammar*
 	    (let* ((*validate-grammar* nil)
 		   (d (slot-value (asdf:find-system :cxml-rng)
 				  'asdf::relative-pathname)))
-	      (parse-relax-ng (merge-pathnames "rng.rng" d))))))
+	      (parse-schema (merge-pathnames "rng.rng" d))))))
   (klacks:with-open-source (source (make-validating-source input))
     (invoke-with-klacks-handler
      (lambda ()
@@ -146,7 +146,7 @@
 	   (check-start-restrictions new-start)
 	   (dolist (defn defns)
 	     (check-restrictions (defn-child defn)))
-	   (make-parsed-grammar new-start defns))))
+	   (make-schema new-start defns))))
      source)))
 
 
@@ -950,13 +950,13 @@
 	      (setf (gethash name *seen-names*) defn)
 	      name))))
 
-(defun serialize-grammar (grammar sink)
+(defun serialize-schema (grammar sink)
   (cxml:with-xml-output sink
     (let ((*definitions-to-names* (make-hash-table))
 	  (*seen-names* (make-hash-table :test 'equal)))
       (cxml:with-element "grammar"
 	(cxml:with-element "start"
-	  (serialize-pattern (parsed-grammar-pattern grammar)))
+	  (serialize-pattern (schema-start grammar)))
 	(loop for defn being each hash-key in *definitions-to-names* do
 	      (serialize-definition defn))))))
 

@@ -144,17 +144,24 @@
 	      <xsl:value-of select="@name"/>
 	    </h1>
 	    <xsl:apply-templates select="documentation-string"/>
-	    <xsl:if test="sections">
-	      <h2>Contents</h2>
-	      <xsl:apply-templates select="sections/section" mode="toc"/>
-	      <br/>
-	      <a href="#index" style="font-weight: bold">
-		Index
-	      </a>
-	      <xsl:apply-templates select="sections"/>
-	    </xsl:if>
-	    <h2><a name="index"></a>Index</h2>
-	    <xsl:apply-templates select="symbols" mode="symbol-index"/>
+	    <table cellspacing="0" cellpadding="0">
+	      <tr>
+		<td valign="top">
+		  <xsl:if test="sections">
+		    <div style="margin-left: -30px">
+		      <h3>About This Package</h3>
+		    </div>
+		    <xsl:apply-templates select="sections/section" mode="toc"/>
+		    <br/>
+		    <xsl:apply-templates select="sections"/>
+		  </xsl:if>
+		</td>
+		<td valign="top">
+		  <h3><a name="index"></a>Symbol Index</h3>
+		  <xsl:apply-templates select="symbols" mode="symbol-index"/>
+		</td>
+	      </tr>
+	    </table>
 	  </div>
 	</body>
       </html>
