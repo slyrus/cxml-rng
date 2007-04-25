@@ -4,7 +4,35 @@
 	   #:parsed-grammar
 	   #:parse-relax-ng
 	   #:serialize-grammar
-	   #:make-validator)
+	   #:make-validator
+
+	   #:parsed-grammar-pattern
+
+	   #:pattern
+	   #:element
+	   #:attribute
+	   #:group
+	   #:interleave
+	   #:choice
+	   #:one-or-more
+	   #:ref
+	   #:empty
+	   #:text
+	   #:value
+	   #:data
+	   #:not-allowed
+	   #:list-pattern
+
+	   #:pattern-a
+	   #:pattern-b
+	   #:pattern-child
+	   #:pattern-element
+	   #:pattern-except
+	   #:pattern-name
+	   #:pattern-params
+	   #:pattern-string
+	   #:pattern-type
+	   #:pattern-value)
   (:documentation
    "@code{cxml-rng} implements @a[http://relaxng.org/spec-20011203.html]{
     Relax NG} schema validation for Closure XML.
@@ -24,6 +52,36 @@
     @aboutfun{parse-relax-ng}
     @aboutfun{make-validator}
     @aboutfun{serialize-grammar}
+    @end{section}
+    @begin[Grammar introspection]{section}
+    The following classes and function are exported so that users can
+    take a peek at the internals of the parsed and simplified grammar.
+
+    @aboutfun{parsed-grammar-pattern}
+    @aboutclass{attribute}
+    @aboutclass{choice}
+    @aboutclass{data}
+    @aboutclass{element}
+    @aboutclass{empty}
+    @aboutclass{group}
+    @aboutclass{interleave}
+    @aboutclass{list-pattern}
+    @aboutclass{not-allowed}
+    @aboutclass{one-or-more}
+    @aboutclass{pattern}
+    @aboutclass{ref}
+    @aboutclass{text}
+    @aboutclass{value}
+    @aboutfun{pattern-child}
+    @aboutfun{pattern-a}
+    @aboutfun{pattern-b}
+    @aboutfun{pattern-name}
+    @aboutfun{pattern-resolved-target}
+    @aboutfun{pattern-type}
+    @aboutfun{pattern-string}
+    @aboutfun{pattern-value}
+    @aboutfun{pattern-params}
+    @aboutfun{pattern-except}
     @end{section}"))
 
 (defpackage :cxml-types

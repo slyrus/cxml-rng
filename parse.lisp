@@ -32,7 +32,8 @@
 
 ;;;; Errors
 
-(define-condition rng-error (simple-error) ())
+(define-condition rng-error (simple-error) ()
+  (:documentation "The class of all validation errors."))
 
 (defun rng-error (source fmt &rest args)
   (let ((s (make-string-output-stream)))
@@ -69,10 +70,22 @@
 
 (defstruct (parsed-grammar
 	     (:constructor make-parsed-grammar (pattern definitions)))
+  "An instance of this class represents a Relax NG grammar that has
+   been parsed and simplified.
+   @see-slot{parsed-grammar-pattern}
+   @see-constructor{parse-relax-ng}
+   @see{make-validator}
+   @see{serialize-grammar} "
   (pattern (missing) :type pattern)
   (definitions (missing) :type list)
   (interned-start nil :type (or null pattern))
   (registratur nil :type (or null hash-table)))
+
+(setf (documentation 'parsed-grammar-pattern 'function)
+      "@arg[instance]{an instance of @class{parsed-grammar}}
+       @return{the start pattern, an instance of @class{pattern}}
+       Reader function for the grammar's start pattern, from which all
+       of the grammar's patters are reachable.")
 
 (defmethod print-object ((object parsed-grammar) stream)
   (print-unreadable-object (object stream :type t :identity t)))
