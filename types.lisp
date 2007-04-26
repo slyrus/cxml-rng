@@ -148,8 +148,12 @@
 (defgeneric context-find-namespace-binding (context prefix)
   (:documentation
    "@arg[context]{an instance of @class{validation-context}}
-    @arg[prefix]{qname prefix, a string}
-    @return{the namespace URI as a string, or NIL}"))
+    @arg[prefix]{name prefix, a string}
+    @return{the namespace URI as a string, or NIL}
+    This function resolves a namespace prefix to a namespace URI in the
+    current context.  All currently declared namespaces
+    are taken into account, including those declared directly on the
+    current element."))
 
 (defclass klacks-validation-context (validation-context)
   ((source :initarg :source :accessor context-source)))

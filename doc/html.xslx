@@ -1,5 +1,5 @@
 <!--
-    This this the main stylesheet.
+    This is the main stylesheet.
     Input must have been cleaned up using cleanup.xsl already.
 
     This stylesheet does nearly all of the formatting work, but still keeps
@@ -12,7 +12,6 @@
 
   -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		xmlns:extra="http://www.w3.org/1999/XSL/Transform"
 		xmlns:macro="http://lichteblau.com/macro"
 		version="1.0">
   <xsl:output method="xml" indent="yes"/>
@@ -106,24 +105,29 @@
       <h2>
 	Class <xsl:value-of select="@name"/>
       </h2>
-      <xsl:choose>
-	<xsl:when test="see-also">
-	  <columns width="100%">
-	    <column width="60%">
-	      <xsl:call-template name="class-left"/>
-	    </column>
-	    <column width="5%">
-	      &#160;
-	    </column>
-	    <column width="35%">
-	      <xsl:call-template name="main-right"/>
-	    </column>
-	  </columns>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="class-left"/>
-	</xsl:otherwise>
-      </xsl:choose>
+      <macro:maybe-columns test="see-also">
+	<h3>Superclasses</h3>
+	<div class="indent">
+	  <xsl:for-each select="cpl/superclass">
+	    <xsl:call-template name="class-list"/>
+	  </xsl:for-each>
+	</div>
+	<h3>Documented Subclasses</h3>
+	<div class="indent">
+	  <xsl:choose>
+	    <xsl:when test="subclasses/subclass">
+	      <xsl:for-each select="subclasses/subclass">
+		<xsl:sort select="@id" data-type="text" order="ascending"/>
+		<xsl:call-template name="class-list"/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      None
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</div>
+	<xsl:call-template name="main-left"/>
+      </macro:maybe-columns>
     </page>
   </xsl:template>
 
@@ -141,24 +145,15 @@
 	Function
 	<xsl:value-of select="@name"/>
       </h2>
-      <xsl:choose>
-	<xsl:when test="see-also">
-	  <columns>
-	    <column width="60%">
-	      <xsl:call-template name="function-left"/>
-	    </column>
-	    <column width="5%">
-	      &#160;
-	    </column>
-	    <column width="35%">
-	      <xsl:call-template name="main-right"/>
-	    </column>
-	  </columns>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="function-left"/>
-	</xsl:otherwise>
-      </xsl:choose>
+      <macro:maybe-columns test="see-also">
+        <h3>Lambda List</h3>
+	<div class="indent">
+	  <xsl:apply-templates select="lambda-list"/>
+	</div>
+	<xsl:apply-templates select="arguments"/>
+	<xsl:apply-templates select="return"/>
+	<xsl:call-template name="main-left"/>
+      </macro:maybe-columns>
     </page>
   </xsl:template>
 
@@ -297,7 +292,6 @@
   </xsl:template>
 
   <xsl:template name="main-left">
-    <xsl:apply-templates select="arguments"/>
     <xsl:choose>
       <xsl:when test="documentation-string">
 	<h3>Details<a name="details"/></h3>
@@ -340,50 +334,11 @@
   </xsl:template>
 
   <xsl:template name="main">
-    <xsl:choose>
-      <xsl:when test="see-also">
-	<columns>
-	  <column width="60%">
-	    <xsl:call-template name="main-left"/>
-	  </column>
-	  <column width="5%">
-	    &#160;
-	  </column>
-	  <column width="35%">
-	    <xsl:call-template name="main-right"/>
-	  </column>
-	</columns>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:call-template name="main-left"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <macro:maybe-columns test="see-also">
+      <xsl:call-template name="main-left"/>
+    </macro:maybe-columns>
   </xsl:template>
 
-  <xsl:template name="class-left">
-    <h3>Superclasses</h3>
-    <div class="indent">
-      <xsl:for-each select="cpl/superclass">
-	<xsl:call-template name="class-list"/>
-      </xsl:for-each>
-    </div>
-    <h3>Documented Subclasses</h3>
-    <div class="indent">
-      <xsl:choose>
-	<xsl:when test="subclasses/subclass">
-	  <xsl:for-each select="subclasses/subclass">
-	    <xsl:sort select="@id" data-type="text" order="ascending"/>
-	    <xsl:call-template name="class-list"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  None
-	</xsl:otherwise>
-      </xsl:choose>
-    </div>
-    <xsl:call-template name="main-left"/>
-  </xsl:template>
-  
   <xsl:template name="class-list">
     <xsl:if test="position() != 1">
       <xsl:text>, </xsl:text>
@@ -415,15 +370,6 @@
 	</tt>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="function-left">
-    <h3>Lambda List</h3>
-    <div class="indent">
-      <xsl:apply-templates select="lambda-list"/>
-    </div>
-    <xsl:apply-templates select="return"/>
-    <xsl:call-template name="main-left"/>
   </xsl:template>
 
   <xsl:template match="lambda-list">
@@ -546,7 +492,7 @@
   </xsl:template>
 
   <xsl:template match="return">
-    <h3>Returns</h3>
+    <h3>Return Value</h3>
     <div class="indent">
       <xsl:apply-templates/>
     </div>

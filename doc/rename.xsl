@@ -1,7 +1,15 @@
+<!--
+    
+    "BECAUSE WE CAN"
+
+    This file is used as a follow-up transformation to macros.xsl to
+    correct namespaces in macro expansions.
+
+  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:extra="http://lichteblau.com/extra"
 		version="1.0">
-  <xsl:output method="xml" indent="yes"/>
+  <xsl:output method="xml" indent="no"/>
 
   <xsl:template match="@*|node()">
     <xsl:copy>
