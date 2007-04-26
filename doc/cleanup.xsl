@@ -72,6 +72,15 @@
     </see>
   </xsl:template>
 
+  <xsl:template mode="auto-see" match="class|fun|variable">
+    <see>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates>
+	<xsl:sort select="@name" data-type="text" order="ascending"/>
+      </xsl:apply-templates>
+    </see>
+  </xsl:template>
+
   <xsl:template match="documentation-string">
     <xsl:if test=".//arg">
       <arguments>
@@ -85,8 +94,16 @@
       </sections>
     </xsl:if>
 
-    <xsl:if test=".//see or .//see-slot or .//see-constructor">
+    <xsl:if test=".//see or .//see-slot or .//see-constructor
+		  or .//class or .//fun or .//variable">
       <see-also>
+	<xsl:if test=".//class or .//fun or .//variable">
+	  <auto>
+	    <xsl:apply-templates mode="auto-see"
+				 select=".//class|.//fun|.//variable"/>
+	  </auto>
+	</xsl:if>
+
 	<xsl:if test=".//see">
 	  <other>
 	    <xsl:apply-templates mode="extract" select=".//see"/>

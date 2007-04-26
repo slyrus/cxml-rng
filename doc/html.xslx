@@ -323,11 +323,16 @@
 	</simple-table>
       </div>
     </xsl:if>
-    <xsl:if test="see-also/other">
+    <xsl:if test="see-also/other|see-also/auto">
       <h3>See also</h3>
       <div class="indent">
 	<simple-table>
-	  <xsl:apply-templates select="see-also/other/see"/>
+	  <xsl:for-each select="see-also/other/see|see-also/auto/see">
+	    <xsl:variable name="name" select="text()"/>
+	    <xsl:if test="not(preceding-sibling::see[text() = $name])">
+	      <xsl:apply-templates select="."/>
+	    </xsl:if>
+	  </xsl:for-each>
 	</simple-table>
       </div>
     </xsl:if>
@@ -427,6 +432,12 @@
     <tt>
       <xsl:apply-templates/>
     </tt>
+  </xsl:template>
+
+  <xsl:template match="pre">
+    <pre>
+      <xsl:apply-templates/>
+    </pre>
   </xsl:template>
 
   <xsl:template match="a">

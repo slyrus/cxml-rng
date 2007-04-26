@@ -35,10 +35,10 @@
     Each type belongs to a datatype library, named by a keyword.  In each
     library, the types are named by strings.
 
-    @see{find-type}
-    @see{type-name}
-    @see{type-library}
-    @see{type-context-dependent-p}
+    @see-constructor{find-type}
+    @see-slot{type-name}
+    @see-slot{type-library}
+    @see-slot{type-context-dependent-p}
     @see{parse}
     @see{equal-using-type}
     @see{validp}"))
@@ -107,7 +107,6 @@
     @short{Compare the @emph{values} @code{u} and @code{v} using a
       data-type-dependent equality function.}
 
-    @see{parse}
     @see{validp}"))
 
 (defgeneric parse (type e &optional context)
@@ -143,7 +142,21 @@
 
 ;;; Validation context
 
-(defclass validation-context () ())
+(defclass validation-context () ()
+  (:documentation
+   "This abstract class defines a protocol allowing data types
+    to query the XML parser about its current state.
+
+    Some types are context dependent, as indicated by
+    @fun{type-context-dependent-p}.  Those types need access to state
+    computed by the XML parser implicitly, like namespace bindings or
+    the Base URI.
+
+    User-defined subclasses must implement a method
+    for the @fun{context-find-namespace-binding} function.
+
+    Two pre-defined validation context implementations are
+    provided, one for use with SAX, the other based on Klacks."))
 
 (defgeneric context-find-namespace-binding (context prefix)
   (:documentation
@@ -156,9 +169,18 @@
     current element."))
 
 (defclass klacks-validation-context (validation-context)
-  ((source :initarg :source :accessor context-source)))
+  ((source :initarg :source :accessor context-source))
+  (:documentation
+   "An validation-context implementation that queries
+    a klacks source for information about the parser's current state.
+    @see-constructor{make-klacks-validation-context}"))
 
 (defun make-klacks-validation-context (source)
+  "@arg[source]{a @a[http://common-lisp.net/project/cxml/klacks.html]{
+     klacks source}}
+   @return{a @class{klacks-validation-context}}
+   Create a validation-context that will query the given klacks source for
+   the current parser context."
   (make-instance 'klacks-validation-context :source source))
 
 (defmethod context-find-namespace-binding
@@ -166,7 +188,12 @@
   (klacks:find-namespace-binding prefix (context-source context)))
 
 (defclass sax-validation-context-mixin (validation-context)
-  ((stack :initform nil :accessor context-stack)))
+  ((stack :initform nil :accessor context-stack))
+  (:documentation
+   "An class that implements validation-context as a mixin for user-defined
+    SAX handler classes.  The mixin will record namespace information
+    automatically, and the user's SAX handler can simply be passed as a
+    validation context to data type function."))
 
 (defmethod sax:start-prefix-mapping
     ((handler sax-validation-context-mixin) prefix uri)
@@ -188,9 +215,31 @@
 
 ;;; Relax NG built-in type library
 
-(defclass rng-type (data-type) ())
-(defclass string-type (rng-type) ())
-(defclass token-type (rng-type) ())
+(defclass rng-type (data-type) ()
+  (:documentation
+   "@short{The class of Relax NG built-in types.}
+    Relax NG defines two built-in data type: string and token.
+
+    The Relax NG type library is named @code{:||}."))
+
+(defclass string-type (rng-type) ()
+  (:documentation
+   "@short{The Relax NG 'string' type.}
+    This data type allows arbitrary strings and interprets them as-is.
+
+    For this type, @fun{parse} will return any string unchanged, and
+    @fun{equal-using-type} compares strings using @code{equal}."))
+
+(defclass token-type (rng-type) ()
+  (:documentation
+   "@short{The Relax NG 'token' type.}
+    This data type allows arbitrary strings and normalizes all whitespaces.
+
+    For this type, @fun{parse} will return the string with leading and
+    trailing whitespace removed, and remaining sequences of spaces
+    compressed down to one space character each.
+
+    A method for @fun{equal-using-type} compares strings using @code{equal}."))
 
 (defmethod type-library ((type rng-type))
   :||)
@@ -243,7 +292,18 @@
 (defclass xsd-type (data-type)
   ((min-length :initarg :min-length :accessor min-length)
    (max-length :initarg :max-length :accessor max-length)
-   (exact-length :initarg :exact-length :accessor exact-length)))
+   (exact-length :initarg :exact-length :accessor exact-length))
+  (:documentation
+   "@short{The class of XML Schema built-in types.}
+
+    Subclasses of xsd-type provide the built-in types of
+    @a[http://www.w3.org/TR/xmlschema-2/]{
+      XML Schema Part 2: Datatypes Second Edition}
+    as specified in @a[http://relaxng.org/xsd-20010907.html]{Guidelines for
+    using W3C XML Schema Datatypes with RELAX NG}.
+
+    The XSD type library
+    is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}."))
 
 (defmethod initialize-instance ((instance xsd-type)
 				&rest args

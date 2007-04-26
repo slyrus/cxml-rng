@@ -99,7 +99,11 @@
 	   #:sax-validation-context-mixin
 	   #:klacks-validation-context
 	   #:make-klacks-validation-context
-	   #:context-find-namespace-binding)
+	   #:context-find-namespace-binding
+	   #:rng-type
+	   #:token-type
+	   #:string-type
+	   #:xsd-type)
   (:documentation
    "@code{cxml-types} defines an extensible interface for XML-related
     data types as required for use in Relax NG validation.
@@ -111,6 +115,18 @@
     using W3C XML Schema Datatypes with RELAX NG}.  The XSD type library
     is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}.
 
+    @begin[Example]{section}
+    @begin{pre}
+* (setf ttt (cxml-types:find-type :|| \"token\"))
+#<CXML-TYPES:TOKEN-TYPE {1002D16B71@}>
+* (cxml-types:parse ttt \"a b\")
+\"a b\"
+* (cxml-types:parse ttt \"a     b\")
+\"a b\"
+* (cxml-types:equal-using-type ttt ** *)
+T
+    @end{pre}
+    @end{section}
     @begin[Type instances]{section}
       Each type, together with its parameters, is represented by an
       instance of @code{data-type}.  The generic function @fun{find-type},
