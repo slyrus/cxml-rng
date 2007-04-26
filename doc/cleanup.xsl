@@ -6,7 +6,7 @@
 
     Example (input):
 
-    <class name="foo">
+    <class-definition name="foo">
       <cpl>...</cpl>
 
       <documentation-string>
@@ -14,11 +14,11 @@
 	<see-slot id="foo">See also the foo function.</see-slot>
 	Beware bugs.
       </documentation-string>
-    </class>
+    </class-definition>
 
     Output:
 
-    <class name="foo">
+    <class-definition name="foo">
       <cpl>...</cpl>
 
       <see-also>
@@ -31,7 +31,7 @@
 	The foo class.
 	Beware bugs.
       </documentation-string>
-    </class>
+    </class-definition>
 
   -->
 

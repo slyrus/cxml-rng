@@ -18,12 +18,8 @@
     <pages>
       <xsl:apply-templates select="documentation"/>
       <xsl:apply-templates select="documentation/package"/>
-      <xsl:apply-templates select="documentation/package/symbols"/>
+      <xsl:apply-templates select="documentation/package/symbols/*"/>
     </pages>
-  </xsl:template>
-
-  <xsl:template match="symbols">
-    <xsl:apply-templates/>
   </xsl:template>
 
 
@@ -35,17 +31,28 @@
     <main-page title="@title">
       Index of packages:
 
-      <xsl:for-each select="package">
-	<h2>
-	  <a href="pages/{@id}.html">
-	    Package
-	    <xsl:value-of select="@name"/>
-	  </a>
-	</h2>
-	<div style="left: 100px">
-	  <xsl:apply-templates select="documentation-string"/>
-	</div>
-      </xsl:for-each>
+      <columns>
+	<column width="60%">
+	  <xsl:for-each select="package">
+	    <h2>
+	      <a href="pages/{@id}.html">
+		Package
+		<xsl:value-of select="@name"/>
+	      </a>
+	    </h2>
+	    <div style="left: 100px">
+	      <xsl:apply-templates select="documentation-string"/>
+	    </div>
+	  </xsl:for-each>
+	</column>
+	<column>
+	  <h3><a name="index"></a>Symbol Index</h3>
+	  <xsl:apply-templates select="package/symbols/*" mode="symbol-index">
+	    <xsl:sort select="@name" data-type="text" order="ascending"/>
+	    <xsl:with-param name="packagep" select="'pages/'"/>
+	  </xsl:apply-templates>
+	</column>
+      </columns>
     </main-page>
   </xsl:template>
 
@@ -83,7 +90,7 @@
     </page>
   </xsl:template>
 
-  <xsl:template match="class">
+  <xsl:template match="class-definition">
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Class {@name}">
@@ -117,7 +124,7 @@
     </page>
   </xsl:template>
 
-  <xsl:template match="function">
+  <xsl:template match="function-definition">
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Function {@name}">
@@ -152,7 +159,7 @@
     </page>
   </xsl:template>
 
-  <xsl:template match="macro">
+  <xsl:template match="macro-definition">
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Macro {@name}">
@@ -171,7 +178,7 @@
     </page>
   </xsl:template>
 
-  <xsl:template match="variable">
+  <xsl:template match="variable-definition">
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Variable {@name}">
@@ -193,36 +200,89 @@
   <!--
       Symbol index
     -->
-  <xsl:template match="class" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
+  <xsl:template match="*" mode="symbol-index"/>
+
+  <xsl:template match="symbols" mode="symbol-index">
+    <xsl:param name="packagep"/>
+    <xsl:apply-templates mode="symbol-index">
+      <xsl:sort select="@id" data-type="text" order="ascending"/>
+      <xsl:with-param name="packagep" select="$packagep"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template name="undocumented">
+    <xsl:if test="not(documentation-string)">
+      <xsl:text>&#160;</xsl:text>
+      <span style="color: red">
+	(undocumented)
+      </span>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="maybe-package-prefix">
+    <xsl:param name="packagep"/>
+    <xsl:if test="$packagep">
+      <span style="color: #777777">
+	<xsl:value-of select="../../@name"/>
+	<xsl:text>::</xsl:text>
+      </span>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="class-definition" mode="symbol-index">
+    <xsl:param name="packagep"/>
+    <a href="{$packagep}{@id}.html">
+      <tt>
+	<xsl:call-template name="maybe-package-prefix">
+	  <xsl:with-param name="packagep" select="$packagep"/>
+	</xsl:call-template>
+	<xsl:value-of select="@name"/>
+      </tt>
     </a>
     <xsl:text>, class</xsl:text>
     <xsl:call-template name="undocumented"/>
     <br/>
   </xsl:template>
 
-  <xsl:template match="function" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
+  <xsl:template match="function-definition" mode="symbol-index">
+    <xsl:param name="packagep"/>
+    <a href="{$packagep}{@id}.html">
+      <tt>
+	<xsl:call-template name="maybe-package-prefix">
+	  <xsl:with-param name="packagep" select="$packagep"/>
+	</xsl:call-template>
+	<xsl:value-of select="@name"/>
+      </tt>
     </a>
     <xsl:text>, function</xsl:text>
     <xsl:call-template name="undocumented"/>
     <br/>
   </xsl:template>
 
-  <xsl:template match="macro" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
+  <xsl:template match="macro-definition" mode="symbol-index">
+    <xsl:param name="packagep"/>
+    <a href="{$packagep}{@id}.html">
+      <tt>
+	<xsl:call-template name="maybe-package-prefix">
+	  <xsl:with-param name="packagep" select="$packagep"/>
+	</xsl:call-template>
+	<xsl:value-of select="@name"/>
+      </tt>
     </a>
     <xsl:text>, macro</xsl:text>
     <xsl:call-template name="undocumented"/>
     <br/>
   </xsl:template>
 
-  <xsl:template match="variable" mode="symbol-index">
-    <a href="{@id}.html">
-      <tt><xsl:value-of select="@name"/></tt>
+  <xsl:template match="variable-definition" mode="symbol-index">
+    <xsl:param name="packagep"/>
+    <a href="{$packagep}{@id}.html">
+      <tt>
+	<xsl:call-template name="maybe-package-prefix">
+	  <xsl:with-param name="packagep" select="$packagep"/>
+	</xsl:call-template>
+	<xsl:value-of select="@name"/>
+      </tt>
     </a>
     <xsl:text>, variable</xsl:text>
     <xsl:call-template name="undocumented"/>
@@ -313,25 +373,6 @@
 	<xsl:call-template name="main-left"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-
-
-  <xsl:template match="*" mode="symbol-index"/>
-
-  <xsl:template match="symbols" mode="symbol-index">
-    <xsl:apply-templates mode="symbol-index">
-      <xsl:sort select="@id" data-type="text" order="ascending"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-  <xsl:template name="undocumented">
-    <xsl:if test="not(documentation-string)">
-      <xsl:text>&#160;</xsl:text>
-      <span style="color: red">
-	(undocumented)
-      </span>
-    </xsl:if>
   </xsl:template>
 
   <xsl:template name="class-left">
@@ -457,21 +498,13 @@
     </tt>
   </xsl:template>
 
-  <xsl:template match="fun[@fun]">
-    <a href="{@id}.html">
-      <tt>
-	<xsl:apply-templates/>
-      </tt>
-    </a>
-  </xsl:template>
-
   <xsl:template match="a">
     <a href="{@a}">
       <xsl:apply-templates/>
     </a>
   </xsl:template>
 
-  <xsl:template match="class[@class]">
+  <xsl:template match="fun">
     <a href="{@id}.html">
       <tt>
 	<xsl:apply-templates/>
@@ -479,7 +512,15 @@
     </a>
   </xsl:template>
 
-  <xsl:template match="variable[@variable]">
+  <xsl:template match="class">
+    <a href="{@id}.html">
+      <tt>
+	<xsl:apply-templates/>
+      </tt>
+    </a>
+  </xsl:template>
+
+  <xsl:template match="variable">
     <a href="{@id}.html">
       <tt>
 	<xsl:apply-templates/>
@@ -554,12 +595,14 @@
 
   <xsl:template match="aboutfun">
     <xsl:variable name="fun" select="text()"/>
-    <xsl:apply-templates mode="about-arguments"
-			 select="//function[@name=$fun]/lambda-list"/>
+    <xsl:apply-templates
+       mode="about-arguments"
+       select="//function-definition[@name=$fun]/lambda-list"/>
     <div style="margin-left: 3em">
       <xsl:choose>
-	<xsl:when test="//function[@name=$fun]/documentation-string//short">
-	  <xsl:for-each select="//function[@name=$fun]">
+	<xsl:when
+	   test="//function-definition[@name=$fun]/documentation-string//short">
+	  <xsl:for-each select="//function-definition[@name=$fun]">
 	    <xsl:apply-templates select="documentation-string//short"/>
 	    <xsl:text> </xsl:text>
 	    <a href="{@id}.html#details">...</a>
@@ -567,7 +610,7 @@
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates
-	     select="//function[@name=$fun]/documentation-string"/>
+	     select="//function-definition[@name=$fun]/documentation-string"/>
 	</xsl:otherwise>
       </xsl:choose>
     </div>
@@ -576,7 +619,7 @@
 
   <xsl:template match="aboutclass">
     <xsl:variable name="name" select="text()"/>
-    <xsl:for-each select="//class[@name=$name]">
+    <xsl:for-each select="//class-definition[@name=$name]">
       <div class="def">
 	<a href="{@id}.html">
 	  Class
@@ -586,8 +629,9 @@
     </xsl:for-each>
     <div style="margin-left: 3em">
       <xsl:choose>
-	<xsl:when test="//class[@name=$name]/documentation-string//short">
-	  <xsl:for-each select="//class[@name=$name]">
+	<xsl:when
+	   test="//class-definition[@name=$name]/documentation-string//short">
+	  <xsl:for-each select="//class-definition[@name=$name]">
 	    <xsl:apply-templates select="documentation-string//short"/>
 	    <xsl:text> </xsl:text>
 	    <a href="{@id}.html#details">...</a>
@@ -595,7 +639,7 @@
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates
-	     select="//class[@name=$name]/documentation-string"/>
+	     select="//class-definition[@name=$name]/documentation-string"/>
 	</xsl:otherwise>
       </xsl:choose>
     </div>

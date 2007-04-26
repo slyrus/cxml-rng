@@ -138,13 +138,13 @@
     @end{section}
     @begin[The validation context]{section}
       Some types are context dependent, as indicated by
-      @fun{type-context-dependent-p}.  Those type need access to state
+      @fun{type-context-dependent-p}.  Those types need access to state
       computed by the XML parser implicitly, like namespace bindings or
       the Base URI.
 
-      An abstract class @class{validation-context} is defined.
-      Users of this API can implement a subclass of @class{validation-context}
-      and define methods for the generic functions listed below.
+      An abstract class @class{validation-context} is defined that
+      users of this API can implement a subclass of 
+      to define methods for the generic functions listed below.
 
       In addition, two pre-defined validation context implementations are
       provided, one for use with SAX, the other based on Klacks.
