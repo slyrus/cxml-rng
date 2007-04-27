@@ -46,7 +46,7 @@
     @end{code}
     @end{section}
     @begin[Classes]{section}
-    @aboutclass{parsed-grammar}
+    @aboutclass{schema}
     @aboutclass{rng-error}
     @end{section}
     @begin[Parsing and validating]{section}
@@ -58,7 +58,7 @@
     The following classes and function are exported so that users can
     take a peek at the internals of the parsed and simplified grammar.
 
-    @aboutfun{parsed-grammar-pattern}
+    @aboutfun{schema-start}
     @aboutclass{attribute}
     @aboutclass{choice}
     @aboutclass{data}
@@ -77,7 +77,7 @@
     @aboutfun{pattern-a}
     @aboutfun{pattern-b}
     @aboutfun{pattern-name}
-    @aboutfun{pattern-resolved-target}
+    @aboutfun{pattern-element}
     @aboutfun{pattern-type}
     @aboutfun{pattern-string}
     @aboutfun{pattern-value}
@@ -134,7 +134,9 @@ T
       are accessible using @fun{type-name}, @fun{type-library}, and
       @fun{type-context-dependent-p}.
 
-      @aboutclass{datatype}
+      @aboutclass{data-type}
+      @aboutclass{rng-type}
+      @aboutclass{xsd-type}
       @aboutfun{find-type}
       @aboutfun{type-name}
       @aboutfun{type-library}

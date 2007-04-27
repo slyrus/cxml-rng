@@ -91,6 +91,7 @@
     In this case, the optional @code{context} argument to @fun{parse} and
     @fun{validp} is required, and an error will be signalled if it is missing.
 
+    @see{validation-context}
     @see{type-name}
     @see{type-library}
     @see{type-context-dependent-p}"))
@@ -144,8 +145,8 @@
 
 (defclass validation-context () ()
   (:documentation
-   "This abstract class defines a protocol allowing data types
-    to query the XML parser about its current state.
+   "@short{This abstract class defines a protocol allowing data types
+    to query the XML parser about its current state.}
 
     Some types are context dependent, as indicated by
     @fun{type-context-dependent-p}.  Those types need access to state
@@ -163,15 +164,16 @@
    "@arg[context]{an instance of @class{validation-context}}
     @arg[prefix]{name prefix, a string}
     @return{the namespace URI as a string, or NIL}
-    This function resolves a namespace prefix to a namespace URI in the
-    current context.  All currently declared namespaces
+    @short{This function resolves a namespace prefix to a namespace URI in the
+    current context.}
+    All currently declared namespaces
     are taken into account, including those declared directly on the
     current element."))
 
 (defclass klacks-validation-context (validation-context)
   ((source :initarg :source :accessor context-source))
   (:documentation
-   "An validation-context implementation that queries
+   "A validation-context implementation that queries
     a klacks source for information about the parser's current state.
     @see-constructor{make-klacks-validation-context}"))
 
@@ -190,10 +192,12 @@
 (defclass sax-validation-context-mixin (validation-context)
   ((stack :initform nil :accessor context-stack))
   (:documentation
-   "An class that implements validation-context as a mixin for user-defined
-    SAX handler classes.  The mixin will record namespace information
+   "@short{A class that implements validation-context as a mixin for
+     user-defined SAX handler classes.}
+
+    The mixin will record namespace information
     automatically, and the user's SAX handler can simply be passed as a
-    validation context to data type function."))
+    validation context to data type functions."))
 
 (defmethod sax:start-prefix-mapping
     ((handler sax-validation-context-mixin) prefix uri)

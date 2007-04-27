@@ -1,68 +1,12 @@
-div.sidebar {
-  float: right;
-  min-width: 15%;
-  padding: 0pt 5pt 5pt 5pt;
-  font-family: verdana, arial;
-}
-
-.sidebar a {
-  border-top: 1px solid #eeeeee;
-  border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
-}
-
-#homepage a {
+a {
   text-decoration: none;
   color: black;
   border-bottom: 1px solid #ff9500;
-  border-top: 1px solid white;
-  border-left: 1px solid white;
-  border-right: 1px solid white;
 }
 
-#homepage a:hover {
+a:hover {
   color: #ff9500;
   border-bottom: 1px solid #aaaaaa;
-}
-
-div.sidebar-title {
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #000000; /* #0000aa */
-  border: solid #000000; /* #0000aa */
-  border-top-width: 1px;
-  border-bottom-width: 0px;
-  border-left-width: 4px;
-  border-right-width: 0px;
-  margin: 0em 2pt 1px 2em;
-}
-
-div.sidebar-title a {
-  color: #ffffff;
-}
-
-div.sidebar-main {
-  background-color: #eeeeee;
-  border: solid #000000; /* #0000aa */
-  border-top-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 4px;
-  border-right-width: 0px;
-  margin: 0em 2pt 1em 2em;
-  padding-top: 2px;
-  padding-left: 2px;
-}
-
-div.sidebar ul {
-  list-style-type: square;
-  padding: 0pt 0pt 0pt 1em;
-  margin: 0 0 1em;
-}
-
-div.sidebar ul.sub {
-  list-style-type: disc;
-  padding: 0pt 0pt 0pt 1em;
-  margin: 0 0 1em;
 }
 
 body {
@@ -72,10 +16,6 @@ body {
   margin-right: 0pt;
   margin-bottom: 10%;
   font-family: verdana, arial;
-//   background-image: url(bg.png);
-//   background-position: top left;
-//   background-attachment: fixed;
-//   background-repeat: no-repeat;
 }
 
 .main {
@@ -91,9 +31,6 @@ h1,h2,h3 {
 }
 
 .def {
-//  background-color: #ffcd87;
-//  background-color: #ffb247;
-//  background-color: #e0a655;
   border-bottom: 1px solid black;
   padding: 1px 1px 1px 1px;
   margin-bottom: 1px;
@@ -102,8 +39,6 @@ h1,h2,h3 {
 }
 
 .def:hover {
-//  background-color: #ffcd87;
-//  background-color: #ffb247;
   background-color: #e0a655;
 }
 

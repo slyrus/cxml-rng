@@ -152,7 +152,17 @@
 
 ;;;; pattern structures
 
-(defstruct pattern)
+(defstruct pattern
+  "@short{The superclass of all patterns.}
+   Instances of this class represent elements of the simplified syntax
+   for Relax NG.
+
+   Patterns are documented for introspective purposes and are not meant to
+   be modified by user code.
+
+   The start pattern of a schema is available through @fun{schema-start}.
+
+   @see{schema}")
 
 (defmethod print-object :around ((object pattern) stream)
   (if *debug*
@@ -165,20 +175,47 @@
 
 (defstruct (%named-pattern (:include %parent) (:conc-name "PATTERN-"))
   name)
-(defstruct (element (:include %named-pattern) (:conc-name "PATTERN-")))
-(defstruct (attribute (:include %named-pattern) (:conc-name "PATTERN-")))
+
+(defstruct (element (:include %named-pattern))
+  "This pattern specifies that an element of a certain name class
+   is required.  Its child pattern describes the attributes and child nodes
+   of this element.
+   @see-slot{pattern-name}
+   @see-slot{pattern-child}")
+
+(defstruct (attribute (:include %named-pattern))
+  "This pattern specifies that an attribute of a certain name class
+   is required.  Its child pattern describes the type of the attribute's
+   contents.
+   @see-slot{pattern-name}
+   @see-slot{pattern-child}")
 
 (defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
   a b)
 (defstruct (group
 	    (:include %combination)
-	    (:constructor make-group (a b))))
+	    (:constructor make-group (a b)))
+  "@short{This pattern specifies that two subpatterns are
+   required at the current position in a specific order.}
+
+   @see-slot{pattern-a}
+   @see-slot{pattern-b}")
 (defstruct (interleave
 	    (:include %combination)
-	    (:constructor make-interleave (a b))))
+	    (:constructor make-interleave (a b)))
+  "@short{This pattern specifies that two possible subpatterns are
+   allowed to occur in any order at the current position.}
+
+   @see-slot{pattern-a}
+   @see-slot{pattern-b}")
 (defstruct (choice
 	    (:include %combination)
-	    (:constructor make-choice (a b))))
+	    (:constructor make-choice (a b)))
+  "@short{This pattern specifies that one of two possible subpatterns are
+   allowed at the current position, given as its children.}
+
+   @see-slot{pattern-a}
+   @see-slot{pattern-b}")
 (defstruct (after
 	    (:include %combination)
 	    (:constructor make-after (a b))))
@@ -188,7 +225,11 @@
 	    (:constructor make-one-or-more (child))))
 (defstruct (list-pattern
 	    (:include %parent)
-	    (:constructor make-list-pattern (child))))
+	    (:constructor make-list-pattern (child)))
+  "@short{This pattern specifies that a subpatterns is allowed multiple
+   times a the current position, with whitespace as a separator.}
+
+   @see-slot{pattern-child}")
 
 (defstruct (ref
 	    (:include pattern)
@@ -197,9 +238,14 @@
   crdepth
   target)
 
+(defun pattern-element (ref)
+  (defn-child (pattern-target ref)))
+
 (defstruct (%leaf (:include pattern)))
 
-(defstruct (empty (:include %leaf) (:conc-name "PATTERN-")))
+(defstruct (empty (:include %leaf))
+  "@short{This pattern specifies that nothing more is expected at the current
+   position.}")
 (defstruct (text (:include %leaf) (:conc-name "PATTERN-")))
 
 (defstruct (%typed-pattern (:include %leaf) (:conc-name "PATTERN-"))
@@ -211,10 +257,22 @@
   value)
 
 (defstruct (data (:include %typed-pattern) (:conc-name "PATTERN-"))
+  "@short{This pattern specifies that text of a specific data type is
+   expected.}
+
+   The data type instance stored in the @code{pattern-type} slot takes into
+   account additional paramaters, which can be retrieved using
+   @code{pattern-params} in their original form.
+
+   @see-slot{pattern-type}
+   @see-slot{pattern-params}
+   @see-slot{pattern-except}"
   params
   except)
 
-(defstruct (not-allowed (:include %leaf) (:conc-name "PATTERN-")))
+(defstruct (not-allowed (:include %leaf))
+  "@short{This pattern specifies that the part of the schema reached at
+   this point is not valid.}")
 
 
 ;;;; non-pattern

@@ -97,6 +97,12 @@
     </td>
   </xsl:template>
 
+  <xsl:template match="padded">
+    <div class="padded">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
   <xsl:template name="header">
     <xsl:param name="base"/>
     <div id="header">

@@ -31,21 +31,25 @@
 
   <xsl:template match="documentation">
     <main-page title="@title">
-      Index of packages:
-
+      <padded>
+	Index of packages:
+      </padded>
+      
       <columns>
 	<column width="60%">
-	  <xsl:for-each select="package">
-	    <h2>
-	      <a href="pages/{@id}.html">
-		Package
-		<xsl:value-of select="@name"/>
-	      </a>
-	    </h2>
-	    <div style="left: 100px">
-	      <xsl:apply-templates select="documentation-string"/>
-	    </div>
-	  </xsl:for-each>
+	  <padded>
+	    <xsl:for-each select="package">
+	      <h2>
+		<a href="pages/{@id}.html">
+		  Package
+		  <xsl:value-of select="@name"/>
+		</a>
+	      </h2>
+	      <div style="left: 100px">
+		<xsl:apply-templates select="documentation-string"/>
+	      </div>
+	    </xsl:for-each>
+	  </padded>
 	</column>
 	<column>
 	  <h3><a name="index"></a>Symbol Index</h3>
@@ -62,27 +66,31 @@
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Package {@name}">
-      <p class="noindent">
-	Up:
-	<a href="../index.html">
-	  <xsl:value-of select="/documentation/@title"/>
-	</a>
-      </p>
-      <h1>
-	Package
-	<xsl:value-of select="@name"/>
-      </h1>
-      <xsl:apply-templates select="documentation-string"/>
+      <padded>
+	<p class="noindent">
+	  Up:
+	  <a href="../index.html">
+	    <xsl:value-of select="/documentation/@title"/>
+	  </a>
+	</p>
+	<h1>
+	  Package
+	  <xsl:value-of select="@name"/>
+	</h1>
+	<xsl:apply-templates select="documentation-string"/>
+      </padded>
       <columns>
 	<column width="60%">
-	  <xsl:if test="sections">
-	    <div style="margin-left: -30px">
-	      <h3>About This Package</h3>
-	    </div>
-	    <xsl:apply-templates select="sections/section" mode="toc"/>
-	    <br/>
-	    <xsl:apply-templates select="sections"/>
-	  </xsl:if>
+	  <padded>
+	    <xsl:if test="sections">
+	      <div style="margin-left: -30px">
+		<h3>About This Package</h3>
+	      </div>
+	      <xsl:apply-templates select="sections/section" mode="toc"/>
+	      <br/>
+	      <xsl:apply-templates select="sections"/>
+	    </xsl:if>
+	  </padded>
 	</column>
 	<column>
 	  <h3><a name="index"></a>Symbol Index</h3>
@@ -96,37 +104,41 @@
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Class {@name}">
-      <p class="noindent">
-	Package:
-	<a href="{../../@id}.html">
-	  <xsl:value-of select="../../@name"/>
-	</a>
-      </p>
-      <h2>
-	Class <xsl:value-of select="@name"/>
-      </h2>
+      <padded>
+	<p class="noindent">
+	  Package:
+	  <a href="{../../@id}.html">
+	    <xsl:value-of select="../../@name"/>
+	  </a>
+	</p>
+	<h2>
+	  Class <xsl:value-of select="@name"/>
+	</h2>
+      </padded>
       <macro:maybe-columns test="see-also">
-	<h3>Superclasses</h3>
-	<div class="indent">
-	  <xsl:for-each select="cpl/superclass">
-	    <xsl:call-template name="class-list"/>
-	  </xsl:for-each>
-	</div>
-	<h3>Documented Subclasses</h3>
-	<div class="indent">
-	  <xsl:choose>
-	    <xsl:when test="subclasses/subclass">
-	      <xsl:for-each select="subclasses/subclass">
-		<xsl:sort select="@id" data-type="text" order="ascending"/>
-		<xsl:call-template name="class-list"/>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      None
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</div>
-	<xsl:call-template name="main-left"/>
+	<padded>
+	  <h3>Superclasses</h3>
+	  <div class="indent">
+	    <xsl:for-each select="cpl/superclass">
+	      <xsl:call-template name="class-list"/>
+	    </xsl:for-each>
+	  </div>
+	  <h3>Documented Subclasses</h3>
+	  <div class="indent">
+	    <xsl:choose>
+	      <xsl:when test="subclasses/subclass">
+		<xsl:for-each select="subclasses/subclass">
+		  <xsl:sort select="@id" data-type="text" order="ascending"/>
+		  <xsl:call-template name="class-list"/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		None
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </div>
+	  <xsl:call-template name="main-left"/>
+	</padded>
       </macro:maybe-columns>
     </page>
   </xsl:template>
@@ -135,24 +147,28 @@
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Function {@name}">
-      <p class="noindent">
-	Package:
-	<a href="{../../@id}.html">
-	  <xsl:value-of select="../../@name"/>
-	</a>
-      </p>
-      <h2>
-	Function
-	<xsl:value-of select="@name"/>
-      </h2>
+      <padded>
+	<p class="noindent">
+	  Package:
+	  <a href="{../../@id}.html">
+	    <xsl:value-of select="../../@name"/>
+	  </a>
+	</p>
+	<h2>
+	  Function
+	  <xsl:value-of select="@name"/>
+	</h2>
+      </padded>
       <macro:maybe-columns test="see-also">
-        <h3>Lambda List</h3>
-	<div class="indent">
-	  <xsl:apply-templates select="lambda-list"/>
-	</div>
-	<xsl:apply-templates select="arguments"/>
-	<xsl:apply-templates select="return"/>
-	<xsl:call-template name="main-left"/>
+	<padded>
+          <h3>Lambda List</h3>
+	  <div class="indent">
+	    <xsl:apply-templates select="lambda-list"/>
+	  </div>
+	  <xsl:apply-templates select="arguments"/>
+	  <xsl:apply-templates select="return"/>
+	  <xsl:call-template name="main-left"/>
+	</padded>
       </macro:maybe-columns>
     </page>
   </xsl:template>
@@ -161,18 +177,20 @@
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Macro {@name}">
-      <p class="noindent">
-	Package:
-	<a href="{../../@id}.html">
-	  <xsl:value-of select="../../@name"/>
-	</a>
-      </p>
-      <h2>
-	Macro
-	<xsl:value-of select="@name"/>
-      </h2>
-      <xsl:apply-templates select="lambda-list"/>
-      <xsl:call-template name="main"/>
+      <padded>
+	<p class="noindent">
+	  Package:
+	  <a href="{../../@id}.html">
+	    <xsl:value-of select="../../@name"/>
+	  </a>
+	</p>
+	<h2>
+	  Macro
+	  <xsl:value-of select="@name"/>
+	</h2>
+	<xsl:apply-templates select="lambda-list"/>
+	<xsl:call-template name="main"/>
+      </padded>
     </page>
   </xsl:template>
 
@@ -180,17 +198,19 @@
     <page base="../"
 	  pathname="pages/{@id}.html"
 	  title="Variable {@name}">
-      <p class="noindent">
-	Package:
-	<a href="{../../@id}.html">
-	  <xsl:value-of select="../../@name"/>
-	</a>
-      </p>
-      <h2>
-	Variable
-	<xsl:value-of select="@name"/>
-      </h2>
-      <xsl:call-template name="main"/>
+      <padded>
+	<p class="noindent">
+	  Package:
+	  <a href="{../../@id}.html">
+	    <xsl:value-of select="../../@name"/>
+	  </a>
+	</p>
+	<h2>
+	  Variable
+	  <xsl:value-of select="@name"/>
+	</h2>
+	<xsl:call-template name="main"/>
+      </padded>
     </page>
   </xsl:template>
 
