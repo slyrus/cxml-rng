@@ -34,9 +34,18 @@
 (defvar *not-allowed* (make-not-allowed))
 
 
-(defun make-validator (grammar)
-  (let* ((table (ensure-registratur grammar))
-	 (start (schema-interned-start grammar))
+(defun make-validator (schema)
+  "@arg[schema]{the parsed Relax NG @class{schema} object}
+   @return{a SAX handler}
+   @short{This function creates a validation handler for @code{schema}},
+    to be used for validation of a document against that schema.
+
+   The validation handler processes SAX events and can be used with any
+   function generating such events, in particular with cxml:parse-file.
+
+   @see{parse-schema}"
+  (let* ((table (ensure-registratur schema))
+	 (start (schema-interned-start schema))
 	 (validator
 	  (make-instance 'validator
 			 :registratur table

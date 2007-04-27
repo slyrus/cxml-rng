@@ -33,7 +33,21 @@
 	   #:pattern-params
 	   #:pattern-string
 	   #:pattern-type
-	   #:pattern-value)
+	   #:pattern-value
+
+	   #:name-class
+	   #:any-name
+	   #:name
+	   #:ns-name
+	   #:name-class-choice
+
+	   #:any-name-except
+	   #:name-uri
+	   #:name-lname
+	   #:ns-name-uri
+	   #:ns-name-except
+	   #:name-class-choice-a
+	   #:name-class-choice-b)
   (:documentation
    "@code{cxml-rng} implements @a[http://relaxng.org/spec-20011203.html]{
     Relax NG} schema validation for Closure XML.

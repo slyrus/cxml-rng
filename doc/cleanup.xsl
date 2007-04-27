@@ -81,6 +81,16 @@
     </see>
   </xsl:template>
 
+  <xsl:template match="class-definition
+		       |function-definition
+		       |variable-definition">
+    <xsl:if test="not(.//unexport)">
+      <xsl:copy>
+	<xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="documentation-string">
     <xsl:if test=".//arg">
       <arguments>

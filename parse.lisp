@@ -36,6 +36,7 @@
   (:documentation "The class of all validation errors."))
 
 (defun rng-error (source fmt &rest args)
+  "@unexport{}"
   (let ((s (make-string-output-stream)))
     (apply #'format s fmt args)
     (when source
@@ -109,6 +110,28 @@
 	upstream)))
 
 (defun parse-schema (input &key entity-resolver)
+  "@arg[input]{a string, pathname, stream, or xstream}
+   @arg[entity-resolver]{a function of two arguments, or NIL}
+   @return{a parsed @class{schema}}
+   @short{This function parses a Relax NG schema file in XML syntax}
+   and returns a parsed representation of that schema.
+
+   @code{input} can be any stream designator as understood by
+   @code{cxml:make-source}.
+
+   Note that namestrings are not valid arguments,
+   because they would be interpreted as XML source code.  Use pathnames
+   instead.
+
+   @code{entity-resolver} can be passed as a function of two arguments.
+   It is invoked for every entity referenced by the
+   document with the entity's Public ID (a rod) and System ID (an
+   URI object) as arguments.  The function may either return
+   nil, CXML will then try to resolve the entity as usual.
+   Alternatively it may return a Common Lisp stream specialized on
+   @code{(unsigned-byte 8)} which will be used instead.
+
+   @see{make-validator}"
   (when *validate-grammar*
     (unless *relax-ng-grammar*
       (setf *relax-ng-grammar*
@@ -176,22 +199,79 @@
 (defstruct (%named-pattern (:include %parent) (:conc-name "PATTERN-"))
   name)
 
+(setf (documentation 'pattern-name 'function)
+      "@arg[instance]{an instance of @class{pattern}}
+       @return{a @class{name-class}}
+       @short{Returns the @code{pattern}'s name class.}
+
+       This slot describes the name allowed for the current element or
+       attribute.
+
+       @see{element}
+       @see{attribute}")
+
+(setf (documentation 'pattern-child 'function)
+      "@arg[instance]{an instance of @class{pattern}}
+       @return{an instance of @class{pattern}}
+       @short{Returns the pattern's sub-pattern.}
+
+       (Elements in the full Relax NG syntax allow more than one child
+       pattern, but simplification normalizes the representation so that
+       any such element has exactly one child.)
+
+       @see{element}
+       @see{attribute}
+       @see{one-or-more}
+       @see{list-pattern}
+       @see{choice}")
+
 (defstruct (element (:include %named-pattern))
-  "This pattern specifies that an element of a certain name class
-   is required.  Its child pattern describes the attributes and child nodes
+  "@short{This pattern specifies that an element of a certain name class
+   is required.}
+
+   Its child pattern describes the attributes and child nodes
    of this element.
    @see-slot{pattern-name}
    @see-slot{pattern-child}")
 
 (defstruct (attribute (:include %named-pattern))
-  "This pattern specifies that an attribute of a certain name class
-   is required.  Its child pattern describes the type of the attribute's
+  "@short{This pattern specifies that an attribute of a certain name class
+   is required.}
+
+   Its child pattern describes the type of the attribute's
    contents.
    @see-slot{pattern-name}
    @see-slot{pattern-child}")
 
 (defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
   a b)
+
+(setf (documentation 'pattern-a 'function)
+      "@arg[instance]{an instance of @class{pattern}}
+       @return{an instance of @class{pattern}}
+       @short{Returns the first of two sub-patterns the pattern instance has.}
+
+       (Elements in the full Relax NG syntax allow more than two child
+       patterns, but simplification normalizes the representation so that
+       any such element has exactly two children.)
+
+       @see{group}
+       @see{interleave}
+       @see{choice}")
+
+(setf (documentation 'pattern-b 'function)
+      "@arg[instance]{an instance of @class{pattern}}
+       @return{an instance of @class{pattern}}
+       @short{Returns the second of two sub-patterns the pattern instance has.}
+
+       (Elements in the full Relax NG syntax allow more than two child
+       patterns, but simplification normalizes the representation so that
+       any such element has exactly two children.)
+
+       @see{group}
+       @see{interleave}
+       @see{choice}")
+
 (defstruct (group
 	    (:include %combination)
 	    (:constructor make-group (a b)))
@@ -222,7 +302,11 @@
 
 (defstruct (one-or-more
 	    (:include %parent)
-	    (:constructor make-one-or-more (child))))
+	    (:constructor make-one-or-more (child)))
+  "@short{This pattern specifies that its subpattern is
+   allowed to occur at the current position one or more times.}
+
+   @see-slot{pattern-child}")
 (defstruct (list-pattern
 	    (:include %parent)
 	    (:constructor make-list-pattern (child)))
@@ -235,10 +319,34 @@
 	    (:include pattern)
 	    (:conc-name "PATTERN-")
 	    (:constructor make-ref (target)))
+  "@short{This pattern references another part of the pattern graph.}
+
+   @code{ref} is the only pattern to introduce shared structure and
+   circularity into the pattern graph, by referring to elements defined
+   elsewhere.
+
+   (@code{ref} pattern in the full Relax NG syntax can be used to refer
+   to any pattern definition in the grammar.  Simplification normalizes
+   the schema so that ref patterns only refer to definitions which have
+   an @code{element} as their child.)
+
+   @see-slot{pattern-element}"
   crdepth
   target)
 
 (defun pattern-element (ref)
+  "@arg[ref]{an instance of @class{ref}}
+   @return{an instance of @class{element}}
+   @short{Returns the ref pattern's target.}
+
+   @code{ref} is the only pattern to introduce shared structure and
+   circularity into the pattern graph, by referring to elements defined
+   elsewhere.
+
+   (@code{ref} pattern in the full Relax NG syntax can be used to refer
+   to any pattern definition in the grammar.  Simplification normalizes
+   the schema so that ref patterns only refer to definitions which have
+   an @code{element} as their child.)"
   (defn-child (pattern-target ref)))
 
 (defstruct (%leaf (:include pattern)))
@@ -246,15 +354,58 @@
 (defstruct (empty (:include %leaf))
   "@short{This pattern specifies that nothing more is expected at the current
    position.}")
-(defstruct (text (:include %leaf) (:conc-name "PATTERN-")))
+
+(defstruct (text (:include %leaf))
+  "@short{This pattern specifies that text is expected here.}")
 
 (defstruct (%typed-pattern (:include %leaf) (:conc-name "PATTERN-"))
   type)
 
+(setf (documentation 'pattern-type 'function)
+      "@arg[instance]{an instance of @class{pattern}}
+       @return{a @class{cxml-types:data-type}}
+       @short{Returns the data type expected at this position.}
+
+       This type has already been parsed into an object.  Its name and
+       the URI of its library can be queried from that object.
+
+       @see{data}
+       @see{value}
+       @see{cxml-types:type-name}
+       @see{cxml-types:type-library}")
+
 (defstruct (value (:include %typed-pattern) (:conc-name "PATTERN-"))
+  "@short{This pattern specifies that a specific value is expected as text
+   here.}
+
+   The value expected is @code{pattern-value}, parsed from
+   @code{pattern-string} using @code{pattern-type}.
+
+   @see-slot{pattern-type}
+   @see-slot{pattern-value}
+   @see-slot{pattern-string}"
   ns
   string
   value)
+
+(setf (documentation 'pattern-string 'function)
+      "@arg[instance]{an instance of @class{value}}
+       @return{a string}
+       @short{Returns the string expected at this position.}
+
+       This string is the lexical representation expected, not parsed into
+       a value object yet.  The parsed object is available as
+       @fun{pattern-value}.
+
+       @see{pattern-type}")
+
+(setf (documentation 'pattern-value 'function)
+      "@arg[instance]{an instance of @class{value}}
+       @return{an object as returned by @fun{cxml-types:parse}}
+       @short{Returns the value expected at this position.}
+
+       This object is the result of parsing @fun{pattern-string} using
+       @fun{pattern-type}.")
 
 (defstruct (data (:include %typed-pattern) (:conc-name "PATTERN-"))
   "@short{This pattern specifies that text of a specific data type is
@@ -269,6 +420,23 @@
    @see-slot{pattern-except}"
   params
   except)
+
+(setf (documentation 'pattern-except 'function)
+      "@arg[instance]{an instance of @class{data}}
+       @return{a @class{pattern}, or @code{nil}}
+       @short{Returns the @code{data} instance's @code{except} pattern.}
+
+       In addition to a data type, @code{data} can specify that certain
+       values are @em{not} permitted.  They are described using a pattern.
+
+       If this slot is @code{nil}, no exception is defined.")
+
+(setf (documentation 'pattern-params 'function)
+      "@arg[instance]{an instance of @class{data}}
+       @return{a list of parameters}
+       @short{fixme}
+
+       fixme: params aren't actually exported yet.")
 
 (defstruct (not-allowed (:include %leaf))
   "@short{This pattern specifies that the part of the schema reached at
@@ -300,26 +468,94 @@
 (defun missing ()
   (error "missing arg"))
 
-(defstruct name-class)
+(defstruct name-class
+  "@short{The abstract superclass of all name-related classes.}
+
+   Name classes represent sets of permissible names for an element or
+   attribute.
+
+   Names are pairs of namespace URI and local-name.")
 
 (defstruct (any-name (:include name-class)
 		     (:constructor make-any-name (except)))
+  "@short{This name class allows any name.}
+
+   Possible exceptions are given as @code{any-name-except}.
+
+   @see-slot{any-name-except}"
   (except (missing) :type (or null name-class)))
+
+(setf (documentation 'any-name-except 'function)
+      "@arg[instance]{an instance of @class{any-name}}
+       @return{a @class{name-class} or @code{nil}}
+
+       Return the name class @em{not} allowed by this @code{any-name},
+       or @code{nil} if there is no such exception.")
 
 (defstruct (name (:include name-class)
 		 (:constructor make-name (uri lname)))
+  "@short{This name class allows only a specific name.}
+
+   A specific namespace URI and local name are expected. 
+
+   @see-slot{name-uri}
+   @see-slot{name-lname}"
   (uri (missing) :type string)
   (lname (missing) :type string))
 
+(setf (documentation 'name-uri 'function)
+      "@arg[instance]{an instance of @class{name}}
+       @return{a string}
+       Return the expected namespace URI.")
+
+(setf (documentation 'name-lname 'function)
+      "@arg[instance]{an instance of @class{name}}
+       @return{a string}
+       Return the expected local name.")
+
 (defstruct (ns-name (:include name-class)
 		    (:constructor make-ns-name (uri except)))
+  "@short{This name class allows all names in a specific namespace.}
+
+   A specific namespace URI is expected. 
+
+   Possible exceptions are given as @code{ns-name-except}.
+
+   @see-slot{ns-name-uri}
+   @see-slot{ns-name-except}"
   (uri (missing) :type string)
   (except (missing) :type (or null name-class)))
 
+(setf (documentation 'ns-name-uri 'function)
+      "@arg[instance]{an instance of @class{ns-name}}
+       @return{a string}
+       Return the expected namespace URI.")
+
+(setf (documentation 'ns-name-except 'function)
+      "@arg[instance]{an instance of @class{ns-name}}
+       @return{a @class{name-class} or @code{nil}}
+
+       Return the name class @em{not} allowed by this @code{ns-name},
+       or @code{nil} if there is no such exception.")
+
 (defstruct (name-class-choice (:include name-class)
 			      (:constructor make-name-class-choice (a b)))
+  "@short{This name class represents the union of two other name classes.}
+
+   @see-slot{name-class-choice-a}
+   @see-slot{name-class-choice-b}"
   (a (missing) :type name-class)
   (b (missing) :type name-class))
+
+(setf (documentation 'name-class-choice-a 'function)
+      "@arg[instance]{an instance of @class{name-class-choice}}
+       @return{a @class{name-class}}
+       Returns the 'first' of two name classes that are allowed.")
+
+(setf (documentation 'name-class-choice-b 'function)
+      "@arg[instance]{an instance of @class{name-class-choice}}
+       @return{a @class{name-class}}
+       Returns the 'second' of two name classes that are allowed.")
 
 (defun simplify-nc-choice (values)
   (zip #'make-name-class-choice values))
@@ -357,6 +593,7 @@
   (klacks:serialize-element source nil))
 
 (defun attribute (lname attrs)
+  "@unexport{}"
   (let ((a (sax:find-attribute-ns "" lname attrs)))
     (if a
 	(sax:attribute-value a)
@@ -1008,13 +1245,22 @@
 	      (setf (gethash name *seen-names*) defn)
 	      name))))
 
-(defun serialize-schema (grammar sink)
+(defun serialize-schema (schema sink)
+  "@arg[schema]{a Relax NG @class{schema}}
+   @arg[sink]{a SAX handler}
+   @return{the result of @code{sax:end-document}}
+   @short{This function serializes a parsed Relax NG back into XML syntax.}
+
+   Note that the schema represented in memory has gone through simplification
+   as is textually different from the original XML document.
+
+   @see{parse-schema}"
   (cxml:with-xml-output sink
     (let ((*definitions-to-names* (make-hash-table))
 	  (*seen-names* (make-hash-table :test 'equal)))
       (cxml:with-element "grammar"
 	(cxml:with-element "start"
-	  (serialize-pattern (schema-start grammar)))
+	  (serialize-pattern (schema-start schema)))
 	(loop for defn being each hash-key in *definitions-to-names* do
 	      (serialize-definition defn))))))
 
