@@ -30,7 +30,7 @@
     -->
 
   <xsl:template match="documentation">
-    <main-page title="@title">
+    <main-page title="{@title}">
       <padded>
 	Index of packages:
       </padded>

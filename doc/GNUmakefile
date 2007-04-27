@@ -2,11 +2,11 @@
 
 all: index.html
 
-html.xsl: macros.xsl html.xslx rename.xsl
-	xsltproc macros.xsl html.xslx | xsltproc rename.xsl - >html.xsl
+html.xsl.out: macros.xsl html.xsl rename.xsl
+	xsltproc macros.xsl html.xsl | xsltproc rename.xsl - >html.xsl.out
 
-index.html: doc.xml html.xsl
+index.html: doc.xml html.xsl.out
 	xsltproc cleanup.xsl doc.xml \
-		| xsltproc html.xsl - \
+		| xsltproc html.xsl.out - \
 		| tee debug.xml \
 		| xsltproc paginate.xsl - >index.html
