@@ -146,9 +146,11 @@
 
 (defun advance (hsx pattern message)
   (when (typep pattern 'not-allowed)
-    (rng-error hsx "~A, was expecting a ~A"
+    (rng-error hsx "~A, was expecting ~A"
 	       message
-	       (replace-scary-characters (current-pattern hsx))))
+	       (replace-scary-characters
+		(with-output-to-string (s)
+		  (expectation (current-pattern hsx) s)))))
   (setf (current-pattern hsx) pattern))
 
 ;; make sure slime doesn't die
@@ -762,6 +764,83 @@
     ((handler text-normalizer) uri lname qname)
   (declare (ignore uri lname qname))
   (flush-pending handler))
+
+
+;;;; EXPECTATION, DESCRIBE-NAME
+
+(defgeneric expectation (pattern stream))
+(defgeneric describe-name (name-class stream))
+
+(defmethod expectation ((pattern after) s)
+  (expectation (pattern-a pattern) s))
+
+(defmethod expectation ((pattern group) s)
+  (expectation (pattern-a pattern) s))
+
+(defmethod expectation ((pattern attribute) s)
+  (write-string "an attribute " s)
+  (describe-name (pattern-name pattern) s))
+
+(defmethod expectation ((pattern choice) s)
+  (expectation (pattern-a pattern) s)
+  (format s "~%  or ")
+  (expectation (pattern-b pattern) s))
+
+(defmethod expectation ((pattern element) s)
+  (write-string "an element " s)
+  (describe-name (pattern-name pattern) s))
+
+(defmethod expectation ((pattern data) s)
+  (format s "a text node of type ~A" (pattern-type pattern)))
+
+(defmethod expectation ((pattern interleave) s)
+  (expectation (pattern-a pattern) s)
+  (format s "~%  interleaved with ")
+  (expectation (pattern-b pattern) s))
+
+(defmethod expectation ((pattern list-pattern) s)
+  (format s "a whitespace separated list of:~%  ")
+  (expectation (pattern-child pattern) s))
+
+(defmethod expectation ((pattern not-allowed) s)
+  "nothing is allowed here at all")
+
+(defmethod expectation ((pattern one-or-more) s)
+  (format s "one or more of:~%  ")
+  (expectation (pattern-child pattern) s))
+
+(defmethod expectation ((pattern text) s)
+  "whitespace")
+
+(defmethod expectation ((pattern value) s)
+  (format s "a text node of type ~A and value ~S"
+	  (pattern-type pattern)
+	  (pattern-value pattern)))
+
+(defmethod expectation ((pattern empty) s)
+  (write-string "nothing more" s))
+
+(defmethod describe-name ((nc name) s)
+  (format s "named ~S, in the namespace ~S"
+	  (name-lname nc)
+	  (name-uri nc)))
+
+(defmethod describe-name ((nc any-name) s)
+  (write-string "of any name" s)
+  (when (any-name-except nc)
+    (write-string " except " s)
+    (describe-name (any-name-except nc) s)))
+
+(defmethod describe-name ((nc ns-name) s)
+  (format s "with a name in the namespace ~S" (ns-name-uri nc))
+  (when (ns-name-except nc)
+    (write-string " except for " s)
+    (describe-name (ns-name-except nc) s)))
+
+(defmethod describe-name ((nc name-class-choice) s)
+  (describe-name (name-class-choice-a nc) s)
+  (format s "~%  or ")
+  (describe-name (name-class-choice-b nc) s))
 
 
 ;;;;
