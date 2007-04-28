@@ -125,7 +125,12 @@
   ((current-pattern :initarg :current-pattern :accessor current-pattern)
    (after-start-tag-p :accessor after-start-tag-p)
    (pending-text-node :initform nil :accessor pending-text-node)
-   (registratur :initarg :registratur :accessor registratur)))
+   (registratur :initarg :registratur :accessor registratur)
+   (open-start-tag\'-cache :initform (make-hash-table :test 'equal)
+			   :reader open-start-tag\'-cache)
+   (close-start-tag\'-cache :initform (make-hash-table)
+			    :reader close-start-tag\'-cache)
+   (end-tag\'-cache :initform (make-hash-table) :reader end-tag\'-cache)))
 
 (defun advance (hsx pattern message)
   (when (typep pattern 'not-allowed)
@@ -448,6 +453,11 @@
 
 (defgeneric open-start-tag\' (handler pattern uri lname))
 
+(defmethod open-start-tag\' :around (hsx (pattern pattern) uri lname)
+  (ensuref (list pattern uri lname)
+	   (open-start-tag\'-cache hsx)
+	   (call-next-method)))
+
 (defmethod open-start-tag\' (hsx (pattern choice) uri lname)
   (intern-choice hsx
                  (open-start-tag\' hsx (pattern-a pattern) uri lname)
@@ -566,6 +576,9 @@
 
 (defgeneric close-start-tag\' (handler pattern))
 
+(defmethod close-start-tag\' :around (hsx (pattern pattern))
+  (ensuref pattern (close-start-tag\'-cache hsx) (call-next-method)))
+
 (defmethod close-start-tag\' (hsx (pattern after))
   (intern-after hsx
 		(close-start-tag\' hsx (pattern-a pattern))
@@ -601,6 +614,9 @@
 ;;;; END-TAG\'
 
 (defgeneric end-tag\' (handler pattern))
+
+(defmethod end-tag\' :around (hsx (pattern pattern))
+  (ensuref pattern (end-tag\'-cache hsx) (call-next-method)))
 
 (defmethod end-tag\' (hsx (pattern choice))
   (intern-choice hsx
