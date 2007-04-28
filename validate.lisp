@@ -33,6 +33,14 @@
 (defvar *empty* (make-empty))
 (defvar *not-allowed* (make-not-allowed))
 
+(defmacro ensuref (key table value)
+  `(ensure-hash ,key ,table (lambda () ,value)))
+
+(defun ensure-hash (key table fn)
+  (or (gethash key table)
+      (setf (gethash key table) (funcall fn))))
+
+
 (defun make-validator (schema)
   "@arg[schema]{the parsed Relax NG @class{schema} object}
    @return{a SAX handler}
@@ -130,7 +138,11 @@
 			   :reader open-start-tag\'-cache)
    (close-start-tag\'-cache :initform (make-hash-table)
 			    :reader close-start-tag\'-cache)
-   (end-tag\'-cache :initform (make-hash-table) :reader end-tag\'-cache)))
+   (end-tag\'-cache :initform (make-hash-table) :reader end-tag\'-cache)
+   (non-element\'-cache :initform (make-hash-table)
+			:reader non-element\'-cache)
+   (mixed-text\'-cache :initform (make-hash-table)
+		       :reader mixed-text\'-cache)))
 
 (defun advance (hsx pattern message)
   (when (typep pattern 'not-allowed)
@@ -159,7 +171,7 @@
       (unless (whitespacep data)
 	;; we already saw an element sibling, so discard whitespace
 	(advance hsx
-		 (text\' hsx (current-pattern hsx) data)
+		 (mixed-text\' hsx (current-pattern hsx))
 		 "text node not valid")))
   (setf (after-start-tag-p hsx) nil))
 
@@ -171,7 +183,7 @@
     (let ((data (pending-text-node hsx)))
       (unless (whitespacep data)
 	(advance hsx
-		 (text\' hsx (current-pattern hsx) data)
+		 (mixed-text\' hsx (current-pattern hsx))
 		 "text node")))
     (setf (pending-text-node hsx) nil))
   (setf attributes
@@ -198,7 +210,7 @@
     ;; process it and handle whitespace specially
     (let* ((current (current-pattern hsx))
 	   (data (pending-text-node hsx))
-	   (next (text\' hsx current data)))
+	   (next (text-only\' hsx current data)))
       (advance hsx
 	       (if (whitespacep data)
 		   (intern-choice hsx current next)
@@ -209,71 +221,121 @@
 	   (end-tag\' hsx (current-pattern hsx))
 	   "end of element not valid"))
 
-
-;;;; TEXT'
-
-(defgeneric text\' (handler pattern data))
-
-(defmethod text\' (hsx (pattern choice) data)
-  (intern-choice hsx
-		 (text\' hsx (pattern-a pattern) data)
-                 (text\' hsx (pattern-b pattern) data)))
-
-(defmethod text\' (hsx (pattern interleave) data)
-  (let ((a (pattern-a pattern))
-        (b (pattern-b pattern)))
-    (intern-choice hsx
-                   (intern-interleave hsx (text\' hsx a data) b)
-                   (intern-interleave hsx a (text\' hsx b data)))))
-
-(defmethod text\' (hsx (pattern group) data)
-  (let* ((a (pattern-a pattern))
-         (b (pattern-b pattern))
-         (p (intern-group hsx (text\' hsx a data) b)))
-    (if (nullable a)
-        (intern-choice hsx p (text\' hsx b data))
-        p)))
-
-(defmethod text\' (hsx (pattern after) data)
-  (intern-after hsx
-                (text\' hsx (pattern-a pattern) data)
-                (pattern-b pattern)))
-
-(defmethod text\' (hsx (pattern one-or-more) data)
-  (let ((child (pattern-child pattern)))
-    (intern-group hsx
-                  (text\' hsx child data)
-		  (intern-zero-or-more hsx child))))
-
-(defmethod text\' (hsx (pattern text) data)
-  (declare (ignore data))
-  pattern)
-
 (defun eat (ok)
   (if ok *empty* *not-allowed*))
 
-(defmethod text\' (hsx (pattern value) data)
+
+;;;; TEXT-ONLY' / NON-ELEMENT'
+
+(defun text-only\' (handler pattern data)
+  (data\' handler
+	  (non-element\' handler pattern)
+	  data))
+
+(defgeneric non-element\' (handler pattern))
+
+(defmethod non-element\' :around (hsx (pattern pattern))
+  (ensuref pattern (non-element\'-cache hsx) (call-next-method)))
+
+(defmethod non-element\' (hsx (pattern choice))
+  (intern-choice hsx
+		 (non-element\' hsx (pattern-a pattern))
+                 (non-element\' hsx (pattern-b pattern))))
+
+(defmethod non-element\' (hsx (pattern interleave))
+  (let ((a (pattern-a pattern))
+        (b (pattern-b pattern)))
+    (intern-choice hsx
+                   (intern-interleave hsx (non-element\' hsx a) b)
+                   (intern-interleave hsx a (non-element\' hsx b)))))
+
+(defmethod non-element\' (hsx (pattern group))
+  (let* ((a (pattern-a pattern))
+         (b (pattern-b pattern))
+         (p (intern-group hsx (non-element\' hsx a) b)))
+    (if (nullable a)
+        (intern-choice hsx p (non-element\' hsx b))
+        p)))
+
+(defmethod non-element\' (hsx (pattern after))
+  (intern-after hsx
+                (non-element\' hsx (pattern-a pattern))
+                (pattern-b pattern)))
+
+(defmethod non-element\' (hsx (pattern one-or-more))
+  (let ((child (pattern-child pattern)))
+    (intern-group hsx
+                  (non-element\' hsx child)
+		  (intern-zero-or-more hsx child))))
+
+(defmethod non-element\' (hsx (pattern element))
+  *not-allowed*)
+
+(defmethod non-element\' (hsx pattern)
+  pattern)
+
+
+;;;; DATA'
+
+(defgeneric data\' (handler pattern data))
+
+(defmethod data\' (hsx (pattern choice) data)
+  (intern-choice hsx
+		 (data\' hsx (pattern-a pattern) data)
+                 (data\' hsx (pattern-b pattern) data)))
+
+(defmethod data\' (hsx (pattern interleave) data)
+  (let ((a (pattern-a pattern))
+        (b (pattern-b pattern)))
+    (intern-choice hsx
+                   (intern-interleave hsx (data\' hsx a data) b)
+                   (intern-interleave hsx a (data\' hsx b data)))))
+
+(defmethod data\' (hsx (pattern group) data)
+  (let* ((a (pattern-a pattern))
+         (b (pattern-b pattern))
+         (p (intern-group hsx (data\' hsx a data) b)))
+    (if (nullable a)
+        (intern-choice hsx p (data\' hsx b data))
+        p)))
+
+(defmethod data\' (hsx (pattern after) data)
+  (intern-after hsx
+                (data\' hsx (pattern-a pattern) data)
+                (pattern-b pattern)))
+
+(defmethod data\' (hsx (pattern one-or-more) data)
+  (let ((child (pattern-child pattern)))
+    (intern-group hsx
+                  (data\' hsx child data)
+		  (intern-zero-or-more hsx child))))
+
+(defmethod data\' (hsx (pattern text) data)
+  (declare (ignore data))
+  pattern)
+
+(defmethod data\' (hsx (pattern value) data)
   (let ((data-type (pattern-type pattern)))
     (eat (cxml-types:equal-using-type
 	  data-type
 	  (pattern-value pattern)
 	  (cxml-types:parse data-type data hsx)))))
 
-(defmethod text\' (hsx (pattern data) data)
+(defmethod data\' (hsx (pattern data) data)
   (eat (and (cxml-types:validp (pattern-type pattern) data hsx)
 	    (let ((except (pattern-except pattern)))
-	      (not (and except (nullable (text\' hsx except data))))))))
+	      (not (and except (nullable (data\' hsx except data))))))))
 
-(defmethod text\' (hsx (pattern list-pattern) data)
+(defmethod data\' (hsx (pattern list-pattern) data)
   (eat (nullable (list\' hsx (pattern-child pattern) (words data)))))
 
-(defmethod text\' (hsx pattern data)
+(defmethod data\' (hsx pattern data)
   (declare (ignore pattern data))
   *not-allowed*)
 
 (defun list\' (hsx pattern words)
   (dolist (word words)
-    (setf pattern (text\' hsx pattern word)))
+    (setf pattern (data\' hsx pattern word)))
   pattern)
 
 (defun words (str)
@@ -281,14 +343,53 @@
 		  (string-trim *whitespace* str)))
 
 
+;;;; MIXED-TEXT'
+
+(defgeneric mixed-text\' (handler pattern))
+
+(defmethod mixed-text\' :around (hsx (pattern pattern))
+  (ensuref pattern (mixed-text\'-cache hsx) (call-next-method)))
+
+(defmethod mixed-text\' (hsx (pattern choice))
+  (intern-choice hsx
+		 (mixed-text\' hsx (pattern-a pattern))
+                 (mixed-text\' hsx (pattern-b pattern))))
+
+(defmethod mixed-text\' (hsx (pattern interleave))
+  (let ((a (pattern-a pattern))
+        (b (pattern-b pattern)))
+    (intern-choice hsx
+                   (intern-interleave hsx (mixed-text\' hsx a) b)
+                   (intern-interleave hsx a (mixed-text\' hsx b)))))
+
+(defmethod mixed-text\' (hsx (pattern group))
+  (let* ((a (pattern-a pattern))
+         (b (pattern-b pattern))
+         (p (intern-group hsx (mixed-text\' hsx a) b)))
+    (if (nullable a)
+        (intern-choice hsx p (mixed-text\' hsx b))
+        p)))
+
+(defmethod mixed-text\' (hsx (pattern after))
+  (intern-after hsx
+                (mixed-text\' hsx (pattern-a pattern))
+                (pattern-b pattern)))
+
+(defmethod mixed-text\' (hsx (pattern one-or-more))
+  (let ((child (pattern-child pattern)))
+    (intern-group hsx
+                  (mixed-text\' hsx child)
+		  (intern-zero-or-more hsx child))))
+
+(defmethod mixed-text\' (hsx (pattern text))
+  pattern)
+
+(defmethod mixed-text\' (hsx pattern)
+  (declare (ignore pattern))
+  *not-allowed*)
+
+
 ;;;; INTERN
-
-(defmacro ensuref (key table value)
-  `(ensure-hash ,key ,table (lambda () ,value)))
-
-(defun ensure-hash (key table fn)
-  (or (gethash key table)
-      (setf (gethash key table) (funcall fn))))
 
 (defgeneric intern-choice (handler a b))
 (defmethod intern-choice (hsx a (b not-allowed)) a)
@@ -562,7 +663,7 @@
 
 (defun value-matches-p (hsx pattern value)
   (or (and (nullable pattern) (whitespacep value))
-      (nullable (text\' hsx pattern value))))
+      (nullable (text-only\' hsx pattern value))))
 
 (defun whitespacep (str)
   (zerop (length (string-trim *whitespace* str))))
