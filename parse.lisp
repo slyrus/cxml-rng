@@ -185,7 +185,8 @@
 
    The start pattern of a schema is available through @fun{schema-start}.
 
-   @see{schema}")
+   @see{schema}"
+  (nullable :uninitialized))
 
 (defmethod print-object :around ((object pattern) stream)
   (if *debug*
@@ -474,13 +475,16 @@
    Name classes represent sets of permissible names for an element or
    attribute.
 
-   Names are pairs of namespace URI and local-name.")
+   Names are pairs of namespace URI and local-name.
+
+   @see{attribute}
+   @see{element}")
 
 (defstruct (any-name (:include name-class)
 		     (:constructor make-any-name (except)))
   "@short{This name class allows any name.}
 
-   Possible exceptions are given as @code{any-name-except}.
+   Exceptions are given as @code{any-name-except}.
 
    @see-slot{any-name-except}"
   (except (missing) :type (or null name-class)))
@@ -515,11 +519,12 @@
 
 (defstruct (ns-name (:include name-class)
 		    (:constructor make-ns-name (uri except)))
-  "@short{This name class allows all names in a specific namespace.}
+  "@short{This name class allows all names in a specific namespace}, with
+   possible exceptions.
 
    A specific namespace URI is expected. 
 
-   Possible exceptions are given as @code{ns-name-except}.
+   Exceptions are given as @code{ns-name-except}.
 
    @see-slot{ns-name-uri}
    @see-slot{ns-name-except}"

@@ -33,7 +33,6 @@
 (defvar *empty* (make-empty))
 (defvar *not-allowed* (make-not-allowed))
 
-
 (defun make-validator (schema)
   "@arg[schema]{the parsed Relax NG @class{schema} object}
    @return{a SAX handler}
@@ -79,35 +78,44 @@
       (contains (name-class-choice-b nc) uri lname)))
 
 
-;;;; NULLABLE
+;;;; COMPUTE-NULLABLE
 
-(defgeneric nullable (pattern))
+(defun finalize-pattern (p)
+  (setf (pattern-nullable p) (compute-nullable p))
+  p)
 
-(defmethod nullable ((pattern group))
+(defun nullable (pattern)
+  (let ((np (pattern-nullable pattern)))
+    (check-type np boolean)		;initialized by intern-pattern
+    np))
+
+(defgeneric compute-nullable (pattern))
+
+(defmethod compute-nullable ((pattern group))
   (and (nullable (pattern-a pattern))
        (nullable (pattern-b pattern))))
 
-(defmethod nullable  ((pattern interleave))
+(defmethod compute-nullable  ((pattern interleave))
   (and (nullable (pattern-a pattern))
        (nullable (pattern-b pattern))))
 
-(defmethod nullable ((pattern choice))
+(defmethod compute-nullable ((pattern choice))
   (or (nullable (pattern-a pattern))
       (nullable (pattern-b pattern))))
 
-(defmethod nullable ((pattern one-or-more))
+(defmethod compute-nullable ((pattern one-or-more))
   (nullable (pattern-child pattern)))
 
-(defmethod nullable ((pattern element)) nil)
-(defmethod nullable ((pattern attribute)) nil)
-(defmethod nullable ((pattern list-pattern)) nil)
-(defmethod nullable ((pattern value)) nil)
-(defmethod nullable ((pattern data)) nil)
-(defmethod nullable ((pattern not-allowed)) nil)
-(defmethod nullable ((pattern after)) nil)
+(defmethod compute-nullable ((pattern element)) nil)
+(defmethod compute-nullable ((pattern attribute)) nil)
+(defmethod compute-nullable ((pattern list-pattern)) nil)
+(defmethod compute-nullable ((pattern value)) nil)
+(defmethod compute-nullable ((pattern data)) nil)
+(defmethod compute-nullable ((pattern not-allowed)) nil)
+(defmethod compute-nullable ((pattern after)) nil)
 
-(defmethod nullable ((pattern empty)) t)
-(defmethod nullable ((pattern text)) t)
+(defmethod compute-nullable ((pattern empty)) t)
+(defmethod compute-nullable ((pattern text)) t)
 
 
 ;;;; VALIDATOR
@@ -281,7 +289,31 @@
 (defmethod intern-choice (hsx a (b not-allowed)) a)
 (defmethod intern-choice (hsx (a not-allowed) b) b)
 (defmethod intern-choice (hsx a b)
-  (ensuref (list 'choice a b) (registratur hsx) (make-choice a b)))
+  (ensuref (list 'choice a b)
+	   (registratur hsx)
+	   (let ((table (make-hash-table)))
+	     (labels ((record (p)
+			(cond
+			  ((typep p 'choice)
+			   (record (pattern-a p))
+			   (record (pattern-b p)))
+			  (t
+			   (setf (gethash p table) t)))))
+	       (record a))
+	     (labels ((eliminate (p)
+			(cond
+			  ((typep p 'choice)
+			   (intern-choice hsx
+					  (eliminate (pattern-a p))
+					  (eliminate (pattern-b p))))
+			  ((gethash p table)
+			   *not-allowed*)
+			  (t
+			   p))))
+	       (let ((x (eliminate b)))
+		 (if (typep x 'not-allowed)
+		     a
+		     (finalize-pattern (make-choice a x))))))))
 
 (defgeneric intern-group (handler a b))
 (defmethod intern-group (hsx (a pattern) (b not-allowed)) b)
@@ -289,7 +321,9 @@
 (defmethod intern-group (hsx a (b empty)) a)
 (defmethod intern-group (hsx (a empty) b) b)
 (defmethod intern-group (hsx a b)
-  (ensuref (list 'group a b) (registratur hsx) (make-group a b)))
+  (ensuref (list 'group a b)
+	   (registratur hsx)
+	   (finalize-pattern (make-group a b))))
 
 (defgeneric intern-interleave (handler a b))
 (defmethod intern-interleave (hsx (a pattern) (b not-allowed)) b)
@@ -297,18 +331,24 @@
 (defmethod intern-interleave (hsx a (b empty)) a)
 (defmethod intern-interleave (hsx (a empty) b) b)
 (defmethod intern-interleave (hsx a b)
-  (ensuref (list 'interleave a b) (registratur hsx) (make-interleave a b)))
+  (ensuref (list 'interleave a b)
+	   (registratur hsx)
+	   (finalize-pattern (make-interleave a b))))
 
 (defgeneric intern-after (handler a b))
 (defmethod intern-after (hsx (a pattern) (b not-allowed)) b)
 (defmethod intern-after (hsx (a not-allowed) (b pattern)) a)
 (defmethod intern-after (hsx a b)
-  (ensuref (list 'after a b) (registratur hsx) (make-after a b)))
+  (ensuref (list 'after a b)
+	   (registratur hsx)
+	   (finalize-pattern (make-after a b))))
 
 (defgeneric intern-one-or-more (handler c))
 (defmethod intern-one-or-more (hsx (c not-allowed)) c)
 (defmethod intern-one-or-more (hsx c)
-  (ensuref (list 'one-or-more c) (registratur hsx) (make-one-or-more c)))
+  (ensuref (list 'one-or-more c)
+	   (registratur hsx)
+	   (finalize-pattern (make-one-or-more c))))
 
 
 ;;;; ENSURE-REGISTRATUR
@@ -341,6 +381,9 @@
 (defmethod intern-pattern ((pattern element) table)
   (pushnew pattern *seen-elements*)
   pattern)
+
+(defmethod intern-pattern :around ((pattern pattern) table)
+  (finalize-pattern (call-next-method)))
 
 (defmethod intern-pattern ((pattern %parent) table)
   (let ((c (intern-pattern (pattern-child pattern) table)))
@@ -602,3 +645,9 @@
     ((handler text-normalizer) uri lname qname)
   (declare (ignore uri lname qname))
   (flush-pending handler))
+
+
+;;;;
+
+(finalize-pattern *empty*)
+(finalize-pattern *not-allowed*)
