@@ -32,28 +32,60 @@
 
 ;;;; Errors
 
-(define-condition rng-error (simple-error) ()
-  (:documentation "The class of all validation errors."))
+(define-condition rng-error (simple-error)
+  ((line-number :initarg :line-number :accessor rng-error-line-number)
+   (column-number :initarg :column-number :accessor rng-error-column-number)
+   (system-id :initarg :system-id :accessor rng-error-system-id))
+  (:documentation
+   "The class of all validation errors.
+    @see-slot{rng-error-line-number}
+    @see-slot{rng-error-column-number}
+    @see-slot{rng-error-system-id}"))
+
+(setf (documentation 'rng-error-line-number 'function)
+      "@arg[instance]{an instance of @class{rng-error}}
+       @return{an integer, or nil}
+       Return the line number reported by the parser when the Relax NG error
+       was detected, or NIL if not available.")
+
+(setf (documentation 'rng-error-column-number 'function)
+      "@arg[instance]{an instance of @class{rng-error}}
+       @return{an integer, or nil}
+       Return the column number reported by the parser when the Relax NG error
+       was detected, or NIL if not available.")
+
+(setf (documentation 'rng-error-system-id 'function)
+      "@arg[instance]{an instance of @class{rng-error}}
+       @return{a puri:uri, or nil}
+       Return the System ID of the document being parsed when the Relax NG
+       error was detected, or NIL if not available.")
 
 (defun rng-error (source fmt &rest args)
   "@unexport{}"
   (let ((s (make-string-output-stream)))
     (apply #'format s fmt args)
-    (when source
-      (etypecase source
-	(klacks:source
-	 (format s "~&  [ Error at line ~D, column ~D in ~S ]"
-		 (klacks:current-line-number source)
-		 (klacks:current-column-number source)
-		 (klacks:current-system-id source)))
-	(sax:sax-parser-mixin
-	 (format s "~&  [ Error at line ~D, column ~D in ~S ]"
-		 (sax:line-number source)
-		 (sax:column-number source)
-		 (sax:system-id source))) ))
-    (error 'rng-error
-	   :format-control "~A"
-	   :format-arguments (list (get-output-stream-string s)))))
+    (multiple-value-bind (line-number column-number system-id)
+	(etypecase source
+	  (null)
+	  (klacks:source
+	   (values (klacks:current-line-number source)
+		   (klacks:current-column-number source)
+		   (klacks:current-system-id source)))
+	  (sax:sax-parser-mixin
+	   (values (sax:line-number source)
+		   (sax:column-number source)
+		   (sax:system-id source))))
+      (when (or line-number column-number system-id)
+	(format s "~&  [ Error at line ~D, column ~D in ~S ]"
+		line-number
+		column-number
+		system-id))
+      (error 'rng-error
+	     :format-control "~A"
+	     :format-arguments (list (get-output-stream-string s))
+	     :line-number line-number
+	     :column-number column-number
+	     :system-id system-id))))
 
 
 ;;;; Parser

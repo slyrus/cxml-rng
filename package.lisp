@@ -1,6 +1,9 @@
 (defpackage :cxml-rng
   (:use :cl)
   (:export #:rng-error
+	   #:rng-error-line-number
+	   #:rng-error-column-number
+	   #:rng-error-system-id
 
 	   #:schema
 	   #:schema-start
