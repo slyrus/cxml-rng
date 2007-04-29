@@ -77,73 +77,196 @@
   ((clex::in comment comment-char))
 
   ((and "'''" (* (or string-char #\")) "'''")
-   (return (subseq clex:bag 3 (- (length clex:bag) 3))))
+   (return
+     (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
 
   ((and #\' (* (or string-char #\")) #\')
    (when (or (find (code-char 13) clex:bag)
 	     (find (code-char 10) clex:bag))
      (rng-error nil "disallowed newline in string literal"))
    (return
-     (subseq clex:bag 1 (- (length clex:bag) 1))))
+     (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
 
   ((and #\" #\" #\" (* (or string-char #\")) #\" #\" #\")
-   (return (subseq clex:bag 3 (- (length clex:bag) 3))))
+   (return
+     (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
 
   ((and #\" (* (or string-char #\')) #\")
    (when (or (find (code-char 13) clex:bag)
 	     (find (code-char 10) clex:bag))
      (rng-error nil "disallowed newline in string literal"))
    (return
-     (subseq clex:bag 1 (- (length clex:bag) 1))))
+     (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
 
   ((and nc-name-start-char (* nc-name-char))
    (return
      (cond
        ((find clex:bag *keywords* :test #'equal)
-	(intern (string-upcase clex:bag) :keyword))
+	(let ((sym (intern (string-upcase clex:bag) :keyword)))
+	  (values sym sym)))
        (t
 	(unless (cxml-types::nc-name-p clex:bag)
 	  (rng-error nil "not an ncname: ~A" clex:bag))
-	clex:bag))))
+	(values 'identifier clex:bag)))))
 
   ((and #\\ nc-name-start-char (* nc-name-char))
    (let ((str (subseq clex:bag 1)))
      (unless (cxml-types::nc-name-p str)
        (rng-error nil "not an ncname: ~A" clex:bag))
-     (return str)))
+     (return (values 'identifier str))))
 
-  (#\= (return :=))
-  (#\{ (return :{))
-  (#\} (return :}))
-  (#\, (return :|,|))
-  (#\& (return :&))
-  (#\| (return :|\||))
-  (#\? (return :?))
-  (#\* (return :*))
-  (#\+ (return :+))
-  (#\( (return :|(|))
-  (#\) (return :|)|))
-  (#\| (return :|\|=|))
-  (#\& (return :&=))
-  (#\: (return :|:|))
-  (#\: (return :|:*|))
-  (#\~ (return :~))
-  (#\- (return :-)))
+  (#\= (return '=))
+  (#\{ (return '{))
+  (#\} (return '}))
+  (#\, (return '|,|))
+  (#\& (return '&))
+  (#\| (return '|\||))
+  (#\? (return '?))
+  (#\* (return '*))
+  (#\+ (return '+))
+  (#\( (return '|(|))
+  (#\) (return '|)|))
+  (#\| (return '|\|=|))
+  (#\& (return '&=))
+  (#\: (return '|:|))
+  (#\: (return '|:*|))
+  (#\~ (return '~))
+  (#\- (return '-)))
+
+(yacc:define-parser *compact-parser*
+  (:start-symbol top-level)
+  (:terminals (:attribute :default :datatypes :div :element :empty
+			  :external :grammar :include :inherit :list
+			  :mixed :namespace :notAllowed :parent :start
+			  :string :text :token
+			  = { } |,| & |\|| ? * + |(| |)| |\|=| &= |:| |:*| ~
+			  identifier literal-segment))
+
+  (top-level (decl* pattern)
+	     (decl* grammmar-content*))
+
+  (decl* ()
+	 (decl decl*))
+
+  (decl (:namespace identifier-or-keyword = namespace-uri-literal
+		    #'(lambda (a b c d)
+			(declare (ignorable a b c d))
+			(print (list :saw-namespace b d))))
+	(:default :namespace = namespace-uri-literal)
+	(:default :namespace identifier-or-keyword = namespace-uri-literal)
+	(:datatypes identifier-or-keyword = literal))
+
+  (pattern (:element name-class { pattern })
+	   (:attribute name-class { pattern })
+	   (pattern \, pattern)
+	   (pattern & pattern)
+	   (pattern \| pattern)
+	   (pattern ?)
+	   (pattern *)
+	   (pattern +)
+	   (:list { pattern })
+	   (:mixed { pattern } )
+	   identifier
+	   (:parent identifier)
+	   :empty
+	   :text
+	   ([data-type-name] data-type-value [params] [except-pattern])
+	   :not-allowed
+	   (:external any-uri-literal [inherit])
+	   (:grammar { grammar-content* })
+	   (\( pattern \)))
+
+  (param (identifier-or-keyword = literal))
+
+  (except-pattern (- pattern))
+
+  (grammar-content* ()
+		    (grammar-content grammar-content*))
+
+  (grammar-content (start)
+		   (define)
+		   (:div { grammar-content* })
+		   (:include any-uri-literal [inherit] [include-content]))
+
+  (include-content* ()
+		    (include-content include-content*))
+
+  (include-content (start)
+		   (define)
+		   (:div { grammar-content* }))
+
+  (start (:start assign-method pattern))
+
+  (define (identifier assign-method pattern))
+
+  (assign-method (=) (\|=) (&=))
+
+  (name-class (name)
+	      (ns-name [except-name-class])
+	      (any-name [except-name-class])
+	      (name-class \| name-class)
+	      (\( name-class \)))
+
+  (name (identifier-or-keyword)
+	(cname))
+
+  (except-name-class (- name-class))
+
+  (data-type-name (cname)
+		  (:string)
+		  (:token))
+
+  (data-type-value literal)
+  (any-uri-literal literal)
+
+  (namespace-uri-literal literal
+			 :inherit)
+
+  (inherit (:inherit = identifier-or-keyword))
+
+  (identifier-or-keyword identifier
+			 keyword)
+
+  ;; identifier ::= (ncname - keyword) | quotedidentifier
+  ;; quotedidentifier ::= "\" ncname
+
+  (cname (ncname \: ncname))
+
+  (ns-name (ncname \:*))
+
+  (any-name (*))
+
+  (literal literal-segment
+	   (literal-segment ~ literal))
+
+  ;; literalsegment ::= ...
+
+  (keyword :default :datatypes :div :element :empty :external :grammar :include
+	   :inherit :list :mixed :namespace :notAllowed :parent :start :string
+	   :text :token)
+
+  ;; optional stuff
+  ([data-type-name] () data-type-name)
+  ([inherit] () inherit)
+  ([params] () ({ params }))
+  (params () (param params))
+  ([except-pattern] () (except-pattern))
+  ([include-content] () ({ include-content* }))
+  ([except-name-class] () except-name-class))
 
 (defun compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
-  (if (pathnamep p)
-      (with-open-file (s p)
-	(let ((f (make-test-lexer s)))
-	  (loop
-	     for k = (funcall f)
-	     until (eq k :eof)
-	     collect k)))
-      (with-input-from-string (s p)
-	(let ((f (make-test-lexer s)))
-	  (loop
-	     for k = (funcall f)
-	     until (eq k :eof)
-	     collect k)))))
+  (flet ((doit (s)
+	   (let ((lexer (make-test-lexer s)))
+	     (yacc:parse-with-lexer
+	      (lambda ()
+		(multiple-value-bind (cat sem) (funcall lexer)
+		  (if (eq cat :eof)
+		      nil
+		      (values cat sem))))
+	      *compact-parser*))))
+    (if (pathnamep p)
+	(with-open-file (s p) (doit s))
+	(with-input-from-string (s p) (doit s)))))
 
 #+(or)
 (compact)
