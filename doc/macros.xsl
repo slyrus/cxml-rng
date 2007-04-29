@@ -20,15 +20,6 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="macro:maybe-package-prefix">
-    <extra:if test="$packagep">
-      <span style="color: #777777">
-	<extra:value-of select="../../@name"/>
-	<extra:text>::</extra:text>
-      </span>
-    </extra:if>
-  </xsl:template>
-
   <xsl:template match="macro:maybe-columns">
     <extra:choose>
       <extra:when test="{@test}">

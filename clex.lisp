@@ -25,6 +25,16 @@
 ;;;  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 ;;;  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 ;;;  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+;;;
+
+;;; Changes
+
+;;  When        Who     What
+;; ----------------------------------------------------------------------------
+;;  2007-04-29  DFL     - Represent RANGE directly to cope with character
+;;                        set sizes typical for Unicode.
+;;                      - Disable *full-table-p* by default.
+;;                      - Added SBCL case to the CMUCL workarounds.
 
 (defpackage :clex
   (:use :cl :runes)
@@ -45,16 +55,67 @@
   id                                    ;numeric id of state
   eps-transitions)                      ;list of all states reached by epsilon (empty transitions)
 
-(defun state-add-link (this char that)
-  "Add a transition to state `this'; reading `char' proceeds to `that'."
-  (cond ((eq char 'eps)
+(defun destructure-range (x)
+  (if (listp x)
+      (values (car x) (cadr x))
+      (values x x)))
+
+(defun range- (a b)
+  (multiple-value-bind (amin amax) (destructure-range a)
+    (multiple-value-bind (bmin bmax) (destructure-range b)
+      (incf amax)
+      (incf bmax)
+      (let ((result nil))
+	(flet ((range* (min max)
+		 (when (< min max)
+		   (push (list min (1- max)) result))))
+	  (range* amin (min bmin amax))
+	  (range* (max amin bmax) amax))
+	result))))
+
+(defun ranges- (aa b)
+  (mapcan (lambda (a) (range- a b)) aa))
+
+(defun partition-range (a pos)
+  (multiple-value-bind (min max) (destructure-range a)
+    (if (and (< min pos) (<= pos max))
+	(list (list min (1- pos))
+	      (list pos max))
+	(list a))))
+
+(defun code (x)
+  (typecase x
+    (integer x)
+    (character (char-code x))))
+
+(defun parse-range (range)
+  (if (listp range)
+      (list (code (car range)) (code (cadr range)))
+      (list (code range) (code range))))
+
+(defun state-add-link (this range that)
+  "Add a transition to state `this'; reading `range' proceeds to `that'."
+  (cond ((eq range 'eps)
          (pushnew that (state-eps-transitions this)))
-        (t
-         (dolist (k (state-transitions this)
-                   (push (cons (list char) that) (state-transitions this)))
-           (when (eq (cdr k) that)
-             (pushnew char (car k))
-             (return nil))) )))
+    (t
+     (let ((new (list (parse-range range))))
+       (dolist (k (state-transitions this)
+		(push (cons new that) (state-transitions this)))
+	 (when (eq (cdr k) that)
+	   (dolist (l (car k))		;avoid duplicates
+	     (setf new (ranges- new l)))
+	   (setf (car k) (append new (car k)))
+	   (return nil)))
+       ;; split existing ranges to remove overlap
+       (dolist (k (state-transitions this))
+	 (flet ((doit (pos)
+		  (setf (car k)
+			(mapcan (lambda (l)
+				  (partition-range l pos))
+				(car k)))))
+	   (dolist (n new)
+	     (doit (car n))
+	     (doit (1+ (cadr n))))))))))
 
 ;;; When constructing FSA's from regular expressions we abstract by the notation
 ;;; of FSA's as boxen with an entry and an exit state.
@@ -134,14 +195,13 @@
   (setf term (regexp-expand-splicing term))
   (cond ((and (atom term) (not (stringp term)))
          (fsa-trivial term))
+        ((loose-eq (car term) 'RANGE)
+         (fsa-trivial (cdr term)))
         ((loose-eq (car term) 'AND) (regexp/and->fsa term))
         ((loose-eq (car term) 'OR)  (regexp/or->fsa term))
         ((loose-eq (car term) '*)   (fsa-iterate (regexp->fsa (cadr term))))
         ((loose-eq (car term) '+)   (regexp->fsa `(AND ,(cadr term) (* ,(cadr term)))))
         ((loose-eq (car term) '?)   (regexp->fsa `(OR (AND) ,(cadr term))))
-        ((loose-eq (car term) 'RANGE)
-         (regexp->fsa `(OR .,(loop for i from (char-code (cadr term)) to (char-code (caddr term)) 
-                                 collect (code-char i)))))
         (t 
          (regexp->fsa `(AND .,term))) ))
 
@@ -251,7 +311,7 @@
                        (push state-set batch)
                        new)))
                (add-state-set (state-set)
-                 (let ((new-tr nil)
+                 (let ((new-tr (make-hash-table :test 'equal))
                        (new-tr-real nil)
                        (name   (name-state-set state-set))
                        (new-final  0))
@@ -261,13 +321,17 @@
                        (dolist (tr (state-transitions s))
                          (let ((to (cdr tr)))
                            (dolist (z (car tr))
-                             (let ((looked (getf new-tr z nil)))
+                             (let ((looked (gethash z new-tr)))
                                (if looked
                                    (fsa-epsilon-closure/set to looked)
                                  (let ((sts (make-empty-set n)))
                                    (fsa-epsilon-closure/set to sts)
-                                   (setf (getf new-tr z) sts) ))))))))
+                                   (setf (gethash z new-tr) sts)))))))))
                    (setq new-tr (frob2 new-tr))
+		   #+(or)
+		   (maphash (lambda (z to)
+			      (push (cons z (name-state-set to)) new-tr-real))
+			    new-tr)
                    (do ((q new-tr (cddr q)))
                        ((null q))
                      (let ((z (car q))
@@ -286,14 +350,15 @@
             (add-state-set (pop batch)))) ))))
 
 (defun frob2 (res &aux res2)
-  (do ((q res (cddr q)))
-      ((null q) res2)
-    (do ((p res2 (cddr p)))
-        ((null p)
-         (setf res2 (list* (list (car q)) (cadr q) res2)))
-      (when (equal (cadr q) (cadr p))
-        (setf (car p) (cons (car q) (car p)))
-        (return)))))
+  (maphash (lambda (z to)
+	     (do ((p res2 (cddr p)))
+		 ((null p)
+		  (setf res2 (list* (list z) to res2)))
+	       (when (equal to (cadr p))
+		 (setf (car p) (cons z (car p)))
+		 (return))))
+	   res)
+  res2)
 
 ;;;; ----------------------------------------------------------------------------------------------------
 ;;;;  API
@@ -317,11 +382,11 @@
 ;;; - identifing sub-expression of regexps (ala \(..\) and \n)
 ;;;
 
-#-(OR CMU GCL)
+#-(OR CMU SBCL GCL)
 (defun loadable-states-form (starts) 
   `',starts)  
 
-#+(OR CMU GCL)
+#+(OR CMU SBCL GCL)
 ;; Leider ist das CMUCL so dumm, dass es scheinbar nicht faehig ist die
 ;; selbstbezuegliche Structur ',starts in ein FASL file zu dumpen ;-(
 ;; Deswegen hier dieser read-from-string Hack.
@@ -363,8 +428,10 @@
   (if *full-table-p*
       (let ((res (make-array 256 :initial-element nil)))
         (dolist (tr trs)
-          (dolist (ch (car tr))
-            (setf (aref res (char-code ch)) (cdr tr))))
+          (dolist (range (car tr))
+            (loop
+	       for code from (car range) to (cadr range)
+	       do (setf (aref res code) (cdr tr)))))
         res)
     trs))
 
@@ -471,11 +538,12 @@
                                         (SVREF (STATE-TRANSITIONS STATE) (CHAR-CODE CH))
                                         NIL))
                                  `(FIND-NEXT-STATE (STATE CH)
-                                     (BLOCK FOO
-                                       (DOLIST (K (STATE-TRANSITIONS STATE))
-                                          (DOLIST (Q (CAR K))
-                                                  (WHEN (CHAR= CH Q)
-                                                        (RETURN-FROM FOO (CDR K)))))))) )
+                                     (WHEN ch
+				       (BLOCK FOO
+					 (DOLIST (K (STATE-TRANSITIONS STATE))
+					   (DOLIST (Q (CAR K))
+					     (WHEN (<= (CAR Q) (CHAR-CODE CH) (CADR q))
+					       (RETURN-FROM FOO (CDR K))))))))) )
                              (DECLARE (INLINE BACKUP GETCH FIND-NEXT-STATE))
                              (TAGBODY 
                               START (SETQ STATE (CDR (ASSOC SUB-STATE STARTS)))

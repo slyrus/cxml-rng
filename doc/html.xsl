@@ -53,10 +53,13 @@
 	</column>
 	<column>
 	  <h3><a name="index"></a>Symbol Index</h3>
-	  <xsl:apply-templates select="package/symbols/*" mode="symbol-index">
-	    <xsl:sort select="@name" data-type="text" order="ascending"/>
-	    <xsl:with-param name="packagep" select="'pages/'"/>
-	  </xsl:apply-templates>
+	  <simple-table>
+	    <xsl:apply-templates select="package/symbols/*"
+				 mode="symbol-index">
+	      <xsl:sort select="@name" data-type="text" order="ascending"/>
+	      <xsl:with-param name="packagep" select="'pages/'"/>
+	    </xsl:apply-templates>
+	  </simple-table>
 	</column>
       </columns>
     </main-page>
@@ -222,71 +225,74 @@
 
   <xsl:template match="symbols" mode="symbol-index">
     <xsl:param name="packagep"/>
-    <xsl:apply-templates mode="symbol-index">
-      <xsl:sort select="@id" data-type="text" order="ascending"/>
-      <xsl:with-param name="packagep" select="$packagep"/>
-    </xsl:apply-templates>
+    <simple-table>
+      <xsl:apply-templates mode="symbol-index">
+	<xsl:sort select="@id" data-type="text" order="ascending"/>
+	<xsl:with-param name="packagep" select="$packagep"/>
+      </xsl:apply-templates>
+    </simple-table>
   </xsl:template>
 
-  <xsl:template name="undocumented">
-    <xsl:if test="not(documentation-string)">
-      <xsl:text>&#160;</xsl:text>
-      <span style="color: red">
-	(undocumented)
-      </span>
-    </xsl:if>
+  <xsl:template name="index-entry">
+    <xsl:param name="packagep"/>
+    <xsl:param name="kind"/>
+
+    <row>
+      <xsl:if test="$packagep">
+	<cell align="right">
+	  <a href="{$packagep}{@id}.html">
+	    <tt>
+	      <span style="color: #777777">
+		<xsl:value-of select="../../@name"/>
+		<xsl:text>:</xsl:text>
+	    </span>
+	    </tt>
+	  </a>
+	</cell>
+      </xsl:if>
+      <cell>
+	<a href="{$packagep}{@id}.html">
+	  <tt>
+	    <xsl:value-of select="@name"/>
+	  </tt>
+	</a>
+	<xsl:text>, </xsl:text>
+	<xsl:value-of select="$kind"/>
+	<xsl:call-template name="undocumented"/>
+      </cell>
+    </row>
   </xsl:template>
 
   <xsl:template match="class-definition" mode="symbol-index">
     <xsl:param name="packagep"/>
-    <a href="{$packagep}{@id}.html">
-      <tt>
-	<macro:maybe-package-prefix/>
-	<xsl:value-of select="@name"/>
-      </tt>
-    </a>
-    <xsl:text>, class</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
+    <xsl:call-template name="index-entry">
+      <xsl:with-param name="packagep" select="$packagep"/>
+      <xsl:with-param name="kind" select="'class'"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="function-definition" mode="symbol-index">
     <xsl:param name="packagep"/>
-    <a href="{$packagep}{@id}.html">
-      <tt>
-	<macro:maybe-package-prefix/>
-	<xsl:value-of select="@name"/>
-      </tt>
-    </a>
-    <xsl:text>, function</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
+    <xsl:call-template name="index-entry">
+      <xsl:with-param name="packagep" select="$packagep"/>
+      <xsl:with-param name="kind" select="'function'"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="macro-definition" mode="symbol-index">
     <xsl:param name="packagep"/>
-    <a href="{$packagep}{@id}.html">
-      <tt>
-	<macro:maybe-package-prefix/>
-	<xsl:value-of select="@name"/>
-      </tt>
-    </a>
-    <xsl:text>, macro</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
+    <xsl:call-template name="index-entry">
+      <xsl:with-param name="packagep" select="$packagep"/>
+      <xsl:with-param name="kind" select="'macro'"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="variable-definition" mode="symbol-index">
     <xsl:param name="packagep"/>
-    <a href="{$packagep}{@id}.html">
-      <tt>
-	<macro:maybe-package-prefix/>
-	<xsl:value-of select="@name"/>
-      </tt>
-    </a>
-    <xsl:text>, variable</xsl:text>
-    <xsl:call-template name="undocumented"/>
-    <br/>
+    <xsl:call-template name="index-entry">
+      <xsl:with-param name="packagep" select="$packagep"/>
+      <xsl:with-param name="kind" select="'variable'"/>
+    </xsl:call-template>
   </xsl:template>
 
 
@@ -606,5 +612,14 @@
       </xsl:choose>
     </div>
     <br/>
+  </xsl:template>
+
+  <xsl:template name="undocumented">
+    <xsl:if test="not(documentation-string)">
+      <xsl:text>&#160;</xsl:text>
+      <span style="color: red">
+	(undocumented)
+      </span>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
