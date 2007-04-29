@@ -560,7 +560,10 @@
                                                 (COND ((AND (EMPTY*?) (NULL CH))
                                                        (RETURN :EOF))
                                                       ((EMPTY*?)
-                                                       (ERROR "oops ~S ~S" ch (mapcar #'car (state-transitions state))))
+                                                       (ERROR "oops at ~A: ~S ~S"
+							      (FILE-POSITION INPUT)
+							      ch
+							      (mapcar #'car (state-transitions state))))
                                                       (T
                                                        (LET ((HALTING-STATE (TOS*/STATE)))
                                                             (LET ((BAG* NIL))
