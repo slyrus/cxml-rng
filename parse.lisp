@@ -1210,7 +1210,7 @@
 	    (skip-to-native source)))
 	(:|nsName|
 	  (unless *ns-name-allowed-p*
-	    (rng-error source "nsname now permitted in except"))
+	    (rng-error source "nsname not permitted in except"))
 	  (let ((uri *namespace-uri*)
 		(*any-name-allowed-p* nil)
 		(*ns-name-allowed-p* nil))

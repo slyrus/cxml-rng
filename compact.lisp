@@ -29,6 +29,9 @@
 
 (in-package :cxml-rng)
 
+#+sbcl
+(declaim (optimize (debug 2)))
+
 (defparameter *keywords*
   '("attribute" "default" "datatypes" "div" "element" "empty" "external"
     "grammar" "include" "inherit" "list" "mixed" "namespace" "notAllowed"
@@ -36,6 +39,11 @@
 
 (defmacro double (x)
   `((lambda (x) (return (values x x))) ,x))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Lexer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (clex:deflexer test
     (
@@ -151,10 +159,23 @@
   (#\~ (double '~))
   (#\- (double '-)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Parsing into S-Expressions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defun sxfc (&rest args)
-    #+nil (print args)
-    args))
+  (defmacro lambda* ((&rest args) &body body)
+    (setf args (mapcar (lambda (arg) (or arg (gensym))) args))
+    `(lambda (,@args)
+       (declare (ignorable ,@args))
+       ,@body))
+
+  (defun wrap-decls (decls content)
+    (if decls
+	`(,@(car decls)
+	    ,(wrap-decls (cadr decls) content))
+	content)))
 
 (yacc:define-parser *compact-parser*
   (:start-symbol top-level)
@@ -167,129 +188,182 @@
   #+nil (:print-states t)
   #+nil (:print-goto-graph t)
 
-  (top-level (decl* pattern #'sxfc)
-	     (decl* grammar-content* #'sxfc))
+  (top-level (decl* pattern #'wrap-decls)
+	     (decl* grammar-content*
+		    (lambda (a b) (wrap-decls a `(with-grammar () ,@b)))))
 
-  (decl* (#'sxfc)
-	 (decl decl* #'sxfc))
+  (decl* () (decl decl*))
 
-  (decl (:namespace identifier-or-keyword = namespace-uri-literal #'sxfc)
-	(:default :namespace = namespace-uri-literal #'sxfc)
+  (decl (:namespace identifier-or-keyword = namespace-uri-literal
+		    (lambda* (nil name nil uri)
+		      `(with-namespace (:uri ,uri :name ,name))))
+	(:default :namespace = namespace-uri-literal
+		  (lambda* (nil nil nil uri)
+		    `(with-namespace (:uri ,uri :default t))))
 	(:default :namespace identifier-or-keyword = namespace-uri-literal
-		  #'sxfc)
-	(:datatypes identifier-or-keyword = literal #'sxfc))
+		  (lambda* (nil nil name nil uri)
+		    `(with-namespace (:uri ,uri :name ,name :default t))))
+	(:datatypes identifier-or-keyword = literal
+		    (lambda* (nil name nil uri)
+		      `(with-data-type (:name ,name :uri ,uri)))))
 
   (pattern particle
-	   (particle-choice #'sxfc)
-	   (particle-group #'sxfc)
-	   (particle-interleave #'sxfc)
-	   (data-except))
+	   particle-choice
+	   particle-group
+	   particle-interleave
+	   data-except)
 
-  (primary (:element name-class { pattern } #'sxfc)
-	   (:attribute name-class { pattern } #'sxfc)
-	   (:list { pattern } #'sxfc)
-	   (:mixed { pattern } #'sxfc)
-	   (identifier #'sxfc)
-	   (:parent identifier #'sxfc)
-	   (:empty #'sxfc)
-	   (:text #'sxfc)
-	   (data-type-name [params])
-	   (data-type-name data-type-value #'sxfc)
-	   (data-type-value #'sxfc)
-	   (:notallowed #'sxfc)
-	   (:external any-uri-literal [inherit] #'sxfc)
-	   (:grammar { grammar-content* } #'sxfc)
-	   (\( pattern \) #'sxfc))
+  (primary (:element name-class { pattern }
+		     (lambda* (nil name nil pattern nil)
+		       `(with-element (:name ,name) ,pattern)))
+	   (:attribute name-class { pattern }
+		       (lambda* (nil name nil pattern nil)
+			 `(with-attribute (:name ,name) ,pattern)))
+	   (:list { pattern }
+		  (lambda* (nil nil pattern nil)
+		    `(list ,pattern)))
+	   (:mixed { pattern }
+		   (lambda* (nil nil pattern nil)
+		     `(mixed ,pattern)))
+	   (identifier (lambda* (x)
+			 `(ref ,x)))
+	   (:parent identifier
+		    (lambda* (nil x)
+		      `(parent-ref ,x)))
+	   (:empty)
+	   (:text)
+	   (data-type-name [params]
+			   (lambda* (name params)
+			     `(data :data-type ,name :params ,params)))
+	   (data-type-name data-type-value
+			   (lambda* (name value)
+			     `(value :data-type ,name :value ,value)))
+	   (data-type-value (lambda* (value)
+			      `(value :data-type nil :value ,value)))
+	   (:notallowed)
+	   (:external any-uri-literal [inherit]
+		      (lambda* (nil uri inherit)
+			`(external-ref :uri ,uri :inherit ,inherit)))
+	   (:grammar { grammar-content* }
+		     (lambda* (nil nil content nil)
+		       `(with-grammar () ,@content)))
+	   (\( pattern \) (lambda* (nil p nil) p)))
 
-  (data-except (data-type-name [params] - primary))
+  (data-except (data-type-name [params] - primary
+			       (lambda* (name params nil p)
+				 `(data :data-type ,name
+					:params ,params
+					:except p))))
 
-  (particle (primary)
-	    (repeated-particle))
+  (particle primary
+	    repeated-particle)
 
-  (repeated-particle (primary *)
-		     (primary +)
-		     (primary ?))
+  (repeated-particle (primary *
+			      (lambda* (p nil) `(zero-or-more ,p)))
+		     (primary +
+			      (lambda* (p nil) `(one-or-more ,p)))
+		     (primary ?
+			      (lambda* (p nil) `(optional ,p))))
 
-  (particle-choice (particle \| particle #'sxfc)
-		   (particle \| particle-choice #'sxfc))
+  (particle-choice (particle \| particle
+			     (lambda* (a nil b) `(choice ,a ,b)))
+		   (particle \| particle-choice
+			     (lambda* (a nil b) `(choice ,a ,@(cdr b)))))
 
-  (particle-group (particle \, particle #'sxfc)
-		  (particle \, particle-group #'sxfc))
+  (particle-group (particle \, particle
+			    (lambda* (a nil b) `(group ,a ,b)))
+		  (particle \, particle-group
+			    (lambda* (a nil b) `(group ,a ,@(cdr b)))))
 
-  (particle-interleave (particle \& particle #'sxfc)
-		       (particle \& particle-interleave #'sxfc))
+  (particle-interleave (particle \& particle
+				 (lambda* (a nil b) `(interleave ,a ,b)))
+		       (particle \& particle-interleave
+				 (lambda* (a nil b) `(interleave ,a ,@(cdr b)))))
 
-  (param (identifier-or-keyword = literal #'sxfc))
+  (param (identifier-or-keyword = literal
+				(lambda* (name nil value)
+				  `(param ,name ,value))))
 
-  (except-pattern (- pattern #'sxfc))
+  (grammar-content* ()
+		    (grammar-content grammar-content* #'cons))
 
-  (grammar-content* (#'sxfc)
-		    (grammar-content grammar-content* #'sxfc))
-
-  (grammar-content (start #'sxfc)
-		   (define #'sxfc)
-		   (:div { grammar-content* } #'sxfc)
+  (grammar-content start
+		   define
+		   (:div { grammar-content* }
+			 (lambda* (nil nil content nil)
+			   `(with-div ,@content)))
 		   (:include any-uri-literal [inherit] [include-content]
-			     #'sxfc))
+			     (lambda* (nil uri inherit content)
+			       `(with-include (:inherit ,inherit)
+				  ,@content))))
 
-  (include-content* (#'sxfc)
-		    (include-content include-content* #'sxfc))
+  (include-content* ()
+		    (include-content include-content* #'cons))
 
-  (include-content (start #'sxfc)
-		   (define #'sxfc)
-		   (:div { grammar-content* } #'sxfc))
+  (include-content start
+		   define
+		   (:div { grammar-content* }
+			 (lambda* (nil nil content nil)
+			   `(with-div ,@content))))
 
-  (start (:start assign-method pattern #'sxfc))
+  (start (:start assign-method pattern
+		 (lambda* (nil method pattern)
+		   `(with-start (:combine-method ,method) ,pattern))))
 
-  (define (identifier assign-method pattern #'sxfc))
+  (define (identifier assign-method pattern
+		      (lambda* (name method pattern)
+			`(with-definition (:name ,name :combine-method ,method)
+			   ,pattern))))
 
-  (assign-method (= #'sxfc)
-		 (\|= #'sxfc)
-		 (&= #'sxfc))
+  (assign-method (= (constantly nil))
+		 (\|= (constantly "choice"))
+		 (&= (constantly "interleave")))
 
-  (name-class (simple-nc)
-	      (nc-choice)
-	      (nc-except))
+  (name-class simple-nc
+	      nc-choice
+	      nc-except)
 
-  (simple-nc (name #'sxfc)
-	     (ns-name #'sxfc)
-	     (* #'sxfc)
-	     (\( name-class \) #'sxfc))
+  (simple-nc (name (lambda* (n) `(name ,n)))
+	     (ns-name (lambda* (n) `(ns-name ,n)))
+	     (* (constantly `(any-name)))
+	     (\( name-class \) (lambda* (nil nc nil) nc)))
 
-  (nc-except (ns-name - simple-nc #'sxfc)
-	     (* - simple-nc #'sxfc))
+  (nc-except (ns-name - simple-nc
+		      (lambda* (nc1 nil nc2) `(ns-name ,nc1 :except ,nc2)))
+	     (* - simple-nc
+		(lambda* (nil nil nc) `(any-name :except ,nc))))
 
-  (nc-choice (simple-nc \| simple-nc #'sxfc)
-	     (simple-nc \| nc-choice #'sxfc))
+  (nc-choice (simple-nc \| simple-nc
+			(lambda* (a nil b) `(name-choice ,a ,b)))
+	     (simple-nc \| nc-choice
+			(lambda* (a nil b) `(name-choice ,a ,@(cdr b)))))
 
-  (name (identifier-or-keyword #'sxfc)
-	(cname #'sxfc))
+  (name identifier-or-keyword cname)
 
-  (data-type-name (cname #'sxfc)
-		  (:string #'sxfc)
-		  (:token #'sxfc))
+  (data-type-name cname :string :token)
 
-  (data-type-value (literal #'sxfc))
-  (any-uri-literal (literal #'sxfc))
+  (data-type-value literal)
+  (any-uri-literal literal)
 
-  (namespace-uri-literal (literal #'sxfc)
-			 (:inherit #'sxfc))
+  (namespace-uri-literal literal :inherit)
 
-  (inherit (:inherit = identifier-or-keyword #'sxfc))
+  (inherit (:inherit = identifier-or-keyword
+		     (lambda* (nil nil x) x)))
 
-  (identifier-or-keyword (identifier #'sxfc)
-			 (keyword #'sxfc))
+  (identifier-or-keyword identifier keyword)
 
   ;; identifier ::= (ncname - keyword) | quotedidentifier
   ;; quotedidentifier ::= "\" ncname
 
-  ;; (ns-name (ncname \:* #'sxfc))
-  (ns-name (nsname #'sxfc))
+  ;; (ns-name (ncname \:*))
+  (ns-name nsname)
 
-  (ncname (identifier-or-keyword #'sxfc))
+  (ncname identifier-or-keyword)
 
-  (literal (literal-segment #'sxfc)
-	   (literal-segment ~ literal #'sxfc))
+  (literal literal-segment
+	   (literal-segment ~ literal
+			    (lambda* (a nil b)
+			      (concatenate 'string a b))))
 
   ;; literalsegment ::= ...
 
@@ -298,12 +372,162 @@
 	   :parent :start :string :text :token)
 
   ;; optional stuff
-  ([data-type-name] (#'sxfc) (data-type-name #'sxfc))
-  ([inherit] (#'sxfc) (inherit #'sxfc))
-  ([params] (#'sxfc) ({ params } #'sxfc))
-  (params (#'sxfc) (param params #'sxfc))
-  ([except-pattern] (#'sxfc) (except-pattern #'sxfc))
-  ([include-content] (#'sxfc) ({ include-content* } #'sxfc)))
+  ([data-type-name] () data-type-name)
+  ([inherit] () inherit)
+  ([params] () ({ params } (lambda* (nil p nil) p)))
+  (params () (param params #'cons))
+  ([include-content] () ({ include-content* }
+			   (lambda* (nil content nil) content))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Conversion of sexps into SAX
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun uncompact (list)
+  (funcall (or (get (car list) 'uncompactor)
+	       (error "no uncompactor for ~A" (car list)))
+	   (cdr list)))
+
+(defmacro define-uncompactor (name (&rest args) &body body)
+  `(setf (get ',name 'uncompactor)
+	 (lambda (.form.) (destructuring-bind ,args .form. ,@body))))
+
+(defvar *namespaces* '(("xml" . "http://www.w3.org/XML/1998/namespace")))
+(defvar *default-namespace* "")
+(defvar *data-types* '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
+
+(define-uncompactor with-namespace ((&key uri name default) &body body)
+  (let ((*namespaces*
+	 (if name
+	     (acons name uri *namespaces*)
+	     *namespaces*))
+	(*default-namespace*
+	 (if default
+	     uri
+	     *default-namespace*)))
+    (mapc #'uncompact body)))
+
+(define-uncompactor with-data-type ((&key name uri) &body body)
+  (let ((*data-types* (acons name uri *data-types*)))
+    (mapc #'uncompact body)))
+
+(define-uncompactor with-grammar ((&optional) &body body)
+  (cxml:with-element "grammar"
+    (mapc #'uncompact body)))
+
+(define-uncompactor with-start ((&key combine-method) &body body)
+  (cxml:with-element "start"
+    (cxml:attribute "combine" combine-method)
+    (mapc #'uncompact body)))
+
+(define-uncompactor ref (name)
+  (cxml:with-element "ref"
+    (cxml:attribute "name" name)))
+
+(define-uncompactor parent-ref (name)
+  (cxml:with-element "parentRef"
+    (cxml:attribute "name" name)))
+
+(define-uncompactor parent-ref (name)
+  (cxml:with-element "parentRef"
+    (cxml:attribute "name" name)))
+
+(define-uncompactor with-element ((&key name) pattern)
+  (cxml:with-element "element"
+    (uncompact name)
+    (uncompact pattern)))
+
+(define-uncompactor with-attribute ((&key name) pattern)
+  (cxml:with-element "attribute"
+    (uncompact name)
+    (uncompact pattern)))
+
+(define-uncompactor list (pattern)
+  (cxml:with-element "list"
+    (uncompact pattern)))
+
+(define-uncompactor mixed (pattern)
+  (cxml:with-element "mixed"
+    (uncompact pattern)))
+
+(define-uncompactor :empty ()
+  (cxml:with-element "empty"))
+
+(define-uncompactor :text ()
+  (cxml:with-element "text"))
+
+(define-uncompactor data (&key data-type params except)
+  (cxml:with-element "data"
+    (cxml:attribute "type" data-type)	;fixme
+    (mapc #'uncompact params)
+    (when except
+      (uncompact except))))
+
+(define-uncompactor value (&key data-type value)
+  (cxml:with-element "value"
+    (when data-type
+      (cxml:attribute "type" data-type))
+    (cxml:text value)))
+
+(define-uncompactor :notallowed ()
+  (cxml:with-element "notAllowed"))
+
+(define-uncompactor with-definition ((&key name combine-method) &body body)
+  (cxml:with-element "define"
+    (cxml:attribute "name" name)
+    (cxml:attribute "combine" combine-method)
+    (mapc #'uncompact body)))
+
+(define-uncompactor with-div (&body body)
+  (cxml:with-element "div"
+    (mapc #'uncompact body)))
+
+(define-uncompactor any-name (&key except)
+  (cxml:with-element "anyName"
+    (when except
+      (uncompact except))))
+
+(define-uncompactor ns-name (nc &key except)
+  (cxml:with-element "nsName"
+    (cxml:attribute "ns" nc)
+    (when except
+      (uncompact except))))
+
+(define-uncompactor name-choice (&rest ncs)
+  (cxml:with-element "choice"
+    (mapc #'uncompact ncs)))
+
+(define-uncompactor name (x)
+  (cxml:with-element "name"
+    (when (keywordp x) (setf x (string-downcase (symbol-name x))))
+    (when (atom x) (setf x (list "" x)))
+    (cxml:attribute "ns" (car x))
+    (cxml:text (cadr x))))
+
+(define-uncompactor choice (&rest body)
+  (cxml:with-element "choice"
+    (mapc #'uncompact body)))
+
+(define-uncompactor group (&rest body)
+  (cxml:with-element "group"
+    (mapc #'uncompact body)))
+
+(define-uncompactor interleave (&rest body)
+  (cxml:with-element "interleave"
+    (mapc #'uncompact body)))
+
+(define-uncompactor one-or-more (p)
+  (cxml:with-element "oneOrMore"
+    (uncompact p)))
+
+(define-uncompactor optional (p)
+  (cxml:with-element "optional"
+    (uncompact p)))
+
+(define-uncompactor zero-or-more (p)
+  (cxml:with-element "zeroOrMore"
+    (uncompact p)))
 
 (defun compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
   (flet ((doit (s)
@@ -319,9 +543,16 @@
 		  *compact-parser*))
 	     (error (c)
 	       (error "~A ~A" (file-position s) c)))))
-    (if (pathnamep p)
-	(with-open-file (s p) (doit s))
-	(with-input-from-string (s p) (doit s)))))
+    (let ((tree
+	   (if (pathnamep p)
+	       (with-open-file (s p) (doit s))
+	       (with-input-from-string (s p) (doit s)))))
+      (print tree)
+      (cxml:with-xml-output (cxml:make-character-stream-sink
+			     *standard-output*
+			     :indentation 2
+			     :canonical nil)
+	(uncompact tree)))))
 
 #+(or)
 (compact)
