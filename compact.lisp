@@ -34,6 +34,9 @@
     "grammar" "include" "inherit" "list" "mixed" "namespace" "notAllowed"
     "parent" "start" "string" "text" "token"))
 
+(defmacro double (x)
+  `((lambda (x) (return (values x x))) ,x))
+
 (clex:deflexer test
     (
      ;; NCName
@@ -45,8 +48,8 @@
 	  (range #xe000 #xfffd)
 	  (range #x10000 #x10ffff)))
      (digit (range #x0030 #x0039))	;ditto
-     (nc-name-start-char (or letter+extras #\_))
-     (nc-name-char (or letter+extras digit #\. #\- #\_))
+     (name-start-char (or letter+extras #\_))
+     (name-char (or letter+extras digit #\. #\- #\_ #\:))
 
      ;; some RNC ranges
      (char
@@ -98,40 +101,60 @@
    (return
      (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
 
-  ((and nc-name-start-char (* nc-name-char))
+  ((and name-start-char (* name-char))
    (return
      (cond
        ((find clex:bag *keywords* :test #'equal)
 	(let ((sym (intern (string-upcase clex:bag) :keyword)))
 	  (values sym sym)))
+       ((find #\: clex:bag)
+	(let* ((pos (position #\: clex:bag))
+	       (prefix (subseq clex:bag 0 pos))
+	       (lname (subseq clex:bag (1+ pos ))))
+	  (when (find #\: lname)
+	    (rng-error "too many colons"))
+	  (unless (and (cxml-types::nc-name-p prefix))
+	    (rng-error nil "not an ncname: ~A" prefix))
+	  (let ((ch (clex::getch)))
+	    (cond
+	      ((and (equal lname "") (eql ch #\*))
+	       (values 'nsname prefix))
+	      (t
+	       (clex::backup ch)
+	       (unless (and (cxml-types::nc-name-p lname))
+		 (rng-error nil "not an ncname: ~A" lname))
+	       (values 'cname prefix lname))))))
        (t
 	(unless (cxml-types::nc-name-p clex:bag)
 	  (rng-error nil "not an ncname: ~A" clex:bag))
 	(values 'identifier clex:bag)))))
 
-  ((and #\\ nc-name-start-char (* nc-name-char))
+  ((and #\\ name-start-char (* name-char))
    (let ((str (subseq clex:bag 1)))
      (unless (cxml-types::nc-name-p str)
        (rng-error nil "not an ncname: ~A" clex:bag))
      (return (values 'identifier str))))
 
-  (#\= (return '=))
-  (#\{ (return '{))
-  (#\} (return '}))
-  (#\, (return '|,|))
-  (#\& (return '&))
-  (#\| (return '|\||))
-  (#\? (return '?))
-  (#\* (return '*))
-  (#\+ (return '+))
-  (#\( (return '|(|))
-  (#\) (return '|)|))
-  (#\| (return '|\|=|))
-  (#\& (return '&=))
-  (#\: (return '|:|))
-  (#\: (return '|:*|))
-  (#\~ (return '~))
-  (#\- (return '-)))
+  (#\= (double '=))
+  (#\{ (double '{))
+  (#\} (double '}))
+  (#\, (double '|,|))
+  (#\& (double '&))
+  (#\| (double '|\||))
+  (#\? (double '?))
+  (#\* (double '*))
+  (#\+ (double '+))
+  (#\( (double '|(|))
+  (#\) (double '|)|))
+  ((and "|=") (double '|\|=|))
+  ((and "&=") (double '&=))
+  (#\~ (double '~))
+  (#\- (double '-)))
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun sxfc (&rest args)
+    #+nil (print args)
+    args))
 
 (yacc:define-parser *compact-parser*
   (:start-symbol top-level)
@@ -139,131 +162,163 @@
 			  :external :grammar :include :inherit :list
 			  :mixed :namespace :notAllowed :parent :start
 			  :string :text :token
-			  = { } |,| & |\|| ? * + |(| |)| |\|=| &= |:| |:*| ~
-			  identifier literal-segment))
+			  = { } |,| & |\|| ? * + |(| |)| |\|=| &= ~ -
+			  identifier literal-segment cname nsname))
+  #+nil (:print-states t)
+  #+nil (:print-goto-graph t)
 
-  (top-level (decl* pattern)
-	     (decl* grammmar-content*))
+  (top-level (decl* pattern #'sxfc)
+	     (decl* grammar-content* #'sxfc))
 
-  (decl* ()
-	 (decl decl*))
+  (decl* (#'sxfc)
+	 (decl decl* #'sxfc))
 
-  (decl (:namespace identifier-or-keyword = namespace-uri-literal
-		    #'(lambda (a b c d)
-			(declare (ignorable a b c d))
-			(print (list :saw-namespace b d))))
-	(:default :namespace = namespace-uri-literal)
-	(:default :namespace identifier-or-keyword = namespace-uri-literal)
-	(:datatypes identifier-or-keyword = literal))
+  (decl (:namespace identifier-or-keyword = namespace-uri-literal #'sxfc)
+	(:default :namespace = namespace-uri-literal #'sxfc)
+	(:default :namespace identifier-or-keyword = namespace-uri-literal
+		  #'sxfc)
+	(:datatypes identifier-or-keyword = literal #'sxfc))
 
-  (pattern (:element name-class { pattern })
-	   (:attribute name-class { pattern })
-	   (pattern \, pattern)
-	   (pattern & pattern)
-	   (pattern \| pattern)
-	   (pattern ?)
-	   (pattern *)
-	   (pattern +)
-	   (:list { pattern })
-	   (:mixed { pattern } )
-	   identifier
-	   (:parent identifier)
-	   :empty
-	   :text
-	   ([data-type-name] data-type-value [params] [except-pattern])
-	   :not-allowed
-	   (:external any-uri-literal [inherit])
-	   (:grammar { grammar-content* })
-	   (\( pattern \)))
+  (pattern particle
+	   (particle-choice #'sxfc)
+	   (particle-group #'sxfc)
+	   (particle-interleave #'sxfc)
+	   (data-except))
 
-  (param (identifier-or-keyword = literal))
+  (primary (:element name-class { pattern } #'sxfc)
+	   (:attribute name-class { pattern } #'sxfc)
+	   (:list { pattern } #'sxfc)
+	   (:mixed { pattern } #'sxfc)
+	   (identifier #'sxfc)
+	   (:parent identifier #'sxfc)
+	   (:empty #'sxfc)
+	   (:text #'sxfc)
+	   (data-type-name [params])
+	   (data-type-name data-type-value #'sxfc)
+	   (data-type-value #'sxfc)
+	   (:notallowed #'sxfc)
+	   (:external any-uri-literal [inherit] #'sxfc)
+	   (:grammar { grammar-content* } #'sxfc)
+	   (\( pattern \) #'sxfc))
 
-  (except-pattern (- pattern))
+  (data-except (data-type-name [params] - primary))
 
-  (grammar-content* ()
-		    (grammar-content grammar-content*))
+  (particle (primary)
+	    (repeated-particle))
 
-  (grammar-content (start)
-		   (define)
-		   (:div { grammar-content* })
-		   (:include any-uri-literal [inherit] [include-content]))
+  (repeated-particle (primary *)
+		     (primary +)
+		     (primary ?))
 
-  (include-content* ()
-		    (include-content include-content*))
+  (particle-choice (particle \| particle #'sxfc)
+		   (particle \| particle-choice #'sxfc))
 
-  (include-content (start)
-		   (define)
-		   (:div { grammar-content* }))
+  (particle-group (particle \, particle #'sxfc)
+		  (particle \, particle-group #'sxfc))
 
-  (start (:start assign-method pattern))
+  (particle-interleave (particle \& particle #'sxfc)
+		       (particle \& particle-interleave #'sxfc))
 
-  (define (identifier assign-method pattern))
+  (param (identifier-or-keyword = literal #'sxfc))
 
-  (assign-method (=) (\|=) (&=))
+  (except-pattern (- pattern #'sxfc))
 
-  (name-class (name)
-	      (ns-name [except-name-class])
-	      (any-name [except-name-class])
-	      (name-class \| name-class)
-	      (\( name-class \)))
+  (grammar-content* (#'sxfc)
+		    (grammar-content grammar-content* #'sxfc))
 
-  (name (identifier-or-keyword)
-	(cname))
+  (grammar-content (start #'sxfc)
+		   (define #'sxfc)
+		   (:div { grammar-content* } #'sxfc)
+		   (:include any-uri-literal [inherit] [include-content]
+			     #'sxfc))
 
-  (except-name-class (- name-class))
+  (include-content* (#'sxfc)
+		    (include-content include-content* #'sxfc))
 
-  (data-type-name (cname)
-		  (:string)
-		  (:token))
+  (include-content (start #'sxfc)
+		   (define #'sxfc)
+		   (:div { grammar-content* } #'sxfc))
 
-  (data-type-value literal)
-  (any-uri-literal literal)
+  (start (:start assign-method pattern #'sxfc))
 
-  (namespace-uri-literal literal
-			 :inherit)
+  (define (identifier assign-method pattern #'sxfc))
 
-  (inherit (:inherit = identifier-or-keyword))
+  (assign-method (= #'sxfc)
+		 (\|= #'sxfc)
+		 (&= #'sxfc))
 
-  (identifier-or-keyword identifier
-			 keyword)
+  (name-class (simple-nc)
+	      (nc-choice)
+	      (nc-except))
+
+  (simple-nc (name #'sxfc)
+	     (ns-name #'sxfc)
+	     (* #'sxfc)
+	     (\( name-class \) #'sxfc))
+
+  (nc-except (ns-name - simple-nc #'sxfc)
+	     (* - simple-nc #'sxfc))
+
+  (nc-choice (simple-nc \| simple-nc #'sxfc)
+	     (simple-nc \| nc-choice #'sxfc))
+
+  (name (identifier-or-keyword #'sxfc)
+	(cname #'sxfc))
+
+  (data-type-name (cname #'sxfc)
+		  (:string #'sxfc)
+		  (:token #'sxfc))
+
+  (data-type-value (literal #'sxfc))
+  (any-uri-literal (literal #'sxfc))
+
+  (namespace-uri-literal (literal #'sxfc)
+			 (:inherit #'sxfc))
+
+  (inherit (:inherit = identifier-or-keyword #'sxfc))
+
+  (identifier-or-keyword (identifier #'sxfc)
+			 (keyword #'sxfc))
 
   ;; identifier ::= (ncname - keyword) | quotedidentifier
   ;; quotedidentifier ::= "\" ncname
 
-  (cname (ncname \: ncname))
+  ;; (ns-name (ncname \:* #'sxfc))
+  (ns-name (nsname #'sxfc))
 
-  (ns-name (ncname \:*))
+  (ncname (identifier-or-keyword #'sxfc))
 
-  (any-name (*))
-
-  (literal literal-segment
-	   (literal-segment ~ literal))
+  (literal (literal-segment #'sxfc)
+	   (literal-segment ~ literal #'sxfc))
 
   ;; literalsegment ::= ...
 
-  (keyword :default :datatypes :div :element :empty :external :grammar :include
-	   :inherit :list :mixed :namespace :notAllowed :parent :start :string
-	   :text :token)
+  (keyword :attribute :default :datatypes :div :element :empty :external
+	   :grammar :include :inherit :list :mixed :namespace :notAllowed
+	   :parent :start :string :text :token)
 
   ;; optional stuff
-  ([data-type-name] () data-type-name)
-  ([inherit] () inherit)
-  ([params] () ({ params }))
-  (params () (param params))
-  ([except-pattern] () (except-pattern))
-  ([include-content] () ({ include-content* }))
-  ([except-name-class] () except-name-class))
+  ([data-type-name] (#'sxfc) (data-type-name #'sxfc))
+  ([inherit] (#'sxfc) (inherit #'sxfc))
+  ([params] (#'sxfc) ({ params } #'sxfc))
+  (params (#'sxfc) (param params #'sxfc))
+  ([except-pattern] (#'sxfc) (except-pattern #'sxfc))
+  ([include-content] (#'sxfc) ({ include-content* } #'sxfc)))
 
 (defun compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
   (flet ((doit (s)
-	   (let ((lexer (make-test-lexer s)))
-	     (yacc:parse-with-lexer
-	      (lambda ()
-		(multiple-value-bind (cat sem) (funcall lexer)
-		  (if (eq cat :eof)
-		      nil
-		      (values cat sem))))
-	      *compact-parser*))))
+	   (handler-case
+	       (let ((lexer (make-test-lexer s)))
+		 (yacc:parse-with-lexer
+		  (lambda ()
+		    (multiple-value-bind (cat sem) (funcall lexer)
+		      #+nil (print (list cat sem))
+		      (if (eq cat :eof)
+			  nil
+			  (values cat sem))))
+		  *compact-parser*))
+	     (error (c)
+	       (error "~A ~A" (file-position s) c)))))
     (if (pathnamep p)
 	(with-open-file (s p) (doit s))
 	(with-input-from-string (s p) (doit s)))))
