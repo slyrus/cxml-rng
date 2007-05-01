@@ -607,7 +607,17 @@
 	(rng-error nil "default namespace already declared to ~A"
 		   *default-namespace*))
       (setf *default-namespace* uri))
-    (mapc #'uncompact body)))
+    (labels ((f ()
+	       (if default
+		   (cxml:with-namespace ("" uri)
+		     (g))
+		   (g)))
+	     (g ()
+	       (mapc #'uncompact body)))
+      (if name
+	  (cxml:with-namespace (name uri)
+	    (f))
+	  (f)))))
 
 (define-uncompactor with-data-type ((&key name uri) &body body)
   (when (and (equal name "xsd")
@@ -623,18 +633,23 @@
 (defparameter *annotation-wrap* nil)
 
 (defmacro with-element (name-and-args &body body)
-  (destructuring-bind (name &rest args)
-      (if (atom name-and-args) (list name-and-args) name-and-args)
-    `(invoke-with-element ,name (lambda () ,@args) (lambda () ,@body))))
+  (destructuring-bind (prefix lname &rest args)
+      (if (atom name-and-args)
+	  (list nil name-and-args)
+	  name-and-args)
+    `(invoke-with-element ,prefix
+			  ,lname
+			  (lambda () ,@args)
+			  (lambda () ,@body))))
 
-(defun invoke-with-element (name args body)
+(defun invoke-with-element (prefix lname args body)
   (if (and *annotation-attributes*
 	   *annotation-wrap*)
-      (cxml:with-element *annotation-wrap*
+      (cxml:with-element* (nil *annotation-wrap*)
 	(let ((*annotation-wrap* nil))
-	  (invoke-with-element name args body)))
+	  (invoke-with-element prefix lname args body)))
       (let ((*annotation-wrap* nil))
-	(cxml:with-element name
+	(cxml:with-element* (prefix lname)
 	  (funcall args)
 	  (when *annotation-attributes*
 	    (uncompact *annotation-attributes*))
@@ -647,27 +662,27 @@
     (mapc #'uncompact body)))
 
 (define-uncompactor with-start ((&key combine-method) &body body)
-  (with-element ("start"
+  (with-element (nil "start"
 		 (cxml:attribute "combine" combine-method))
     (mapc #'uncompact body)))
 
 (define-uncompactor ref (name)
-  (with-element ("ref"
-		 (cxml:attribute "name" name))))
+  (with-element (nil "ref"
+		     (cxml:attribute "name" name))))
 
 (define-uncompactor parent-ref (name)
-  (with-element ("parentRef"
-		 (cxml:attribute "name" name))))
+  (with-element (nil "parentRef"
+		     (cxml:attribute "name" name))))
 
 (define-uncompactor parent-ref (name)
-  (with-element ("parentRef" (cxml:attribute "name" name))))
+  (with-element (nil "parentRef" (cxml:attribute "name" name))))
 
 (define-uncompactor external-ref (&key uri inherit)
-  (with-element ("externalRef"
-		 (cxml:attribute "uri" uri)
-		 (cxml:attribute "ns" (if inherit
-					  (lookup-prefix inherit)
-					  *default-namespace*)))))
+  (with-element (nil "externalRef"
+		     (cxml:attribute "uri" uri)
+		     (cxml:attribute "ns" (if inherit
+					      (lookup-prefix inherit)
+					      *default-namespace*)))))
 
 (define-uncompactor with-element ((&key name) pattern)
   (with-element "element"
@@ -707,23 +722,22 @@
      (cxml:attribute "type" (cdr data-type)))))
 
 (define-uncompactor data (&key data-type params except)
-  (with-element ("data" (uncompact-data-type data-type))
+  (with-element (nil "data" (uncompact-data-type data-type))
     (mapc #'uncompact params)
     (when except
       (uncompact except))))
 
 (define-uncompactor value (&key data-type value)
-  (with-element ("value"
-		 (uncompact-data-type data-type))
+  (with-element (nil "value" (uncompact-data-type data-type))
     (cxml:text value)))
 
 (define-uncompactor :notallowed ()
   (with-element "notAllowed"))
 
 (define-uncompactor with-definition ((&key name combine-method) &body body)
-  (with-element ("define"
-		 (cxml:attribute "name" name)
-		 (cxml:attribute "combine" combine-method))
+  (with-element (nil "define"
+		     (cxml:attribute "name" name)
+		     (cxml:attribute "combine" combine-method))
     (mapc #'uncompact body)))
 
 (define-uncompactor with-div (&body body)
@@ -736,8 +750,8 @@
       (uncompact except))))
 
 (define-uncompactor ns-name (nc &key except)
-  (with-element ("nsName"
-		 (cxml:attribute "ns" (lookup-prefix nc)))
+  (with-element (nil "nsName"
+		     (cxml:attribute "ns" (lookup-prefix nc)))
     (when except
       (uncompact except))))
 
@@ -753,8 +767,7 @@
 
 (define-uncompactor name (x)
   (multiple-value-bind (uri lname) (destructure-cname-like x)
-    (with-element ("name"
-		   (cxml:attribute "ns" uri))
+    (with-element (nil "name" (cxml:attribute "ns" uri))
       (cxml:text lname))))
 
 (define-uncompactor choice (&rest body)
@@ -782,10 +795,10 @@
     (uncompact p)))
 
 (define-uncompactor with-include ((&key inherit) &body body)
-  (with-element ("include"
-		 (cxml:attribute "ns" (if inherit
-					  (lookup-prefix inherit)
-					  *default-namespace*)))
+  (with-element (nil "include"
+		     (cxml:attribute "ns" (if inherit
+					      (lookup-prefix inherit)
+					      *default-namespace*)))
     (mapc #'uncompact body)))
 
 (define-uncompactor with-annotations
@@ -820,17 +833,19 @@
   (mapc #'uncompact attrs))
 
 (define-uncompactor annotation-attribute (name value)
-  ;; zzz namespace lookup
-  (cxml:attribute (format nil "~A:~A" (car name) (cdr name))
-		  value))
+  (cxml:attribute* (car name) (cdr name) value))
 
 (define-uncompactor param (name value)
-  ;; zzz namespace lookup
-  (with-element ("param"
-		 (cxml:attribute "name" name))
+  (with-element (nil "param"
+		     (cxml:attribute "name" name))
     (cxml:text value)))
 
-(defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
+(define-uncompactor with-annotation-element ((&key name) &body attrs)
+  (cxml:with-element name
+    (mapc #'uncompact attrs)))
+
+(defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc")
+		      out)
   (flet ((doit (s)
 	   (handler-case
 	       (let ((lexer (make-test-lexer s)))
@@ -848,18 +863,26 @@
 	   (if (pathnamep p)
 	       (with-open-file (s p) (doit s))
 	       (with-input-from-string (s p) (doit s)))))
-       #+nil (print tree)
-      (cxml:with-xml-output nil
-	#+(or)
-	(cxml:make-character-stream-sink
-	 *standard-output*
-	 :indentation 2
-	 :canonical nil)
+      #+nil (print tree)
+      (cxml:with-xml-output
+	  (if out
+	      (cxml:make-octet-stream-sink
+	       out
+	       :indentation 2
+	       :canonical nil)
+	      (cxml:make-character-stream-sink
+	       *standard-output*
+	       :indentation 2
+	       :canonical nil))
 	(uncompact tree)))))
 
 (defun test-compact ()
   (dolist (p (directory "/home/david/src/nxml-mode-20041004/schema/*.rnc"))
-    (parse-compact p)))
+    (print p)
+    (with-open-file (s (make-pathname :type "rng" :defaults p)
+		       :direction :output
+		       :if-exists :supersede)
+      (parse-compact p s))))
 
 #+(or)
 (compact)
