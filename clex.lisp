@@ -539,7 +539,8 @@
 					   (DOLIST (Q (CAR K))
 					     (WHEN (<= (CAR Q) (CHAR-CODE CH) (CADR q))
 					       (RETURN-FROM FOO (CDR K))))))))) )
-                             (DECLARE (INLINE BACKUP GETCH FIND-NEXT-STATE))
+                             (DECLARE (INLINE BACKUP GETCH FIND-NEXT-STATE)
+				      (IGNORABLE #'BEGIN))
                              (TAGBODY 
                               START (SETQ STATE (CDR (ASSOC SUB-STATE STARTS)))
                                     (WHEN (NULL STATE)
@@ -556,7 +557,7 @@
                                                        (RETURN :EOF))
                                                       ((EMPTY*?)
                                                        (ERROR "oops at ~A: ~S ~S"
-							      (FILE-POSITION INPUT)
+							      (file-position (cxml-rng::stream-source INPUT))
 							      ch
 							      (mapcar #'car (state-transitions state))))
                                                       (T

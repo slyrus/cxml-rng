@@ -45,45 +45,73 @@
 ;;;; Escape interpretation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defclass unhexer (trivial-gray-streams:fundamental-character-input-stream)
-    ((source-stream :initarg :source-stream :accessor source-stream)))
+(defclass hex-stream (trivial-gray-streams:fundamental-character-input-stream)
+    ((source :initarg :source :accessor stream-source)
+     (buffer :initform (make-array 1 :adjustable t :fill-pointer 0)
+	     :accessor stream-buffer)
+     (pos :initform 0 :accessor stream-pos)))
 
-;;; zzz das haetten wir eigentlich auch mit deflexer machen koennen
-(defmethod trivial-gray-streams:stream-read-char ((s unhexer))
-  (let* ((r (source-stream s))
-	 (c (read-char r nil :eof)))
-    (case c
-      (:eof c)
-      (#\\
-       (unless (eql (read-char r nil) #\x)
-	 (rng-error nil "expected x after \\"))
-       (loop
-	  for d = (peek-char nil r)
-	  while (eql d #\x)
-	  do (read-char r))
-       (unless (eql (read-char r nil) #\{)
-	 (rng-error nil "expected { after \\x"))
-       (unless (digit-char-p (peek-char r nil) 16)
-	 (rng-error nil "expected x after \\"))
-       (loop
-	  for result = 0 then (+ (* result 16) i)
-	  for d = (peek-char nil r nil)
-	  for i = (digit-char-p d 16)
-	  while i
-	  do
-	    (read-char r)
-	  finally
-	    (unless (eql (read-char r nil) #\})
-	      (rng-error nil "expected } after \\x{nn"))
-	    (return (code-char result))))
-      (t c))))
+(defmethod trivial-gray-streams:stream-file-position ((s hex-stream))
+  (file-position (stream-source s)))
+
+;; zzz geht das nicht besser?
+(defmethod trivial-gray-streams:stream-read-char ((s hex-stream))
+  (with-slots (source buffer pos) s
+    (cond
+      ((< pos (length buffer))
+       (prog1
+	 (elt buffer pos)
+	 (incf pos)))
+      (t
+       (setf (fill-pointer buffer) 0)
+       (setf pos 0)
+       (flet ((slurp ()
+		(let ((c (read-char source nil)))
+		  (vector-push-extend c buffer)
+		  c)))
+	 (macrolet ((with-expectation (frob &body body)
+		      (when (characterp frob)
+			(setf frob `(eql (slurp) ,frob)))
+		      `(let ((result ,frob))
+			 (cond
+			   (result
+			    ,@(or body (list 'result)))
+			   (t
+			    (prog1
+				(elt buffer 0)
+			      (incf pos)))))))
+	   (with-expectation
+	       #\\
+	     (with-expectation
+		 #\x
+	       (with-expectation
+		   (loop
+		      for d = (peek-char nil source)
+		      while (eql d #\x)
+		      do (slurp)
+		      finally
+			(return (eql (slurp) #\{)))
+		 (with-expectation
+		     (loop
+			for result = 0 then (+ (* result 16) i)
+			for d = (peek-char nil source nil)
+			for i = (digit-char-p d 16)
+			while i
+			do
+			  (slurp)
+			finally
+			  (return
+			    (when (eql (slurp) #\})
+			      (setf (fill-pointer buffer) 0)
+			      (setf pos 0)
+			      (code-char result))))))))))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Tokenization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(clex:deflexer test
+(clex:deflexer rng
     (
      ;; NCName
      (letter+extras
@@ -103,11 +131,14 @@
 	  (range 32 #xd7ff)
 	  (range #xe000 #xfffd)
 	  (range #x10000 #x10ffff)))
-     (comment-char
-      (or 9
-	  (range 32 #xd7ff)
+     (init-comment-char
+      (or 9 32 33 34
+	  ;; #\#
+	  (range 36 #xd7ff)
 	  (range #xe000 #xfffd)
 	  (range #x10000 #x10ffff)))
+     (comment-char
+      (or 35 init-comment-char))
      (string-char
       (or 32 33
 	  ;; #\"
@@ -121,7 +152,14 @@
 
   ((* space))
 
-  (#\# (clex:begin 'comment))
+  ((and "##") (clex:begin 'documentation-line))
+  ((and "##" newline))
+  ((clex::in documentation-line newline) (clex:begin 'clex:initial))
+  ((clex::in documentation-line comment-char)
+   (return (values 'documentation-line clex:bag)))
+
+  ((and #\# init-comment-char) (clex:begin 'comment))
+  ((and #\# newline))
   ((clex::in comment newline) (clex:begin 'clex:initial))
   ((clex::in comment comment-char))
 
@@ -237,7 +275,7 @@
 			  = { } |,| & |\|| ? * + |(| |)| |\|=| &= ~ -
 			  [ ] >>
 			  identifier literal-segment cname nsname
-			  documentation))
+			  documentation-line))
   #+debug (:print-first-terminals t)
   #+debug (:print-states t)
   #+debug (:print-lookaheads t)
@@ -519,6 +557,11 @@
   (documentations (documentation)
 		  (documentation documentations #'cons))
 
+  (documentation documentation-line
+		 (documentation-line documentation
+				     (lambda (a b)
+				       (concatenate 'string a b))))
+
   (annotated-nc-except (lead-annotated-nc-except
 			follow-annotations
 			(lambda (p a)
@@ -692,7 +735,10 @@
 	  (when *annotation-attributes*
 	    (uncompact *annotation-attributes*))
 	  (dolist (elt *annotation-elements*)
-	    (error "fixme: ~A" elt))
+	    (cxml:with-namespace
+		("a" "http://relaxng.org/ns/compatibility/annotations/1.0")
+	      (cxml:with-element* ("a" "documentation")
+		(cxml:text elt))))
 	  (funcall body)))))
 
 (define-uncompactor with-grammar ((&optional) &body body)
@@ -889,8 +935,8 @@
 		      out)
   (flet ((doit (s)
 	   (handler-case
-	       (let ((lexer (make-test-lexer
-			     (make-instance 'unhexer :source-stream s))))
+	       (let ((lexer (make-rng-lexer
+			     (make-instance 'hex-stream :source s))))
 		 (yacc:parse-with-lexer
 		  (lambda ()
 		    (multiple-value-bind (cat sem) (funcall lexer)
