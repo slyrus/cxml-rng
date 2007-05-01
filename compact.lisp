@@ -131,7 +131,7 @@
 	       (clex::backup ch)
 	       (unless (and (cxml-types::nc-name-p lname))
 		 (rng-error nil "not an ncname: ~A" lname))
-	       (values 'cname prefix lname))))))
+	       (values 'cname (cons prefix lname)))))))
        (t
 	(unless (cxml-types::nc-name-p clex:bag)
 	  (rng-error nil "not an ncname: ~A" clex:bag))
@@ -146,6 +146,8 @@
   (#\= (double '=))
   (#\{ (double '{))
   (#\} (double '}))
+  (#\[ (double '[))
+  (#\] (double ']))
   (#\, (double '|,|))
   (#\& (double '&))
   (#\| (double '|\||))
@@ -156,6 +158,7 @@
   (#\) (double '|)|))
   ((and "|=") (double '|\|=|))
   ((and "&=") (double '&=))
+  ((and ">>") (double '>>))
   (#\~ (double '~))
   (#\- (double '-)))
 
@@ -165,11 +168,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
+  #+(or)
   (defmacro lambda* ((&rest args) &body body)
     (setf args (mapcar (lambda (arg) (or arg (gensym))) args))
     `(lambda (,@args)
        (declare (ignorable ,@args))
        ,@body))
+
+  (defmacro lambda* ((&rest args) &body body)
+    (setf args (mapcar (lambda (arg) (or arg (gensym))) args))
+    `(lambda (&rest .args.)
+       (unless (equal (length .args.) ,(length args))
+	 (error "expected ~A, got ~A" ',args .args.))
+       (destructuring-bind (,@args) .args.
+	 (declare (ignorable ,@args))
+	 ,@body)))
 
   (defun wrap-decls (decls content)
     (if decls
@@ -184,9 +197,14 @@
 			  :mixed :namespace :notAllowed :parent :start
 			  :string :text :token
 			  = { } |,| & |\|| ? * + |(| |)| |\|=| &= ~ -
-			  identifier literal-segment cname nsname))
-  #+nil (:print-states t)
-  #+nil (:print-goto-graph t)
+			  [ ] >>
+			  identifier literal-segment cname nsname
+			  documentation))
+  (:print-first-terminals t)
+;;   (:print-states t)
+;;   (:print-lookaheads t)
+;;   (:print-goto-graph t)
+  #+nil (:muffle-conflicts (57 10))		;hrmpf
 
   (top-level (decl* pattern #'wrap-decls)
 	     (decl* grammar-content*
@@ -207,11 +225,17 @@
 		    (lambda* (nil name nil uri)
 		      `(with-data-type (:name ,name :uri ,uri)))))
 
-  (pattern particle
-	   particle-choice
-	   particle-group
-	   particle-interleave
-	   data-except)
+  (pattern (inner-pattern
+	    (lambda* (p) `(without-annotations ,p))))
+
+  (particle (inner-particle
+	     (lambda* (p) `(without-annotations ,p))))
+
+  (inner-pattern inner-particle
+		 (particle-choice (lambda* (p) `(%with-annotations ,p)))
+		 (particle-group (lambda* (p) `(%with-annotations ,p)))
+		 (particle-interleave (lambda* (p) `(%with-annotations ,p)))
+		 (data-except (lambda* (p) `(%with-annotations-group ,p))))
 
   (primary (:element name-class { pattern }
 		     (lambda* (nil name nil pattern nil)
@@ -249,21 +273,45 @@
 		       `(with-grammar () ,@content)))
 	   (\( pattern \) (lambda* (nil p nil) p)))
 
-  (data-except (data-type-name [params] - primary
+  (data-except (data-type-name [params] - lead-annotated-primary
 			       (lambda* (name params nil p)
 				 `(data :data-type ,name
 					:params ,params
 					:except p))))
 
-  (particle primary
-	    repeated-particle)
+  (inner-particle (annotated-primary
+		   (lambda* (p) `(%with-annotations-group ,p)))
+		  (repeated-primary follow-annotations
+				    (lambda* (a b)
+				      `(progn
+					 (%with-annotations ,a)
+					 ,b))))
 
-  (repeated-particle (primary *
-			      (lambda* (p nil) `(zero-or-more ,p)))
-		     (primary +
-			      (lambda* (p nil) `(one-or-more ,p)))
-		     (primary ?
-			      (lambda* (p nil) `(optional ,p))))
+  (repeated-primary (annotated-primary *
+				       (lambda* (p nil) `(zero-or-more ,p)))
+		    (annotated-primary +
+				       (lambda* (p nil) `(one-or-more ,p)))
+		    (annotated-primary ?
+				       (lambda* (p nil) `(optional ,p))))
+
+  (annotated-primary (lead-annotated-primary follow-annotations
+					     (lambda* (a b)
+					       `(progn ,a ,b))))
+
+  (annotated-data-except (lead-annotated-data-except follow-annotations
+						     (lambda* (a b)
+						       `(progn ,a ,b))))
+
+  (lead-annotated-data-except (annotations data-except
+					   (lambda* (a p)
+					     `(with-annotations ,a ,p))))
+
+  (lead-annotated-primary (annotations primary
+				       (lambda* (a p)
+					 `(with-annotations ,a ,p)))
+			  (annotations \( inner-pattern \)
+				       (lambda* (a nil p nil)
+					 `(let-annotations ,a ,p))))
 
   (particle-choice (particle \| particle
 			     (lambda* (a nil b) `(choice ,a ,b)))
@@ -280,31 +328,45 @@
 		       (particle \& particle-interleave
 				 (lambda* (a nil b) `(interleave ,a ,@(cdr b)))))
 
-  (param (identifier-or-keyword = literal
-				(lambda* (name nil value)
-				  `(param ,name ,value))))
+  (param (annotations identifier-or-keyword = literal
+		      (lambda* (a name nil value)
+			`(with-annotations ,a (param ,name ,value)))))
 
   (grammar-content* ()
-		    (grammar-content grammar-content* #'cons))
+		    (member grammar-content* #'cons))
 
-  (grammar-content start
-		   define
-		   (:div { grammar-content* }
-			 (lambda* (nil nil content nil)
-			   `(with-div ,@content)))
-		   (:include any-uri-literal [inherit] [include-content]
-			     (lambda* (nil uri inherit content)
-			       `(with-include (:inherit ,inherit)
-				  ,@content))))
+  (member annotated-component
+	  annotated-element-not-keyword)
+
+  (annotated-component (annotations component
+				    (lambda* (a c)
+				      `(with-annotations (,@a) ,c))))
+
+  (component start
+	     define
+	     (:div { grammar-content* }
+		   (lambda* (nil nil content nil)
+		     `(with-div ,@content)))
+	     (:include any-uri-literal [inherit] [include-content]
+		       (lambda* (nil uri inherit content)
+			 `(with-include (:inherit ,inherit)
+			    ,@content))))
 
   (include-content* ()
-		    (include-content include-content* #'cons))
+		    (include-member include-content* #'cons))
 
-  (include-content start
-		   define
-		   (:div { grammar-content* }
-			 (lambda* (nil nil content nil)
-			   `(with-div ,@content))))
+  (include-member annotated-include-component
+		  annotation-element-not-keyword)
+
+  (annotated-include-component (annotations include-component
+					    (lambda* (a c)
+					      `(with-annotations (,@a) ,c))))
+
+  (include-component start
+		     define
+		     (:div { grammar-content* }
+			   (lambda* (nil nil content nil)
+			     `(with-div ,@content))))
 
   (start (:start assign-method pattern
 		 (lambda* (nil method pattern)
@@ -319,24 +381,123 @@
 		 (\|= (constantly "choice"))
 		 (&= (constantly "interleave")))
 
-  (name-class simple-nc
-	      nc-choice
-	      nc-except)
+  (name-class (inner-name-class (lambda (nc) `(without-annotations ,nc))))
+
+  (inner-name-class (annotated-simple-nc
+		     (lambda (nc) `(%with-annotations-choice ,nc)))
+		    (nc-choice
+		     (lambda (nc) `(%with-annotations ,nc)))
+		    (annotated-nc-except
+		     (lambda (nc) `(%with-annotations-choice ,nc))))
 
   (simple-nc (name (lambda* (n) `(name ,n)))
 	     (ns-name (lambda* (n) `(ns-name ,n)))
 	     (* (constantly `(any-name)))
 	     (\( name-class \) (lambda* (nil nc nil) nc)))
 
+  (follow-annotations ()
+		      (>> annotation-element follow-annotations))
+
+  (annotations ()
+	       (documentations)
+	       ([ annotation-attributes annotation-elements ]
+		  )
+	       (documentations [ annotation-attributes annotation-elements ]
+			       ))
+
+  (annotation-attributes
+   ((constantly '(annotation-attributes)))
+   (foreign-attribute-name = literal annotation-attributes
+			   (lambda* (name nil value rest)
+			     `(annotation-attributes
+			       (attribute ,name ,value)
+			       ,@(cdr rest)))))
+
+  (foreign-attribute-name prefixed-name)
+
+  (annotation-elements ()
+		       (annotation-element annotation-elements #'cons))
+
+  (annotation-element (foreign-element-name annotation-attributes-content
+					    (lambda (a b)
+					      `(with-annotation-element
+						   (:name ,a)
+						 ,b))))
+
+  (foreign-element-name identifier-or-keyword
+			prefixed-name)
+
+  (annotation-element-not-keyword (foreign-element-name-not-keyword
+				   annotation-attributes-content
+				   (lambda (a b)
+				     `(with-annotation-element
+					  (:name ,a)
+					,b))))
+
+  (foreign-element-name-not-keyword identifier prefixed-name)
+
+  (annotation-attributes-content ([ nested-annotation-attributes
+				     annotation-content ]))
+
+  (nested-annotation-attributes
+   ((constantly '(annotation-attributes)))
+   (any-attribute-name = literal
+		       nested-annotation-attributes
+		       (lambda* (name nil value rest)
+			 `(annotation-attributes
+			   (attribute ,name ,value)
+			   ,@(cdr rest)))))
+
+  (any-attribute-name identifier-or-keyword prefixed-name)
+
+  (annotation-content ()
+		      (nested-annotation-element annotation-content #'cons)
+		      (literal annotation-content #'cons))
+
+  (nested-annotation-element (any-element-name annotation-attributes-content
+					       (lambda (a b)
+						 `(with-annotation-element
+						      (:name ,a)
+						    ,b))))
+
+  (any-element-name identifier-or-keyword prefixed-name)
+
+  (prefixed-name cname)
+
+  (documentations (documentation)
+		  (documentation documentations #'cons))
+
+  (annotated-nc-except (lead-annotated-nc-except
+			follow-annotations
+			(lambda (p a)
+			  `(progn ,p ,a))))
+
+  (lead-annotated-nc-except (annotations nc-except
+					 (lambda (a p)
+					   `(with-annotations ,a ,p))))
+
+  (annotated-simple-nc lead-annotated-simple-nc
+		       (lead-annotated-simple-nc
+			follow-annotations
+			(lambda (p a) `(progn ,p ,a))))
+
+  (lead-annotated-simple-nc
+   (annotations simple-nc
+		(lambda (a nc) `(with-annotations ,a ,nc)))
+   (annotations \( inner-name-class \)
+		(lambda (a nc) `(let-annotations ,a ,nc))))
+
   (nc-except (ns-name - simple-nc
 		      (lambda* (nc1 nil nc2) `(ns-name ,nc1 :except ,nc2)))
 	     (* - simple-nc
 		(lambda* (nil nil nc) `(any-name :except ,nc))))
 
-  (nc-choice (simple-nc \| simple-nc
-			(lambda* (a nil b) `(name-choice ,a ,b)))
-	     (simple-nc \| nc-choice
-			(lambda* (a nil b) `(name-choice ,a ,@(cdr b)))))
+  (nc-choice (annotated-simple-nc \| annotated-simple-nc
+				  (lambda* (a nil b)
+				    `(name-choice ,a ,b)))
+	     (annotated-simple-nc \| nc-choice
+				  (lambda* (a nil b)
+				    `(name-choice ,a ,@(cdr b)))))
 
   (name identifier-or-keyword cname)
 
@@ -397,18 +558,46 @@
 (defvar *default-namespace* "")
 (defvar *data-types* '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
 
+(defvar *parent-namespaces* nil)
+(defvar *parent-default-namespace* nil)
+
+(defun xor (a b)
+  (if a (not b) b))
+
+(defun lookup-prefix (prefix)
+  (cdr (assoc prefix *namespaces* :test 'equal)))
+
+(defun lookup-data-type (name)
+  (assoc name *data-types* :test 'equal))
+
 (define-uncompactor with-namespace ((&key uri name default) &body body)
-  (let ((*namespaces*
-	 (if name
-	     (acons name uri *namespaces*)
-	     *namespaces*))
-	(*default-namespace*
-	 (if default
-	     uri
-	     *default-namespace*)))
+  (when (xor (equal name "xml")
+	     (equal uri "http://www.w3.org/XML/1998/namespace"))
+    (rng-error nil "invalid redeclaration of `xml' namespace"))
+  (when (equal name "xmlns")
+    (rng-error nil "invalid declaration of `xmlns' namespace"))
+  (when (eq uri :inherit)
+    (setf uri (if name
+		  (cdr (assoc name *parent-namespaces* :test 'equal))
+		  *parent-default-namespace*)))
+  (let ((*namespaces* *namespaces*)
+	(*default-namespace* *default-namespace*))
+    (when name
+      (when (lookup-prefix name)
+	(rng-error nil "duplicate declaration of prefix ~A" name))
+      (push (cons name uri) *namespaces*))
+    (when default
+      (when *default-namespace*
+	(rng-error nil "multiple default namespaces declared"))
+      (push uri *default-namespace*))
     (mapc #'uncompact body)))
 
 (define-uncompactor with-data-type ((&key name uri) &body body)
+  (when (and (equal name "xsd")
+	     (not (equal uri "http://www.w3.org/2001/XMLSchema-datatypes")))
+    (rng-error nil "invalid redeclaration of `xml' namespace"))
+  (when (lookup-data-type name)
+    (rng-error nil "duplicate declaration of library ~A" name))
   (let ((*data-types* (acons name uri *data-types*)))
     (mapc #'uncompact body)))
 
@@ -432,6 +621,13 @@
 (define-uncompactor parent-ref (name)
   (cxml:with-element "parentRef"
     (cxml:attribute "name" name)))
+
+(define-uncompactor external-ref (&key uri inherit)
+  (cxml:with-element "externalRef"
+    (cxml:attribute "uri" uri)
+    (cxml:attribute "ns" (if inherit
+			     (lookup-prefix inherit)
+			     *default-namespace*))))
 
 (define-uncompactor with-element ((&key name) pattern)
   (cxml:with-element "element"
@@ -459,7 +655,16 @@
 
 (define-uncompactor data (&key data-type params except)
   (cxml:with-element "data"
-    (cxml:attribute "type" data-type)	;fixme
+    (case data-type
+      (:string
+       (cxml:attribute "datatypeLibrary" "")
+       (cxml:attribute "type" "string"))
+      (:token
+       (cxml:attribute "datatypeLibrary" "")
+       (cxml:attribute "type" "token"))
+      (t
+       (cxml:attribute "datatypeLibrary" (lookup-data-type (car data-type)))
+       (cxml:attribute "type" (cadr data-type))))
     (mapc #'uncompact params)
     (when except
       (uncompact except))))
@@ -490,7 +695,7 @@
 
 (define-uncompactor ns-name (nc &key except)
   (cxml:with-element "nsName"
-    (cxml:attribute "ns" nc)
+    (cxml:attribute "ns" (lookup-prefix nc))
     (when except
       (uncompact except))))
 
@@ -498,12 +703,17 @@
   (cxml:with-element "choice"
     (mapc #'uncompact ncs)))
 
+(defun destructure-cname-like (x)
+  (when (keywordp x) (setf x (string-downcase (symbol-name x))))
+  (when (atom x) (setf x (list "" x)))
+  (values (lookup-prefix (car x))
+	  (cdr x)))
+
 (define-uncompactor name (x)
   (cxml:with-element "name"
-    (when (keywordp x) (setf x (string-downcase (symbol-name x))))
-    (when (atom x) (setf x (list "" x)))
-    (cxml:attribute "ns" (car x))
-    (cxml:text (cadr x))))
+    (multiple-value-bind (uri lname) (destructure-cname-like x)
+      (cxml:attribute "ns" uri)
+      (cxml:text lname))))
 
 (define-uncompactor choice (&rest body)
   (cxml:with-element "choice"
@@ -528,6 +738,13 @@
 (define-uncompactor zero-or-more (p)
   (cxml:with-element "zeroOrMore"
     (uncompact p)))
+
+(define-uncompactor with-include ((&key inherit) &body body)
+  (cxml:with-element "include"
+    (cxml:attribute "ns" (if inherit
+			   (lookup-prefix inherit)
+			   *default-namespace*))
+    (mapc #'uncompact body)))
 
 (defun compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
   (flet ((doit (s)
