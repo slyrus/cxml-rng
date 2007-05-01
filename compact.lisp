@@ -42,7 +42,45 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Lexer
+;;;; Escape interpretation
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defclass unhexer (trivial-gray-streams:fundamental-character-input-stream)
+    ((source-stream :initarg :source-stream :accessor source-stream)))
+
+;;; zzz das haetten wir eigentlich auch mit deflexer machen koennen
+(defmethod trivial-gray-streams:stream-read-char ((s unhexer))
+  (let* ((r (source-stream s))
+	 (c (read-char r nil :eof)))
+    (case c
+      (:eof c)
+      (#\\
+       (unless (eql (read-char r nil) #\x)
+	 (rng-error nil "expected x after \\"))
+       (loop
+	  for d = (peek-char nil r)
+	  while (eql d #\x)
+	  do (read-char r))
+       (unless (eql (read-char r nil) #\{)
+	 (rng-error nil "expected { after \\x"))
+       (unless (digit-char-p (peek-char r nil) 16)
+	 (rng-error nil "expected x after \\"))
+       (loop
+	  for result = 0 then (+ (* result 16) i)
+	  for d = (peek-char nil r nil)
+	  for i = (digit-char-p d 16)
+	  while i
+	  do
+	    (read-char r)
+	  finally
+	    (unless (eql (read-char r nil) #\})
+	      (rng-error nil "expected } after \\x{nn"))
+	    (return (code-char result))))
+      (t c))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Tokenization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (clex:deflexer test
@@ -844,11 +882,15 @@
   (cxml:with-element name
     (mapc #'uncompact attrs)))
 
+;;; zzz strip BOM
+;;; zzz newline normalization: Wir lesen von einem character-stream, daher
+;;; macht das schon das Lisp fuer uns -- je nach Plattform. Aber nicht richtig.
 (defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc")
 		      out)
   (flet ((doit (s)
 	   (handler-case
-	       (let ((lexer (make-test-lexer s)))
+	       (let ((lexer (make-test-lexer
+			     (make-instance 'unhexer :source-stream s))))
 		 (yacc:parse-with-lexer
 		  (lambda ()
 		    (multiple-value-bind (cat sem) (funcall lexer)
