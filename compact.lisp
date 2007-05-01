@@ -200,11 +200,11 @@
 			  [ ] >>
 			  identifier literal-segment cname nsname
 			  documentation))
-  (:print-first-terminals t)
-;;   (:print-states t)
-;;   (:print-lookaheads t)
-;;   (:print-goto-graph t)
-  #+nil (:muffle-conflicts (57 10))		;hrmpf
+  #+debug (:print-first-terminals t)
+  #+debug (:print-states t)
+  #+debug (:print-lookaheads t)
+  #+debug (:print-goto-graph t)
+  (:muffle-conflicts (322 0))		;hrmpf
 
   (top-level (decl* pattern #'wrap-decls)
 	     (decl* grammar-content*
@@ -306,7 +306,8 @@
 					   (lambda* (a p)
 					     `(with-annotations ,a ,p))))
 
-  (lead-annotated-primary (annotations primary
+  (lead-annotated-primary primary
+			  (annotations primary
 				       (lambda* (a p)
 					 `(with-annotations ,a ,p)))
 			  (annotations \( inner-pattern \)
@@ -340,7 +341,7 @@
 
   (annotated-component (annotations component
 				    (lambda* (a c)
-				      `(with-annotations (,@a) ,c))))
+				      `(with-annotations ,a ,c))))
 
   (component start
 	     define
@@ -399,11 +400,16 @@
 		      (>> annotation-element follow-annotations))
 
   (annotations ()
-	       (documentations)
+	       (documentations
+		(lambda (e)
+		  `(annotation :elements ,e)))
 	       ([ annotation-attributes annotation-elements ]
-		  )
+		  (lambda* (nil a e nil)
+		    `(annotation :attributes a :elements ,e)))
 	       (documentations [ annotation-attributes annotation-elements ]
-			       ))
+			       (lambda* (d nil a e nil)
+				 `(annotation :attributes ,a
+					      :elements ,(append e d)))))
 
   (annotation-attributes
    ((constantly '(annotation-attributes)))
@@ -476,8 +482,7 @@
 					 (lambda (a p)
 					   `(with-annotations ,a ,p))))
 
-  (annotated-simple-nc lead-annotated-simple-nc
-		       (lead-annotated-simple-nc
+  (annotated-simple-nc (lead-annotated-simple-nc
 			follow-annotations
 			(lambda (p a) `(progn ,p ,a))))
 
@@ -554,12 +559,12 @@
   `(setf (get ',name 'uncompactor)
 	 (lambda (.form.) (destructuring-bind ,args .form. ,@body))))
 
-(defvar *namespaces* '(("xml" . "http://www.w3.org/XML/1998/namespace")))
-(defvar *default-namespace* "")
-(defvar *data-types* '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
+(defparameter *namespaces* '(("xml" . "http://www.w3.org/XML/1998/namespace")))
+(defparameter *default-namespace* nil)
+(defparameter *data-types* '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
 
-(defvar *parent-namespaces* nil)
-(defvar *parent-default-namespace* nil)
+(defparameter *parent-namespaces* nil)
+(defparameter *parent-default-namespace* nil)
 
 (defun xor (a b)
   (if a (not b) b))
@@ -568,7 +573,7 @@
   (cdr (assoc prefix *namespaces* :test 'equal)))
 
 (defun lookup-data-type (name)
-  (assoc name *data-types* :test 'equal))
+  (cdr (assoc name *data-types* :test 'equal)))
 
 (define-uncompactor with-namespace ((&key uri name default) &body body)
   (when (xor (equal name "xml")
@@ -588,172 +593,222 @@
       (push (cons name uri) *namespaces*))
     (when default
       (when *default-namespace*
-	(rng-error nil "multiple default namespaces declared"))
-      (push uri *default-namespace*))
+	(rng-error nil "default namespace already declared to ~A"
+		   *default-namespace*))
+      (setf *default-namespace* uri))
     (mapc #'uncompact body)))
 
 (define-uncompactor with-data-type ((&key name uri) &body body)
   (when (and (equal name "xsd")
 	     (not (equal uri "http://www.w3.org/2001/XMLSchema-datatypes")))
     (rng-error nil "invalid redeclaration of `xml' namespace"))
-  (when (lookup-data-type name)
+  (when (and (lookup-data-type name) (not (equal name "xsd")))
     (rng-error nil "duplicate declaration of library ~A" name))
   (let ((*data-types* (acons name uri *data-types*)))
     (mapc #'uncompact body)))
 
+(defparameter *annotation-attributes* nil)
+(defparameter *annotation-elements* nil)
+(defparameter *annotation-wrap* nil)
+
+(defmacro with-element (name-and-args &body body)
+  (destructuring-bind (name &rest args)
+      (if (atom name-and-args) (list name-and-args) name-and-args)
+    `(invoke-with-element ,name (lambda () ,@args) (lambda () ,@body))))
+
+(defun invoke-with-element (name args body)
+  (if (and *annotation-attributes*
+	   *annotation-wrap*)
+      (cxml:with-element *annotation-wrap*
+	(let ((*annotation-wrap* nil))
+	  (invoke-with-element name args body)))
+      (cxml:with-element name
+	(funcall args)
+	(dolist (attr *annotation-attributes*)
+	  (error "fixme: ~A" attr))
+	(dolist (elt *annotation-elements*)
+	  (error "fixme: ~A" elt))
+	(funcall body))))
+
 (define-uncompactor with-grammar ((&optional) &body body)
-  (cxml:with-element "grammar"
+  (with-element "grammar"
     (mapc #'uncompact body)))
 
 (define-uncompactor with-start ((&key combine-method) &body body)
-  (cxml:with-element "start"
-    (cxml:attribute "combine" combine-method)
+  (with-element ("start"
+		 (cxml:attribute "combine" combine-method))
     (mapc #'uncompact body)))
 
 (define-uncompactor ref (name)
-  (cxml:with-element "ref"
-    (cxml:attribute "name" name)))
+  (with-element ("ref"
+		 (cxml:attribute "name" name))))
 
 (define-uncompactor parent-ref (name)
-  (cxml:with-element "parentRef"
-    (cxml:attribute "name" name)))
+  (with-element ("parentRef"
+		 (cxml:attribute "name" name))))
 
 (define-uncompactor parent-ref (name)
-  (cxml:with-element "parentRef"
-    (cxml:attribute "name" name)))
+  (with-element ("parentRef" (cxml:attribute "name" name))))
 
 (define-uncompactor external-ref (&key uri inherit)
-  (cxml:with-element "externalRef"
-    (cxml:attribute "uri" uri)
-    (cxml:attribute "ns" (if inherit
-			     (lookup-prefix inherit)
-			     *default-namespace*))))
+  (with-element ("externalRef"
+		 (cxml:attribute "uri" uri)
+		 (cxml:attribute "ns" (if inherit
+					  (lookup-prefix inherit)
+					  *default-namespace*)))))
 
 (define-uncompactor with-element ((&key name) pattern)
-  (cxml:with-element "element"
+  (with-element "element"
     (uncompact name)
     (uncompact pattern)))
 
 (define-uncompactor with-attribute ((&key name) pattern)
-  (cxml:with-element "attribute"
+  (with-element "attribute"
     (uncompact name)
     (uncompact pattern)))
 
 (define-uncompactor list (pattern)
-  (cxml:with-element "list"
+  (with-element "list"
     (uncompact pattern)))
 
 (define-uncompactor mixed (pattern)
-  (cxml:with-element "mixed"
+  (with-element "mixed"
     (uncompact pattern)))
 
 (define-uncompactor :empty ()
-  (cxml:with-element "empty"))
+  (with-element "empty"))
 
 (define-uncompactor :text ()
-  (cxml:with-element "text"))
+  (with-element "text"))
 
 (define-uncompactor data (&key data-type params except)
-  (cxml:with-element "data"
-    (case data-type
-      (:string
-       (cxml:attribute "datatypeLibrary" "")
-       (cxml:attribute "type" "string"))
-      (:token
-       (cxml:attribute "datatypeLibrary" "")
-       (cxml:attribute "type" "token"))
-      (t
-       (cxml:attribute "datatypeLibrary" (lookup-data-type (car data-type)))
-       (cxml:attribute "type" (cadr data-type))))
+  (with-element ("data"
+		 (case data-type
+		   (:string
+		    (cxml:attribute "datatypeLibrary" "")
+		    (cxml:attribute "type" "string"))
+		   (:token
+		    (cxml:attribute "datatypeLibrary" "")
+		    (cxml:attribute "type" "token"))
+		   (t
+		    (cxml:attribute "datatypeLibrary"
+				    (lookup-data-type (car data-type)))
+		    (cxml:attribute "type" (cdr data-type)))))
     (mapc #'uncompact params)
     (when except
       (uncompact except))))
 
 (define-uncompactor value (&key data-type value)
-  (cxml:with-element "value"
-    (when data-type
-      (cxml:attribute "type" data-type))
+  (with-element ("value"
+		 (when data-type
+		   (cxml:attribute "type" data-type)))
     (cxml:text value)))
 
 (define-uncompactor :notallowed ()
-  (cxml:with-element "notAllowed"))
+  (with-element "notAllowed"))
 
 (define-uncompactor with-definition ((&key name combine-method) &body body)
-  (cxml:with-element "define"
-    (cxml:attribute "name" name)
-    (cxml:attribute "combine" combine-method)
+  (with-element ("define"
+		 (cxml:attribute "name" name)
+		 (cxml:attribute "combine" combine-method))
     (mapc #'uncompact body)))
 
 (define-uncompactor with-div (&body body)
-  (cxml:with-element "div"
+  (with-element "div"
     (mapc #'uncompact body)))
 
 (define-uncompactor any-name (&key except)
-  (cxml:with-element "anyName"
+  (with-element "anyName"
     (when except
       (uncompact except))))
 
 (define-uncompactor ns-name (nc &key except)
-  (cxml:with-element "nsName"
-    (cxml:attribute "ns" (lookup-prefix nc))
+  (with-element ("nsName"
+		 (cxml:attribute "ns" (lookup-prefix nc)))
     (when except
       (uncompact except))))
 
 (define-uncompactor name-choice (&rest ncs)
-  (cxml:with-element "choice"
+  (with-element "choice"
     (mapc #'uncompact ncs)))
 
 (defun destructure-cname-like (x)
   (when (keywordp x) (setf x (string-downcase (symbol-name x))))
-  (when (atom x) (setf x (list "" x)))
+  (when (atom x) (setf x (cons "" x)))
   (values (lookup-prefix (car x))
 	  (cdr x)))
 
 (define-uncompactor name (x)
-  (cxml:with-element "name"
-    (multiple-value-bind (uri lname) (destructure-cname-like x)
-      (cxml:attribute "ns" uri)
+  (multiple-value-bind (uri lname) (destructure-cname-like x)
+    (with-element ("name"
+		   (cxml:attribute "ns" uri))
       (cxml:text lname))))
 
 (define-uncompactor choice (&rest body)
-  (cxml:with-element "choice"
+  (with-element "choice"
     (mapc #'uncompact body)))
 
 (define-uncompactor group (&rest body)
-  (cxml:with-element "group"
+  (with-element "group"
     (mapc #'uncompact body)))
 
 (define-uncompactor interleave (&rest body)
-  (cxml:with-element "interleave"
+  (with-element "interleave"
     (mapc #'uncompact body)))
 
 (define-uncompactor one-or-more (p)
-  (cxml:with-element "oneOrMore"
+  (with-element "oneOrMore"
     (uncompact p)))
 
 (define-uncompactor optional (p)
-  (cxml:with-element "optional"
+  (with-element "optional"
     (uncompact p)))
 
 (define-uncompactor zero-or-more (p)
-  (cxml:with-element "zeroOrMore"
+  (with-element "zeroOrMore"
     (uncompact p)))
 
 (define-uncompactor with-include ((&key inherit) &body body)
-  (cxml:with-element "include"
-    (cxml:attribute "ns" (if inherit
-			   (lookup-prefix inherit)
-			   *default-namespace*))
+  (with-element ("include"
+		 (cxml:attribute "ns" (if inherit
+					  (lookup-prefix inherit)
+					  *default-namespace*)))
     (mapc #'uncompact body)))
 
-(defun compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
+(define-uncompactor with-annotations ((&key attributes elements) &body body)
+  (let ((*annotation-attributes* attributes)
+	(*annotation-elements* elements))
+    (mapc #'uncompact body)))
+
+(define-uncompactor without-annotations (&body body)
+  (let ((*annotation-attributes* nil)
+	(*annotation-elements* nil))
+    (mapc #'uncompact body)))
+
+;; zzz das kann weg
+(define-uncompactor %with-annotations (&body body)
+  (mapc #'uncompact body))
+
+(define-uncompactor %with-annotations-group (&body body)
+  (let ((*annotation-wrap* "group"))
+    (mapc #'uncompact body)))
+
+(define-uncompactor %with-annotations-choice (&body body)
+  (let ((*annotation-wrap* "choice"))
+    (mapc #'uncompact body)))
+
+(define-uncompactor progn (a b)
+  (when a (uncompact a))
+  (when b (uncompact b)))
+
+(defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
   (flet ((doit (s)
 	   (handler-case
 	       (let ((lexer (make-test-lexer s)))
 		 (yacc:parse-with-lexer
 		  (lambda ()
 		    (multiple-value-bind (cat sem) (funcall lexer)
-		      #+nil (print (list cat sem))
+		      (print (list cat sem))
 		      (if (eq cat :eof)
 			  nil
 			  (values cat sem))))
@@ -764,12 +819,16 @@
 	   (if (pathnamep p)
 	       (with-open-file (s p) (doit s))
 	       (with-input-from-string (s p) (doit s)))))
-      (print tree)
+      #+nil (print tree)
       (cxml:with-xml-output (cxml:make-character-stream-sink
 			     *standard-output*
 			     :indentation 2
 			     :canonical nil)
 	(uncompact tree)))))
+
+(defun test-compact ()
+  (dolist (p (directory "/home/david/src/nxml-mode-20041004/schema/*.rnc"))
+    (parse-compact p)))
 
 #+(or)
 (compact)
