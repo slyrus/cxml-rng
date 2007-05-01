@@ -71,7 +71,7 @@
 	  (range #xe000 #xfffd)
 	  (range #x10000 #x10ffff)))
      (string-char
-      (or 32
+      (or 32 33
 	  ;; #\"
 	  (range 35 38)
 	  ;; #\'
@@ -87,7 +87,7 @@
   ((clex::in comment newline) (clex:begin 'clex:initial))
   ((clex::in comment comment-char))
 
-  ((and "'''" (* (or string-char #\")) "'''")
+  ((and "'''" (* (or string-char #\' #\")) "'''")
    (return
      (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
 
@@ -98,7 +98,7 @@
    (return
      (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
 
-  ((and #\" #\" #\" (* (or string-char #\")) #\" #\" #\")
+  ((and #\" #\" #\" (* (or string-char #\' #\")) #\" #\" #\")
    (return
      (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
 
@@ -204,7 +204,7 @@
   #+debug (:print-states t)
   #+debug (:print-lookaheads t)
   #+debug (:print-goto-graph t)
-  (:muffle-conflicts (322 0))		;hrmpf
+  (:muffle-conflicts (49 0))		;hrmpf
 
   (top-level (decl* pattern #'wrap-decls)
 	     (decl* grammar-content*
@@ -277,7 +277,7 @@
 			       (lambda* (name params nil p)
 				 `(data :data-type ,name
 					:params ,params
-					:except p))))
+					:except ,p))))
 
   (inner-particle (annotated-primary
 		   (lambda* (p) `(%with-annotations-group ,p)))
@@ -302,7 +302,8 @@
 						     (lambda* (a b)
 						       `(progn ,a ,b))))
 
-  (lead-annotated-data-except (annotations data-except
+  (lead-annotated-data-except data-except
+			      (annotations data-except
 					   (lambda* (a p)
 					     `(with-annotations ,a ,p))))
 
@@ -310,6 +311,8 @@
 			  (annotations primary
 				       (lambda* (a p)
 					 `(with-annotations ,a ,p)))
+			  (\( inner-pattern \)
+			      (lambda* (nil p nil) p))
 			  (annotations \( inner-pattern \)
 				       (lambda* (a nil p nil)
 					 `(let-annotations ,a ,p))))
@@ -329,7 +332,10 @@
 		       (particle \& particle-interleave
 				 (lambda* (a nil b) `(interleave ,a ,@(cdr b)))))
 
-  (param (annotations identifier-or-keyword = literal
+  (param (identifier-or-keyword = literal
+				(lambda* (name nil value)
+				  `(param ,name ,value)))
+	 (annotations identifier-or-keyword = literal
 		      (lambda* (a name nil value)
 			`(with-annotations ,a (param ,name ,value)))))
 
@@ -339,7 +345,8 @@
   (member annotated-component
 	  annotated-element-not-keyword)
 
-  (annotated-component (annotations component
+  (annotated-component component
+		       (annotations component
 				    (lambda* (a c)
 				      `(with-annotations ,a ,c))))
 
@@ -359,7 +366,8 @@
   (include-member annotated-include-component
 		  annotation-element-not-keyword)
 
-  (annotated-include-component (annotations include-component
+  (annotated-include-component include-component
+			       (annotations include-component
 					    (lambda* (a c)
 					      `(with-annotations (,@a) ,c))))
 
@@ -399,13 +407,13 @@
   (follow-annotations ()
 		      (>> annotation-element follow-annotations))
 
-  (annotations ()
+  (annotations #+nil ()
 	       (documentations
 		(lambda (e)
 		  `(annotation :elements ,e)))
 	       ([ annotation-attributes annotation-elements ]
 		  (lambda* (nil a e nil)
-		    `(annotation :attributes a :elements ,e)))
+		    `(annotation :attributes ,a :elements ,e)))
 	       (documentations [ annotation-attributes annotation-elements ]
 			       (lambda* (d nil a e nil)
 				 `(annotation :attributes ,a
@@ -416,7 +424,7 @@
    (foreign-attribute-name = literal annotation-attributes
 			   (lambda* (name nil value rest)
 			     `(annotation-attributes
-			       (attribute ,name ,value)
+			       (annotation-attribute ,name ,value)
 			       ,@(cdr rest)))))
 
   (foreign-attribute-name prefixed-name)
@@ -451,7 +459,7 @@
 		       nested-annotation-attributes
 		       (lambda* (name nil value rest)
 			 `(annotation-attributes
-			   (attribute ,name ,value)
+			   (annotation-attribute ,name ,value)
 			   ,@(cdr rest)))))
 
   (any-attribute-name identifier-or-keyword prefixed-name)
@@ -478,7 +486,8 @@
 			(lambda (p a)
 			  `(progn ,p ,a))))
 
-  (lead-annotated-nc-except (annotations nc-except
+  (lead-annotated-nc-except nc-except
+			    (annotations nc-except
 					 (lambda (a p)
 					   `(with-annotations ,a ,p))))
 
@@ -487,6 +496,8 @@
 			(lambda (p a) `(progn ,p ,a))))
 
   (lead-annotated-simple-nc
+   simple-nc
+   (\( inner-name-class \) (lambda* (nil nc nil) nc))
    (annotations simple-nc
 		(lambda (a nc) `(with-annotations ,a ,nc)))
    (annotations \( inner-name-class \)
@@ -622,13 +633,14 @@
       (cxml:with-element *annotation-wrap*
 	(let ((*annotation-wrap* nil))
 	  (invoke-with-element name args body)))
-      (cxml:with-element name
-	(funcall args)
-	(dolist (attr *annotation-attributes*)
-	  (error "fixme: ~A" attr))
-	(dolist (elt *annotation-elements*)
-	  (error "fixme: ~A" elt))
-	(funcall body))))
+      (let ((*annotation-wrap* nil))
+	(cxml:with-element name
+	  (funcall args)
+	  (when *annotation-attributes*
+	    (uncompact *annotation-attributes*))
+	  (dolist (elt *annotation-elements*)
+	    (error "fixme: ~A" elt))
+	  (funcall body)))))
 
 (define-uncompactor with-grammar ((&optional) &body body)
   (with-element "grammar"
@@ -681,27 +693,28 @@
 (define-uncompactor :text ()
   (with-element "text"))
 
+(defun uncompact-data-type (data-type)
+  (case data-type
+    (:string
+     (cxml:attribute "datatypeLibrary" "")
+     (cxml:attribute "type" "string"))
+    (:token
+     (cxml:attribute "datatypeLibrary" "")
+     (cxml:attribute "type" "token"))
+    (t
+     (cxml:attribute "datatypeLibrary"
+		     (lookup-data-type (car data-type)))
+     (cxml:attribute "type" (cdr data-type)))))
+
 (define-uncompactor data (&key data-type params except)
-  (with-element ("data"
-		 (case data-type
-		   (:string
-		    (cxml:attribute "datatypeLibrary" "")
-		    (cxml:attribute "type" "string"))
-		   (:token
-		    (cxml:attribute "datatypeLibrary" "")
-		    (cxml:attribute "type" "token"))
-		   (t
-		    (cxml:attribute "datatypeLibrary"
-				    (lookup-data-type (car data-type)))
-		    (cxml:attribute "type" (cdr data-type)))))
+  (with-element ("data" (uncompact-data-type data-type))
     (mapc #'uncompact params)
     (when except
       (uncompact except))))
 
 (define-uncompactor value (&key data-type value)
   (with-element ("value"
-		 (when data-type
-		   (cxml:attribute "type" data-type)))
+		 (uncompact-data-type data-type))
     (cxml:text value)))
 
 (define-uncompactor :notallowed ()
@@ -775,7 +788,9 @@
 					  *default-namespace*)))
     (mapc #'uncompact body)))
 
-(define-uncompactor with-annotations ((&key attributes elements) &body body)
+(define-uncompactor with-annotations
+    ((annotation &key attributes elements) &body body)
+  (check-type annotation (member annotation))
   (let ((*annotation-attributes* attributes)
 	(*annotation-elements* elements))
     (mapc #'uncompact body)))
@@ -801,6 +816,20 @@
   (when a (uncompact a))
   (when b (uncompact b)))
 
+(define-uncompactor annotation-attributes (&rest attrs)
+  (mapc #'uncompact attrs))
+
+(define-uncompactor annotation-attribute (name value)
+  ;; zzz namespace lookup
+  (cxml:attribute (format nil "~A:~A" (car name) (cdr name))
+		  value))
+
+(define-uncompactor param (name value)
+  ;; zzz namespace lookup
+  (with-element ("param"
+		 (cxml:attribute "name" name))
+    (cxml:text value)))
+
 (defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc"))
   (flet ((doit (s)
 	   (handler-case
@@ -808,7 +837,7 @@
 		 (yacc:parse-with-lexer
 		  (lambda ()
 		    (multiple-value-bind (cat sem) (funcall lexer)
-		      (print (list cat sem))
+		      #+nil (print (list cat sem))
 		      (if (eq cat :eof)
 			  nil
 			  (values cat sem))))
@@ -819,11 +848,13 @@
 	   (if (pathnamep p)
 	       (with-open-file (s p) (doit s))
 	       (with-input-from-string (s p) (doit s)))))
-      #+nil (print tree)
-      (cxml:with-xml-output (cxml:make-character-stream-sink
-			     *standard-output*
-			     :indentation 2
-			     :canonical nil)
+       #+nil (print tree)
+      (cxml:with-xml-output nil
+	#+(or)
+	(cxml:make-character-stream-sink
+	 *standard-output*
+	 :indentation 2
+	 :canonical nil)
 	(uncompact tree)))))
 
 (defun test-compact ()
