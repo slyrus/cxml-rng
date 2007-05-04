@@ -9,6 +9,7 @@
 	   #:schema-start
 
 	   #:parse-schema
+	   #:parse-compact
 	   #:serialize-schema
 	   #:make-validator
 
@@ -54,6 +55,9 @@
   (:documentation
    "@code{cxml-rng} implements @a[http://relaxng.org/spec-20011203.html]{
     Relax NG} schema validation for Closure XML.
+
+    Support for @a[http://relaxng.org/compact-20021121.html]{Compact Syntax}
+    is included.
 
     @begin[Example]{section}
     @begin{code}

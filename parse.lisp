@@ -919,38 +919,62 @@
 (defun safe-parse-uri (source str &optional base)
   (when (zerop (length str))
     (rng-error source "missing URI"))
-  (let ((uri
-	 (handler-case
-	     (if base
-		 (puri:merge-uris str base)
-		 (puri:parse-uri str))
-	   (puri:uri-parse-error ()
-	     (rng-error source "invalid URI: ~A" str)))))
+  (let* ((compactp (rnc-uri-p str))
+	 (str (if compactp (follow-rnc-uri str) str))
+	 (uri
+	  (handler-case
+	      (if base
+		  (puri:merge-uris str base)
+		  (puri:parse-uri str))
+	    (puri:uri-parse-error ()
+	      (rng-error source "invalid URI: ~A" str)))))
     (when (and (eq (puri:uri-scheme uri) :file)
 	       (puri:uri-fragment uri))
       (rng-error source "Forbidden fragment in URI: ~A" str))
-    uri))
+    (values uri compactp)))
+
+(defun named-string-xstream (str uri)
+  (let ((xstream (cxml::string->xstream str)))
+    (setf (cxml::xstream-name xstream)
+	  (cxml::make-stream-name
+	   :entity-name "main document"
+	   :entity-kind :main
+	   :uri uri))
+    xstream))
+
+(defun xstream-open-schema (uri compactp)
+  (if compactp
+      (named-string-xstream
+       (uncompact-file
+	;; fixme: Hier waere es schon, mit *entity-resolver* arbeiten
+	;; zu koennen, aber der liefert binaere Streams.
+	(open (cxml::uri-to-pathname uri)
+	      :element-type 'character
+	      :direction :input))
+       uri)
+      (cxml::xstream-open-extid* *entity-resolver* nil uri)))
 
 (defun p/external-ref (source)
   (klacks:expecting-element (source "externalRef")
     (let* ((href
 	    (escape-uri (attribute "href" (klacks:list-attributes source))))
-	   (base (klacks:current-xml-base source))
-	   (uri (safe-parse-uri source href base)))
-      (when (find uri *include-uri-stack* :test #'puri:uri=)
-	(rng-error source "looping include"))
-      (prog1
-	  (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
-		 (xstream
-		  (cxml::xstream-open-extid* *entity-resolver* nil uri)))
-	    (klacks:with-open-source (source (make-validating-source xstream))
-	      (invoke-with-klacks-handler
-	       (lambda ()
-		 (klacks:find-event source :start-element)
-		 (let ((*datatype-library* ""))
-		   (p/pattern source)))
-	       source)))
-	(skip-foreign* source)))))
+	   (base (klacks:current-xml-base source)))
+      (multiple-value-bind (uri compactp)
+	  (safe-parse-uri source href base)
+	(when (find uri *include-uri-stack* :test #'puri:uri=)
+	  (rng-error source "looping include"))
+	(prog1
+	    (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
+		   (xstream (xstream-open-schema uri compactp)))
+	      (klacks:with-open-source
+		  (source (make-validating-source xstream))
+		(invoke-with-klacks-handler
+		 (lambda ()
+		   (klacks:find-event source :start-element)
+		   (let ((*datatype-library* ""))
+		     (p/pattern source)))
+		 source)))
+	  (skip-foreign* source))))))
 
 (defun p/grammar (source &optional grammar)
   (klacks:expecting-element (source "grammar")
@@ -971,22 +995,24 @@
   (loop
     (multiple-value-bind (key uri lname) (klacks:peek source)
       uri
-      (case key
+      (ecase key
+	(:characters
+	 (klacks:consume source))
 	(:start-element
-	  (with-library-and-ns (klacks:list-attributes source)
-	    (case (find-symbol lname :keyword)
-	      (:|start| (process-start source))
-	      (:|define| (process-define source))
-	      (:|div| (process-div source))
-	      (:|include|
-		(when disallow-include
-		  (rng-error source "nested include not permitted"))
-		(process-include source))
-	      (t
-		(skip-foreign source)))))
+	 (with-library-and-ns (klacks:list-attributes source)
+	   (case (find-symbol lname :keyword)
+	     (:|start|
+	       (process-start source))
+	     (:|define| (process-define source))
+	     (:|div| (process-div source))
+	     (:|include|
+	       (when disallow-include
+		 (rng-error source "nested include not permitted"))
+	       (process-include source))
+	     (t
+	      (skip-foreign source)))))
 	(:end-element
-	  (return))))
-    (klacks:consume source)))
+	 (return))))))
 
 (defun process-start (source)
   (klacks:expecting-element (source "start")
@@ -1125,48 +1151,49 @@
     (let* ((href
 	    (escape-uri (attribute "href" (klacks:list-attributes source))))
 	   (base (klacks:current-xml-base source))
-	   (uri (safe-parse-uri source href base))
 	   (*include-start* nil)
 	   (*include-definitions* '()))
-      (consume-and-skip-to-native source)
-      (let ((*include-body-p* t))
-	(process-grammar-content* source :disallow-include t))
-      (let ((tmp-start
-	     (when *include-start*
-	       (prog1
-		   (copy-structure *include-start*)
-		 (reset-definition-for-include *include-start*))))
-	    (tmp-defns
-	     (loop
-		 for defn in *include-definitions*
-		 collect
-		   (prog1
-		       (copy-structure defn)
-		     (reset-definition-for-include defn)))))
-	(when (find uri *include-uri-stack* :test #'puri:uri=)
-	  (rng-error source "looping include"))
-	(let* ((*include-uri-stack* (cons uri *include-uri-stack*))
-	       (xstream (cxml::xstream-open-extid* *entity-resolver* nil uri)))
-	  (klacks:with-open-source (source (make-validating-source xstream))
-	    (invoke-with-klacks-handler
-	     (lambda ()
-	       (klacks:find-event source :start-element)
-	       (let ((*datatype-library* ""))
-		 (p/grammar source *grammar*)))
-	     source))
-	  (when tmp-start
-	    (when (eq (defn-redefinition *include-start*)
-		      :being-redefined-and-no-original)
-	      (rng-error source "start not found in redefinition of grammar"))
-	    (restore-definition *include-start* tmp-start))
-	  (dolist (copy tmp-defns)
-	    (let ((defn (gethash (defn-name copy)
-				 (grammar-definitions *grammar*))))
-	      (when (eq (defn-redefinition defn)
+      (multiple-value-bind (uri compactp)
+	  (safe-parse-uri source href base)
+	(consume-and-skip-to-native source)
+	(let ((*include-body-p* t))
+	  (process-grammar-content* source :disallow-include t))
+	(let ((tmp-start
+	       (when *include-start*
+		 (prog1
+		     (copy-structure *include-start*)
+		   (reset-definition-for-include *include-start*))))
+	      (tmp-defns
+	       (loop
+		  for defn in *include-definitions*
+		  collect
+		  (prog1
+		      (copy-structure defn)
+		    (reset-definition-for-include defn)))))
+	  (when (find uri *include-uri-stack* :test #'puri:uri=)
+	    (rng-error source "looping include"))
+	  (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
+		 (xstream (xstream-open-schema uri compactp)))
+	    (klacks:with-open-source (source (make-validating-source xstream))
+	      (invoke-with-klacks-handler
+	       (lambda ()
+		 (klacks:find-event source :start-element)
+		 (let ((*datatype-library* ""))
+		   (p/grammar source *grammar*)))
+	       source))
+	    (when tmp-start
+	      (when (eq (defn-redefinition *include-start*)
 			:being-redefined-and-no-original)
-		(rng-error source "redefinition not found in grammar"))
-	      (restore-definition defn copy)))
-	  nil)))))
+		(rng-error source "start not found in redefinition of grammar"))
+	      (restore-definition *include-start* tmp-start))
+	    (dolist (copy tmp-defns)
+	      (let ((defn (gethash (defn-name copy)
+				   (grammar-definitions *grammar*))))
+		(when (eq (defn-redefinition defn)
+			  :being-redefined-and-no-original)
+		  (rng-error source "redefinition not found in grammar"))
+		(restore-definition defn copy)))
+	    nil))))))
 
 (defun check-pattern-definitions (source grammar)
   (when (and (grammar-start grammar)

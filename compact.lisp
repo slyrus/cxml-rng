@@ -433,7 +433,7 @@
 		     `(with-div ,@content)))
 	     (:include any-uri-literal [inherit] [include-content]
 		       (lambda* (nil uri inherit content)
-			 `(with-include (:inherit ,inherit)
+			 `(with-include (:inherit ,inherit :uri ,uri)
 			    ,@content))))
 
   (include-content* ()
@@ -758,7 +758,7 @@
 (define-uncompactor external-ref (&key uri inherit)
   (let ((ns (if inherit (lookup-prefix inherit) (lookup-default))))
     (with-element (nil "externalRef"
-		       (cxml:attribute "uri" uri)
+		       (cxml:attribute "href" (munge-schema-ref uri))
 		       (ns-attribute ns)))))
 
 (defvar *elementp*)
@@ -879,9 +879,26 @@
   (with-element "zeroOrMore"
     (uncompact p)))
 
-(define-uncompactor with-include ((&key inherit) &body body)
+(defun munge-schema-ref (uri)
+  (if (search "://" uri)
+      (concatenate 'string "rnc+" uri)
+      (concatenate 'string "rnc+://" uri)))
+
+(defun rnc-uri-p (uri)
+  (and (search "://" uri)
+       (equal (mismatch "rnc+" uri) 4)))
+
+(defun follow-rnc-uri (uri)
+  (if (equal (mismatch "rnc+://" uri) 7)
+      ;; rnc+://foo/bar
+      (subseq uri 7)
+      ;; rnc+file:///usr/foo/...
+      (subseq uri 4)))
+
+(define-uncompactor with-include ((&key inherit uri) &body body)
   (let ((ns (if inherit (lookup-prefix inherit) (lookup-default))))
     (with-element (nil "include"
+		       (cxml:attribute "href" (munge-schema-ref uri))
 		       (ns-attribute ns))
       (mapc #'uncompact body))))
 
@@ -931,39 +948,43 @@
 ;;; zzz strip BOM
 ;;; zzz newline normalization: Wir lesen von einem character-stream, daher
 ;;; macht das schon das Lisp fuer uns -- je nach Plattform. Aber nicht richtig.
-(defun parse-compact (&optional (p #p"/home/david/src/lisp/cxml-rng/rng.rnc")
-		      out)
-  (flet ((doit (s)
-	   (handler-case
-	       (let ((lexer (make-rng-lexer
-			     (make-instance 'hex-stream :source s))))
-		 (yacc:parse-with-lexer
-		  (lambda ()
-		    (multiple-value-bind (cat sem) (funcall lexer)
-		      #+nil (print (list cat sem))
-		      (if (eq cat :eof)
-			  nil
-			  (values cat sem))))
-		  *compact-parser*))
-	     (error (c)
-	       (error "~A ~A" (file-position s) c)))))
-    (let ((tree
-	   (if (pathnamep p)
-	       (with-open-file (s p) (doit s))
-	       (with-input-from-string (s p) (doit s)))))
-      #+nil (print tree)
+(defun uncompact-file-1 (stream)
+  (handler-case
+      (let ((lexer (make-rng-lexer
+		    (make-instance 'hex-stream :source stream))))
+	(yacc:parse-with-lexer
+	 (lambda ()
+	   (multiple-value-bind (cat sem) (funcall lexer)
+	     #+nil (print (list cat sem))
+	     (if (eq cat :eof)
+		 nil
+		 (values cat sem))))
+	 *compact-parser*))
+    (error (c)
+      (rng-error nil
+		 "failed to parse compact syntax at char ~A, ~A:~%  ~A"
+		 (file-position stream)
+		 (cxml::safe-stream-sysid stream)
+		 c))))
+
+(defun uncompact-file (input &optional stream)
+  (let ((tree
+	 (etypecase input
+	   (pathname (with-open-file (s input) (uncompact-file-1 s)))
+	   (stream (with-open-stream (s input) (uncompact-file-1 s))))))
+    #+nil (print tree)
+    (with-output-to-string (s)
       (cxml:with-xml-output
-	  (if out
-	      (cxml:make-octet-stream-sink
-	       out
-	       :indentation 2
-	       :canonical nil)
-	      (cxml:make-character-stream-sink
-	       *standard-output*
-	       :indentation 2
-	       :canonical nil))
+	  (if stream
+	      (cxml:make-octet-stream-sink stream)
+	      (cxml:make-character-stream-sink s))
 	(cxml:with-namespace ("" "http://relaxng.org/ns/structure/1.0")
 	  (uncompact tree))))))
+
+(defun parse-compact (pathname)
+  (parse-schema (named-string-xstream
+		 (uncompact-file pathname)
+		 (cxml::pathname-to-uri pathname))))
 
 (defun test-compact ()
   (dolist (p (directory "/home/david/src/nxml-mode-20041004/schema/*.rnc"))
@@ -971,7 +992,7 @@
     (with-open-file (s (make-pathname :type "rng" :defaults p)
 		       :direction :output
 		       :if-exists :supersede)
-      (parse-compact p s))))
+      (uncompact-file p s))))
 
 #+(or)
 (compact)
