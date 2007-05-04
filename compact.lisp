@@ -280,7 +280,7 @@
   #+debug (:print-states t)
   #+debug (:print-lookaheads t)
   #+debug (:print-goto-graph t)
-  (:muffle-conflicts (49 0))		;hrmpf
+  (:muffle-conflicts (50 0))		;hrmpf
 
   (top-level (decl* pattern #'wrap-decls)
 	     (decl* grammar-content*
@@ -653,16 +653,17 @@
 
 (defparameter *namespaces* '(("xml" . "http://www.w3.org/XML/1998/namespace")))
 (defparameter *default-namespace* nil)
-(defparameter *data-types* '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
-
-(defparameter *parent-namespaces* nil)
-(defparameter *parent-default-namespace* nil)
+(defparameter *data-types*
+  '(("xsd" . "http://www.w3.org/2001/XMLSchema-datatypes")))
 
 (defun xor (a b)
   (if a (not b) b))
 
 (defun lookup-prefix (prefix)
   (cdr (assoc prefix *namespaces* :test 'equal)))
+
+(defun lookup-default ()
+  (or *default-namespace* :inherit))
 
 (defun lookup-data-type (name)
   (cdr (assoc name *data-types* :test 'equal)))
@@ -673,10 +674,6 @@
     (rng-error nil "invalid redeclaration of `xml' namespace"))
   (when (equal name "xmlns")
     (rng-error nil "invalid declaration of `xmlns' namespace"))
-  (when (eq uri :inherit)
-    (setf uri (if name
-		  (cdr (assoc name *parent-namespaces* :test 'equal))
-		  *parent-default-namespace*)))
   (let ((*namespaces* *namespaces*)
 	(*default-namespace* *default-namespace*))
     (when name
@@ -688,17 +685,10 @@
 	(rng-error nil "default namespace already declared to ~A"
 		   *default-namespace*))
       (setf *default-namespace* uri))
-    (labels ((f ()
-	       (if default
-		   (cxml:with-namespace ("" uri)
-		     (g))
-		   (g)))
-	     (g ()
-	       (mapc #'uncompact body)))
-      (if name
-	  (cxml:with-namespace (name uri)
-	    (f))
-	  (f)))))
+    (if (and name (not (eq uri :inherit)))
+	(cxml:with-namespace (name uri)
+	  (mapc #'uncompact body))
+	(mapc #'uncompact body))))
 
 (define-uncompactor with-data-type ((&key name uri) &body body)
   (when (and (equal name "xsd")
@@ -761,21 +751,28 @@
 (define-uncompactor parent-ref (name)
   (with-element (nil "parentRef" (cxml:attribute "name" name))))
 
+(defun ns-attribute (uri-or-inherit)
+  (unless (eq uri-or-inherit :inherit)
+    (cxml:attribute "ns" uri-or-inherit)))
+
 (define-uncompactor external-ref (&key uri inherit)
-  (with-element (nil "externalRef"
-		     (cxml:attribute "uri" uri)
-		     (cxml:attribute "ns" (if inherit
-					      (lookup-prefix inherit)
-					      *default-namespace*)))))
+  (let ((ns (if inherit (lookup-prefix inherit) (lookup-default))))
+    (with-element (nil "externalRef"
+		       (cxml:attribute "uri" uri)
+		       (ns-attribute ns)))))
+
+(defvar *elementp*)
 
 (define-uncompactor with-element ((&key name) pattern)
   (with-element "element"
-    (uncompact name)
+    (let ((*elementp* t))
+      (uncompact name))
     (uncompact pattern)))
 
 (define-uncompactor with-attribute ((&key name) pattern)
   (with-element "attribute"
-    (uncompact name)
+    (let ((*elementp* nil))
+      (uncompact name))
     (uncompact pattern)))
 
 (define-uncompactor list (pattern)
@@ -835,7 +832,7 @@
 
 (define-uncompactor ns-name (nc &key except)
   (with-element (nil "nsName"
-		     (cxml:attribute "ns" (lookup-prefix nc)))
+		     (ns-attribute (lookup-prefix nc)))
     (when except
       (uncompact except))))
 
@@ -845,13 +842,17 @@
 
 (defun destructure-cname-like (x)
   (when (keywordp x) (setf x (string-downcase (symbol-name x))))
-  (when (atom x) (setf x (cons "" x)))
+  (when (atom x)
+    (setf x (cons (if *elementp* "" nil)
+		  x)))
   (values (lookup-prefix (car x))
 	  (cdr x)))
 
 (define-uncompactor name (x)
   (multiple-value-bind (uri lname) (destructure-cname-like x)
-    (with-element (nil "name" (cxml:attribute "ns" uri))
+    (with-element (nil
+		   "name"
+		   (ns-attribute uri))
       (cxml:text lname))))
 
 (define-uncompactor choice (&rest body)
@@ -879,11 +880,10 @@
     (uncompact p)))
 
 (define-uncompactor with-include ((&key inherit) &body body)
-  (with-element (nil "include"
-		     (cxml:attribute "ns" (if inherit
-					      (lookup-prefix inherit)
-					      *default-namespace*)))
-    (mapc #'uncompact body)))
+  (let ((ns (if inherit (lookup-prefix inherit) (lookup-default))))
+    (with-element (nil "include"
+		       (ns-attribute ns))
+      (mapc #'uncompact body))))
 
 (define-uncompactor with-annotations
     ((annotation &key attributes elements) &body body)
@@ -962,7 +962,8 @@
 	       *standard-output*
 	       :indentation 2
 	       :canonical nil))
-	(uncompact tree)))))
+	(cxml:with-namespace ("" "http://relaxng.org/ns/structure/1.0")
+	  (uncompact tree))))))
 
 (defun test-compact ()
   (dolist (p (directory "/home/david/src/nxml-mode-20041004/schema/*.rnc"))
