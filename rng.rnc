@@ -1,4 +1,9 @@
 # RELAX NG XML syntax specified in compact syntax.
+#
+# Original version from http://relaxng.org/compact-20021121.html
+#
+# Fixed to allow foreignElement* before the nameClass of element and
+# attribute.  -- david
 
 default namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace local = ""
@@ -7,8 +12,8 @@ datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 start = pattern
 
 pattern =
-  element element { (nameQName | nameClass), (common & pattern+) }
-  | element attribute { (nameQName | nameClass), (common & pattern?) }
+  element element { foreignElement*, (nameQName | nameClass), (common & pattern+) }
+  | element attribute { foreignElement*, (nameQName | nameClass), (common & pattern?) }
   | element group|interleave|choice|optional
             |zeroOrMore|oneOrMore|list|mixed { common & pattern+ }
   | element ref|parentRef { nameNCName, common }

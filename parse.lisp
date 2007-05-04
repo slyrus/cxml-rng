@@ -170,7 +170,9 @@
 	    (let* ((*validate-grammar* nil)
 		   (d (slot-value (asdf:find-system :cxml-rng)
 				  'asdf::relative-pathname)))
-	      (parse-schema (merge-pathnames "rng.rng" d))))))
+	      (parse-schema (merge-pathnames "rng.rng" d))
+	      #+(or)
+	      (parse-compact (merge-pathnames "rng.rnc" d))))))
   (klacks:with-open-source (source (make-validating-source input))
     (invoke-with-klacks-handler
      (lambda ()
@@ -1229,7 +1231,7 @@
 	    (destructure-name source qname)))
 	(:|anyName|
 	  (unless *any-name-allowed-p*
-	    (rng-error source "anyname now permitted in except"))
+	    (rng-error source "anyname not permitted in except"))
 	  (klacks:consume source)
 	  (prog1
 	      (let ((*any-name-allowed-p* nil))
@@ -1259,9 +1261,12 @@
     (loop
       (skip-to-native source)
       (case (klacks:peek source)
-	(:start-element (push (p/name-class source) results))
-	(:end-element (return)))
-      (klacks:consume source))
+	(:characters
+	 (klacks:consume source))
+	(:start-element
+	 (push (p/name-class source) results))
+	(:end-element
+	 (return))))
     (nreverse results)))
 
 (defun p/except-name-class? (source)

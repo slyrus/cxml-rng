@@ -144,10 +144,11 @@
    (mixed-text\'-cache :initform (make-hash-table)
 		       :reader mixed-text\'-cache)))
 
-(defun advance (hsx pattern message)
+(defun advance (hsx pattern message &rest args)
   (when (typep pattern 'not-allowed)
-    (rng-error hsx "~A, was expecting ~A"
+    (rng-error hsx "~?, was expecting ~A"
 	       message
+	       args
 	       (replace-scary-characters
 		(with-output-to-string (s)
 		  (expectation (current-pattern hsx) s)))))
@@ -194,7 +195,7 @@
   (let* ((p0 (current-pattern hsx))
 	 (p1 (open-start-tag\' hsx p0 uri lname))
 	 (p2 (progn
-	       (advance hsx p1 "element not valid")
+	       (advance hsx p1 "element ~A (~A) not valid" lname uri)
 	       (attributes\' hsx p1 attributes)))
 	 (p3 (progn
 	       (advance hsx p2 "attributes not valid")

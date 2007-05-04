@@ -684,8 +684,9 @@
       (when *default-namespace*
 	(rng-error nil "default namespace already declared to ~A"
 		   *default-namespace*))
+      (push (cons "" uri) *namespaces*)
       (setf *default-namespace* uri))
-    (if (and name (not (eq uri :inherit)))
+    (if (and name (not (or (eq uri :inherit) (equal uri ""))))
 	(cxml:with-namespace (name uri)
 	  (mapc #'uncompact body))
 	(mapc #'uncompact body))))
@@ -806,7 +807,8 @@
   (with-element (nil "data" (uncompact-data-type data-type))
     (mapc #'uncompact params)
     (when except
-      (uncompact except))))
+      (with-element "except"
+	(uncompact except)))))
 
 (define-uncompactor value (&key data-type value)
   (with-element (nil "value" (uncompact-data-type data-type))
@@ -828,20 +830,23 @@
 (define-uncompactor any-name (&key except)
   (with-element "anyName"
     (when except
-      (uncompact except))))
+      (with-element "except"
+	(uncompact except)))))
 
 (define-uncompactor ns-name (nc &key except)
   (with-element (nil "nsName"
 		     (ns-attribute (lookup-prefix nc)))
     (when except
-      (uncompact except))))
+      (with-element "except"
+	(uncompact except)))))
 
 (define-uncompactor name-choice (&rest ncs)
   (with-element "choice"
     (mapc #'uncompact ncs)))
 
 (defun destructure-cname-like (x)
-  (when (keywordp x) (setf x (string-downcase (symbol-name x))))
+  (when (keywordp x)
+    (setf x (find x *keywords* :test 'string-equal)))
   (when (atom x)
     (setf x (cons (if *elementp* "" nil)
 		  x)))
