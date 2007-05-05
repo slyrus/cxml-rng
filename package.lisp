@@ -72,6 +72,7 @@
     @end{section}
     @begin[Parsing and validating]{section}
     @aboutfun{parse-schema}
+    @aboutfun{parse-compact}
     @aboutfun{make-validator}
     @aboutfun{serialize-grammar}
     @end{section}

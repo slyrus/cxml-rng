@@ -163,6 +163,7 @@
    Alternatively it may return a Common Lisp stream specialized on
    @code{(unsigned-byte 8)} which will be used instead.
 
+   @see{parse-compact}
    @see{make-validator}"
   (when *validate-grammar*
     (unless *relax-ng-grammar*
@@ -290,6 +291,7 @@
        patterns, but simplification normalizes the representation so that
        any such element has exactly two children.)
 
+       @see{pattern-b}
        @see{group}
        @see{interleave}
        @see{choice}")
@@ -303,6 +305,7 @@
        patterns, but simplification normalizes the representation so that
        any such element has exactly two children.)
 
+       @see{pattern-a}
        @see{group}
        @see{interleave}
        @see{choice}")
@@ -589,12 +592,14 @@
 (setf (documentation 'name-class-choice-a 'function)
       "@arg[instance]{an instance of @class{name-class-choice}}
        @return{a @class{name-class}}
-       Returns the 'first' of two name classes that are allowed.")
+       Returns the 'first' of two name classes that are allowed.
+       @see{name-class-choice-b}")
 
 (setf (documentation 'name-class-choice-b 'function)
       "@arg[instance]{an instance of @class{name-class-choice}}
        @return{a @class{name-class}}
-       Returns the 'second' of two name classes that are allowed.")
+       Returns the 'second' of two name classes that are allowed.
+       @see{name-class-choice-a}")
 
 (defun simplify-nc-choice (values)
   (zip #'make-name-class-choice values))

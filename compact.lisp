@@ -987,6 +987,13 @@
 	  (uncompact tree))))))
 
 (defun parse-compact (pathname)
+  "@arg[pathname]{a pathname designator for a Relax NG compact file}
+   @return{a parsed @class{schema}}
+   @short{This function parses a Relax NG schema file in compact syntax}
+   and returns a parsed representation of that schema.
+
+   @see{parse-schema}
+   @see{make-validator}"
   (parse-schema (named-string-xstream
 		 (uncompact-file pathname)
 		 (cxml::pathname-to-uri pathname))))
