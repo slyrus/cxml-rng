@@ -605,6 +605,9 @@
 
 (defxsd (base64-binary-type "base64Binary") (xsd-type) ())
 
+(defmethod equal-using-type ((type base64-binary-type) u v)
+  (equalp u v))
+
 (defmethod %parse ((type base64-binary-type) e context)
   (declare (ignore context))
   (if (cl-ppcre:all-matches
@@ -625,6 +628,9 @@
 ;;; hexBinary
 
 (defxsd (hex-binary-type "hexBinary") (xsd-type) ())
+
+(defmethod equal-using-type ((type hex-binary-type) u v)
+  (equalp u v))
 
 (defmethod %parse ((type hex-binary-type) e context)
   (declare (ignore context))
@@ -647,15 +653,51 @@
 
 (defxsd (float-type "float") (xsd-type) ())
 
+(defmethod equal-using-type ((type float-type) u v)
+  (= u v))
+
+;; zzz nehme hier an, dass single-float in IEEE single float ist.
+;; Das stimmt unter LispWorks bestimmt wieder nicht.
+(defmethod %parse ((type float-type) e context)
+  (declare (ignore context))
+  (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
+      (coerce (parse-number:parse-number e) 'single-float)
+      :error))
+
 
 ;;; decimal
 
 (defxsd (decimal-type "decimal") (xsd-type) ())
 
+(defmethod equal-using-type ((type decimal-type) u v)
+  (= u v))
+
+(defmethod %parse ((type decimal-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional a b)
+      (scan-to-strings "^([+-]\d)+(?:[.](\d+))?$" e)
+    (if a
+	(+ (parse-integer a)
+	   (/ (parse-integer b) (expt 10 (length b))))
+	:error)))
+
 
 ;;; double
 
+;; zzz nehme hier an, dass double-float in IEEE double float ist.
+;; Auch das ist nicht garantiert.
 (defxsd (double-type "double") (xsd-type) ())
+
+(defmethod equal-using-type ((type float-type) u v)
+  (= u v))
+
+;; zzz nehme hier an, dass single-float in IEEE single float ist.
+;; Das stimmt unter LispWorks bestimmt wieder nicht.
+(defmethod %parse ((type float-type) e context)
+  (declare (ignore context))
+  (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
+      (coerce (parse-number:parse-number e) 'single-float)
+      :error))
 
 
 ;;; AnyURi
@@ -670,14 +712,18 @@
 
 
 ;;; QName
+;;; NOTATION
 
-(defxsd (qname-type "QName") (xsd-type) ())
+(defclass qname-like (xsd-type) ())
+
+(defxsd (qname-type "QName") (qname-like) ())
+(defxsd (notation-type "NOTATION") (qname-like) ())
 
 (defstruct (qname (:constructor make-qname (uri lname)))
   uri
   lname)
 
-(defmethod equal-using-type ((type qname-type) u v)
+(defmethod equal-using-type ((type qname-like) u v)
   (and (equal (qname-uri u) (qname-uri v))
        (equal (qname-lname u) (qname-lname v))))
 
@@ -686,7 +732,7 @@
        (cxml::name-start-rune-p (elt str 0))
        (every #'cxml::name-rune-p str)))
 
-(defmethod %parse ((type qname-type) e context)
+(defmethod %parse ((type qname-like) e context)
   (setf e (normalize-whitespace e))
   (handler-case
       (if (namep e)
@@ -699,13 +745,6 @@
 	  :error)
     (cxml:well-formedness-violation ()
       :error)))
-
-
-;;; NOTATION
-
-(defxsd (notation-type "NOTATION") (xsd-type) ())
-
-
 
 
 ;;; string
@@ -731,11 +770,20 @@
 
 (defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
 
+(defmethod %parse ((type normalized-string-type) e context)
+  (if (some (lambda (c) (find c #.(remove #\space *whitespace*))) e)
+      :error
+      e))
 
 
 ;;; token
 
 (defxsd (xsd-token-type "token") (normalized-string-type) ())
+
+(defmethod %parse ((type xsd-token-type) e context)
+  (if (equal e (normalize-whitespace e))
+      e
+      :error))
 
 
 ;;; language
