@@ -605,10 +605,42 @@
 
 (defxsd (base64-binary-type "base64Binary") (xsd-type) ())
 
+(defmethod %parse ((type base64-binary-type) e context)
+  (declare (ignore context))
+  (if (cl-ppcre:all-matches
+       "(?x)
+        ^(([A-Za-z0-9+/][ ]?[A-Za-z0-9+/][ ]?[A-Za-z0-9+/]
+                  [ ]?[A-Za-z0-9+/][ ]?)*
+           (([A-Za-z0-9+/][ ]?[A-Za-z0-9+/][ ]?[A-Za-z0-9+/][ ]?[A-Za-z0-9+/])
+             | ([A-Za-z0-9+/][ ]?[A-Za-z0-9+/][ ]?[AEIMQUYcgkosw048][ ]?=)
+             | ([A-Za-z0-9+/][ ]?[AQgw][ ]?=[ ]?=)))?$"
+       e)
+      (handler-case
+	  (cl-base64:base64-string-to-usb8-array e)
+	(warning (c)
+	  (error "unexpected failure in Base64 decoding: ~A" c)))
+      :error))
+
 
 ;;; hexBinary
 
 (defxsd (hex-binary-type "hexBinary") (xsd-type) ())
+
+(defmethod %parse ((type hex-binary-type) e context)
+  (declare (ignore context))
+  (if (evenp (length e))
+      (let ((result
+	     (make-array (/ (length e) 2) :element-type '(unsigned-byte 8))))
+	(loop
+	   loop for i from 0 below (length e) by 2
+	   do
+	     (setf (elt result)
+		   (handler-case
+		       (parse-integer e :start i :end (+ i 2) :radix 16)
+		     (error ()
+		       (return :error))))
+	   finally (return result)))
+      :error))
 
 
 ;;; float

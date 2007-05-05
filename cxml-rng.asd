@@ -22,4 +22,4 @@
      (:file "test")
      (:file "clex")
      (:file "compact"))
-    :depends-on (:cxml :cl-ppcre :yacc :parse-number))
+    :depends-on (:cxml :cl-ppcre :yacc :parse-number :cl-base64))
