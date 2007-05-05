@@ -377,7 +377,16 @@
 (defmethod %parse ((type duration-type) e context)
   (declare (ignore context))
   (let ((strs
-	 (cl-ppcre:scan-to-strings "^(-)?P(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)D)?(T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:[.]\\d+)?)S)?)?$"
+	 (cl-ppcre:scan-to-strings "(?x)
+                                     ^(-)?            # minus
+                                     P(?:(\\d+)Y)?    # years
+                                     (?:(\\d+)M)?     # months
+                                     (?:(\\d+)D)?     # days
+                                     (T               # (time)
+                                       (?:(\\d+)H)?   # hours
+                                       (?:(\\d+)M)?   # minutes
+                                       (?:(\\d+(?:[.]\\d+)?)S)?   # seconds
+                                       )?$"
 				   e)))
     (destructuring-bind (&optional minusp y m d tp h min s)
 	(coerce strs 'list)
@@ -395,6 +404,55 @@
 
 (defxsd (date-time-type "dateTime") (xsd-type) ())
 
+(defmethod equal-using-type ((type duration-type) u v)
+  (equal u v))
+
+;; FIXME: Was ist denn nun mit der Zeitzone?  Sollen wir die wegwerfen oder
+;; hat das was mit timeOnTimeline zu tun?  Verstehe ich nicht.
+(defmethod %parse ((type date-time-type) e context)
+  (declare (ignore context))
+  (let ((strs
+	 (cl-ppcre:scan-to-strings "(?x)
+                                      ^(-)?                     # opt. minus
+                                      ((?:[1-9]\d*)?\d{4})      # year
+                                      -(\d\d)                   # month
+                                      -(\d\d)                   # day
+                                      T                         # (time)
+                                      (\d\d)                    # hour
+                                      -(\d\d)                   # minute
+                                      -(\d+(?:[.]\\d+)?)        # second
+                                      (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                                      $"
+				   e)))
+    (destructuring-bind (&optional minusp y m d h min s tz tz-sign tz-h tz-m)
+	(coerce strs 'list)
+      ;; parse into numbers
+      (flet ((int (str)
+	       (and str (parse-integer str)))
+	     (num (str)
+	       (and str (parse-number:parse-number str))))
+	(setf (values y m d h min s tz-h tz-m)
+	      (values (* (int y) (if minusp -1 1))
+		      (int m) (int d) (int h) (int min)
+		      (num s)
+		      (int tz-h) (int tz-m))))
+      (let ((day-limit
+	     (cond
+	       ((and (eql m 2) (zerop (mod y 4)) (not (zerop (mod y 400)))) 29)
+	       ((eql m 2) 28)
+	       ((oddp y) 31)
+	       (t 30))))
+	;; check ranges
+	(if (and y
+		 (plusp z)
+		 (<= 1 m 12)
+		 (<= 1 d day-limit)
+		 (<= 0 h 24)
+		 (<= 0 m 59)
+		 ;; zzz sind leap seconds immer erlaubt?
+		 (<= 0 s 60))
+	    (list (* y (if minusp -1 1)) m d h min s)
+	    :error)))))
 
 
 ;;; time
