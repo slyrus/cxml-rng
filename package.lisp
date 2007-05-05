@@ -125,7 +125,52 @@
 	   #:rng-type
 	   #:token-type
 	   #:string-type
-	   #:xsd-type)
+	   #:xsd-type
+
+	   #:duration-type 
+	   #:date-time-type 
+	   #:time-type 
+	   #:date-type 
+	   #:year-month-type 
+	   #:year-type 
+	   #:month-day-type 
+	   #:day-type 
+	   #:month-type 
+	   #:boolean-type 
+	   #:base64-binary-type 
+	   #:hex-binary-type 
+	   #:float-type 
+	   #:decimal-type 
+	   #:double-type 
+	   #:any-uri-type 
+	   #:qname-type 
+	   #:notation-type 
+	   #:xsd-string-type 
+	   #:normalized-string-type 
+	   #:xsd-token-type 
+	   #:language-type 
+	   #:name-type 
+	   #:ncname-type 
+	   #:id-type 
+	   #:idref-type 
+	   #:idrefs-type 
+	   #:entity-type 
+	   #:entities-type 
+	   #:nmtoken-type 
+	   #:nmtokens-type 
+	   #:integer-type 
+	   #:non-positive-integer-type 
+	   #:negative-integer-type 
+	   #:long-type 
+	   #:int-type 
+	   #:short-type 
+	   #:bite-type 
+	   #:non-negative-integer-type 
+	   #:unsigned-long-type 
+	   #:unsigned-int-type 
+	   #:unsigned-short-type 
+	   #:unsigned-byte-type 
+	   #:positive-integer-type)
   (:documentation
    "@code{cxml-types} defines an extensible interface for XML-related
     data types as required for use in Relax NG validation.

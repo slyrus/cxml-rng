@@ -293,6 +293,19 @@
 
 ;;; XML Schema Part 2: Datatypes Second Edition
 
+(defparameter *xsd-types* (make-hash-table :test 'equal))
+
+(defmacro defxsd
+    ((class-name type-name) (&rest supers) (&rest slots) &rest args)
+  `(progn
+     (setf (gethash ,type-name *xsd-types*) ',class-name)
+     (defclass ,class-name ,supers
+	 ((type-name :initform ,type-name
+		     :reader type-name
+		     :allocation :class)
+	  ,@slots)
+       ,@args)))
+
 (defclass xsd-type (data-type)
   ((min-length :initarg :min-length :accessor min-length)
    (max-length :initarg :max-length :accessor max-length)
@@ -337,13 +350,7 @@
   args					;fixme
   (if (eq name :probe)
       t
-      (let ((class
-	     (case (find-symbol name :keyword)
-	       (:|QName| 'qname-type)
-	       (:|NCName| 'ncname-type)
-	       (:|anyURI| 'any-uri-type)
-	       (:|string| 'xsd-string-type)
-	       (t nil))))
+      (let ((class (gethash name *xsd-types*)))
 	(if class
 	    (apply #'make-instance class args)
 	    nil))))
@@ -360,12 +367,122 @@
     result))
 
 
+;;; duration
+
+(defxsd (duration-type "duration") (xsd-type) ())
+
+(defmethod equal-using-type ((type duration-type) u v)
+  (equal u v))
+
+(defmethod %parse ((type duration-type) e context)
+  (declare (ignore context))
+  (let ((strs
+	 (cl-ppcre:scan-to-strings "^(-)?P(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)D)?(T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:[.]\\d+)?)S)?)?$"
+				   e)))
+    (destructuring-bind (&optional minusp y m d tp h min s)
+	(coerce strs 'list)
+      (if (and (or y m d h min s)
+	       (or (null tp) (or h min s)))
+	  (let ((f (if minusp -1 1)))
+	    (flet ((int (str)
+		     (and str (* f (parse-integer str)))))
+	      (list (int y) (int m) (int d) (int h) (int min)
+		    (and s (* f (parse-number:parse-number s))))))
+	  :error))))
+
+
+;;; dateTime
+
+(defxsd (date-time-type "dateTime") (xsd-type) ())
+
+
+
+;;; time
+
+(defxsd (time-type "time") (xsd-type) ())
+
+
+
+;;; date
+
+(defxsd (date-type "date") (xsd-type) ())
+
+
+
+;;; gYearMonth
+
+(defxsd (year-month-type "gYearMonth") (xsd-type) ())
+
+
+
+;;; gYear
+
+(defxsd (year-type "gYear") (xsd-type) ())
+
+
+
+;;; gMonthDay
+
+(defxsd (month-day-type "gMonthDay") (xsd-type) ())
+
+
+
+;;; gDay
+
+(defxsd (day-type "gDay") (xsd-type) ())
+
+
+
+;;; gMonth
+
+(defxsd (month-type "gMonth") (xsd-type) ())
+
+
+
+;;; boolean
+
+(defxsd (boolean-type "boolean") (xsd-type) ())
+
+
+;;; base64Binary
+
+(defxsd (base64-binary-type "base64Binary") (xsd-type) ())
+
+
+;;; hexBinary
+
+(defxsd (hex-binary-type "hexBinary") (xsd-type) ())
+
+
+;;; float
+
+(defxsd (float-type "float") (xsd-type) ())
+
+
+;;; decimal
+
+(defxsd (decimal-type "decimal") (xsd-type) ())
+
+
+;;; double
+
+(defxsd (double-type "double") (xsd-type) ())
+
+
+;;; AnyURi
+
+(defxsd (any-uri-type "AnyURI") (xsd-type) ())
+
+(defmethod equal-using-type ((type any-uri-type) u v)
+  (equal u v))
+
+(defmethod %parse ((type any-uri-type) e context)
+  (cxml-rng::escape-uri (normalize-whitespace e)))
+
+
 ;;; QName
 
-(defclass qname-type (xsd-type) ())
-
-(defmethod type-name ((type qname-type))
-  "QName")
+(defxsd (qname-type "QName") (xsd-type) ())
 
 (defstruct (qname (:constructor make-qname (uri lname)))
   uri
@@ -395,12 +512,56 @@
       :error)))
 
 
+;;; NOTATION
+
+(defxsd (notation-type "NOTATION") (xsd-type) ())
+
+
+
+
+;;; string
+
+(defxsd (xsd-string-type "string") (xsd-type) ())
+
+(defmethod equal-using-type ((type xsd-string-type) u v)
+  (equal u v))
+
+(defmethod %parse ((type xsd-string-type) e context)
+  (if (or (and (min-length type) (< (length e) (min-length type)))
+	  (and (max-length type) (> (length e) (max-length type)))
+	  (and (exact-length type) (/= (length e) (exact-length type))))
+      :error
+      e))
+
+
+;;;;
+;;;; Derived types
+;;;;
+
+;;; normalizedString
+
+(defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
+
+
+
+;;; token
+
+(defxsd (xsd-token-type "token") (normalized-string-type) ())
+
+
+;;; language
+
+(defxsd (language-type "language") (xsd-token-type) ())
+
+
+;;; Name
+
+(defxsd (name-type "Name") (xsd-token-type) ())
+
+
 ;;; NCName
 
-(defclass ncname-type (xsd-type) ())
-
-(defmethod type-name ((type ncname-type))
-  "NCName")
+(defxsd (ncname-type "NCName") (name-type) ())
 
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
@@ -414,34 +575,105 @@
       e
       :error))
 
+;;; ID
 
-;;; AnyURi
-
-(defclass any-uri-type (xsd-type) ())
-
-(defmethod type-name ((type any-uri-type))
-  "AnyURI")
-
-(defmethod equal-using-type ((type any-uri-type) u v)
-  (equal u v))
-
-(defmethod %parse ((type any-uri-type) e context)
-  (cxml-rng::escape-uri (normalize-whitespace e)))
+(defxsd (id-type "ID") (ncname-type) ())
 
 
-;;; string
+;;; IDREF
 
-(defclass xsd-string-type (xsd-type) ())
+(defxsd (idref-type "IDREF") (id-type) ())
 
-(defmethod type-name ((type xsd-string-type))
-  "string")
 
-(defmethod equal-using-type ((type xsd-string-type) u v)
-  (equal u v))
+;;; IDREFS
 
-(defmethod %parse ((type xsd-string-type) e context)
-  (if (or (and (min-length type) (< (length e) (min-length type)))
-	  (and (max-length type) (> (length e) (max-length type)))
-	  (and (exact-length type) (/= (length e) (exact-length type))))
-      :error
-      e))
+;; fixme?
+(defxsd (idrefs-type "IDREFS") (xsd-type) ())
+
+
+;;; ENTITY
+
+(defxsd (entity-type "ENTITY") (ncname-type) ())
+
+
+;;; IDREFS
+
+;; fixme?
+(defxsd (entities-type "ENTITIES") (xsd-type) ())
+
+
+;;; NMTOKEN
+
+(defxsd (nmtoken-type "NMTOKEN") (xsd-token-type) ())
+
+
+;;; NMTOKENS
+
+(defxsd (nmtokens-type "NMTOKENS") (nmtoken-type) ())
+
+
+;;; integer
+
+(defxsd (integer-type "integer") (decimal-type) ())
+
+
+;;; nonPositiveInteger
+
+(defxsd (non-positive-integer-type "nonPositiveInteger") (integer-type) ())
+
+
+;;; nonPositiveInteger
+
+(defxsd (negative-integer-type "negativeInteger") (non-positive-integer-type)
+  ())
+
+
+;;; long
+
+(defxsd (long-type "long") (integer-type) ())
+
+
+;;; int
+
+(defxsd (int-type "int") (long-type) ())
+
+
+;;; short
+
+(defxsd (short-type "short") (int-type) ())
+
+
+;;; byte
+
+(defxsd (bite-type "byte") (short-type) ())
+
+
+;;; nonNegativeInteger
+
+(defxsd (non-negative-integer-type "nonNegativeInteger") (integer-type) ())
+
+
+;;; unsignedLong
+
+(defxsd (unsigned-long-type "unsignedLong") (non-negative-integer-type) ())
+
+
+;;; unsignedInt
+
+(defxsd (unsigned-int-type "unsignedInt") (unsigned-long-type) ())
+
+
+;;; unsignedShort
+
+(defxsd (unsigned-short-type "unsignedShort") (unsigned-int-type) ())
+
+
+;;; unsignedByte
+
+(defxsd (unsigned-byte-type "unsignedByte") (unsigned-short-type) ())
+
+
+;;; positiveInteger
+
+(defxsd (positive-integer-type "positiveInteger") (non-negative-integer-type)
+  ())
