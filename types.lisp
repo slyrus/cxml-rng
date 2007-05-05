@@ -374,30 +374,31 @@
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
 
+(defun scan-to-strings (&rest args)
+  (coerce (apply #'cl-ppcre:scan-to-strings args) 'list))
+
 (defmethod %parse ((type duration-type) e context)
   (declare (ignore context))
-  (let ((strs
-	 (cl-ppcre:scan-to-strings "(?x)
-                                     ^(-)?            # minus
-                                     P(?:(\\d+)Y)?    # years
-                                     (?:(\\d+)M)?     # months
-                                     (?:(\\d+)D)?     # days
-                                     (T               # (time)
-                                       (?:(\\d+)H)?   # hours
-                                       (?:(\\d+)M)?   # minutes
-                                       (?:(\\d+(?:[.]\\d+)?)S)?   # seconds
-                                       )?$"
-				   e)))
-    (destructuring-bind (&optional minusp y m d tp h min s)
-	(coerce strs 'list)
-      (if (and (or y m d h min s)
-	       (or (null tp) (or h min s)))
-	  (let ((f (if minusp -1 1)))
-	    (flet ((int (str)
-		     (and str (* f (parse-integer str)))))
-	      (list (int y) (int m) (int d) (int h) (int min)
-		    (and s (* f (parse-number:parse-number s))))))
-	  :error))))
+  (destructuring-bind (&optional minusp y m d tp h min s)
+      (scan-to-strings "(?x)
+                         ^(-)?            # minus
+                         P(?:(\\d+)Y)?    # years
+                         (?:(\\d+)M)?     # months
+                         (?:(\\d+)D)?     # days
+                         (T               # (time)
+                           (?:(\\d+)H)?   # hours
+                           (?:(\\d+)M)?   # minutes
+                           (?:(\\d+(?:[.]\\d+)?)S)?   # seconds
+                           )?$"
+		       e)
+    (if (and (or y m d h min s)
+	     (or (null tp) (or h min s)))
+	(let ((f (if minusp -1 1)))
+	  (flet ((int (str)
+		   (and str (* f (parse-integer str)))))
+	    (list (int y) (int m) (int d) (int h) (int min)
+		  (and s (* f (parse-number:parse-number s))))))
+	:error)))
 
 
 ;;; dateTime
@@ -407,99 +408,197 @@
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
 
-;; FIXME: Was ist denn nun mit der Zeitzone?  Sollen wir die wegwerfen oder
-;; hat das was mit timeOnTimeline zu tun?  Verstehe ich nicht.
+;; FIXME: Was ist denn nun mit der Zeitzone im Sinne von EQUAL-USING-TYPE?
+;; Sollen wir die wegwerfen oder hat das was mit timeOnTimeline zu tun?
+;; Verstehe ich nicht.
+(defmethod parse-time (minusp y m d h min s tz tz-sign tz-h tz-m
+		       &key (start 0) end)
+  (declare (ignore context))
+  ;; parse into numbers
+  (flet ((int (str)
+	   (and str (parse-integer str)))
+	 (num (str)
+	   (and str (parse-number:parse-number str))))
+    (setf (values y m d h min s tz-h tz-m)
+	  (values (* (int y) (if minusp -1 1))
+		  (int m) (int d) (int h) (int min)
+		  (num s)
+		  (int tz-h) (int tz-m))))
+  (let ((day-limit
+	 (cond
+	   ((and (eql m 2) (zerop (mod y 4)) (not (zerop (mod y 400)))) 29)
+	   ((eql m 2) 28)
+	   ((oddp y) 31)
+	   (t 30))))
+    ;; check ranges
+    (cond
+      ((and y
+	    (plusp y)
+	    (<= 1 m 12)
+	    (<= 1 d day-limit)
+	    (<= 0 h 24)
+	    (<= 0 m 59)
+	    ;; zzz sind leap seconds immer erlaubt?
+	    (<= 0 s 60))
+       ;; 24:00:00 must be canonicalized
+       (when (and (eql h 24) (zerop min) (zerop s))
+	 (incf h)
+	 (incf d)
+	 (when (> d day-limit)
+	   (setf d 1)
+	   (incf m)
+	   (when (> m 12)
+	     (incf y))))
+       (subseq (list (* y (if minusp -1 1)) m d h min s) start end))
+      (t
+       :error))))
+
 (defmethod %parse ((type date-time-type) e context)
   (declare (ignore context))
-  (let ((strs
-	 (cl-ppcre:scan-to-strings "(?x)
-                                      ^(-)?                     # opt. minus
-                                      ((?:[1-9]\d*)?\d{4})      # year
-                                      -(\d\d)                   # month
-                                      -(\d\d)                   # day
-                                      T                         # (time)
-                                      (\d\d)                    # hour
-                                      -(\d\d)                   # minute
-                                      -(\d+(?:[.]\\d+)?)        # second
-                                      (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
-                                      $"
-				   e)))
-    (destructuring-bind (&optional minusp y m d h min s tz tz-sign tz-h tz-m)
-	(coerce strs 'list)
-      ;; parse into numbers
-      (flet ((int (str)
-	       (and str (parse-integer str)))
-	     (num (str)
-	       (and str (parse-number:parse-number str))))
-	(setf (values y m d h min s tz-h tz-m)
-	      (values (* (int y) (if minusp -1 1))
-		      (int m) (int d) (int h) (int min)
-		      (num s)
-		      (int tz-h) (int tz-m))))
-      (let ((day-limit
-	     (cond
-	       ((and (eql m 2) (zerop (mod y 4)) (not (zerop (mod y 400)))) 29)
-	       ((eql m 2) 28)
-	       ((oddp y) 31)
-	       (t 30))))
-	;; check ranges
-	(if (and y
-		 (plusp z)
-		 (<= 1 m 12)
-		 (<= 1 d day-limit)
-		 (<= 0 h 24)
-		 (<= 0 m 59)
-		 ;; zzz sind leap seconds immer erlaubt?
-		 (<= 0 s 60))
-	    (list (* y (if minusp -1 1)) m d h min s)
-	    :error)))))
+  (destructuring-bind (&optional minusp y m d h min s tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ^(-)?                     # opt. minus
+                          ((?:[1-9]\d*)?\d{4})      # year
+                          -(\d\d)                   # month
+                          -(\d\d)                   # day
+                          T                         # (time)
+                          (\d\d)                    # hour
+                          -(\d\d)                   # minute
+                          -(\d+(?:[.]\\d+)?)        # second
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time minusp y m d h min s tz tz-sign tz-h tz-m)))
 
 
 ;;; time
 
 (defxsd (time-type "time") (xsd-type) ())
 
+(defmethod %parse ((type time-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional h min s tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ^(\d\d)                    # hour
+                          -(\d\d)                   # minute
+                          -(\d+(?:[.]\\d+)?)        # second
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time nil 1 1 1 h min s tz tz-sign tz-h tz-m
+		:start 3)))
 
 
 ;;; date
 
 (defxsd (date-type "date") (xsd-type) ())
 
+(defmethod %parse ((type date-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional minusp y m d tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ^(-)?                     # opt. minus
+                          ((?:[1-9]\d*)?\d{4})      # year
+                          -(\d\d)                   # month
+                          -(\d\d)                   # day
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time minusp y m d 0 0 0 tz tz-sign tz-h tz-m
+		:end 3)))
 
 
 ;;; gYearMonth
 
 (defxsd (year-month-type "gYearMonth") (xsd-type) ())
 
+(defmethod %parse ((type year-month-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional minusp y m)
+      (scan-to-strings "(?x)
+                          ^(-)?                     # opt. minus
+                          ((?:[1-9]\d*)?\d{4})      # year
+                          -(\d\d)                   # month
+                          $"
+		       e)
+    (parse-time minusp y m 1 0 0 0 nil nil nil nil
+		:end 2)))
 
 
 ;;; gYear
 
 (defxsd (year-type "gYear") (xsd-type) ())
 
+(defmethod %parse ((type year-month-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional minusp y)
+      (scan-to-strings "(?x)
+                          ^(-)?                     # opt. minus
+                          ((?:[1-9]\d*)?\d{4})      # year
+                          $"
+		       e)
+    (parse-time minusp y 1 1 0 0 0 tz tz-sign tz-h tz-m
+		:end 1)))
 
 
 ;;; gMonthDay
 
 (defxsd (month-day-type "gMonthDay") (xsd-type) ())
 
+(defmethod %parse ((type month-day-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional m d tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ^--(\d\d)                 # month
+                          -(\d\d)                   # day
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time nil 1 m d nil nil nil nil nil nil nil
+		:start 1 :end 3)))
 
 
 ;;; gDay
 
 (defxsd (day-type "gDay") (xsd-type) ())
 
+(defmethod %parse ((type day-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional d tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ---(\d\d)                   # day
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time nil 1 m d nil nil nil nil nil nil nil
+		:start 3 :end 4)))
 
 
 ;;; gMonth
 
 (defxsd (month-type "gMonth") (xsd-type) ())
 
+(defmethod %parse ((type month-type) e context)
+  (declare (ignore context))
+  (destructuring-bind (&optional m tz tz-sign tz-h tz-m)
+      (scan-to-strings "(?x)
+                          ^--(\d\d)                 # month
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          $"
+		       e)
+    (parse-time nil 1 m d nil nil nil nil nil nil nil
+		:start 2 :end 3)))
 
 
 ;;; boolean
 
 (defxsd (boolean-type "boolean") (xsd-type) ())
+
+(defmethod %parse ((type boolean-type) e context)
+  (declare (ignore context))
+  (case (find-symbol e :keyword)
+    ((:|true| :|1|) t)
+    ((:|false| :|0|) nil)))
 
 
 ;;; base64Binary
