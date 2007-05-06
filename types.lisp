@@ -482,8 +482,7 @@
 	     "1903-07-01T00:00:00Z"))))
 
 (defun datetime+duration (s d)
-  (destructuring-bind (syear smonth sday shour sminute ssecond &optional szone)
-      s
+  (destructuring-bind (syear smonth sday shour sminute ssecond szone) s
     (destructuring-bind (dyear dmonth dday dhour dminute dsecond) d
       (flet ((floor3 (a low high)
 	       (multiple-value-bind (u v)
@@ -521,7 +520,7 @@
 			     (floor3 tmp 1 13)
 			   (setf emonth m)
 			   (incf eyear y))))
-		    (list year emonth day ehour eminute esecond)))))))))))
+		    (list eyear emonth day ehour eminute esecond)))))))))))
 
 (defun scan-to-strings (&rest args)
   (coerce (apply #'cl-ppcre:scan-to-strings args) 'list))
@@ -552,10 +551,52 @@
 
 ;;; dateTime
 
-(defxsd (date-time-type "dateTime") (xsd-type ordering-mixin) ())
+(defclass time-ordering-mixin (ordering-mixin) ())
 
-(defmethod equal-using-type ((type duration-type) u v)
+(defxsd (date-time-type "dateTime") (xsd-type time-ordering-mixin) ())
+
+(defmethod equal-using-type ((type time-ordering-mixin) u v)
   (equal u v))
+
+;; add zone-offset as a duration (if any), but keep a boolean in the
+;; zone-offset field indicating whether there was a time-zone
+(defun normalize-date-time (u)
+  (destructuring-bind (year month day hour minute second zone-offset) u
+    (let ((v (list year month day hour minute second (and zone-offset t))))
+      (if zone-offset
+	  (multiple-value-bind (h m)
+	      (truncate zone-offset)
+	    (datetime+timezone v h (* m 100)))
+	  v))))
+
+(defun datetime+timezone (u h m)
+  (datetime+duration v (list 0 0 0 h m 0)))
+
+(defmethod lessp-using-type ((type time-ordering-mixin) p q)
+  (destructuring-bind (pyear pmonth pday phour pminute psecond pzonep)
+      (normalize-date-time p)
+    (destructuring-bind (qyear qmonth qday qhour qminute qsecond qzonep)
+	(normalize-date-time q)
+      (cond
+	((and pzone (not qzone))
+	 (lessp-using-type type p (datetime+timezone q 14)))
+	((and (not pzone) qzone)
+	 (lessp-using-type type (datetime+timezone p -14) q))
+	(t
+	 ;; zzz hier sollen wir <> liefern bei Feldern, die in genau einer
+	 ;; der Zeiten fehlen.  Wir stellen aber fehlende Felder derzeit
+	 ;; defaulted dar, koennen diese Situation also nicht feststellen.
+	 ;; Einen Unterschied sollte das nur machen, wenn Werte verschiedener
+	 ;; Datentypen miteinander verglichen werden.  Das bieten wir einfach
+	 ;; nicht an.
+	 (loop
+	    for a in (list pyear pmonth pday phour pminute psecond)
+	    for b in (list qyear qmonth qday qhour qminute qsecond)
+	    do
+	      (when (< a b)
+		(return t))
+	      (when (> a b)
+		(return nil))))))))
 
 (defun day-limit (m y)
   (cond
@@ -568,12 +609,9 @@
     ((oddp y) 31)
     (t 30)))
 
-;; FIXME: Was ist denn nun mit der Zeitzone im Sinne von EQUAL-USING-TYPE?
-;; Sollen wir die wegwerfen oder hat das was mit timeOnTimeline zu tun?
-;; Verstehe ich nicht.
 (defmethod parse-time (minusp y m d h min s tz tz-sign tz-h tz-m
 		       &key (start 0) end)
-  (declare (ignore context))
+  (declare (ignore context start end))
   ;; parse into numbers
   (flet ((int (str)
 	   (and str (parse-integer str)))
@@ -604,7 +642,13 @@
 	   (incf m)
 	   (when (> m 12)
 	     (incf y))))
-       (subseq (list (* y (if minusp -1 1)) m d h min s) start end))
+       (let ((tz-offset
+	      (when tz-h
+		(* (if (equal tz-sign "-") -1 1)
+		   (+ tz-h (/ hz-m 100))))))
+	 (list (* y (if minusp -1 1)) m d h min s tz-offset)
+	 ;; (subseq ... start end)
+	 ))
       (t
        :error))))
 
@@ -628,7 +672,7 @@
 
 ;;; time
 
-(defxsd (time-type "time") (xsd-type ordering-mixin) ())
+(defxsd (time-type "time") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type time-type) e context)
   (declare (ignore context))
@@ -646,7 +690,7 @@
 
 ;;; date
 
-(defxsd (date-type "date") (xsd-type ordering-mixin) ())
+(defxsd (date-type "date") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type date-type) e context)
   (declare (ignore context))
@@ -665,7 +709,7 @@
 
 ;;; gYearMonth
 
-(defxsd (year-month-type "gYearMonth") (xsd-type ordering-mixin) ())
+(defxsd (year-month-type "gYearMonth") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
@@ -682,7 +726,7 @@
 
 ;;; gYear
 
-(defxsd (year-type "gYear") (xsd-type ordering-mixin) ())
+(defxsd (year-type "gYear") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
@@ -698,7 +742,7 @@
 
 ;;; gMonthDay
 
-(defxsd (month-day-type "gMonthDay") (xsd-type ordering-mixin) ())
+(defxsd (month-day-type "gMonthDay") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type month-day-type) e context)
   (declare (ignore context))
@@ -715,7 +759,7 @@
 
 ;;; gDay
 
-(defxsd (day-type "gDay") (xsd-type ordering-mixin) ())
+(defxsd (day-type "gDay") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type day-type) e context)
   (declare (ignore context))
@@ -731,7 +775,7 @@
 
 ;;; gMonth
 
-(defxsd (month-type "gMonth") (xsd-type ordering-mixin) ())
+(defxsd (month-type "gMonth") (xsd-type time-ordering-mixin) ())
 
 (defmethod parse/xsd ((type month-type) e context)
   (declare (ignore context))
