@@ -1045,10 +1045,12 @@
 (defmethod parse/xsd ((type decimal-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional a b)
-      (scan-to-strings "^([+-]?\\d+)(?:[.](\\d+))?$" e)
-    (if a
-	(+ (parse-integer a)
-	   (if b
+      (scan-to-strings "^([+-]?\\d*)(?:[.](\\d+))?$" e)
+    (if (plusp (+ (length a) (length b)))
+	(+ (if (plusp (length a))
+	       (parse-integer a)
+	       0)
+	   (if (plusp (length b))
 	       (/ (parse-integer b) (expt 10 (length b)))
 	       0))
 	:error)))
