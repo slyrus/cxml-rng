@@ -786,12 +786,12 @@
   (let ((day-limit (day-limit m y)))
     ;; check ranges
     (cond
-      ((and y
+      ((and y m d h min s
 	    (plusp y)
 	    (<= 1 m 12)
 	    (<= 1 d day-limit)
 	    (<= 0 h 24)
-	    (<= 0 m 59)
+	    (<= 0 min 59)
 	    ;; zzz sind leap seconds immer erlaubt?
 	    (<= 0 s 60))
        ;; 24:00:00 must be canonicalized
@@ -823,8 +823,8 @@
                           -(\\d\\d)                   # day
                           T                         # (time)
                           (\\d\\d)                    # hour
-                          -(\\d\\d)                   # minute
-                          -(\\d+(?:[.]\\d+)?)        # second
+                          :(\\d\\d)                   # minute
+                          :(\\d+(?:[.]\\d+)?)        # second
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
@@ -840,12 +840,12 @@
   (destructuring-bind (&optional h min s tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
                           ^(\\d\\d)                    # hour
-                          -(\\d\\d)                   # minute
-                          -(\\d+(?:[.]\\d+)?)        # second
+                          :(\\d\\d)                   # minute
+                          :(\\d+(?:[.]\\d+)?)        # second
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 1 1 h min s tz tz-sign tz-h tz-m
+    (parse-time nil "1" "1" "1" h min s tz tz-sign tz-h tz-m
 		:start 3)))
 
 
@@ -864,7 +864,7 @@
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time minusp y m d 0 0 0 tz tz-sign tz-h tz-m
+    (parse-time minusp y m d "0" "0" "0" tz tz-sign tz-h tz-m
 		:end 3)))
 
 
@@ -881,7 +881,7 @@
                           -(\\d\\d)                   # month
                           $"
 		       e)
-    (parse-time minusp y m 1 0 0 0 nil nil nil nil
+    (parse-time minusp y m "1" "0" "0" "0" nil nil nil nil
 		:end 2)))
 
 
@@ -889,7 +889,7 @@
 
 (defxsd (year-type "gYear") (xsd-type time-ordering-mixin) ())
 
-(defmethod parse/xsd ((type year-month-type) e context)
+(defmethod parse/xsd ((type year-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -898,7 +898,7 @@
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time minusp y 1 1 0 0 0 tz tz-sign tz-h tz-m
+    (parse-time minusp y "1" "1" "0" "0" "0" tz tz-sign tz-h tz-m
 		:end 1)))
 
 
@@ -915,7 +915,7 @@
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 m d 0 0 0 tz tz-sign tz-h tz-m
+    (parse-time nil "1" m d "0" "0" "0" tz tz-sign tz-h tz-m
 		:start 1 :end 3)))
 
 
@@ -931,7 +931,7 @@
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 1 d 0 0 0 tz tz-sign tz-h tz-m
+    (parse-time nil "1" "1" d "0" "0" "0" tz tz-sign tz-h tz-m
 		:start 3 :end 4)))
 
 
@@ -947,7 +947,7 @@
                           (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 m 1 0 0 0 tz tz-sign tz-h tz-m
+    (parse-time nil "1" m "1" "0" "0" "0" tz tz-sign tz-h tz-m
 		:start 2 :end 3)))
 
 
