@@ -122,6 +122,7 @@
 	   #:klacks-validation-context
 	   #:make-klacks-validation-context
 	   #:context-find-namespace-binding
+	   #:context-find-unparsed-entity
 	   #:rng-type
 	   #:token-type
 	   #:string-type
@@ -238,4 +239,5 @@ T
       @aboutclass{sax-validation-context-mixin}
       @aboutclass{klacks-validation-context}
       @aboutfun{context-find-namespace-binding}
+      @aboutfun{context-find-unparsed-entity}
     @end{section}"))

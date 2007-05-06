@@ -41,6 +41,7 @@
     @see-slot{type-context-dependent-p}
     @see{parse}
     @see{equal-using-type}
+    @see{lessp-using-type}
     @see{validp}"))
 
 (defgeneric find-type (library name &key &allow-other-keys)
@@ -153,8 +154,9 @@
     computed by the XML parser implicitly, like namespace bindings or
     the Base URI.
 
-    User-defined subclasses must implement a method
-    for the @fun{context-find-namespace-binding} function.
+    User-defined subclasses must implement methods
+    for the functions @fun{context-find-namespace-binding} and
+    @fun{context-find-unparsed-entity}.
 
     Two pre-defined validation context implementations are
     provided, one for use with SAX, the other based on Klacks."))
@@ -169,6 +171,13 @@
     All currently declared namespaces
     are taken into account, including those declared directly on the
     current element."))
+
+(defgeneric context-find-unparsed-entity (context name)
+  (:documentation
+   "@arg[context]{an instance of @class{validation-context}}
+    @arg[name]{entity name, a string}
+    @return{@code{nil}, or a list of public id, system id, and notation name}
+    This function looks for an unparsed entity in the current context."))
 
 (defclass klacks-validation-context (validation-context)
   ((source :initarg :source :accessor context-source))
@@ -189,8 +198,24 @@
     ((context klacks-validation-context) prefix)
   (klacks:find-namespace-binding prefix (context-source context)))
 
+;; zzz nicht schoen.
+(defmethod context-find-unparsed-entity
+    ((context klacks-validation-context) name)
+  (or (dolist (x (slot-value (context-source context)
+			     'cxml::external-declarations))
+	(when (and (eq (car x) 'sax:unparsed-entity-declaration)
+		   (equal (cadr x) name))
+	  (return t)))
+      (dolist (x (slot-value (context-source context)
+			     'cxml::internal-declarations))
+	(when (and (eq (car x) 'sax:unparsed-entity-declaration)
+		   (equal (cadr x) name))
+	  (return t)))))
+
 (defclass sax-validation-context-mixin (validation-context)
-  ((stack :initform nil :accessor context-stack))
+  ((stack :initform nil :accessor context-stack)
+   (unparsed-entities :initform (make-hash-table :test 'equal)
+		      :accessor unparsed-entities))
   (:documentation
    "@short{A class that implements validation-context as a mixin for
      user-defined SAX handler classes.}
@@ -212,9 +237,19 @@
 		:key #'car
 		:test #'equal)))
 
+(defmethod sax:unparsed-entity-declaration
+    ((context sax-validation-context-mixin)
+     name public-id system-id notation-name)
+  (setf (gethash name (unparsed-entities context))
+	(list public-id system-id notation-name)))
+
 (defmethod context-find-namespace-binding
     ((context sax-validation-context-mixin) prefix)
   (cdr (assoc prefix (context-stack context) :test #'equal)))
+
+(defmethod context-find-unparsed-entity
+    ((context sax-validation-context-mixin) name)
+  (gethash name (unparsed-entities context)))
 
 
 ;;; Relax NG built-in type library
@@ -312,7 +347,7 @@
        ,@args)))
 
 (defclass xsd-type (data-type)
-  ((pattern :initarg :pattern :reader pattern)
+  ((pattern :initform nil :initarg :pattern :reader pattern)
    (spec-pattern :initform nil :reader spec-pattern :allocation :class))
   (:documentation
    "@short{The class of XML Schema built-in types.}
@@ -366,10 +401,13 @@
 
 (defmethod validp/xsd and ((type xsd-type) v context)
   (declare (ignore context))
-  (and (or (null (pattern type)
-		 (cl-ppcre:all-matches (pattern type) v)))
-       (or (null (spec-pattern type)
-		 (cl-ppcre:all-matches (spec-pattern type) v)))))
+  ;; zzz
+  #+(or)
+  (and (or (null (pattern type))
+	   (cl-ppcre:all-matches (pattern type) v))
+       (or (null (spec-pattern type))
+	   (cl-ppcre:all-matches (spec-pattern type) v)))
+  t)
 
 (defmethod validp ((type xsd-type) e &optional context)
   (not (eq :error (parse/xsd type e context))))
@@ -395,33 +433,37 @@
 (defmethod munge-whitespace ((type xsd-type) e)
   (normalize-whitespace e))
 
-(defmethod munge-whitespace ((type xsd-string-type) e)
-  e)
-
-(defmethod munge-whitespace ((type normalized-string-type) e)
-  (replace-whitespace e))
-
-(defmethod munge-whitespace ((type xsd-token-type) e)
-  (normalize-whitespace e))
-
 
 ;;; ordering-mixin
 
 (defclass ordering-mixin ()
     ((min-exclusive :initform nil
 		    :initarg :min-exclusive
-		    :reader min-exclusive)
+		    :accessor min-exclusive)
      (max-exclusive :initform nil
 		    :initarg :max-exclusive
-		    :reader max-exclusive)
+		    :accessor max-exclusive)
      (min-inclusive :initform nil
 		    :initarg :min-inclusive
-		    :reader min-inclusive)
+		    :accessor min-inclusive)
      (max-inclusive :initform nil
 		    :initarg :max-inclusive
-		    :reader max-inclusive)))
+		    :accessor max-inclusive)))
 
-(defgeneric lessp-using-type (type u v))
+(defgeneric lessp-using-type (type u v)
+  (:documentation
+   "@arg[type]{an ordered @class{data-type}}
+    @arg[u]{a parsed value as returned by @fun{parse}}
+    @arg[v]{a parsed value as returned by @fun{parse}}
+    @return{a boolean}
+    @short{Compare the @emph{values} @code{u} and @code{v} using a
+      data-type-dependent partial ordering.}
+
+    A method for this function is provided only by types that have a
+    natural partial ordering.  The ordering is described in the
+    documentation for the type.
+
+    @see{equal-using-type}"))
 
 (defun <-using-type (type u v)
   (lessp-using-type type u v))
@@ -449,12 +491,12 @@
 ;;; length-mixin
 
 (defclass length-mixin ()
-    ((exact-length :initform nil :initarg :exact-length :reader exact-length)
-     (min-length :initform nil :initarg :min-length :reader min-length)
-     (max-length :initform nil :initarg :max-length :reader max-length)))
+    ((exact-length :initform nil :initarg :exact-length :accessor exact-length)
+     (min-length :initform nil :initarg :min-length :accessor min-length)
+     (max-length :initform nil :initarg :max-length :accessor max-length)))
 
 ;; extra-hack fuer die "Laenge" eines QName...
-(defgeneric length-using-type (type u v))
+(defgeneric length-using-type (type u))
 (defmethod length-using-type ((type length-mixin) e) (length e))
 
 (defmethod validp/xsd and ((type length-mixin) v context)
@@ -478,10 +520,10 @@
 (defmethod parse/xsd ((type enumeration-type) e context)
   (let ((wt (word-type type)))
     (loop
-       for word in (cl-ppcre:split " " str)
+       for word in (cl-ppcre:split " " e)
        for v = (parse wt word context)
        collect v
-       when (eq v) do (return :error))))
+       when (eq v :error) do (return :error))))
 
 
 
@@ -498,7 +540,7 @@
 (defmethod lessp-using-type ((type duration-type) u v)
   (let ((dt (make-instance 'date-time-type)))
     (every (lambda (str)
-	     (let ((s (%parse dt str nil)))
+	     (let ((s (parse dt str nil)))
 	       (lessp-using-type dt
 				 (datetime+duration s u)
 				 (datetime+duration s v))))
@@ -510,14 +552,14 @@
 (defun datetime+duration (s d)
   (destructuring-bind (syear smonth sday shour sminute ssecond szone) s
     (destructuring-bind (dyear dmonth dday dhour dminute dsecond) d
-      (flet ((floor3 (a low high)
-	       (multiple-value-bind (u v)
-		   (floor (- a low) (- high low))
-		 (values u (+ low v))))
-	     (maximum-day-in-month-for (yearvalue monthvalue)
-	       (let ((m (modulo3 monthvalue 1 13))
-		     (y (+ yearvalue (floor3 monthvalue 1 13))))
-		 (day-limit m y))))
+      (labels ((floor3 (a low high)
+		 (multiple-value-bind (u v)
+		     (floor (- a low) (- high low))
+		   (values u (+ low v))))
+	       (maximum-day-in-month-for (yearvalue monthvalue)
+		 (multiple-value-bind (m y)
+		     (floor3 monthvalue 1 13)
+		   (day-limit m (+ yearvalue y)))))
 	(multiple-value-bind (carry emonth) (floor3 (+ smonth dmonth) 1 13)
 	  (let ((eyear (+ syear dyear carry))
 		(ezone szone))
@@ -546,7 +588,8 @@
 			     (floor3 tmp 1 13)
 			   (setf emonth m)
 			   (incf eyear y))))
-		    (list eyear emonth day ehour eminute esecond)))))))))))
+		    (list eyear emonth eday ehour eminute esecond
+			  ezone)))))))))))
 
 (defun scan-to-strings (&rest args)
   (coerce (apply #'cl-ppcre:scan-to-strings args) 'list))
@@ -595,19 +638,19 @@
 	    (datetime+timezone v h (* m 100)))
 	  v))))
 
-(defun datetime+timezone (u h m)
-  (datetime+duration v (list 0 0 0 h m 0)))
+(defun datetime+timezone (d h m)
+  (datetime+duration d (list 0 0 0 h m 0)))
 
 (defmethod lessp-using-type ((type time-ordering-mixin) p q)
-  (destructuring-bind (pyear pmonth pday phour pminute psecond pzonep)
+  (destructuring-bind (pyear pmonth pday phour pminute psecond pzone)
       (normalize-date-time p)
-    (destructuring-bind (qyear qmonth qday qhour qminute qsecond qzonep)
+    (destructuring-bind (qyear qmonth qday qhour qminute qsecond qzone)
 	(normalize-date-time q)
       (cond
 	((and pzone (not qzone))
-	 (lessp-using-type type p (datetime+timezone q 14)))
+	 (lessp-using-type type p (datetime+timezone q 14 0)))
 	((and (not pzone) qzone)
-	 (lessp-using-type type (datetime+timezone p -14) q))
+	 (lessp-using-type type (datetime+timezone p -14 0) q))
 	(t
 	 ;; zzz hier sollen wir <> liefern bei Feldern, die in genau einer
 	 ;; der Zeiten fehlen.  Wir stellen aber fehlende Felder derzeit
@@ -637,7 +680,7 @@
 
 (defmethod parse-time (minusp y m d h min s tz tz-sign tz-h tz-m
 		       &key (start 0) end)
-  (declare (ignore context start end))
+  (declare (ignore start end))		;zzz
   ;; parse into numbers
   (flet ((int (str)
 	   (and str (parse-integer str)))
@@ -671,7 +714,7 @@
        (let ((tz-offset
 	      (when tz-h
 		(* (if (equal tz-sign "-") -1 1)
-		   (+ tz-h (/ hz-m 100))))))
+		   (+ tz-h (/ tz-m 100))))))
 	 (list (* y (if minusp -1 1)) m d h min s tz-offset)
 	 ;; (subseq ... start end)
 	 ))
@@ -756,10 +799,11 @@
 
 (defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
-  (destructuring-bind (&optional minusp y)
+  (destructuring-bind (&optional minusp y tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
                           ^(-)?                     # opt. minus
                           ((?:[1-9]\d*)?\d{4})      # year
+                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time minusp y 1 1 0 0 0 tz tz-sign tz-h tz-m
@@ -779,7 +823,7 @@
                           (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 m d nil nil nil nil nil nil nil
+    (parse-time nil 1 m d 0 0 0 tz tz-sign tz-h tz-m
 		:start 1 :end 3)))
 
 
@@ -795,7 +839,7 @@
                           (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 m d nil nil nil nil nil nil nil
+    (parse-time nil 1 1 d 0 0 0 tz tz-sign tz-h tz-m
 		:start 3 :end 4)))
 
 
@@ -811,7 +855,7 @@
                           (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
                           $"
 		       e)
-    (parse-time nil 1 m d nil nil nil nil nil nil nil
+    (parse-time nil 1 m 1 0 0 0 tz tz-sign tz-h tz-m
 		:start 2 :end 3)))
 
 
@@ -863,9 +907,10 @@
       (let ((result
 	     (make-array (/ (length e) 2) :element-type '(unsigned-byte 8))))
 	(loop
-	   loop for i from 0 below (length e) by 2
+	   for i from 0 below (length e) by 2
+	   for j from 0
 	   do
-	     (setf (elt result)
+	     (setf (elt result j)
 		   (handler-case
 		       (parse-integer e :start i :end (+ i 2) :radix 16)
 		     (error ()
@@ -898,10 +943,10 @@
 (defxsd (decimal-type "decimal") (xsd-type ordering-mixin)
   ((fraction-digits :initform nil
 		    :initarg :fraction-digits
-		    :reader fraction-digits)
+		    :accessor fraction-digits)
    (total-digits :initform nil
 		 :initarg :total-digits
-		 :reader total-digits)))
+		 :accessor total-digits)))
 
 (defmethod lessp-using-type ((type decimal-type) u v)
   (< u v))
@@ -919,8 +964,9 @@
 	       (zerop (mod scaled 1))))
 	 (or (null total-digits)
 	     (let ((scaled (abs v)))
-	       (loop until (zerop (mod scaled 1))
-		    (setf scaled (* scaled 10)))
+	       (loop
+		  until (zerop (mod scaled 1))
+		  do (setf scaled (* scaled 10)))
 	       (< scaled (expt 10 total-digits)))))))
 
 (defmethod parse/xsd ((type decimal-type) e context)
@@ -954,7 +1000,7 @@
 
 ;;; AnyURi
 
-(defxsd (any-uri-type "AnyURI") (xsd-type length-mixin) ())
+(defxsd (any-uri-type "anyURI") (xsd-type length-mixin) ())
 
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
@@ -1009,6 +1055,9 @@
 (defmethod equal-using-type ((type xsd-string-type) u v)
   (equal u v))
 
+(defmethod munge-whitespace ((type xsd-string-type) e)
+  e)
+
 (defmethod parse/xsd ((type xsd-string-type) e context)
   e)
 
@@ -1019,16 +1068,18 @@
 
 ;;; normalizedString
 
-;;; (changes only the whiteSpace facet, defined above)
-
 (defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
+
+(defmethod munge-whitespace ((type normalized-string-type) e)
+  (replace-whitespace e))
 
 
 ;;; token
 
-;;; (changes only the whiteSpace facet, defined above)
-
 (defxsd (xsd-token-type "token") (normalized-string-type) ())
+
+(defmethod munge-whitespace ((type xsd-token-type) e)
+  (normalize-whitespace e))
 
 
 ;;; language
@@ -1085,6 +1136,11 @@
 ;;; ENTITY
 
 (defxsd (entity-type "ENTITY") (ncname-type) ())
+
+(defmethod parse/xsd ((type entity-type) e context)
+  (if (context-find-unparsed-entity context e)
+      e
+      :error))
 
 
 ;;; ENTITIES
@@ -1181,7 +1237,7 @@
 
 ;;; byte
 
-(defxsd (bite-type "byte") (short-type) ())
+(defxsd (byte-type "byte") (short-type) ())
 
 (defmethod initialize-instance :after ((type byte-type) &key)
   (setf (max-inclusive type) (min* 127 (max-inclusive type)))
@@ -1233,5 +1289,5 @@
 (defxsd (positive-integer-type "positiveInteger") (non-negative-integer-type)
   ())
 
-(defmethod initialize-instance :after ((type postive-integer-type) &key)
+(defmethod initialize-instance :after ((type positive-integer-type) &key)
   (setf (min-inclusive type) (max* 1 (min-inclusive type))))
