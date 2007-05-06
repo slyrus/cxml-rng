@@ -360,21 +360,29 @@
 	    (apply #'make-instance class args)
 	    nil))))
 
-(defgeneric %parse (type e context))
+(defgeneric parse/xsd (type e context))
+
+(defgeneric validp/xsd (type v context)
+  (:method-combination and))
 
 (defmethod validp ((type xsd-type) e &optional context)
-  (not (eq :error (%parse type e context))))
+  (not (eq :error (parse/xsd type e context))))
 
 (defmethod parse ((type xsd-type) e &optional context)
-  (let ((result (%parse type e context)))
+  (let ((result (parse/xsd type e context)))
     (when (eq result :error)
       (error "not valid for data type ~A: ~S" type e))
     result))
 
-(defmethod %parse :around ((type xsd-type) e context)
-  (call-next-method type
-		    (munge-whitespace type e)
-		    context))
+;; Handle the whiteSpace "facet" before the subclass sees it.
+;; If parsing succeded, check other facets by asking validp/xsd.
+(defmethod parse/xsd :around ((type xsd-type) e context)
+  (let ((result (call-next-method type
+				  (munge-whitespace type e)
+				  context)))
+    (if (or (eq result :error) (validp/xsd type e context))
+	result
+	:error)))
 
 (defgeneric munge-whitespace (type e))
 
@@ -391,18 +399,140 @@
   (normalize-whitespace e))
 
 
+;;; ordering-mixin
+
+(defclass ordering-mixin ()
+    ((min-exclusive :initform nil
+		    :initarg :min-exclusive
+		    :reader min-exclusive)
+     (max-exclusive :initform nil
+		    :initarg :max-exclusive
+		    :reader max-exclusive)
+     (min-inclusive :initform nil
+		    :initarg :min-inclusive
+		    :reader min-inclusive)
+     (max-inclusive :initform nil
+		    :initarg :max-inclusive
+		    :reader max-inclusive)))
+
+(defgeneric lessp-using-type (type u v))
+
+(defun <-using-type (type u v)
+  (lessp-using-type type u v))
+
+(defun <=-using-type (type u v)
+  (or (lessp-using-type type u v) (equal-using-type type u v)))
+
+;; it's only a partial ordering, so in general this is not the opposite of <=
+(defun >-using-type (type u v)
+  (lessp-using-type type v u))
+
+;; it's only a partial ordering, so in general this is not the opposite of <
+(defun >=-using-type (type u v)
+  (or (lessp-using-type type v u) (equal-using-type type v u)))
+
+(defmethod validp/xsd and ((type ordering-mixin) v context)
+  (declare (ignore context))
+  (with-slots (min-exclusive max-exclusive min-inclusive max-inclusive) type
+    (and (or (null min-exclusive) (>-using-type type v min-exclusive))
+	 (or (null max-exclusive) (<-using-type type v max-exclusive))
+	 (or (null min-inclusive) (>=-using-type type v min-inclusive))
+	 (or (null max-inclusive) (<=-using-type type v max-inclusive)))))
+
+
+;;; length-mixin
+
+(defclass length-mixin ()
+    ((exact-length :initform nil :initarg :exact-length :reader exact-length)
+     (min-length :initform nil :initarg :min-length :reader min-length)
+     (max-length :initform nil :initarg :max-length :reader max-length)))
+
+(defgeneric length-using-type (type u v))
+
+(defmethod validp/xsd and ((type length-mixin) v context)
+  (declare (ignore context))
+  (with-slots (exact-length min-length max-length) type
+    (or (not (or exact-length min-length max-length))
+	(let ((l (length-using-type type v)))
+	  (and (or (null exact-length) (eql l exact-length))
+	       (or (null min-length) (>= l min-length))
+	       (or (null max-length) (<= l max-length)))))))
+
+
+;;; Primitive types
 
 ;;; duration
 
-(defxsd (duration-type "duration") (xsd-type) ())
+(defxsd (duration-type "duration") (xsd-type ordering-mixin) ())
 
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
 
+;; zzz das ist vielleicht ein bisschen zu woertlich implementiert
+(defmethod lessp-using-type ((type duration-type) u v)
+  (let ((dt (make-instance 'date-time-type)))
+    (every (lambda (str)
+	     (let ((s (%parse dt str nil)))
+	       (lessp-using-type dt
+				 (datetime+duration s u)
+				 (datetime+duration s v))))
+	   '("1696-09-01T00:00:00Z"
+	     "1697-02-01T00:00:00Z"
+	     "1903-03-01T00:00:00Z"
+	     "1903-07-01T00:00:00Z"))))
+
+(defun datetime+duration (s d)
+  (destructuring-bind (syear smonth sday shour sminute ssecond) s
+    (destructuring-bind (dyear dmonth dday dhour dminute dsecond) d
+      (flet ((fquotient (a b) (floor a b))
+	     (modulo (a b) (nth-value 1 (floor a b)))
+	     (fquotient3 (a low high) (fquotient (- a low) (- high low)))
+	     (modulo3 (a low high) (+ low (modulo (- a low) (- high low))))
+	     (maximum-day-in-month-for (yearvalue monthvalue)
+	       (let ((m (modulo3 monthvalue 1 13))
+		     (y (+ yearvalue (fquotient3 monthvalue 1 13))))
+		 (day-limit m y))))
+	(multiple-value-bind (emonth carry)
+	    (let ((temp (+ smonth dmonth)))
+	      (values (modulo3 temp 1 13)
+		      (fquotient3 temp 1 13)))
+	  (let ((eyear (+ syear dyear carry))
+		(ezone szone))
+	    (multiple-value-bind (esecond carry)
+		(let ((temp (+ ssecond dsecond)))
+		  (values (modulo temp 60)
+			  (fquotient temp 60)))
+	      (multiple-value-bind (eminute carry)
+		  (let ((temp (+ sminute dminute carry)))
+		    (values (modulo temp 60)
+			    (fquotient temp 60)))
+		(multiple-value-bind (ehour carry)
+		    (let ((temp (+ shour dhour carry)))
+		      (values (modulo temp 24)
+			      (fquotient temp 24)))
+		  (let* ((mdimf (maximum-day-in-month-for eyear emonth))
+			 (tempdays (max 1 (min sday mdimf)))
+			 (eday (+ tempdays dday carry)))
+		    (loop
+		       (let ((mdimf (maximum-day-in-month-for eyear emonth)))
+			 (cond
+			   ((< eday 1)
+			    (setf eday (+ eday mdimf))
+			    (setf carry -1))
+			   ((> eday mdimf)
+			    (setf eday (- eday mdimf))
+			    (setf carry 1))
+			   (t
+			    (return))))
+		       (let ((temp (+ emonth carry)))
+			 (setf emonth (modulo3 temp 1 13))
+			 (setf eyear (+ eyear (fquotient3 temp 1 13)))))
+		    (list year emonth day ehour eminute esecond)))))))))))
+
 (defun scan-to-strings (&rest args)
   (coerce (apply #'cl-ppcre:scan-to-strings args) 'list))
 
-(defmethod %parse ((type duration-type) e context)
+(defmethod parse/xsd ((type duration-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y m d tp h min s)
       (scan-to-strings "(?x)
@@ -428,10 +558,21 @@
 
 ;;; dateTime
 
-(defxsd (date-time-type "dateTime") (xsd-type) ())
+(defxsd (date-time-type "dateTime") (xsd-type ordering-mixin) ())
 
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
+
+(defun day-limit (m y)
+  (cond
+    ((and (eql m 2)
+	  (or (zerop (mod y 400))
+	      (and (zerop (mod y 4))
+		   (not (zerop (mod y 100))))))
+     29)
+    ((eql m 2) 28)
+    ((oddp y) 31)
+    (t 30)))
 
 ;; FIXME: Was ist denn nun mit der Zeitzone im Sinne von EQUAL-USING-TYPE?
 ;; Sollen wir die wegwerfen oder hat das was mit timeOnTimeline zu tun?
@@ -449,12 +590,7 @@
 		  (int m) (int d) (int h) (int min)
 		  (num s)
 		  (int tz-h) (int tz-m))))
-  (let ((day-limit
-	 (cond
-	   ((and (eql m 2) (zerop (mod y 4)) (not (zerop (mod y 400)))) 29)
-	   ((eql m 2) 28)
-	   ((oddp y) 31)
-	   (t 30))))
+  (let ((day-limit (day-limit m y)))
     ;; check ranges
     (cond
       ((and y
@@ -478,7 +614,7 @@
       (t
        :error))))
 
-(defmethod %parse ((type date-time-type) e context)
+(defmethod parse/xsd ((type date-time-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y m d h min s tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -498,9 +634,9 @@
 
 ;;; time
 
-(defxsd (time-type "time") (xsd-type) ())
+(defxsd (time-type "time") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type time-type) e context)
+(defmethod parse/xsd ((type time-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional h min s tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -516,9 +652,9 @@
 
 ;;; date
 
-(defxsd (date-type "date") (xsd-type) ())
+(defxsd (date-type "date") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type date-type) e context)
+(defmethod parse/xsd ((type date-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y m d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -535,9 +671,9 @@
 
 ;;; gYearMonth
 
-(defxsd (year-month-type "gYearMonth") (xsd-type) ())
+(defxsd (year-month-type "gYearMonth") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type year-month-type) e context)
+(defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y m)
       (scan-to-strings "(?x)
@@ -552,9 +688,9 @@
 
 ;;; gYear
 
-(defxsd (year-type "gYear") (xsd-type) ())
+(defxsd (year-type "gYear") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type year-month-type) e context)
+(defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional minusp y)
       (scan-to-strings "(?x)
@@ -568,9 +704,9 @@
 
 ;;; gMonthDay
 
-(defxsd (month-day-type "gMonthDay") (xsd-type) ())
+(defxsd (month-day-type "gMonthDay") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type month-day-type) e context)
+(defmethod parse/xsd ((type month-day-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional m d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -585,9 +721,9 @@
 
 ;;; gDay
 
-(defxsd (day-type "gDay") (xsd-type) ())
+(defxsd (day-type "gDay") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type day-type) e context)
+(defmethod parse/xsd ((type day-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -601,9 +737,9 @@
 
 ;;; gMonth
 
-(defxsd (month-type "gMonth") (xsd-type) ())
+(defxsd (month-type "gMonth") (xsd-type ordering-mixin) ())
 
-(defmethod %parse ((type month-type) e context)
+(defmethod parse/xsd ((type month-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional m tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
@@ -619,7 +755,7 @@
 
 (defxsd (boolean-type "boolean") (xsd-type) ())
 
-(defmethod %parse ((type boolean-type) e context)
+(defmethod parse/xsd ((type boolean-type) e context)
   (declare (ignore context))
   (case (find-symbol e :keyword)
     ((:|true| :|1|) t)
@@ -633,7 +769,7 @@
 (defmethod equal-using-type ((type base64-binary-type) u v)
   (equalp u v))
 
-(defmethod %parse ((type base64-binary-type) e context)
+(defmethod parse/xsd ((type base64-binary-type) e context)
   (declare (ignore context))
   (if (cl-ppcre:all-matches
        "(?x)
@@ -657,7 +793,7 @@
 (defmethod equal-using-type ((type hex-binary-type) u v)
   (equalp u v))
 
-(defmethod %parse ((type hex-binary-type) e context)
+(defmethod parse/xsd ((type hex-binary-type) e context)
   (declare (ignore context))
   (if (evenp (length e))
       (let ((result
@@ -676,14 +812,17 @@
 
 ;;; float
 
-(defxsd (float-type "float") (xsd-type) ())
+(defxsd (float-type "float") (xsd-type ordering-mixin) ())
 
 (defmethod equal-using-type ((type float-type) u v)
   (= u v))
 
+(defmethod lessp-using-type ((type float-type) u v)
+  (< u v))
+
 ;; zzz nehme hier an, dass single-float in IEEE single float ist.
 ;; Das stimmt unter LispWorks bestimmt wieder nicht.
-(defmethod %parse ((type float-type) e context)
+(defmethod parse/xsd ((type float-type) e context)
   (declare (ignore context))
   (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
       (coerce (parse-number:parse-number e) 'single-float)
@@ -692,15 +831,38 @@
 
 ;;; decimal
 
-(defxsd (decimal-type "decimal") (xsd-type) ())
+(defxsd (decimal-type "decimal") (xsd-type ordering-mixin)
+  ((fraction-digits :initform nil
+		    :initarg :fraction-digits
+		    :reader fraction-digits)
+   (total-digits :initform nil
+		 :initarg :total-digits
+		 :reader total-digits)))
+
+(defmethod lessp-using-type ((type decimal-type) u v)
+  (< u v))
 
 (defmethod equal-using-type ((type decimal-type) u v)
   (= u v))
 
-(defmethod %parse ((type decimal-type) e context)
+(defmethod validp/xsd and ((type decimal-type) v context)
+  (declare (ignore context))
+  (with-slots (fraction-digits total-digits) type
+    (and (or (null fraction-digits)
+	     (let* ((betrag (abs v))
+		    (fraction (- betrag (truncate betrag)))
+		    (scaled (* fraction (expt 10 fraction-digits))))
+	       (zerop (mod scaled 1))))
+	 (or (null total-digits)
+	     (let ((scaled (abs v)))
+	       (loop until (zerop (mod scaled 1))
+		    (setf scaled (* scaled 10)))
+	       (< scaled (expt 10 total-digits)))))))
+
+(defmethod parse/xsd ((type decimal-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional a b)
-      (scan-to-strings "^([+-]\d)+(?:[.](\d+))?$" e)
+      (scan-to-strings "^([+-]\d+)(?:[.](\d+))?$" e)
     (if a
 	(+ (parse-integer a)
 	   (/ (parse-integer b) (expt 10 (length b))))
@@ -709,19 +871,20 @@
 
 ;;; double
 
-;; zzz nehme hier an, dass double-float in IEEE double float ist.
-;; Auch das ist nicht garantiert.
-(defxsd (double-type "double") (xsd-type) ())
+(defxsd (double-type "double") (xsd-type ordering-mixin) ())
 
-(defmethod equal-using-type ((type float-type) u v)
+(defmethod equal-using-type ((type double-type) u v)
   (= u v))
 
-;; zzz nehme hier an, dass single-float in IEEE single float ist.
-;; Das stimmt unter LispWorks bestimmt wieder nicht.
-(defmethod %parse ((type float-type) e context)
+(defmethod lessp-using-type ((type double-type) u v)
+  (< u v))
+
+;; zzz nehme hier an, dass double-float in IEEE double float ist.
+;; Auch das ist nicht garantiert.
+(defmethod parse/xsd ((type double-type) e context)
   (declare (ignore context))
   (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
-      (coerce (parse-number:parse-number e) 'single-float)
+      (coerce (parse-number:parse-number e) 'double-float)
       :error))
 
 
@@ -732,7 +895,7 @@
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
 
-(defmethod %parse ((type any-uri-type) e context)
+(defmethod parse/xsd ((type any-uri-type) e context)
   (cxml-rng::escape-uri (normalize-whitespace e)))
 
 
@@ -757,7 +920,7 @@
        (cxml::name-start-rune-p (elt str 0))
        (every #'cxml::name-rune-p str)))
 
-(defmethod %parse ((type qname-like) e context)
+(defmethod parse/xsd ((type qname-like) e context)
   (setf e (normalize-whitespace e))
   (handler-case
       (if (namep e)
@@ -779,7 +942,7 @@
 (defmethod equal-using-type ((type xsd-string-type) u v)
   (equal u v))
 
-(defmethod %parse ((type xsd-string-type) e context)
+(defmethod parse/xsd ((type xsd-string-type) e context)
   (if (or (and (min-length type) (< (length e) (min-length type)))
 	  (and (max-length type) (> (length e) (max-length type)))
 	  (and (exact-length type) (/= (length e) (exact-length type))))
@@ -825,7 +988,7 @@
 (defun nc-name-p (str)
   (and (namep str) (cxml::nc-name-p str)))
 
-(defmethod %parse ((type ncname-type) e context)
+(defmethod parse/xsd ((type ncname-type) e context)
   (setf e (normalize-whitespace e))
   (if (nc-name-p e)
       e
@@ -865,12 +1028,19 @@
 
 ;;; NMTOKENS
 
-(defxsd (nmtokens-type "NMTOKENS") (nmtoken-type) ())
+(defxsd (nmtokens-type "NMTOKENS") (xsd-type) ())
 
 
 ;;; integer
 
 (defxsd (integer-type "integer") (decimal-type) ())
+
+;; period is forbidden, so there's no point in letting decimal handle parsing
+(defmethod parse/xsd ((type integer-type) e context)
+  (declare (ignore context))
+  (if (cl-ppcre:all-matches "^[+-]\d+$" e)
+      (parse-number:parse-number e)
+      :error))
 
 
 ;;; nonPositiveInteger
