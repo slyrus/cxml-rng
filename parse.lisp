@@ -472,9 +472,7 @@
 (setf (documentation 'pattern-params 'function)
       "@arg[instance]{an instance of @class{data}}
        @return{a list of @fun{cxml-types:param}}
-       @short{fixme}
-
-       The data type parameters for this data pattern.
+       @short{The data type parameters for this data pattern.}
 
        (With the XSD type library, these are known as restricting facets.)")
 

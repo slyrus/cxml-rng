@@ -121,6 +121,7 @@
 	   #:type-context-dependent-p
 	   #:parse
 	   #:equal-using-type
+	   #:lessp-using-type
 	   #:validp
 	   #:validation-context
 	   #:sax-validation-context-mixin
@@ -221,11 +222,13 @@ T
       @fun{parse} will compute the string's @emph{value}, and return a
       Lisp object of a type-specific class as a representation of that value.
       Values returned by @fun{parse} can be compared for equality using
-      @fun{equal-using-type}.
+      @fun{equal-using-type}.  Some types also define a partial ordering,
+      which can be queried using @fun{lessp-using-type}.
 
       @aboutfun{validp}
       @aboutfun{parse}
       @aboutfun{equal-using-type}
+      @aboutfun{lessp-using-type}
     @end{section}
     @begin[The validation context]{section}
       Some types are context dependent, as indicated by

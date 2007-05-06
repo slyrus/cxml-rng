@@ -29,8 +29,37 @@
 (in-package :cxml-types)
 
 (defstruct (param (:constructor make-param (name value)))
+  "@short{A named data type parameter.}
+
+   (With the XSD type library, parameters are known as restricting facets.)
+   @see-constructor{make-param}
+   @see{find-type}
+   @see{cxml-rng:pattern-params}
+   @see{cxml-rng:data}
+   @see-slot{param-name}
+   @see-slot{param-value}"
   name
   value)
+
+(setf (documentation 'make-param 'function)
+      "@arg[name]{paramater name, a string}
+       @arg[value]{paramater value, a string}
+       @return{a @class{param}}
+       Create a data type parameter.
+       @see{param-name}
+       @see{param-value}")
+
+(setf (documentation 'param-name 'function)
+      "@arg[instance]{an instance of @class{param}}
+       @return{a string}
+       The data type parameter's name.
+       @see{param-value}")
+
+(setf (documentation 'param-value 'function)
+      "@arg[instance]{an instance of @class{param}}
+       @return{a string}
+       The data type parameter's value.
+       @see{param-name}")
 
 (defclass data-type () ()
   (:documentation
