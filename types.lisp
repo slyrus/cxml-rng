@@ -394,7 +394,16 @@
     using W3C XML Schema Datatypes with RELAX NG}.
 
     The XSD type library
-    is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}."))
+    is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}.
+
+    @b{Parameters.} All XSD types accept regular expressions restricting
+    the set of strings accepted by the type.  The pattern paramater is
+    called @code{\"pattern\"}.  This parameter can be repeated to specify
+    multiple regular expressions than all must match.
+    As an initarg, specify @code{:pattern} with a list of regular expressions
+    as an argument.
+
+    @see-slot{patterns}"))
 
 (defmethod print-object ((object xsd-type) stream)
   (print-unreadable-object (object stream :type t :identity nil)
@@ -623,7 +632,25 @@
 
 ;;; duration
 
-(defxsd (duration-type "duration") (xsd-type ordering-mixin) ())
+(defxsd (duration-type "duration") (xsd-type ordering-mixin)
+  ()
+  (:documentation
+   "@short{The duration data type, representing a duration of time.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#duration]{specification}.
+
+    @b{Implementation.} This type returns lists of the form
+    @code{(years months days hours minutes seconds)}.  Each
+    value can be @code{nil} or a number.  All values are integers
+    except for @code{seconds}, which is a real.
+
+    @b{Example.} @code{P1Y2M3DT10H30M}
+    maps to @code{(1 2 3 10 30 nil)}
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}."))
 
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
@@ -717,7 +744,27 @@
 
 (defclass time-ordering-mixin (ordering-mixin) ())
 
-(defxsd (date-time-type "dateTime") (xsd-type time-ordering-mixin) ())
+(defxsd (date-time-type "dateTime") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The dateTime data type, representing a moment in time.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#dateTime]{specification}.
+
+    @b{Implementation.} This type returns lists of the form
+    @code{(year month day hour minute second timezone)}.  Each
+    value is an integer, except except for @code{second}, which is a real, 
+    and @code{timezone} which is a real or @code{nil}.
+    A @code{timezone} of @code{nil} indicates UTC.
+
+    @b{Example.} @code{2002-10-10T12:00:00-05:00}
+    maps to @code{(2002 10 10 12 0 0 -5)}
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod equal-using-type ((type time-ordering-mixin) u v)
   (equal u v))
@@ -836,7 +883,23 @@
 
 ;;; time
 
-(defxsd (time-type "time") (xsd-type time-ordering-mixin) ())
+(defxsd (time-type "time") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The time data type, representing a time of day.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#dateTime]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{year},
+    @code{month} and @code{day} are filled with dummy values from the
+    Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type time-type) e context)
   (declare (ignore context))
@@ -854,7 +917,23 @@
 
 ;;; date
 
-(defxsd (date-type "date") (xsd-type time-ordering-mixin) ())
+(defxsd (date-type "date") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing a day of the year.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#date]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{hour},
+    @code{minute} and @code{second} are filled with dummy values from the
+    Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type date-type) e context)
   (declare (ignore context))
@@ -873,7 +952,24 @@
 
 ;;; gYearMonth
 
-(defxsd (year-month-type "gYearMonth") (xsd-type time-ordering-mixin) ())
+(defxsd (year-month-type "gYearMonth") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing the calendar month of a specific
+    year.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#gYearMonth]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{day}, @code{hour},
+    @code{minute} and @code{second} are filled with dummy values from the
+    Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type year-month-type) e context)
   (declare (ignore context))
@@ -890,7 +986,23 @@
 
 ;;; gYear
 
-(defxsd (year-type "gYear") (xsd-type time-ordering-mixin) ())
+(defxsd (year-type "gYear") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing a calendar year.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#gYear]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{month}, @code{day},
+    @code{hour}, @code{minute} and @code{second} are filled with dummy values
+    from the Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type year-type) e context)
   (declare (ignore context))
@@ -907,7 +1019,23 @@
 
 ;;; gMonthDay
 
-(defxsd (month-day-type "gMonthDay") (xsd-type time-ordering-mixin) ())
+(defxsd (month-day-type "gMonthDay") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing a calendar month and day.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#monthDay]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{year},
+    @code{hour}, @code{minute} and @code{second} are filled with dummy values
+    from the Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type month-day-type) e context)
   (declare (ignore context))
@@ -924,7 +1052,23 @@
 
 ;;; gDay
 
-(defxsd (day-type "gDay") (xsd-type time-ordering-mixin) ())
+(defxsd (day-type "gDay") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing a calendar day.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#gDay]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{year}, @code{month},
+    @code{hour}, @code{minute} and @code{second} are filled with dummy values
+    from the Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type day-type) e context)
   (declare (ignore context))
@@ -940,7 +1084,23 @@
 
 ;;; gMonth
 
-(defxsd (month-type "gMonth") (xsd-type time-ordering-mixin) ())
+(defxsd (month-type "gMonth") (xsd-type time-ordering-mixin)
+  ()
+  (:documentation
+   "@short{The date data type, representing a calendar month.}
+
+    @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
+    the @a[http://www.w3.org/TR/xmlschema-2/#gMonth]{specification}.
+
+    @b{Implementation.} This type returns the same kind of lists as
+    @class{date-time-type}, except that the fields @code{year}, @code{day},
+    @code{hour}, @code{minute} and @code{second} are filled with dummy values
+    from the Gregorian year AD 1.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type month-type) e context)
   (declare (ignore context))

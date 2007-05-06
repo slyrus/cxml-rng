@@ -448,6 +448,12 @@
     </i>
   </xsl:template>
 
+  <xsl:template match="b">
+    <b>
+      <xsl:apply-templates/>
+    </b>
+  </xsl:template>
+
   <xsl:template match="var">
     <tt>
       <xsl:apply-templates/>

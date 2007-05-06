@@ -132,56 +132,58 @@
 	   #:rng-type
 	   #:token-type
 	   #:string-type
-	   #:xsd-type
 
-	   #:duration-type 
-	   #:date-time-type 
-	   #:time-type 
-	   #:date-type 
-	   #:year-month-type 
-	   #:year-type 
-	   #:month-day-type 
-	   #:day-type 
-	   #:month-type 
-	   #:boolean-type 
-	   #:base64-binary-type 
-	   #:hex-binary-type 
-	   #:float-type 
-	   #:decimal-type 
-	   #:double-type 
-	   #:any-uri-type 
-	   #:qname-type 
-	   #:notation-type 
-	   #:xsd-string-type 
-	   #:normalized-string-type 
-	   #:xsd-token-type 
-	   #:language-type 
-	   #:name-type 
-	   #:ncname-type 
-	   #:id-type 
-	   #:idref-type 
-	   #:idrefs-type 
-	   #:entity-type 
-	   #:entities-type 
-	   #:nmtoken-type 
-	   #:nmtokens-type 
-	   #:integer-type 
-	   #:non-positive-integer-type 
-	   #:negative-integer-type 
-	   #:long-type 
-	   #:int-type 
-	   #:short-type 
-	   #:bite-type 
-	   #:non-negative-integer-type 
-	   #:unsigned-long-type 
-	   #:unsigned-int-type 
-	   #:unsigned-short-type 
-	   #:unsigned-byte-type 
+	   #:xsd-type
+	   #:patterns
+
+	   #:duration-type
+	   #:date-time-type
+	   #:time-type
+	   #:date-type
+	   #:year-month-type
+	   #:year-type
+	   #:month-day-type
+	   #:day-type
+	   #:month-type
+	   #:boolean-type
+	   #:base64-binary-type
+	   #:hex-binary-type
+	   #:float-type
+	   #:decimal-type
+	   #:double-type
+	   #:any-uri-type
+	   #:qname-type
+	   #:notation-type
+	   #:xsd-string-type
+	   #:normalized-string-type
+	   #:xsd-token-type
+	   #:language-type
+	   #:name-type
+	   #:ncname-type
+	   #:id-type
+	   #:idref-type
+	   #:idrefs-type
+	   #:entity-type
+	   #:entities-type
+	   #:nmtoken-type
+	   #:nmtokens-type
+	   #:integer-type
+	   #:non-positive-integer-type
+	   #:negative-integer-type
+	   #:long-type
+	   #:int-type
+	   #:short-type
+	   #:bite-type
+	   #:non-negative-integer-type
+	   #:unsigned-long-type
+	   #:unsigned-int-type
+	   #:unsigned-short-type
+	   #:unsigned-byte-type
 	   #:positive-integer-type)
   (:documentation
    "@code{cxml-types} defines an extensible interface for XML-related
     data types as required for use in Relax NG validation.
-    It includes Relax NG's minimal built-in type library, which is named 
+    It includes Relax NG's minimal built-in type library, which is named
     @code{:||} and defines the types \"string\" and \"token\".
     In addition, it implements the built-in types of
     @a[http://www.w3.org/TR/xmlschema-2/]{XML Schema Datatypes}
@@ -237,7 +239,7 @@ T
       the Base URI.
 
       An abstract class @class{validation-context} is defined that
-      users of this API can implement a subclass of 
+      users of this API can implement a subclass of
       to define methods for the generic functions listed below.
 
       In addition, two pre-defined validation context implementations are
@@ -248,4 +250,52 @@ T
       @aboutclass{klacks-validation-context}
       @aboutfun{context-find-namespace-binding}
       @aboutfun{context-find-unparsed-entity}
+    @end{section}
+    @begin[XSD data types]{section}
+      The following types are part of the XSD built-in data type library:
+
+      @aboutclass{duration-type}
+      @aboutclass{date-time-type}
+      @aboutclass{time-type}
+      @aboutclass{date-type}
+      @aboutclass{year-month-type}
+      @aboutclass{year-type}
+      @aboutclass{month-day-type}
+      @aboutclass{day-type}
+      @aboutclass{month-type}
+      @aboutclass{boolean-type}
+      @aboutclass{base64-binary-type}
+      @aboutclass{hex-binary-type}
+      @aboutclass{float-type}
+      @aboutclass{decimal-type}
+      @aboutclass{double-type}
+      @aboutclass{any-uri-type}
+      @aboutclass{qname-type}
+      @aboutclass{notation-type}
+      @aboutclass{xsd-string-type}
+      @aboutclass{normalized-string-type}
+      @aboutclass{xsd-token-type}
+      @aboutclass{language-type}
+      @aboutclass{name-type}
+      @aboutclass{ncname-type}
+      @aboutclass{id-type}
+      @aboutclass{idref-type}
+      @aboutclass{idrefs-type}
+      @aboutclass{entity-type}
+      @aboutclass{entities-type}
+      @aboutclass{nmtoken-type}
+      @aboutclass{nmtokens-type}
+      @aboutclass{integer-type}
+      @aboutclass{non-positive-integer-type}
+      @aboutclass{negative-integer-type}
+      @aboutclass{long-type}
+      @aboutclass{int-type}
+      @aboutclass{short-type}
+      @aboutclass{bite-type}
+      @aboutclass{non-negative-integer-type}
+      @aboutclass{unsigned-long-type}
+      @aboutclass{unsigned-int-type}
+      @aboutclass{unsigned-short-type}
+      @aboutclass{unsigned-byte-type}
+      @aboutclass{positive-integer-type}
     @end{section}"))
