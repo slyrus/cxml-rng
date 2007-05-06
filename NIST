@@ -222,15 +222,12 @@ PASS INSTANCE NISTXML-decimal-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-decimal-whiteSpace-1.xsd: failed to parse: params not valid for type: decimal/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                  :NAME whiteSpace
-                                                                                  :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-decimal-whiteSpace-1.rng> ]
-FAIL NISTXML-decimal-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-decimal-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-decimal-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-decimal-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-decimal-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-decimal-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-decimal-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-decimal-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-decimal-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-decimal-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-decimal-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-integer-minExclusive-1.xsd
 PASS INSTANCE NISTXML-integer-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-integer-minExclusive-1-2.xml
@@ -431,15 +428,12 @@ PASS INSTANCE NISTXML-integer-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-integer-whiteSpace-1.xsd: failed to parse: params not valid for type: integer/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                  :NAME whiteSpace
-                                                                                  :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-integer-whiteSpace-1.rng> ]
-FAIL NISTXML-integer-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-integer-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-integer-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-integer-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-integer-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-integer-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-integer-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-integer-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-integer-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-integer-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-integer-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-nonPositiveInteger-minExclusive-1.xsd
 PASS INSTANCE NISTXML-nonPositiveInteger-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-nonPositiveInteger-minExclusive-1-2.xml
@@ -640,15 +634,12 @@ PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-nonPositiveInteger-whiteSpace-1.xsd: failed to parse: params not valid for type: nonPositiveInteger/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                             :NAME whiteSpace
-                                                                                             :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-nonPositiveInteger-whiteSpace-1.rng> ]
-FAIL NISTXML-nonPositiveInteger-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-nonPositiveInteger-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-nonPositiveInteger-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-nonPositiveInteger-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-nonPositiveInteger-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-nonPositiveInteger-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-negativeInteger-minExclusive-1.xsd
 PASS INSTANCE NISTXML-negativeInteger-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-negativeInteger-minExclusive-1-2.xml
@@ -849,15 +840,12 @@ PASS INSTANCE NISTXML-negativeInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-negativeInteger-whiteSpace-1.xsd: failed to parse: params not valid for type: negativeInteger/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                          :NAME whiteSpace
-                                                                                          :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-negativeInteger-whiteSpace-1.rng> ]
-FAIL NISTXML-negativeInteger-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-negativeInteger-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-negativeInteger-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-negativeInteger-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-negativeInteger-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-negativeInteger-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-long-minExclusive-1.xsd
 PASS INSTANCE NISTXML-long-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-long-minExclusive-1-2.xml
@@ -1058,15 +1046,12 @@ PASS INSTANCE NISTXML-long-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-long-whiteSpace-1.xsd: failed to parse: params not valid for type: long/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-long-whiteSpace-1.rng> ]
-FAIL NISTXML-long-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-long-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-long-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-long-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-long-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-long-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-long-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-long-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-long-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-long-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-long-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-int-minExclusive-1.xsd
 PASS INSTANCE NISTXML-int-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-int-minExclusive-1-2.xml
@@ -1267,15 +1252,12 @@ PASS INSTANCE NISTXML-int-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-int-whiteSpace-1.xsd: failed to parse: params not valid for type: int/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                              :NAME whiteSpace
-                                                                              :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-int-whiteSpace-1.rng> ]
-FAIL NISTXML-int-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-int-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-int-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-int-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-int-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-int-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-int-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-int-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-int-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-int-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-int-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-short-minExclusive-1.xsd
 PASS INSTANCE NISTXML-short-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-short-minExclusive-1-2.xml
@@ -1476,15 +1458,12 @@ PASS INSTANCE NISTXML-short-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-short-whiteSpace-1.xsd: failed to parse: params not valid for type: short/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                :NAME whiteSpace
-                                                                                :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-short-whiteSpace-1.rng> ]
-FAIL NISTXML-short-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-short-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-short-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-short-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-short-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-short-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-short-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-short-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-short-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-short-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-short-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-byte-minExclusive-1.xsd
 PASS INSTANCE NISTXML-byte-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-byte-minExclusive-1-2.xml
@@ -1673,15 +1652,12 @@ PASS INSTANCE NISTXML-byte-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-byte-whiteSpace-1.xsd: failed to parse: params not valid for type: byte/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-byte-whiteSpace-1.rng> ]
-FAIL NISTXML-byte-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-byte-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-byte-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-byte-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-byte-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-byte-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-byte-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-byte-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-byte-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-byte-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-byte-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-nonNegativeInteger-minExclusive-1.xsd
 PASS INSTANCE NISTXML-nonNegativeInteger-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-nonNegativeInteger-minExclusive-1-2.xml
@@ -1882,15 +1858,12 @@ PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-nonNegativeInteger-whiteSpace-1.xsd: failed to parse: params not valid for type: nonNegativeInteger/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                             :NAME whiteSpace
-                                                                                             :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-nonNegativeInteger-whiteSpace-1.rng> ]
-FAIL NISTXML-nonNegativeInteger-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-nonNegativeInteger-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-nonNegativeInteger-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-nonNegativeInteger-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-nonNegativeInteger-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-nonNegativeInteger-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-unsignedLong-minExclusive-1.xsd
 PASS INSTANCE NISTXML-unsignedLong-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-unsignedLong-minExclusive-1-2.xml
@@ -2091,15 +2064,12 @@ PASS INSTANCE NISTXML-unsignedLong-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-unsignedLong-whiteSpace-1.xsd: failed to parse: params not valid for type: unsignedLong/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                       :NAME whiteSpace
-                                                                                       :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-unsignedLong-whiteSpace-1.rng> ]
-FAIL NISTXML-unsignedLong-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-unsignedLong-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-unsignedLong-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-unsignedLong-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-unsignedLong-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-unsignedLong-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-unsignedInt-minExclusive-1.xsd
 PASS INSTANCE NISTXML-unsignedInt-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-unsignedInt-minExclusive-1-2.xml
@@ -2300,15 +2270,12 @@ PASS INSTANCE NISTXML-unsignedInt-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-unsignedInt-whiteSpace-1.xsd: failed to parse: params not valid for type: unsignedInt/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                      :NAME whiteSpace
-                                                                                      :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-unsignedInt-whiteSpace-1.rng> ]
-FAIL NISTXML-unsignedInt-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-unsignedInt-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-unsignedInt-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-unsignedInt-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-unsignedInt-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-unsignedInt-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-unsignedShort-minExclusive-1.xsd
 PASS INSTANCE NISTXML-unsignedShort-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-unsignedShort-minExclusive-1-2.xml
@@ -2509,15 +2476,12 @@ PASS INSTANCE NISTXML-unsignedShort-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-unsignedShort-whiteSpace-1.xsd: failed to parse: params not valid for type: unsignedShort/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                        :NAME whiteSpace
-                                                                                        :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-unsignedShort-whiteSpace-1.rng> ]
-FAIL NISTXML-unsignedShort-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-unsignedShort-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-unsignedShort-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-unsignedShort-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-unsignedShort-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-unsignedShort-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-unsignedByte-minExclusive-1.xsd
 PASS INSTANCE NISTXML-unsignedByte-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-unsignedByte-minExclusive-1-2.xml
@@ -2694,15 +2658,12 @@ PASS INSTANCE NISTXML-unsignedByte-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-unsignedByte-whiteSpace-1.xsd: failed to parse: params not valid for type: unsignedByte/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                       :NAME whiteSpace
-                                                                                       :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-unsignedByte-whiteSpace-1.rng> ]
-FAIL NISTXML-unsignedByte-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-unsignedByte-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-unsignedByte-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-unsignedByte-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-unsignedByte-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-unsignedByte-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-positiveInteger-minExclusive-1.xsd
 PASS INSTANCE NISTXML-positiveInteger-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-positiveInteger-minExclusive-1-2.xml
@@ -2903,15 +2864,12 @@ PASS INSTANCE NISTXML-positiveInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-positiveInteger-whiteSpace-1.xsd: failed to parse: params not valid for type: positiveInteger/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                          :NAME whiteSpace
-                                                                                          :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-positiveInteger-whiteSpace-1.rng> ]
-FAIL NISTXML-positiveInteger-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-positiveInteger-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-positiveInteger-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-positiveInteger-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-positiveInteger-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-positiveInteger-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-double-minExclusive-1.xsd
 FAIL INSTANCE NISTXML-double-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 161 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-1-1.xml> ]
@@ -3093,15 +3051,12 @@ PASS INSTANCE NISTXML-double-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-double-whiteSpace-1.xsd: failed to parse: params not valid for type: double/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-double-whiteSpace-1.rng> ]
-FAIL NISTXML-double-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-double-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-double-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-double-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-double-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-double-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-double-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-double-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-double-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-double-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-double-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-float-minExclusive-1.xsd
 FAIL INSTANCE NISTXML-float-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MIN-EXCLUSIVE 0.0>
   [ Error at line 17, column 157 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-minExclusive-1-1.xml> ]
@@ -3286,15 +3241,12 @@ PASS INSTANCE NISTXML-float-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-float-whiteSpace-1.xsd: failed to parse: params not valid for type: float/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                :NAME whiteSpace
-                                                                                :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-float-whiteSpace-1.rng> ]
-FAIL NISTXML-float-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-float-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-float-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-float-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-float-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-float-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-float-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-float-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-float-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-float-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-float-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-duration-minExclusive-1.xsd
 FAIL INSTANCE NISTXML-duration-minExclusive-1-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a NUMBER:
                                                                                             NIL
@@ -3543,15 +3495,12 @@ PASS INSTANCE NISTXML-duration-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-duration-whiteSpace-1.xsd: failed to parse: params not valid for type: duration/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                   :NAME whiteSpace
-                                                                                   :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-duration-whiteSpace-1.rng> ]
-FAIL NISTXML-duration-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-duration-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-duration-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-duration-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-duration-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-duration-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-duration-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-duration-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-duration-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-duration-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-duration-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-dateTime-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a NUMBER:
                                                                                   NIL
 FAIL NISTXML-dateTime-minExclusive-1-1.xml: no schema
@@ -3761,15 +3710,12 @@ PASS INSTANCE NISTXML-dateTime-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-dateTime-whiteSpace-1.xsd: failed to parse: params not valid for type: dateTime/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                   :NAME whiteSpace
-                                                                                   :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-dateTime-whiteSpace-1.rng> ]
-FAIL NISTXML-dateTime-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-dateTime-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-dateTime-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-dateTime-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-dateTime-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-dateTime-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-dateTime-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-dateTime-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-dateTime-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-dateTime-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-dateTime-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-time-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: The value
                                                                               1
                                                                             is not of type
@@ -4069,15 +4015,12 @@ PASS INSTANCE NISTXML-time-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-time-whiteSpace-1.xsd: failed to parse: params not valid for type: time/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-time-whiteSpace-1.rng> ]
-FAIL NISTXML-time-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-time-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-time-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-time-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-time-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-time-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-time-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-time-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-time-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-time-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-time-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-date-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: The value
                                                                               0
                                                                             is not of type
@@ -4377,15 +4320,12 @@ PASS INSTANCE NISTXML-date-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-date-whiteSpace-1.xsd: failed to parse: params not valid for type: date/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-date-whiteSpace-1.rng> ]
-FAIL NISTXML-date-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-date-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-date-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-date-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-date-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-date-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-date-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-date-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-date-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-date-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-date-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-gYearMonth-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a NUMBER:
                                                                                     NIL
 FAIL NISTXML-gYearMonth-minExclusive-1-1.xml: no schema
@@ -4595,15 +4535,12 @@ PASS INSTANCE NISTXML-gYearMonth-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-gYearMonth-whiteSpace-1.xsd: failed to parse: params not valid for type: gYearMonth/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                     :NAME whiteSpace
-                                                                                     :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-gYearMonth-whiteSpace-1.rng> ]
-FAIL NISTXML-gYearMonth-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-gYearMonth-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-gYearMonth-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-gYearMonth-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-gYearMonth-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-gYearMonth-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-gYear-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
@@ -4810,155 +4747,155 @@ FAIL INSTANCE NISTXML-gYear-pattern-1-1.xml: (BOGUS CONDITON) failed to validate
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1002960661}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003616861}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1002AA7081}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003BE8D71}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1002B6C8A1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003C43961}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1002BD3241}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003DBB8A1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1002C3F8A1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1004546961}>).
 PASS NISTSchema-gYear-pattern-2.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-2-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002CE1FB1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10045FD8A1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002D45241}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100463FB01}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002E51951}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1004686CE1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002F51A61}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100472AA61}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002FCFD71}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100477A5C1}>).
 PASS NISTSchema-gYear-pattern-3.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-3-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {10030B7C11}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100486BFB1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {1003142F51}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10048F7FC1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {100326DA61}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100497A8A1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {10032EED11}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10049B7461}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {1003357CE1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10049F7001}>).
 PASS NISTSchema-gYear-pattern-4.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-4-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2021"
-                                                                                     #<CXML-RNG::VALIDATOR {10035BB121}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10023B5371}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "1991"
-                                                                                     #<CXML-RNG::VALIDATOR {1003659DC1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10024C5A11}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "1987"
-                                                                                     #<CXML-RNG::VALIDATOR {10036B7041}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10025104D1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2008"
-                                                                                     #<CXML-RNG::VALIDATOR {1003768EF1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10025A2B81}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2020"
-                                                                                     #<CXML-RNG::VALIDATOR {10037D7251}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002656AD1}>).
 PASS NISTSchema-gYear-pattern-5.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-5-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {10038F85E1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10027645D1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {100397FB71}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10027CDC11}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {10039D7A61}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10028AA4E1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {1003A21711}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10029B9951}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
                                                                                     (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {1003A5E3B1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002A2A951}>).
 PASS NISTSchema-gYear-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-1-2.xml: (ignored)
@@ -4989,15 +4926,12 @@ PASS INSTANCE NISTXML-gYear-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-gYear-whiteSpace-1.xsd: failed to parse: params not valid for type: gYear/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                :NAME whiteSpace
-                                                                                :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-gYear-whiteSpace-1.rng> ]
-FAIL NISTXML-gYear-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-gYear-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-gYear-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-gYear-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-gYear-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-gYear-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-gYear-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-gYear-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-gYear-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-gYear-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-gYear-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-gMonthDay-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: The value
                                                                                    1
                                                                                  is not of type
@@ -5297,15 +5231,12 @@ PASS INSTANCE NISTXML-gMonthDay-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-gMonthDay-whiteSpace-1.xsd: failed to parse: params not valid for type: gMonthDay/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                    :NAME whiteSpace
-                                                                                    :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-gMonthDay-whiteSpace-1.rng> ]
-FAIL NISTXML-gMonthDay-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-gMonthDay-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-gMonthDay-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-gMonthDay-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-gMonthDay-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-gMonthDay-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-gDay-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: The value
                                                                               1
                                                                             is not of type
@@ -5601,15 +5532,12 @@ PASS INSTANCE NISTXML-gDay-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-gDay-whiteSpace-1.xsd: failed to parse: params not valid for type: gDay/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-gDay-whiteSpace-1.rng> ]
-FAIL NISTXML-gDay-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-gDay-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-gDay-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-gDay-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-gDay-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-gDay-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-gDay-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-gDay-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-gDay-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-gDay-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-gDay-whiteSpace-1-5.xml: (ignored)
 FAIL NISTSchema-gMonth-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: The value
                                                                                 1
                                                                               is not of type
@@ -5909,15 +5837,12 @@ PASS INSTANCE NISTXML-gMonth-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-gMonth-whiteSpace-1.xsd: failed to parse: params not valid for type: gMonth/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-gMonth-whiteSpace-1.rng> ]
-FAIL NISTXML-gMonth-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-gMonth-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-gMonth-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-gMonth-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-gMonth-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-gMonth-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-gMonth-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-gMonth-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-gMonth-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-gMonth-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-gMonth-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-string-maxLength-1.xsd
 PASS INSTANCE NISTXML-string-maxLength-1-1.xml
 PASS NISTSchema-string-maxLength-2.xsd
@@ -6060,33 +5985,24 @@ PASS INSTANCE NISTXML-string-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-string-whiteSpace-1.xsd: failed to parse: params not valid for type: string/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE preserve))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-string-whiteSpace-1.rng> ]
-FAIL NISTXML-string-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-string-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-string-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-string-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-string-whiteSpace-1-5.xml: no schema
-FAIL NISTSchema-string-whiteSpace-2.xsd: failed to parse: params not valid for type: string/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-string-whiteSpace-2.rng> ]
-FAIL NISTXML-string-whiteSpace-2-1.xml: no schema
-FAIL NISTXML-string-whiteSpace-2-2.xml: no schema
-FAIL NISTXML-string-whiteSpace-2-3.xml: no schema
-FAIL NISTXML-string-whiteSpace-2-4.xml: no schema
-FAIL NISTXML-string-whiteSpace-2-5.xml: no schema
-FAIL NISTSchema-string-whiteSpace-3.xsd: failed to parse: params not valid for type: string/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE replace))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-string-whiteSpace-3.rng> ]
-FAIL NISTXML-string-whiteSpace-3-1.xml: no schema
-FAIL NISTXML-string-whiteSpace-3-2.xml: no schema
-FAIL NISTXML-string-whiteSpace-3-3.xml: no schema
-FAIL NISTXML-string-whiteSpace-3-4.xml: no schema
-FAIL NISTXML-string-whiteSpace-3-5.xml: no schema
+PASS NISTSchema-string-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-string-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-1-5.xml: (ignored)
+PASS NISTSchema-string-whiteSpace-2.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-string-whiteSpace-2-1.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-2-2.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-2-3.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-2-4.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-2-5.xml: (ignored)
+PASS NISTSchema-string-whiteSpace-3.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-string-whiteSpace-3-1.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-3-2.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-3-3.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-3-4.xml: (ignored)
+PASS INSTANCE NISTXML-string-whiteSpace-3-5.xml: (ignored)
 PASS NISTSchema-normalizedString-maxLength-1.xsd
 PASS INSTANCE NISTXML-normalizedString-maxLength-1-1.xml
 PASS NISTSchema-normalizedString-maxLength-2.xsd
@@ -6229,24 +6145,18 @@ PASS INSTANCE NISTXML-normalizedString-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-normalizedString-whiteSpace-1.xsd: failed to parse: params not valid for type: normalizedString/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                           :NAME whiteSpace
-                                                                                           :VALUE replace))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-normalizedString-whiteSpace-1.rng> ]
-FAIL NISTXML-normalizedString-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-1-5.xml: no schema
-FAIL NISTSchema-normalizedString-whiteSpace-2.xsd: failed to parse: params not valid for type: normalizedString/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                           :NAME whiteSpace
-                                                                                           :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-normalizedString-whiteSpace-2.rng> ]
-FAIL NISTXML-normalizedString-whiteSpace-2-1.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-2-2.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-2-3.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-2-4.xml: no schema
-FAIL NISTXML-normalizedString-whiteSpace-2-5.xml: no schema
+PASS NISTSchema-normalizedString-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-5.xml: (ignored)
+PASS NISTSchema-normalizedString-whiteSpace-2.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-1.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-2.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-3.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-4.xml: (ignored)
+PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-5.xml: (ignored)
 PASS NISTSchema-token-maxLength-1.xsd
 PASS INSTANCE NISTXML-token-maxLength-1-1.xml
 PASS NISTSchema-token-maxLength-2.xsd
@@ -6389,15 +6299,12 @@ PASS INSTANCE NISTXML-token-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-token-whiteSpace-1.xsd: failed to parse: params not valid for type: token/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                :NAME whiteSpace
-                                                                                :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-token-whiteSpace-1.rng> ]
-FAIL NISTXML-token-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-token-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-token-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-token-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-token-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-token-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-token-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-token-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-token-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-token-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-token-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-Name-maxLength-1.xsd
 PASS INSTANCE NISTXML-Name-maxLength-1-1.xml
 PASS INSTANCE NISTXML-Name-maxLength-1-2.xml
@@ -6548,15 +6455,12 @@ PASS INSTANCE NISTXML-Name-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-Name-whiteSpace-1.xsd: failed to parse: params not valid for type: Name/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                               :NAME whiteSpace
-                                                                               :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-Name-whiteSpace-1.rng> ]
-FAIL NISTXML-Name-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-Name-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-Name-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-Name-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-Name-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-Name-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-Name-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-Name-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-Name-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-Name-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-Name-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-NMTOKEN-maxLength-1.xsd
 PASS INSTANCE NISTXML-NMTOKEN-maxLength-1-1.xml
 PASS INSTANCE NISTXML-NMTOKEN-maxLength-1-2.xml
@@ -6705,15 +6609,12 @@ PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-NMTOKEN-whiteSpace-1.xsd: failed to parse: params not valid for type: NMTOKEN/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                  :NAME whiteSpace
-                                                                                  :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-NMTOKEN-whiteSpace-1.rng> ]
-FAIL NISTXML-NMTOKEN-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-NMTOKEN-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-NMTOKEN-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-NMTOKEN-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-NMTOKEN-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-NMTOKEN-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-NCName-maxLength-1.xsd
 PASS INSTANCE NISTXML-NCName-maxLength-1-1.xml
 PASS INSTANCE NISTXML-NCName-maxLength-1-2.xml
@@ -6864,15 +6765,12 @@ PASS INSTANCE NISTXML-NCName-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-NCName-whiteSpace-1.xsd: failed to parse: params not valid for type: NCName/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-NCName-whiteSpace-1.rng> ]
-FAIL NISTXML-NCName-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-NCName-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-NCName-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-NCName-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-NCName-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-NCName-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-NCName-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-NCName-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-NCName-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-NCName-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-NCName-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-ID-maxLength-1.xsd
 PASS INSTANCE NISTXML-ID-maxLength-1-1.xml
 PASS INSTANCE NISTXML-ID-maxLength-1-2.xml
@@ -7023,15 +6921,12 @@ PASS INSTANCE NISTXML-ID-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-ID-whiteSpace-1.xsd: failed to parse: params not valid for type: ID/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                             :NAME whiteSpace
-                                                                             :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-ID-whiteSpace-1.rng> ]
-FAIL NISTXML-ID-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-ID-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-ID-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-ID-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-ID-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-ID-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-ID-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-ID-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-ID-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-ID-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-ID-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-boolean-pattern-1.xsd
 PASS INSTANCE NISTXML-boolean-pattern-1-1.xml
 PASS NISTSchema-boolean-pattern-2.xsd
@@ -7040,15 +6935,12 @@ PASS NISTSchema-boolean-pattern-3.xsd
 PASS INSTANCE NISTXML-boolean-pattern-3-1.xml
 PASS NISTSchema-boolean-pattern-4.xsd
 PASS INSTANCE NISTXML-boolean-pattern-4-1.xml
-FAIL NISTSchema-boolean-whiteSpace-1.xsd: failed to parse: params not valid for type: boolean/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                  :NAME whiteSpace
-                                                                                  :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-boolean-whiteSpace-1.rng> ]
-FAIL NISTXML-boolean-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-boolean-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-boolean-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-boolean-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-boolean-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-boolean-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-boolean-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-boolean-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-boolean-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-boolean-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-boolean-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-base64Binary-maxLength-1.xsd
 PASS INSTANCE NISTXML-base64Binary-maxLength-1-1.xml
 PASS INSTANCE NISTXML-base64Binary-maxLength-1-2.xml
@@ -7199,15 +7091,12 @@ PASS INSTANCE NISTXML-base64Binary-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-base64Binary-whiteSpace-1.xsd: failed to parse: params not valid for type: base64Binary/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                       :NAME whiteSpace
-                                                                                       :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-base64Binary-whiteSpace-1.rng> ]
-FAIL NISTXML-base64Binary-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-base64Binary-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-base64Binary-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-base64Binary-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-base64Binary-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-base64Binary-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-hexBinary-maxLength-1.xsd
 PASS INSTANCE NISTXML-hexBinary-maxLength-1-1.xml
 PASS INSTANCE NISTXML-hexBinary-maxLength-1-2.xml
@@ -7358,15 +7247,12 @@ PASS INSTANCE NISTXML-hexBinary-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-hexBinary-whiteSpace-1.xsd: failed to parse: params not valid for type: hexBinary/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                    :NAME whiteSpace
-                                                                                    :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-hexBinary-whiteSpace-1.rng> ]
-FAIL NISTXML-hexBinary-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-hexBinary-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-hexBinary-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-hexBinary-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-hexBinary-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-hexBinary-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-language-maxLength-1.xsd
 PASS INSTANCE NISTXML-language-maxLength-1-1.xml
 PASS INSTANCE NISTXML-language-maxLength-1-2.xml
@@ -7513,15 +7399,12 @@ PASS INSTANCE NISTXML-language-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-language-whiteSpace-1.xsd: failed to parse: params not valid for type: language/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                   :NAME whiteSpace
-                                                                                   :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-language-whiteSpace-1.rng> ]
-FAIL NISTXML-language-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-language-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-language-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-language-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-language-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-language-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-language-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-language-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-language-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-language-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-language-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-anyURI-maxLength-1.xsd
 PASS INSTANCE NISTXML-anyURI-maxLength-1-1.xml
 PASS INSTANCE NISTXML-anyURI-maxLength-1-2.xml
@@ -7671,15 +7554,12 @@ PASS INSTANCE NISTXML-anyURI-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-anyURI-whiteSpace-1.xsd: failed to parse: params not valid for type: anyURI/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                 :NAME whiteSpace
-                                                                                 :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-anyURI-whiteSpace-1.rng> ]
-FAIL NISTXML-anyURI-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-anyURI-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-anyURI-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-anyURI-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-anyURI-whiteSpace-1-5.xml: no schema
+PASS NISTSchema-anyURI-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-anyURI-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-anyURI-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-anyURI-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-anyURI-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-anyURI-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-QName-maxLength-1.xsd
 PASS INSTANCE NISTXML-QName-maxLength-1-1.xml
 PASS INSTANCE NISTXML-QName-maxLength-1-2.xml
@@ -7867,13 +7747,10 @@ PASS INSTANCE NISTXML-QName-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-5.xml: (ignored)
-FAIL NISTSchema-QName-whiteSpace-1.xsd: failed to parse: params not valid for type: QName/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
-                                                                                :NAME whiteSpace
-                                                                                :VALUE collapse))
-  [ Error at line 11, column 14 in #<URI file://+/home/david/NISTSchemaTests/NISTSchema-QName-whiteSpace-1.rng> ]
-FAIL NISTXML-QName-whiteSpace-1-1.xml: no schema
-FAIL NISTXML-QName-whiteSpace-1-2.xml: no schema
-FAIL NISTXML-QName-whiteSpace-1-3.xml: no schema
-FAIL NISTXML-QName-whiteSpace-1-4.xml: no schema
-FAIL NISTXML-QName-whiteSpace-1-5.xml: no schema
-Passed 4203/7583 tests.
+PASS NISTSchema-QName-whiteSpace-1.xsd: whiteSpace forbidden
+PASS INSTANCE NISTXML-QName-whiteSpace-1-1.xml: (ignored)
+PASS INSTANCE NISTXML-QName-whiteSpace-1-2.xml: (ignored)
+PASS INSTANCE NISTXML-QName-whiteSpace-1-3.xml: (ignored)
+PASS INSTANCE NISTXML-QName-whiteSpace-1-4.xml: (ignored)
+PASS INSTANCE NISTXML-QName-whiteSpace-1-5.xml: (ignored)
+Passed 4408/7624 tests.

@@ -207,6 +207,9 @@
 	  t)
       (rng-error (c)
 	(cond
+	  ((search ":NAME whiteSpace" (princ-to-string c))
+	   (format t "PASS ~A: whiteSpace forbidden~%" href)
+	   :ignore)
 	  ((search ":NAME enumeration" (princ-to-string c))
 	   (format t "PASS ~A: enumeration forbidden~%" href)
 	   :ignore)
