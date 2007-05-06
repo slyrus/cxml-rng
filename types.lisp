@@ -644,6 +644,9 @@
 (defun datetime+duration (s d)
   (destructuring-bind (syear smonth sday shour sminute ssecond szone) s
     (destructuring-bind (dyear dmonth dday dhour dminute dsecond) d
+      (setf dhour (or dhour 0))
+      (setf dminute (or dminute 0))
+      (setf dsecond (or dsecond 0))
       (labels ((floor3 (a low high)
 		 (multiple-value-bind (u v)
 		     (floor (- a low) (- high low))

@@ -3152,16 +3152,11 @@ PASS INSTANCE NISTXML-float-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-whiteSpace-1-5.xml: (ignored)
 PASS NISTSchema-duration-minExclusive-1.xsd
-FAIL INSTANCE NISTXML-duration-minExclusive-1-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minExclusive-1-2.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minExclusive-1-3.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minExclusive-1-4.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minExclusive-1-5.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-minExclusive-1-1.xml
+PASS INSTANCE NISTXML-duration-minExclusive-1-2.xml
+PASS INSTANCE NISTXML-duration-minExclusive-1-3.xml
+PASS INSTANCE NISTXML-duration-minExclusive-1-4.xml
+PASS INSTANCE NISTXML-duration-minExclusive-1-5.xml
 PASS NISTSchema-duration-minExclusive-2.xsd
 PASS INSTANCE NISTXML-duration-minExclusive-2-1.xml
 PASS INSTANCE NISTXML-duration-minExclusive-2-2.xml
@@ -3183,21 +3178,15 @@ PASS INSTANCE NISTXML-duration-minExclusive-4-5.xml
 PASS NISTSchema-duration-minExclusive-5.xsd
 PASS INSTANCE NISTXML-duration-minExclusive-5-1.xml
 PASS NISTSchema-duration-minInclusive-1.xsd
-FAIL INSTANCE NISTXML-duration-minInclusive-1-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minInclusive-1-2.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minInclusive-1-3.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minInclusive-1-4.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-minInclusive-1-5.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-minInclusive-1-1.xml
+PASS INSTANCE NISTXML-duration-minInclusive-1-2.xml
+PASS INSTANCE NISTXML-duration-minInclusive-1-3.xml
+PASS INSTANCE NISTXML-duration-minInclusive-1-4.xml
+PASS INSTANCE NISTXML-duration-minInclusive-1-5.xml
 PASS NISTSchema-duration-minInclusive-2.xsd
 PASS INSTANCE NISTXML-duration-minInclusive-2-1.xml
 PASS INSTANCE NISTXML-duration-minInclusive-2-2.xml
-FAIL INSTANCE NISTXML-duration-minInclusive-2-3.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-minInclusive-2-3.xml
 PASS INSTANCE NISTXML-duration-minInclusive-2-4.xml
 PASS INSTANCE NISTXML-duration-minInclusive-2-5.xml
 PASS NISTSchema-duration-minInclusive-3.xsd
@@ -3215,73 +3204,56 @@ PASS INSTANCE NISTXML-duration-minInclusive-4-5.xml
 PASS NISTSchema-duration-minInclusive-5.xsd
 PASS INSTANCE NISTXML-duration-minInclusive-5-1.xml
 PASS NISTSchema-duration-maxExclusive-1.xsd
-FAIL INSTANCE NISTXML-duration-maxExclusive-1-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-1-1.xml
 PASS NISTSchema-duration-maxExclusive-2.xsd
-FAIL INSTANCE NISTXML-duration-maxExclusive-2-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-2-1.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-2-2.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-2-3.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-2-4.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-2-5.xml
 PASS NISTSchema-duration-maxExclusive-3.xsd
-FAIL INSTANCE NISTXML-duration-maxExclusive-3-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-3-1.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-3-2.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-3-3.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-3-4.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-3-5.xml
 PASS NISTSchema-duration-maxExclusive-4.xsd
-FAIL INSTANCE NISTXML-duration-maxExclusive-4-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-maxExclusive-4-2.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-maxExclusive-4-3.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-maxExclusive-4-4.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-maxExclusive-4-5.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-4-1.xml
+PASS INSTANCE NISTXML-duration-maxExclusive-4-2.xml
+PASS INSTANCE NISTXML-duration-maxExclusive-4-3.xml
+PASS INSTANCE NISTXML-duration-maxExclusive-4-4.xml
+PASS INSTANCE NISTXML-duration-maxExclusive-4-5.xml
 PASS NISTSchema-duration-maxExclusive-5.xsd
-FAIL INSTANCE NISTXML-duration-maxExclusive-5-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-5-1.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-5-2.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-5-3.xml
-FAIL INSTANCE NISTXML-duration-maxExclusive-5-4.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxExclusive-5-4.xml
 PASS INSTANCE NISTXML-duration-maxExclusive-5-5.xml
 PASS NISTSchema-duration-maxInclusive-1.xsd
-FAIL INSTANCE NISTXML-duration-maxInclusive-1-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-1-1.xml
 PASS NISTSchema-duration-maxInclusive-2.xsd
-FAIL INSTANCE NISTXML-duration-maxInclusive-2-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-2-1.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-2-2.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-2-3.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-2-4.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-2-5.xml
 PASS NISTSchema-duration-maxInclusive-3.xsd
-FAIL INSTANCE NISTXML-duration-maxInclusive-3-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-3-1.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-3-2.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-3-3.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-3-4.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-3-5.xml
 PASS NISTSchema-duration-maxInclusive-4.xsd
-FAIL INSTANCE NISTXML-duration-maxInclusive-4-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-4-1.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-4-2.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-4-3.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-4-4.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-4-5.xml
 PASS NISTSchema-duration-maxInclusive-5.xsd
-FAIL INSTANCE NISTXML-duration-maxInclusive-5-1.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
-FAIL INSTANCE NISTXML-duration-maxInclusive-5-2.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-5-1.xml
+PASS INSTANCE NISTXML-duration-maxInclusive-5-2.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-5-3.xml
-FAIL INSTANCE NISTXML-duration-maxInclusive-5-4.xml: (BOGUS CONDITON) failed to validate: Argument Y is not a NUMBER:
-                                                                                            NIL
+PASS INSTANCE NISTXML-duration-maxInclusive-5-4.xml
 PASS INSTANCE NISTXML-duration-maxInclusive-5-5.xml
 PASS NISTSchema-duration-pattern-1.xsd
 PASS INSTANCE NISTXML-duration-pattern-1-1.xml
@@ -6524,4 +6496,4 @@ PASS INSTANCE NISTXML-QName-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-5.xml: (ignored)
-Passed 5178/7757 tests.
+Passed 5206/7757 tests.
