@@ -109,7 +109,12 @@
 
 (defpackage :cxml-types
   (:use :cl)
-  (:export #:data-type
+  (:export #:param
+	   #:make-param
+	   #:param-name
+	   #:param-value
+
+	   #:data-type
 	   #:find-type
 	   #:type-library
 	   #:type-name

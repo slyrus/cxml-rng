@@ -471,10 +471,12 @@
 
 (setf (documentation 'pattern-params 'function)
       "@arg[instance]{an instance of @class{data}}
-       @return{a list of parameters}
+       @return{a list of @fun{cxml-types:param}}
        @short{fixme}
 
-       fixme: params aren't actually exported yet.")
+       The data type parameters for this data pattern.
+
+       (With the XSD type library, these are known as restricting facets.)")
 
 (defstruct (not-allowed (:include %leaf))
   "@short{This pattern specifies that the part of the schema reached at
@@ -487,10 +489,6 @@
   (start nil)
   parent
   (definitions (make-hash-table :test 'equal)))
-
-(defstruct param
-  name
-  string)
 
 ;; Clark calls this structure "RefPattern"
 (defstruct (definition (:conc-name "DEFN-"))
@@ -860,7 +858,9 @@
 	(setf type "token")
 	(setf dl ""))
       (let ((data-type
-	     (cxml-types:find-type (and dl (find-symbol dl :keyword)) type))
+	     (cxml-types:find-type (and dl (find-symbol dl :keyword))
+				   type
+				   nil))
 	    (vc (cxml-types:make-klacks-validation-context source)))
 	(unless data-type
 	  (rng-error source "type not found: ~A/~A" type dl))
@@ -891,16 +891,15 @@
 	      (return)))))
       (setf params (nreverse params))
       (let* ((dl *datatype-library*)
-	     (data-type (apply #'cxml-types:find-type
-			       (and dl (find-symbol dl :keyword))
-			       type
-			       (loop
-				  for p in params
-				  collect (find-symbol (param-name p)
-						       :keyword)
-				  collect (param-string p)))))
+	     (data-type (cxml-types:find-type
+			 (and dl (find-symbol dl :keyword))
+			 type
+			 params)))
 	(unless data-type
 	  (rng-error source "type not found: ~A/~A" type dl))
+	(when (eq data-type :error)
+	  (rng-error source "params not valid for type: ~A/~A/~A"
+		     type dl params))
 	(make-data
 	 :type data-type
 	 :params params
@@ -910,7 +909,7 @@
   (klacks:expecting-element (source "param")
     (let ((name (ntc "name" source))
 	  (string (consume-and-parse-characters source)))
-      (make-param :name name :string string))))
+      (cxml-types:make-param name string))))
 
 (defun p/except-pattern (source)
   (klacks:expecting-element (source "except")
@@ -1387,8 +1386,8 @@
 	  (cxml:attribute "type" (cxml-types:type-name type)))
 	(dolist (param (pattern-params pattern))
 	  (cxml:with-element "param"
-	    (cxml:attribute "name" (param-name param))
-	    (cxml:text (param-string param))))
+	    (cxml:attribute "name" (cxml-types:param-name param))
+	    (cxml:text (cxml-types:param-value param))))
 	(when (pattern-except pattern)
 	  (cxml:with-element "except"
 	    (serialize-pattern (pattern-except pattern))))))))

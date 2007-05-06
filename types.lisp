@@ -28,6 +28,10 @@
 
 (in-package :cxml-types)
 
+(defstruct (param (:constructor make-param (name value)))
+  name
+  value)
+
 (defclass data-type () ()
   (:documentation
    "@short{The abstract superclass of all types.}
@@ -44,19 +48,19 @@
     @see{lessp-using-type}
     @see{validp}"))
 
-(defgeneric find-type (library name &key &allow-other-keys)
+(defgeneric find-type (library name params)
   (:documentation
    "@arg[library]{datatype library, a keyword symbol}
     @arg[name]{the type's name, a string}
-    @arg[args]{type parameters, strings named by keyword arguments}
+    @arg[params]{type parameters, a list of @class{param} instances}
     @return{an instance of @class{data-type}, or @code{nil}}
     @short{Look up the type named @em{name} in datatype library @em{library}.}
 
     Return a type instance for this type and the additional parameters,
     or @code{nil} if the type does not exist.
 
-    Additional parameters (knows as facets in XSD) can be passed to specify
-    or restrict the type for the purposes of @fun{validp}.
+    Additional parameters (knows as restricting facets in XSD) can be passed
+    to specify or restrict the type for the purposes of @fun{validp}.
 
     @see{data-type}"))
 
@@ -78,8 +82,8 @@
     @see{type-library}
     @see{type-context-dependent-p}"))
 
-(defmethod find-type ((library t) name &key &allow-other-keys)
-  (declare (ignore name))
+(defmethod find-type ((library t) name params)
+  (declare (ignore name params))
   nil)
 
 (defgeneric type-context-dependent-p (type)
@@ -286,10 +290,10 @@
 (defvar *string-data-type* (make-instance 'string-type))
 (defvar *token-data-type* (make-instance 'token-type))
 
-(defmethod find-type ((library (eql :||)) name &rest args &key)
+(defmethod find-type ((library (eql :||)) name params)
   (cond
     ((eq name :probe) t)
-    (args nil)
+    (params :error)
     ((equal name "string") *string-data-type*)
     ((equal name "token") *token-data-type*)
     (t nil)))
@@ -347,8 +351,7 @@
        ,@args)))
 
 (defclass xsd-type (data-type)
-  ((pattern :initform nil :initarg :pattern :reader pattern)
-   (spec-pattern :initform nil :reader spec-pattern :allocation :class))
+  ((patterns :initform nil :initarg :patterns :reader patterns))
   (:documentation
    "@short{The class of XML Schema built-in types.}
 
@@ -361,37 +364,57 @@
     The XSD type library
     is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}."))
 
-(defmethod initialize-instance ((instance xsd-type)
-				&rest args
-				&key ((:|minLength| min-length))
-				     ((:|maxLength| max-length))
-				     ((:|length| exact-length)))
-  (apply #'call-next-method
-	 instance
-	 :min-length (when min-length
-		       ;; fixme: richtigen fehler
-		       (parse-integer min-length))
-	 :max-length (when max-length
-		       ;; fixme: richtigen fehler
-		       (parse-integer max-length))
-	 :exact-length (when exact-length
-			 ;; fixme: richtigen fehler
-			 (parse-integer exact-length))
-	 args))
-
 (defmethod type-library ((type xsd-type))
   :|http://www.w3.org/2001/XMLSchema-datatypes|)
 
+(defun zip (keys values)
+  (loop for key in keys for value in values collect key collect value))
+
+(defgeneric parse-parameter (class-name type-name value))
+
+(defun parse-parameters (type-class params)
+  (let ((patterns '())
+	(args '()))
+    (dolist (param params (values t patterns args))
+      (let ((name (param-name param))
+	    (value (param-value param)))
+	(if (equal name "pattern")
+	    (push value patterns)
+	    (multiple-value-bind (key required-class)
+		(case (find-symbol (param-name param) :keyword)
+		  (:|length| (values :exact-length 'length-mixin))
+		  (:|maxLength| (values :max-length 'length-mixin))
+		  (:|minLength| (values :min-length 'length-mixin))
+		  (:|minInclusive| (values :min-inclusive 'ordering-mixin))
+		  (:|maxInclusive| (values :max-inclusive 'ordering-mixin))
+		  (:|minExclusive| (values :min-exclusive 'ordering-mixin))
+		  (:|maxExclusive| (values :max-exclusive 'ordering-mixin))
+		  (:|totalDigits| (values :total-digits 'decimal))
+		  (:|fractionDigits| (values :fraction-digits 'decimal))
+		  (t (return nil)))
+	      (unless (subtypep type-class required-class)
+		(return nil))
+	      (when (loop
+		       for (k nil) on args by #'cddr
+		       thereis (eq key k))
+		(return nil))
+	      (push (parse-parameter required-class type-class value) args)
+	      (push key args)))))))
+
 (defmethod find-type
-    ((library (eql :|http://www.w3.org/2001/XMLSchema-datatypes|))
-     name
-     &rest args &key)
-  args					;fixme
+    ((library (eql :|http://www.w3.org/2001/XMLSchema-datatypes|)) name params)
   (if (eq name :probe)
       t
       (let ((class (gethash name *xsd-types*)))
 	(if class
-	    (apply #'make-instance class args)
+	    (multiple-value-bind (ok patterns other-args)
+		(parse-parameters class params)
+	      (if ok
+		  (apply #'make-instance
+			 class
+			 :patterns patterns
+			 other-args)
+		  :error))
 	    nil))))
 
 (defgeneric parse/xsd (type e context))
@@ -403,10 +426,9 @@
   (declare (ignore context))
   ;; zzz
   #+(or)
-  (and (or (null (pattern type))
-	   (cl-ppcre:all-matches (pattern type) v))
-       (or (null (spec-pattern type))
-	   (cl-ppcre:all-matches (spec-pattern type) v)))
+  (every (lambda (pattern)
+	   (cl-ppcre:all-matches pattern v))
+	 (patterns type))
   t)
 
 (defmethod validp ((type xsd-type) e &optional context)
@@ -424,7 +446,7 @@
   (let ((result (call-next-method type
 				  (munge-whitespace type e)
 				  context)))
-    (if (or (eq result :error) (validp/xsd type e context))
+    (if (or (eq result :error) (validp/xsd type result context))
 	result
 	:error)))
 
@@ -449,6 +471,10 @@
      (max-inclusive :initform nil
 		    :initarg :max-inclusive
 		    :accessor max-inclusive)))
+
+(defmethod parse-parameter
+    ((class-name (eql 'ordering-mixin)) type-name value)
+  (parse (make-instance type-name) value nil))
 
 (defgeneric lessp-using-type (type u v)
   (:documentation
@@ -494,6 +520,10 @@
     ((exact-length :initform nil :initarg :exact-length :accessor exact-length)
      (min-length :initform nil :initarg :min-length :accessor min-length)
      (max-length :initform nil :initarg :max-length :accessor max-length)))
+
+(defmethod parse-parameter
+    ((class-name (eql 'length-mixin)) (type-name t) value)
+  (parse (make-instance 'non-negative-integer-type) value nil))
 
 ;; extra-hack fuer die "Laenge" eines QName...
 (defgeneric length-using-type (type u))
@@ -933,7 +963,7 @@
 ;; Das stimmt unter LispWorks bestimmt wieder nicht.
 (defmethod parse/xsd ((type float-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
+  (if (cl-ppcre:all-matches "^[+-]?\d+([.]\d+)?([eE][+-]?\d+)?$" e)
       (coerce (parse-number:parse-number e) 'single-float)
       :error))
 
@@ -947,6 +977,10 @@
    (total-digits :initform nil
 		 :initarg :total-digits
 		 :accessor total-digits)))
+
+(defmethod parse-parameter
+    ((class-name (eql 'decimal-type)) (type-name t) value)
+  (parse (make-instance 'positive-integer-type) value nil))
 
 (defmethod lessp-using-type ((type decimal-type) u v)
   (< u v))
@@ -972,7 +1006,7 @@
 (defmethod parse/xsd ((type decimal-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional a b)
-      (scan-to-strings "^([+-]\d+)(?:[.](\d+))?$" e)
+      (scan-to-strings "^([+-]?\d+)(?:[.](\d+))?$" e)
     (if a
 	(+ (parse-integer a)
 	   (/ (parse-integer b) (expt 10 (length b))))
@@ -993,7 +1027,7 @@
 ;; Auch das ist nicht garantiert.
 (defmethod parse/xsd ((type double-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]\d+([.]\d+)?([eE][+-]\d+)?$" e)
+  (if (cl-ppcre:all-matches "^[+-]?\d+([.]\d+)?([eE][+-]?\d+)?$" e)
       (coerce (parse-number:parse-number e) 'double-float)
       :error))
 
@@ -1085,25 +1119,19 @@
 ;;; language
 
 (defxsd (language-type "language") (xsd-token-type)
-  ((spec-pattern :initform "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
-		 :reader spec-pattern
-		 :allocation :class)))
+  ((patterns :initform '("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"))))
 
 
 ;;; Name
 
 (defxsd (name-type "Name") (xsd-token-type)
-  ((spec-pattern :initform "\\i\\c*"
-		 :reader spec-pattern
-		 :allocation :class)))
+  ((patterns :initform '("\\i\\c*"))))
 
 
 ;;; NCName
 
 (defxsd (ncname-type "NCName") (name-type)
-  ((spec-pattern :initform "[\\i-[:]][\\c-[:]]*"
-		 :reader spec-pattern
-		 :allocation :class)))
+  ((patterns :initform '("[\\i-[:]][\\c-[:]]*"))))
 
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
@@ -1152,9 +1180,7 @@
 ;;; NMTOKEN
 
 (defxsd (nmtoken-type "NMTOKEN") (xsd-token-type)
-  ((spec-pattern :initform "\\c+"
-		 :reader spec-pattern
-		 :allocation :class)))
+  ((patterns :initform '("\\c+"))))
 
 
 ;;; NMTOKENS
@@ -1172,7 +1198,7 @@
 ;; das pattern im schema nicht.
 (defmethod parse/xsd ((type integer-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-][1-9]\d*$" e)
+  (if (cl-ppcre:all-matches "^[+-]?[1-9]\d*$" e)
       (parse-number:parse-number e)
       :error))
 
