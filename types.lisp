@@ -651,7 +651,7 @@
 			  ezone)))))))))))
 
 (defun scan-to-strings (&rest args)
-  (coerce (apply #'cl-ppcre:scan-to-strings args) 'list))
+  (coerce (nth-value 1 (apply #'cl-ppcre:scan-to-strings args)) 'list))
 
 (defmethod parse/xsd ((type duration-type) e context)
   (declare (ignore context))
@@ -785,14 +785,14 @@
   (destructuring-bind (&optional minusp y m d h min s tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
                           ^(-)?                     # opt. minus
-                          ((?:[1-9]\d*)?\d{4})      # year
-                          -(\d\d)                   # month
-                          -(\d\d)                   # day
+                          ((?:[1-9]\\d*)?\\d{4})      # year
+                          -(\\d\\d)                   # month
+                          -(\\d\\d)                   # day
                           T                         # (time)
-                          (\d\d)                    # hour
-                          -(\d\d)                   # minute
-                          -(\d+(?:[.]\\d+)?)        # second
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          (\\d\\d)                    # hour
+                          -(\\d\\d)                   # minute
+                          -(\\d+(?:[.]\\d+)?)        # second
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time minusp y m d h min s tz tz-sign tz-h tz-m)))
@@ -806,10 +806,10 @@
   (declare (ignore context))
   (destructuring-bind (&optional h min s tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
-                          ^(\d\d)                    # hour
-                          -(\d\d)                   # minute
-                          -(\d+(?:[.]\\d+)?)        # second
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ^(\\d\\d)                    # hour
+                          -(\\d\\d)                   # minute
+                          -(\\d+(?:[.]\\d+)?)        # second
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time nil 1 1 1 h min s tz tz-sign tz-h tz-m
@@ -825,10 +825,10 @@
   (destructuring-bind (&optional minusp y m d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
                           ^(-)?                     # opt. minus
-                          ((?:[1-9]\d*)?\d{4})      # year
-                          -(\d\d)                   # month
-                          -(\d\d)                   # day
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ((?:[1-9]\\d*)?\\d{4})      # year
+                          -(\\d\\d)                   # month
+                          -(\\d\\d)                   # day
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time minusp y m d 0 0 0 tz tz-sign tz-h tz-m
@@ -844,8 +844,8 @@
   (destructuring-bind (&optional minusp y m)
       (scan-to-strings "(?x)
                           ^(-)?                     # opt. minus
-                          ((?:[1-9]\d*)?\d{4})      # year
-                          -(\d\d)                   # month
+                          ((?:[1-9]\\d*)?\\d{4})      # year
+                          -(\\d\\d)                   # month
                           $"
 		       e)
     (parse-time minusp y m 1 0 0 0 nil nil nil nil
@@ -861,8 +861,8 @@
   (destructuring-bind (&optional minusp y tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
                           ^(-)?                     # opt. minus
-                          ((?:[1-9]\d*)?\d{4})      # year
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ((?:[1-9]\\d*)?\\d{4})      # year
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time minusp y 1 1 0 0 0 tz tz-sign tz-h tz-m
@@ -877,9 +877,9 @@
   (declare (ignore context))
   (destructuring-bind (&optional m d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
-                          ^--(\d\d)                 # month
-                          -(\d\d)                   # day
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ^--(\\d\\d)                 # month
+                          -(\\d\\d)                   # day
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time nil 1 m d 0 0 0 tz tz-sign tz-h tz-m
@@ -894,8 +894,8 @@
   (declare (ignore context))
   (destructuring-bind (&optional d tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
-                          ---(\d\d)                   # day
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ---(\\d\\d)                   # day
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time nil 1 1 d 0 0 0 tz tz-sign tz-h tz-m
@@ -910,8 +910,8 @@
   (declare (ignore context))
   (destructuring-bind (&optional m tz tz-sign tz-h tz-m)
       (scan-to-strings "(?x)
-                          ^--(\d\d)                 # month
-                          (([+-])(\d\d):(\d\d)|Z)?  # opt timezone
+                          ^--(\\d\\d)                 # month
+                          (([+-])(\\d\\d):(\\d\\d)|Z)?  # opt timezone
                           $"
 		       e)
     (parse-time nil 1 m 1 0 0 0 tz tz-sign tz-h tz-m
@@ -992,7 +992,7 @@
 ;; Das stimmt unter LispWorks bestimmt wieder nicht.
 (defmethod parse/xsd ((type float-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?\d+([.]\d+)?([eE][+-]?\d+)?$" e)
+  (if (cl-ppcre:all-matches "^[+-]?\\d+([.]\\d+)?([eE][+-]?\\d+)?$" e)
       (coerce (parse-number:parse-number e) 'single-float)
       :error))
 
@@ -1035,10 +1035,12 @@
 (defmethod parse/xsd ((type decimal-type) e context)
   (declare (ignore context))
   (destructuring-bind (&optional a b)
-      (scan-to-strings "^([+-]?\d+)(?:[.](\d+))?$" e)
+      (scan-to-strings "^([+-]?\\d+)(?:[.](\\d+))?$" e)
     (if a
 	(+ (parse-integer a)
-	   (/ (parse-integer b) (expt 10 (length b))))
+	   (if b
+	       (/ (parse-integer b) (expt 10 (length b)))
+	       0))
 	:error)))
 
 
@@ -1056,7 +1058,7 @@
 ;; Auch das ist nicht garantiert.
 (defmethod parse/xsd ((type double-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?\d+([.]\d+)?([eE][+-]?\d+)?$" e)
+  (if (cl-ppcre:all-matches "^[+-]?\\d+([.]\\d+)?([eE][+-]?\\d+)?$" e)
       (coerce (parse-number:parse-number e) 'double-float)
       :error))
 
@@ -1227,7 +1229,7 @@
 ;; das pattern im schema nicht.
 (defmethod parse/xsd ((type integer-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?[1-9]\d*$" e)
+  (if (cl-ppcre:all-matches "^[+-]?[1-9]\\d*$" e)
       (parse-number:parse-number e)
       :error))
 
