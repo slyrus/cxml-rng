@@ -467,7 +467,25 @@
 	       (or (null max-length) (<= l max-length)))))))
 
 
-;;; Primitive types
+;;; enumeration-type
+
+(defclass enumeration-type (xsd-type length-mixin)
+    ((word-type :reader word-type)))
+
+(defmethod initialize-instance :after ((type enumeration-type) &key)
+  (setf (min-length type) (max* 1 (min-length type))))
+
+(defmethod parse/xsd ((type enumeration-type) e context)
+  (let ((wt (word-type type)))
+    (loop
+       for word in (cl-ppcre:split " " str)
+       for v = (parse wt word context)
+       collect v
+       when (eq v) do (return :error))))
+
+
+
+;;;; Primitive types
 
 ;;; duration
 
@@ -1060,8 +1078,8 @@
 
 ;;; IDREFS
 
-;; fixme?
-(defxsd (idrefs-type "IDREFS") (xsd-type) ())
+(defxsd (idrefs-type "IDREFS") (enumeration-type)
+  ((word-type :initform (make-instance 'idref-type))))
 
 
 ;;; ENTITY
@@ -1069,10 +1087,10 @@
 (defxsd (entity-type "ENTITY") (ncname-type) ())
 
 
-;;; IDREFS
+;;; ENTITIES
 
-;; fixme?
-(defxsd (entities-type "ENTITIES") (xsd-type) ())
+(defxsd (entities-type "ENTITIES") (enumeration-type)
+  ((word-type :initform (make-instance 'entity-type))))
 
 
 ;;; NMTOKEN
@@ -1085,7 +1103,8 @@
 
 ;;; NMTOKENS
 
-(defxsd (nmtokens-type "NMTOKENS") (xsd-type) ())
+(defxsd (nmtokens-type "NMTOKENS") (enumeration-type)
+  ((word-type :initform (make-instance 'nmtoken-type))))
 
 
 ;;; integer
