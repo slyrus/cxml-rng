@@ -955,8 +955,8 @@
 (defxsd (year-month-type "gYearMonth") (xsd-type time-ordering-mixin)
   ()
   (:documentation
-   "@short{The date data type, representing the calendar month of a specific
-    year.}
+   "@short{The gYearMonth data type, representing the calendar month of a
+    specific year.}
 
     @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
     the @a[http://www.w3.org/TR/xmlschema-2/#gYearMonth]{specification}.
@@ -989,7 +989,7 @@
 (defxsd (year-type "gYear") (xsd-type time-ordering-mixin)
   ()
   (:documentation
-   "@short{The date data type, representing a calendar year.}
+   "@short{The gYear data type, representing a calendar year.}
 
     @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
     the @a[http://www.w3.org/TR/xmlschema-2/#gYear]{specification}.
@@ -1022,7 +1022,7 @@
 (defxsd (month-day-type "gMonthDay") (xsd-type time-ordering-mixin)
   ()
   (:documentation
-   "@short{The date data type, representing a calendar month and day.}
+   "@short{The gMonthDay data type, representing a calendar month and day.}
 
     @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
     the @a[http://www.w3.org/TR/xmlschema-2/#monthDay]{specification}.
@@ -1055,7 +1055,7 @@
 (defxsd (day-type "gDay") (xsd-type time-ordering-mixin)
   ()
   (:documentation
-   "@short{The date data type, representing a calendar day.}
+   "@short{The gDay data type, representing a calendar day.}
 
     @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
     the @a[http://www.w3.org/TR/xmlschema-2/#gDay]{specification}.
@@ -1087,7 +1087,7 @@
 (defxsd (month-type "gMonth") (xsd-type time-ordering-mixin)
   ()
   (:documentation
-   "@short{The date data type, representing a calendar month.}
+   "@short{The gMonth data type, representing a calendar month.}
 
     @b{Syntax.} This type accepts an ISO-like syntax.  For details refer to
     the @a[http://www.w3.org/TR/xmlschema-2/#gMonth]{specification}.
@@ -1116,7 +1116,18 @@
 
 ;;; boolean
 
-(defxsd (boolean-type "boolean") (xsd-type) ())
+(defxsd (boolean-type "boolean") (xsd-type)
+  ()
+  (:documentation
+   "@short{The boolean data type.}
+
+    @b{Syntax.} \"1\", \"0\",  \"true\", or \"false\".
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#boolean]{specification}.
+
+    @b{Implementation.} This type returns @code{t} or @code{nil}.
+
+    @b{Parameters.} No parameters except for @fun{pattern} are available for
+    this type."))
 
 (defmethod parse/xsd ((type boolean-type) e context)
   (declare (ignore context))
@@ -1127,7 +1138,20 @@
 
 ;;; base64Binary
 
-(defxsd (base64-binary-type "base64Binary") (xsd-type length-mixin) ())
+(defxsd (base64-binary-type "base64Binary") (xsd-type length-mixin)
+  ()
+  (:documentation
+   "@short{The base64Binary data type.}
+
+    @b{Syntax.} Normal Base64 syntax.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#base64Binary]{specification}.
+
+    @b{Implementation.} This type returns an @code{(unsigned-byte 8)}
+    vector.
+
+    @b{Parameters.} This type allows restrictions on the length of the octet
+    vector through the parameters @fun{exact-length}, @fun{min-length}, and
+    @fun{max-length}."))
 
 (defmethod equal-using-type ((type base64-binary-type) u v)
   (equalp u v))
@@ -1151,7 +1175,21 @@
 
 ;;; hexBinary
 
-(defxsd (hex-binary-type "hexBinary") (xsd-type length-mixin) ())
+(defxsd (hex-binary-type "hexBinary") (xsd-type length-mixin)
+  ()
+  (:documentation
+   "@short{The hexBinary data type.}
+
+    @b{Syntax.} A sequence of two-digit hexadecimal numbers representing
+    one octet each.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#hexBinary]{specification}.
+
+    @b{Implementation.} This type returns an @code{(unsigned-byte 8)}
+    vector.
+
+    @b{Parameters.} This type allows restrictions on the length of the octet
+    vector through the parameters @fun{exact-length}, @fun{min-length}, and
+    @fun{max-length}."))
 
 (defmethod equal-using-type ((type hex-binary-type) u v)
   (equalp u v))
@@ -1176,7 +1214,22 @@
 
 ;;; float
 
-(defxsd (float-type "float") (xsd-type ordering-mixin) ())
+(defxsd (float-type "float") (xsd-type ordering-mixin)
+  ()
+  (:documentation
+   "@short{The float data type.}
+
+    @b{Syntax.} A floating-point number in a \"scientific notation\".
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#float]{specification}.
+
+    @b{Implementation.} This type returns a @code{single-float} or, on
+    implementations where Infinity and Nan cannot be represented as such,
+    a special symbol that is treated as if it was Infinity or NaN by the
+    built-in ordering.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}."))
 
 (defmethod equal-using-type ((type float-type) u v)
   #+(or sbcl allegro) (= u v)
@@ -1230,7 +1283,19 @@
 		    :accessor fraction-digits)
    (total-digits :initform nil
 		 :initarg :total-digits
-		 :accessor total-digits)))
+		 :accessor total-digits))
+  (:documentation
+   "@short{The decimal data type.}
+
+    @b{Syntax.} A rational number, written using an optional decimal point
+    and decimal places.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#decimal]{specification}.
+
+    @b{Implementation.} This type returns a @code{rational}.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}."))
 
 (defmethod describe-facets progn ((object decimal-type) stream)
   (dolist (slot '(fraction-digits total-digits))
@@ -1291,7 +1356,22 @@
 
 ;;; double
 
-(defxsd (double-type "double") (xsd-type ordering-mixin) ())
+(defxsd (double-type "double") (xsd-type ordering-mixin)
+  ()
+  (:documentation
+   "@short{The double data type.}
+
+    @b{Syntax.} A floating-point number in a \"scientific notation\".
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#double]{specification}.
+
+    @b{Implementation.} This type returns a @code{double-float} or, on
+    implementations where Infinity and Nan cannot be represented as such,
+    a special symbol that is treated as if it was Infinity or NaN by the
+    built-in ordering.
+
+    @b{Parameters.} This type is ordered and allows the parameters
+    @fun{max-inclusive}, @fun{min-inclusive},
+    @fun{max-exclusive}, and @fun{min-exclusive}."))
 
 (defmethod equal-using-type ((type double-type) u v)
   #+(or sbcl allegro) (= u v)
@@ -1315,7 +1395,20 @@
 
 ;;; AnyURi
 
-(defxsd (any-uri-type "anyURI") (xsd-type length-mixin) ())
+(defxsd (any-uri-type "anyURI") (xsd-type length-mixin)
+  ()
+  (:documentation
+   "@short{The anyURI data type.}
+
+    @b{Syntax.} An arbitrary string (!).
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#anyURI]{specification}.
+
+    @b{Implementation.} This type returns a normalized string in which
+    special characters have been escaped.
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    normalized string through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
 
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
@@ -1329,8 +1422,43 @@
 
 (defclass qname-like (xsd-type length-mixin) ())
 
-(defxsd (qname-type "QName") (qname-like) ())
-(defxsd (notation-type "NOTATION") (qname-like) ())
+(defxsd (qname-type "QName") (qname-like)
+  ()
+  (:documentation
+   "@short{The QName data type.}
+
+    @b{Syntax.} A Qualified Name, as per the \"Namespaces in XML\"
+    specification.  The namespace prefix must be bound to a namespace URI
+    in the context.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#QName]{specification}.
+
+    @b{Context dependent.} This type is context dependent and requires
+    the @code{context} argument to @fun{parse} and @fun{validp}.
+
+    @b{Implementation.} This type returns a structure with two components,
+    the namespace URI and the local name.  fixme: and the original length.
+    fixme: export this structure.
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    original QName through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
+
+(defxsd (notation-type "NOTATION") (qname-like)
+  ()
+  (:documentation
+   "@short{The NOTATION data type.}
+
+    @b{Syntax.} A qualified name.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#NOTATION]{specification}.
+
+    @b{Implementation.} This type is treated exactly like
+    @class{qname-type}, as specified in
+    @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
+    Schema Datatypes with RELAX NG}.
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    original QName through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
 
 (defstruct (qname (:constructor make-qname (uri lname length)))
   uri
@@ -1365,7 +1493,20 @@
 
 ;;; string
 
-(defxsd (xsd-string-type "string") (xsd-type length-mixin) ())
+(defxsd (xsd-string-type "string") (xsd-type length-mixin)
+  ()
+  (:documentation
+   "@short{The string data type.}
+
+    @b{Syntax.} An arbitrary string.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#string]{specification}.
+
+    @b{Implementation.} Returns the string unchanged.  This is the only
+    XSD type that does not normalize or replace whitespace.
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    string through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
 
 (defmethod equal-using-type ((type xsd-string-type) u v)
   (equal u v))
@@ -1383,7 +1524,25 @@
 
 ;;; normalizedString
 
-(defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
+(defxsd (normalized-string-type "normalizedString") (xsd-string-type)
+  ()
+  (:documentation
+   "@short{The normalizedString data type, derived from string.}
+
+    @b{Syntax.} An arbitrary string.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#normalizedString]{specification}.
+
+    @b{Implementation.} Returns the string with whitespace replaced.
+
+    I.e., each whitespace character is replaced by a space
+    (character code 32), but multiple spaces, as well as
+    leading and trailing spaces will still be returned.
+
+    (This is the only XSD type that replaces whitespace in this way.)
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    normalized string through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
 
 (defmethod munge-whitespace ((type normalized-string-type) e)
   (replace-whitespace e))
@@ -1391,7 +1550,26 @@
 
 ;;; token
 
-(defxsd (xsd-token-type "token") (normalized-string-type) ())
+(defxsd (xsd-token-type "token") (normalized-string-type)
+  ()
+  (:documentation
+   "@short{The token data type, derived from normalizedString.}
+
+    @b{Syntax.} An arbitrary string.
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#token]{specification}.
+
+    @b{Implementation.} Returns the string with normalized whitespace.
+
+    I.e., each whitespace character is replaced by a space
+    (character code 32), multiple spaces are collapsed into one character,
+    and leading and trailing spaces will be removed.
+
+    (This is the standard behaviour of all XSD types with the exception of
+    token's supertypes @class{string-type} and @class{normalized-string-type}.)
+
+    @b{Parameters.} This type allows restrictions on the length of the
+    normalized string through the parameters @fun{exact-length},
+    @fun{min-length}, and @fun{max-length}."))
 
 (defmethod munge-whitespace ((type xsd-token-type) e)
   (normalize-whitespace e))
@@ -1400,19 +1578,46 @@
 ;;; language
 
 (defxsd (language-type "language") (xsd-token-type)
-  ((patterns :initform '("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"))))
+  ((patterns :initform '("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*")))
+  (:documentation
+   "@short{The language data type, derived from token.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#language]{specification}.
+
+    @b{Restrictions.} This type restricts its supertype @class{token-type}
+    to strings of the pattern \"[a-zA-Z]{1,8@}(-[a-zA-Z0-9]{1,8@})*\".
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 
 ;;; Name
 
 (defxsd (name-type "Name") (xsd-token-type)
-  ((patterns :initform '("\\i\\c*"))))
+  ((patterns :initform '("\\i\\c*")))
+  (:documentation
+   "@short{The Name data type, derived from token.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#Name]{specification}.
+
+    @b{Restrictions.} This type restricts its supertype @class{token-type}
+    to strings of the pattern \"\\i\\c*\".
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 
 ;;; NCName
 
 (defxsd (ncname-type "NCName") (name-type)
-  ((patterns :initform '("[\\i-[:]][\\c-[:]]*"))))
+  ((patterns :initform '("[\\i-[:]][\\c-[:]]*")))
+  (:documentation
+   "@short{The NCName data type, derived from Name.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#NCName]{specification}.
+
+    @b{Restrictions.} This type restricts its supertype @class{name-type}
+    to strings of the pattern \"[\\i-[:]][\\c-[:]]*\".
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
@@ -1428,23 +1633,74 @@
 
 ;;; ID
 
-(defxsd (id-type "ID") (ncname-type) ())
+(defxsd (id-type "ID") (ncname-type)
+  ()
+  (:documentation
+   "@short{The ID data type, derived from NCName.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#ID]{specification}.
+
+    @b{Restrictions.} None, except when used with DTD compatibility.
+    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
+    Schema Datatypes with RELAX NG}.
+    (fixme: not implemented yet -- dfl, 2007-06-06)
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 
 ;;; IDREF
 
-(defxsd (idref-type "IDREF") (id-type) ())
+(defxsd (idref-type "IDREF") (id-type)
+  ()
+  (:documentation
+   "@short{The IDREF data type, derived from ID.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#IDREF]{specification}.
+
+    @b{Restrictions.} None, except when used with DTD compatibility.
+    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
+    Schema Datatypes with RELAX NG}.
+    (fixme: not implemented yet -- dfl, 2007-06-06)
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 
 ;;; IDREFS
 
 (defxsd (idrefs-type "IDREFS") (enumeration-type)
-  ((word-type :initform (make-instance 'idref-type))))
+  ((word-type :initform (make-instance 'idref-type)))
+  (:documentation
+   "@short{The IDREFS data type, an enumeration.}
+
+    @b{Syntax.} A whitespace-separated sequence of @class{idref-type}
+    values, with at least one element.
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#IDREFS]{specification}.
+
+    @b{Implementation.} This type returns a list of the values as returned by
+    @class{idref-type}.
+
+    @b{Parameters.} This type allows restrictions on the number of values
+    through the parameters @fun{exact-length},@fun{min-length}, and
+    @fun{max-length}."))
 
 
 ;;; ENTITY
 
-(defxsd (entity-type "ENTITY") (ncname-type) ())
+(defxsd (entity-type "ENTITY") (ncname-type)
+  ()
+  (:documentation
+   "@short{The ENTITY data type, derived from NCName.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#ENTITY]{specification}.
+
+    @b{Restrictions.} This type restricts its supertype @class{ncname-type}
+    to names that have been declared as unparsed entities in the context.
+
+    @b{Context dependent.} This type is context dependent and requires
+    the @code{context} argument to @fun{parse} and @fun{validp}.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod parse/xsd ((type entity-type) e context)
   (if (context-find-unparsed-entity context e)
@@ -1455,19 +1711,59 @@
 ;;; ENTITIES
 
 (defxsd (entities-type "ENTITIES") (enumeration-type)
-  ((word-type :initform (make-instance 'entity-type))))
+  ((word-type :initform (make-instance 'entity-type)))
+  (:documentation
+   "@short{The ENTITIES data type, an enumeration.}
+
+    @b{Syntax.} A whitespace-separated sequence of @class{entity-type}
+    values, with at least one element.
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#ENTITIES]{specification}.
+
+    @b{Implementation.} This type returns a list of the values as returned by
+    @class{entity-type}.
+
+    @b{Context dependent.} This type is context dependent and requires
+    the @code{context} argument to @fun{parse} and @fun{validp}.
+
+    @b{Parameters.} This type allows restrictions on the number of values
+    through the parameters @fun{exact-length},@fun{min-length}, and
+    @fun{max-length}."))
 
 
 ;;; NMTOKEN
 
 (defxsd (nmtoken-type "NMTOKEN") (xsd-token-type)
-  ((patterns :initform '("\\c+"))))
+  ((patterns :initform '("\\c+")))
+  (:documentation
+   "@short{The NMTOKEN data type, derived from token.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#NMTOKEN]{specification}.
+
+    @b{Restrictions.} This type restricts its supertype @class{token-type}
+    to strings of the pattern \"\\c+\".
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 
 ;;; NMTOKENS
 
 (defxsd (nmtokens-type "NMTOKENS") (enumeration-type)
-  ((word-type :initform (make-instance 'nmtoken-type))))
+  ((word-type :initform (make-instance 'nmtoken-type)))
+  (:documentation
+   "@short{The NMTOKENS data type, an enumeration.}
+
+    @b{Syntax.} A whitespace-separated sequence of @class{nmtoken-type}
+    values, with at least one element.
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#NMTOKENS]{specification}.
+
+    @b{Implementation.} This type returns a list of the values as returned by
+    @class{nmtoken-type}.
+
+    @b{Parameters.} This type allows restrictions on the number of values
+    through the parameters @fun{exact-length},@fun{min-length}, and
+    @fun{max-length}."))
 
 
 ;;; integer

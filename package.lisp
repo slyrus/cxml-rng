@@ -251,8 +251,9 @@ T
       @aboutfun{context-find-namespace-binding}
       @aboutfun{context-find-unparsed-entity}
     @end{section}
-    @begin[XSD data types]{section}
-      The following types are part of the XSD built-in data type library:
+    @begin[Primitive XSD built-in types]{section}
+      The following primitive types are part of the XSD built-in data type
+      library:
 
       @aboutclass{duration-type}
       @aboutclass{date-time-type}
@@ -273,6 +274,21 @@ T
       @aboutclass{qname-type}
       @aboutclass{notation-type}
       @aboutclass{xsd-string-type}
+    @end{section}
+    @begin[Enumerated XSD built-in types]{section}
+      The following types are part of the XSD built-in data type
+      library, and are defined as derived types through enumeration.
+      Relax NG does not implement the enumeration facet, so although these
+      types are described as \"derived\", they are implemented directly.
+
+      @aboutclass{idrefs-type}
+      @aboutclass{entities-type}
+      @aboutclass{nmtokens-type}
+    @end{section}
+    @begin[Derived XSD built-in types]{section}
+      The following types are part of the XSD built-in data type
+      library, and are defined as derived types through restriction.
+
       @aboutclass{normalized-string-type}
       @aboutclass{xsd-token-type}
       @aboutclass{language-type}
@@ -280,11 +296,8 @@ T
       @aboutclass{ncname-type}
       @aboutclass{id-type}
       @aboutclass{idref-type}
-      @aboutclass{idrefs-type}
       @aboutclass{entity-type}
-      @aboutclass{entities-type}
       @aboutclass{nmtoken-type}
-      @aboutclass{nmtokens-type}
       @aboutclass{integer-type}
       @aboutclass{non-positive-integer-type}
       @aboutclass{negative-integer-type}
