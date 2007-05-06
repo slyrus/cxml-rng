@@ -42,8 +42,8 @@
   value)
 
 (setf (documentation 'make-param 'function)
-      "@arg[name]{paramater name, a string}
-       @arg[value]{paramater value, a string}
+      "@arg[name]{parameter name, a string}
+       @arg[value]{parameter value, a string}
        @return{a @class{param}}
        Create a data type parameter.
        @see{param-name}
@@ -85,11 +85,13 @@
     @return{an instance of @class{data-type}, or @code{nil}}
     @short{Look up the type named @em{name} in datatype library @em{library}.}
 
-    Return a type instance for this type and the additional parameters,
-    or @code{nil} if the type does not exist.
-
     Additional parameters (knows as restricting facets in XSD) can be passed
     to specify or restrict the type for the purposes of @fun{validp}.
+
+    Return a type instance for this type and the additional parameters,
+    @code{nil} if the type does not exist, or
+    @code{:error} if the type exists, but the specified parameters are not
+    valid for that type.
 
     @see{data-type}"))
 
@@ -397,9 +399,9 @@
     is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}.
 
     @b{Parameters.} All XSD types accept regular expressions restricting
-    the set of strings accepted by the type.  The pattern paramater is
+    the set of strings accepted by the type.  The pattern parameter is
     called @code{\"pattern\"}.  This parameter can be repeated to specify
-    multiple regular expressions than all must match.
+    multiple regular expressions that must all match the data.
     As an initarg, specify @code{:pattern} with a list of regular expressions
     as an argument.
 
@@ -549,8 +551,7 @@
       data-type-dependent partial ordering.}
 
     A method for this function is provided only by types that have a
-    natural partial ordering.  The ordering is described in the
-    documentation for the type.
+    natural partial ordering.
 
     @see{equal-using-type}"))
 
