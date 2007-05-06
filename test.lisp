@@ -131,9 +131,15 @@
 	    (format t " FAIL: incorrect condition type: ~A~%" c)
 	    nil)))))
 
+(defvar *test-xmllint*)
+
 (defun run-nist-tests
-    (&optional (p #p"/home/david/NISTSchemaTests/NISTXMLSchemaTestSuite.xml"))
-  (dribble "/home/david/src/lisp/cxml-rng/NIST" :if-exists :rename-and-delete)
+    (*test-xmllint*
+     &optional (p #p"/home/david/NISTSchemaTests/NISTXMLSchemaTestSuite.xml"))
+  (dribble (if *test-xmllint*
+	       "/home/david/src/lisp/cxml-rng/NIST-xmllint"
+	       "/home/david/src/lisp/cxml-rng/NIST")
+	   :if-exists :rename-and-delete)
   (klacks:with-open-source (s (cxml:make-source p))
     (let ((total 0)
 	  (pass 0))
@@ -158,14 +164,17 @@
 	       (klacks:peek-next r)
 	     uri
 	     (unless key
-	       (return)) 
+	       (return))
 	     (when (eq key :start-element)
 	       (cond
 		 ((equal lname "Schema")
 		  (incf total)
-		  (setf schema
-			(read-nist-grammar (klacks:get-attribute r "href")
-					   base))
+		  (let ((href (klacks:get-attribute r "href")))
+		    (setf schema
+			  (if (or (search "-enumeration-" href)
+				  (search "-whiteSpace-" href))
+			      :ignore
+			      (read-nist-grammar href base))))
 		  (when schema
 		    (incf total)))
 		 ((equal lname "Instance")
@@ -181,6 +190,21 @@
     ((eq schema :ignore)
      (format t "PASS INSTANCE ~A: (ignored)~%" href)
      t)
+    ((stringp schema)
+     (assert *test-xmllint*)
+     (let ((asdf::*VERBOSE-OUT* (make-string-output-stream)))
+       (cond
+	 ((zerop (asdf:run-shell-command
+		  "xmllint -relaxng ~A ~A"
+		  schema
+		  (namestring (merge-pathnames href base))))
+	  (format t "PASS INSTANCE ~A~%" href)
+	  t)
+	 (t
+	  (format t "FAIL INSTANCE ~A: failed to validate:~_ ~A~%"
+		  href
+		  (get-output-stream-string asdf::*VERBOSE-OUT*))
+	  nil))))
     (schema
      (handler-case
 	 (progn
@@ -202,7 +226,9 @@
   (let ((p (make-pathname :type "rng" :defaults href)))
     (handler-case
 	(prog1
-	    (parse-schema (merge-pathnames p base))
+	    (if *test-xmllint*
+		(namestring (merge-pathnames p base))
+		(parse-schema (merge-pathnames p base)))
 	  (format t "PASS ~A~%" href)
 	  t)
       (rng-error (c)

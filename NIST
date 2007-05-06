@@ -192,37 +192,31 @@ PASS INSTANCE NISTXML-decimal-pattern-5-2.xml
 PASS INSTANCE NISTXML-decimal-pattern-5-3.xml
 PASS INSTANCE NISTXML-decimal-pattern-5-4.xml
 PASS INSTANCE NISTXML-decimal-pattern-5-5.xml
-PASS NISTSchema-decimal-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-decimal-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-decimal-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-decimal-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-decimal-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-decimal-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-decimal-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-decimal-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-decimal-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-decimal-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-decimal-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-decimal-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-decimal-whiteSpace-1-3.xml: (ignored)
@@ -398,37 +392,31 @@ PASS INSTANCE NISTXML-integer-pattern-5-2.xml
 PASS INSTANCE NISTXML-integer-pattern-5-3.xml
 PASS INSTANCE NISTXML-integer-pattern-5-4.xml
 PASS INSTANCE NISTXML-integer-pattern-5-5.xml
-PASS NISTSchema-integer-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-integer-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-integer-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-integer-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-integer-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-integer-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-integer-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-integer-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-integer-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-integer-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-integer-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-integer-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-integer-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-integer-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-integer-whiteSpace-1-3.xml: (ignored)
@@ -604,37 +592,31 @@ PASS INSTANCE NISTXML-nonPositiveInteger-pattern-5-2.xml
 PASS INSTANCE NISTXML-nonPositiveInteger-pattern-5-3.xml
 PASS INSTANCE NISTXML-nonPositiveInteger-pattern-5-4.xml
 PASS INSTANCE NISTXML-nonPositiveInteger-pattern-5-5.xml
-PASS NISTSchema-nonPositiveInteger-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-nonPositiveInteger-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-nonPositiveInteger-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-nonPositiveInteger-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-nonPositiveInteger-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-nonPositiveInteger-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonPositiveInteger-whiteSpace-1-3.xml: (ignored)
@@ -810,37 +792,31 @@ PASS INSTANCE NISTXML-negativeInteger-pattern-5-2.xml
 PASS INSTANCE NISTXML-negativeInteger-pattern-5-3.xml
 PASS INSTANCE NISTXML-negativeInteger-pattern-5-4.xml
 PASS INSTANCE NISTXML-negativeInteger-pattern-5-5.xml
-PASS NISTSchema-negativeInteger-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-negativeInteger-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-negativeInteger-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-negativeInteger-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-negativeInteger-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-negativeInteger-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-negativeInteger-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-negativeInteger-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-negativeInteger-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-negativeInteger-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-negativeInteger-whiteSpace-1-3.xml: (ignored)
@@ -1016,37 +992,31 @@ PASS INSTANCE NISTXML-long-pattern-5-2.xml
 PASS INSTANCE NISTXML-long-pattern-5-3.xml
 PASS INSTANCE NISTXML-long-pattern-5-4.xml
 PASS INSTANCE NISTXML-long-pattern-5-5.xml
-PASS NISTSchema-long-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-long-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-long-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-long-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-long-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-long-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-long-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-long-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-long-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-long-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-long-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-long-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-long-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-long-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-long-whiteSpace-1-3.xml: (ignored)
@@ -1222,37 +1192,31 @@ PASS INSTANCE NISTXML-int-pattern-5-2.xml
 PASS INSTANCE NISTXML-int-pattern-5-3.xml
 PASS INSTANCE NISTXML-int-pattern-5-4.xml
 PASS INSTANCE NISTXML-int-pattern-5-5.xml
-PASS NISTSchema-int-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-int-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-int-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-int-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-int-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-int-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-int-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-int-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-int-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-int-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-int-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-int-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-int-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-int-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-int-whiteSpace-1-3.xml: (ignored)
@@ -1428,37 +1392,31 @@ PASS INSTANCE NISTXML-short-pattern-5-2.xml
 PASS INSTANCE NISTXML-short-pattern-5-3.xml
 PASS INSTANCE NISTXML-short-pattern-5-4.xml
 PASS INSTANCE NISTXML-short-pattern-5-5.xml
-PASS NISTSchema-short-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-short-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-short-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-short-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-short-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-short-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-short-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-short-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-short-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-short-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-short-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-short-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-short-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-short-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-short-whiteSpace-1-3.xml: (ignored)
@@ -1622,37 +1580,31 @@ PASS INSTANCE NISTXML-byte-pattern-5-2.xml
 PASS INSTANCE NISTXML-byte-pattern-5-3.xml
 PASS INSTANCE NISTXML-byte-pattern-5-4.xml
 PASS INSTANCE NISTXML-byte-pattern-5-5.xml
-PASS NISTSchema-byte-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-byte-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-byte-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-byte-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-byte-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-byte-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-byte-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-byte-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-byte-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-byte-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-byte-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-byte-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-byte-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-byte-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-byte-whiteSpace-1-3.xml: (ignored)
@@ -1828,37 +1780,31 @@ PASS INSTANCE NISTXML-nonNegativeInteger-pattern-5-2.xml
 PASS INSTANCE NISTXML-nonNegativeInteger-pattern-5-3.xml
 PASS INSTANCE NISTXML-nonNegativeInteger-pattern-5-4.xml
 PASS INSTANCE NISTXML-nonNegativeInteger-pattern-5-5.xml
-PASS NISTSchema-nonNegativeInteger-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-nonNegativeInteger-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-nonNegativeInteger-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-nonNegativeInteger-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-nonNegativeInteger-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-nonNegativeInteger-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-nonNegativeInteger-whiteSpace-1-3.xml: (ignored)
@@ -2034,37 +1980,31 @@ PASS INSTANCE NISTXML-unsignedLong-pattern-5-2.xml
 PASS INSTANCE NISTXML-unsignedLong-pattern-5-3.xml
 PASS INSTANCE NISTXML-unsignedLong-pattern-5-4.xml
 PASS INSTANCE NISTXML-unsignedLong-pattern-5-5.xml
-PASS NISTSchema-unsignedLong-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedLong-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-unsignedLong-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedLong-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-unsignedLong-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedLong-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-unsignedLong-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedLong-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-unsignedLong-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-unsignedLong-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedLong-whiteSpace-1-3.xml: (ignored)
@@ -2240,37 +2180,31 @@ PASS INSTANCE NISTXML-unsignedInt-pattern-5-2.xml
 PASS INSTANCE NISTXML-unsignedInt-pattern-5-3.xml
 PASS INSTANCE NISTXML-unsignedInt-pattern-5-4.xml
 PASS INSTANCE NISTXML-unsignedInt-pattern-5-5.xml
-PASS NISTSchema-unsignedInt-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedInt-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-unsignedInt-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedInt-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-unsignedInt-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedInt-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-unsignedInt-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedInt-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-unsignedInt-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-unsignedInt-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedInt-whiteSpace-1-3.xml: (ignored)
@@ -2446,37 +2380,31 @@ PASS INSTANCE NISTXML-unsignedShort-pattern-5-2.xml
 PASS INSTANCE NISTXML-unsignedShort-pattern-5-3.xml
 PASS INSTANCE NISTXML-unsignedShort-pattern-5-4.xml
 PASS INSTANCE NISTXML-unsignedShort-pattern-5-5.xml
-PASS NISTSchema-unsignedShort-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedShort-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-unsignedShort-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedShort-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-unsignedShort-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedShort-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-unsignedShort-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedShort-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-unsignedShort-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-unsignedShort-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedShort-whiteSpace-1-3.xml: (ignored)
@@ -2628,37 +2556,31 @@ PASS INSTANCE NISTXML-unsignedByte-pattern-3-2.xml
 PASS INSTANCE NISTXML-unsignedByte-pattern-3-3.xml
 PASS INSTANCE NISTXML-unsignedByte-pattern-3-4.xml
 PASS INSTANCE NISTXML-unsignedByte-pattern-3-5.xml
-PASS NISTSchema-unsignedByte-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedByte-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-unsignedByte-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedByte-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-unsignedByte-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedByte-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-unsignedByte-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedByte-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-unsignedByte-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-unsignedByte-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-unsignedByte-whiteSpace-1-3.xml: (ignored)
@@ -2834,37 +2756,31 @@ PASS INSTANCE NISTXML-positiveInteger-pattern-5-2.xml
 PASS INSTANCE NISTXML-positiveInteger-pattern-5-3.xml
 PASS INSTANCE NISTXML-positiveInteger-pattern-5-4.xml
 PASS INSTANCE NISTXML-positiveInteger-pattern-5-5.xml
-PASS NISTSchema-positiveInteger-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-positiveInteger-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-positiveInteger-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-positiveInteger-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-positiveInteger-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-positiveInteger-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-positiveInteger-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-positiveInteger-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-positiveInteger-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-positiveInteger-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-positiveInteger-whiteSpace-1-3.xml: (ignored)
@@ -3021,37 +2937,31 @@ PASS INSTANCE NISTXML-double-pattern-5-2.xml
 PASS INSTANCE NISTXML-double-pattern-5-3.xml
 PASS INSTANCE NISTXML-double-pattern-5-4.xml
 PASS INSTANCE NISTXML-double-pattern-5-5.xml
-PASS NISTSchema-double-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-double-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-double-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-double-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-double-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-double-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-double-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-double-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-double-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-double-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-double-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-double-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-double-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-double-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-double-whiteSpace-1-3.xml: (ignored)
@@ -3211,37 +3121,31 @@ PASS INSTANCE NISTXML-float-pattern-5-2.xml
 PASS INSTANCE NISTXML-float-pattern-5-3.xml
 PASS INSTANCE NISTXML-float-pattern-5-4.xml
 PASS INSTANCE NISTXML-float-pattern-5-5.xml
-PASS NISTSchema-float-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-float-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-float-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-float-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-float-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-float-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-float-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-float-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-float-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-float-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-float-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-float-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-float-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-float-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-float-whiteSpace-1-3.xml: (ignored)
@@ -3409,37 +3313,31 @@ PASS INSTANCE NISTXML-duration-pattern-5-2.xml
 PASS INSTANCE NISTXML-duration-pattern-5-3.xml
 PASS INSTANCE NISTXML-duration-pattern-5-4.xml
 PASS INSTANCE NISTXML-duration-pattern-5-5.xml
-PASS NISTSchema-duration-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-duration-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-duration-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-duration-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-duration-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-duration-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-duration-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-duration-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-duration-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-duration-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-duration-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-duration-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-duration-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-duration-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-duration-whiteSpace-1-3.xml: (ignored)
@@ -3587,37 +3485,31 @@ PASS INSTANCE NISTXML-dateTime-pattern-5-2.xml
 PASS INSTANCE NISTXML-dateTime-pattern-5-3.xml
 PASS INSTANCE NISTXML-dateTime-pattern-5-4.xml
 PASS INSTANCE NISTXML-dateTime-pattern-5-5.xml
-PASS NISTSchema-dateTime-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-dateTime-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-dateTime-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-dateTime-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-dateTime-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-dateTime-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-dateTime-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-dateTime-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-dateTime-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-dateTime-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-dateTime-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-dateTime-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-dateTime-whiteSpace-1-3.xml: (ignored)
@@ -3757,37 +3649,31 @@ PASS INSTANCE NISTXML-time-pattern-5-2.xml
 PASS INSTANCE NISTXML-time-pattern-5-3.xml
 PASS INSTANCE NISTXML-time-pattern-5-4.xml
 PASS INSTANCE NISTXML-time-pattern-5-5.xml
-PASS NISTSchema-time-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-time-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-time-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-time-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-time-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-time-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-time-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-time-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-time-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-time-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-time-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-time-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-time-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-time-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-time-whiteSpace-1-3.xml: (ignored)
@@ -3937,37 +3823,31 @@ PASS INSTANCE NISTXML-date-pattern-5-2.xml
 PASS INSTANCE NISTXML-date-pattern-5-3.xml
 PASS INSTANCE NISTXML-date-pattern-5-4.xml
 PASS INSTANCE NISTXML-date-pattern-5-5.xml
-PASS NISTSchema-date-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-date-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-date-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-date-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-date-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-date-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-date-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-date-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-date-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-date-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-date-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-date-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-date-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-date-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-date-whiteSpace-1-3.xml: (ignored)
@@ -4107,37 +3987,31 @@ PASS INSTANCE NISTXML-gYearMonth-pattern-5-2.xml
 PASS INSTANCE NISTXML-gYearMonth-pattern-5-3.xml
 PASS INSTANCE NISTXML-gYearMonth-pattern-5-4.xml
 PASS INSTANCE NISTXML-gYearMonth-pattern-5-5.xml
-PASS NISTSchema-gYearMonth-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYearMonth-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-gYearMonth-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYearMonth-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-gYearMonth-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYearMonth-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-gYearMonth-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYearMonth-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-gYearMonth-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-gYearMonth-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYearMonth-whiteSpace-1-3.xml: (ignored)
@@ -4273,37 +4147,31 @@ PASS INSTANCE NISTXML-gYear-pattern-5-2.xml
 PASS INSTANCE NISTXML-gYear-pattern-5-3.xml
 PASS INSTANCE NISTXML-gYear-pattern-5-4.xml
 PASS INSTANCE NISTXML-gYear-pattern-5-5.xml
-PASS NISTSchema-gYear-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-gYear-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-gYear-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-gYear-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-gYear-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gYear-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-gYear-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-gYear-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gYear-whiteSpace-1-3.xml: (ignored)
@@ -4443,37 +4311,31 @@ PASS INSTANCE NISTXML-gMonthDay-pattern-5-2.xml
 PASS INSTANCE NISTXML-gMonthDay-pattern-5-3.xml
 PASS INSTANCE NISTXML-gMonthDay-pattern-5-4.xml
 PASS INSTANCE NISTXML-gMonthDay-pattern-5-5.xml
-PASS NISTSchema-gMonthDay-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonthDay-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-gMonthDay-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonthDay-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-gMonthDay-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonthDay-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-gMonthDay-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonthDay-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-gMonthDay-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-gMonthDay-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonthDay-whiteSpace-1-3.xml: (ignored)
@@ -4609,37 +4471,31 @@ PASS INSTANCE NISTXML-gDay-pattern-5-2.xml
 PASS INSTANCE NISTXML-gDay-pattern-5-3.xml
 PASS INSTANCE NISTXML-gDay-pattern-5-4.xml
 PASS INSTANCE NISTXML-gDay-pattern-5-5.xml
-PASS NISTSchema-gDay-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gDay-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-gDay-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gDay-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-gDay-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gDay-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-gDay-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gDay-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-gDay-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gDay-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-gDay-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-3.xml: (ignored)
@@ -4804,37 +4660,31 @@ FAIL INSTANCE NISTXML-gMonth-pattern-5-4.xml: failed to validate: text node not 
   [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-4.xml> ]
 FAIL INSTANCE NISTXML-gMonth-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
   [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-5.xml> ]
-PASS NISTSchema-gMonth-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonth-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-gMonth-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonth-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-gMonth-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonth-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-gMonth-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonth-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-gMonth-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-gMonth-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-gMonth-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-gMonth-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-whiteSpace-1-3.xml: (ignored)
@@ -4952,49 +4802,41 @@ PASS INSTANCE NISTXML-string-pattern-5-2.xml
 PASS INSTANCE NISTXML-string-pattern-5-3.xml
 PASS INSTANCE NISTXML-string-pattern-5-4.xml
 PASS INSTANCE NISTXML-string-pattern-5-5.xml
-PASS NISTSchema-string-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-string-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-string-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-string-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-string-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-string-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-string-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-string-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-string-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-string-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-string-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-string-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-1-5.xml: (ignored)
-PASS NISTSchema-string-whiteSpace-2.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-string-whiteSpace-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-2-5.xml: (ignored)
-PASS NISTSchema-string-whiteSpace-3.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-string-whiteSpace-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-whiteSpace-3-3.xml: (ignored)
@@ -5112,43 +4954,36 @@ PASS INSTANCE NISTXML-normalizedString-pattern-5-2.xml
 PASS INSTANCE NISTXML-normalizedString-pattern-5-3.xml
 PASS INSTANCE NISTXML-normalizedString-pattern-5-4.xml
 PASS INSTANCE NISTXML-normalizedString-pattern-5-5.xml
-PASS NISTSchema-normalizedString-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-normalizedString-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-normalizedString-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-normalizedString-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-normalizedString-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-normalizedString-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-normalizedString-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-normalizedString-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-normalizedString-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-1-5.xml: (ignored)
-PASS NISTSchema-normalizedString-whiteSpace-2.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-whiteSpace-2-3.xml: (ignored)
@@ -5266,37 +5101,31 @@ PASS INSTANCE NISTXML-token-pattern-5-2.xml
 PASS INSTANCE NISTXML-token-pattern-5-3.xml
 PASS INSTANCE NISTXML-token-pattern-5-4.xml
 PASS INSTANCE NISTXML-token-pattern-5-5.xml
-PASS NISTSchema-token-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-token-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-token-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-token-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-token-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-token-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-token-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-token-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-token-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-token-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-token-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-token-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-whiteSpace-1-3.xml: (ignored)
@@ -5422,37 +5251,31 @@ PASS INSTANCE NISTXML-Name-pattern-5-2.xml
 PASS INSTANCE NISTXML-Name-pattern-5-3.xml
 PASS INSTANCE NISTXML-Name-pattern-5-4.xml
 PASS INSTANCE NISTXML-Name-pattern-5-5.xml
-PASS NISTSchema-Name-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-Name-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-Name-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-Name-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-Name-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-Name-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-Name-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-Name-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-Name-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-Name-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-Name-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-Name-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-Name-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-Name-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-Name-whiteSpace-1-3.xml: (ignored)
@@ -5578,35 +5401,29 @@ PASS INSTANCE NISTXML-NMTOKEN-pattern-5-2.xml
 PASS INSTANCE NISTXML-NMTOKEN-pattern-5-3.xml
 PASS INSTANCE NISTXML-NMTOKEN-pattern-5-4.xml
 PASS INSTANCE NISTXML-NMTOKEN-pattern-5-5.xml
-PASS NISTSchema-NMTOKEN-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-NMTOKEN-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-NMTOKEN-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-NMTOKEN-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-4-3.xml: (ignored)
-PASS NISTSchema-NMTOKEN-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-NMTOKEN-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-NMTOKEN-whiteSpace-1-3.xml: (ignored)
@@ -5732,37 +5549,31 @@ PASS INSTANCE NISTXML-NCName-pattern-5-2.xml
 PASS INSTANCE NISTXML-NCName-pattern-5-3.xml
 PASS INSTANCE NISTXML-NCName-pattern-5-4.xml
 PASS INSTANCE NISTXML-NCName-pattern-5-5.xml
-PASS NISTSchema-NCName-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NCName-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-NCName-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NCName-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-NCName-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NCName-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-NCName-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NCName-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-NCName-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-NCName-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-NCName-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-NCName-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-NCName-whiteSpace-1-3.xml: (ignored)
@@ -5888,37 +5699,31 @@ PASS INSTANCE NISTXML-ID-pattern-5-2.xml
 PASS INSTANCE NISTXML-ID-pattern-5-3.xml
 PASS INSTANCE NISTXML-ID-pattern-5-4.xml
 PASS INSTANCE NISTXML-ID-pattern-5-5.xml
-PASS NISTSchema-ID-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-ID-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-ID-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-ID-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-ID-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-ID-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-ID-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-ID-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-ID-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-ID-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-ID-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-ID-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-ID-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-ID-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-ID-whiteSpace-1-3.xml: (ignored)
@@ -5932,7 +5737,6 @@ PASS NISTSchema-boolean-pattern-3.xsd
 PASS INSTANCE NISTXML-boolean-pattern-3-1.xml
 PASS NISTSchema-boolean-pattern-4.xsd
 PASS INSTANCE NISTXML-boolean-pattern-4-1.xml
-PASS NISTSchema-boolean-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-boolean-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-boolean-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-boolean-whiteSpace-1-3.xml: (ignored)
@@ -6058,37 +5862,31 @@ PASS INSTANCE NISTXML-base64Binary-pattern-5-2.xml
 PASS INSTANCE NISTXML-base64Binary-pattern-5-3.xml
 PASS INSTANCE NISTXML-base64Binary-pattern-5-4.xml
 PASS INSTANCE NISTXML-base64Binary-pattern-5-5.xml
-PASS NISTSchema-base64Binary-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-base64Binary-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-base64Binary-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-base64Binary-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-base64Binary-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-base64Binary-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-base64Binary-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-base64Binary-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-base64Binary-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-base64Binary-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-base64Binary-whiteSpace-1-3.xml: (ignored)
@@ -6214,37 +6012,31 @@ PASS INSTANCE NISTXML-hexBinary-pattern-5-2.xml
 PASS INSTANCE NISTXML-hexBinary-pattern-5-3.xml
 PASS INSTANCE NISTXML-hexBinary-pattern-5-4.xml
 PASS INSTANCE NISTXML-hexBinary-pattern-5-5.xml
-PASS NISTSchema-hexBinary-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-hexBinary-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-hexBinary-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-hexBinary-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-hexBinary-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-hexBinary-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-hexBinary-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-hexBinary-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-hexBinary-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-hexBinary-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-hexBinary-whiteSpace-1-3.xml: (ignored)
@@ -6366,37 +6158,31 @@ PASS INSTANCE NISTXML-language-pattern-5-2.xml
 PASS INSTANCE NISTXML-language-pattern-5-3.xml
 PASS INSTANCE NISTXML-language-pattern-5-4.xml
 PASS INSTANCE NISTXML-language-pattern-5-5.xml
-PASS NISTSchema-language-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-language-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-language-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-language-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-language-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-language-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-language-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-language-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-language-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-language-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-language-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-language-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-language-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-language-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-language-whiteSpace-1-3.xml: (ignored)
@@ -6521,37 +6307,31 @@ PASS INSTANCE NISTXML-anyURI-pattern-5-2.xml
 PASS INSTANCE NISTXML-anyURI-pattern-5-3.xml
 PASS INSTANCE NISTXML-anyURI-pattern-5-4.xml
 PASS INSTANCE NISTXML-anyURI-pattern-5-5.xml
-PASS NISTSchema-anyURI-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-anyURI-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-anyURI-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-anyURI-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-anyURI-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-anyURI-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-anyURI-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-anyURI-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-anyURI-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-anyURI-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-anyURI-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-anyURI-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-anyURI-whiteSpace-1-3.xml: (ignored)
@@ -6714,37 +6494,31 @@ PASS INSTANCE NISTXML-QName-pattern-5-3.xml
 PASS INSTANCE NISTXML-QName-pattern-5-4.xml
 FAIL INSTANCE NISTXML-QName-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{57}>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-5-5.xml> ]
-PASS NISTSchema-QName-enumeration-1.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-QName-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-1-5.xml: (ignored)
-PASS NISTSchema-QName-enumeration-2.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-QName-enumeration-2-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-2-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-2-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-2-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-2-5.xml: (ignored)
-PASS NISTSchema-QName-enumeration-3.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-QName-enumeration-3-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-3-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-3-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-3-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-3-5.xml: (ignored)
-PASS NISTSchema-QName-enumeration-4.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-QName-enumeration-4-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-4-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-4-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-4-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-4-5.xml: (ignored)
-PASS NISTSchema-QName-enumeration-5.xsd: enumeration forbidden
 PASS INSTANCE NISTXML-QName-enumeration-5-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-enumeration-5-5.xml: (ignored)
-PASS NISTSchema-QName-whiteSpace-1.xsd: whiteSpace forbidden
 PASS INSTANCE NISTXML-QName-whiteSpace-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-3.xml: (ignored)
