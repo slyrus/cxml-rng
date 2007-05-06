@@ -290,6 +290,11 @@
 			      (string-trim *whitespace* str)
 			      " "))
 
+(defun replace-whitespace (str)
+  (cl-ppcre:regex-replace-all #.(format nil "[~A]" *whitespace*)
+			      str
+			      " "))
+
 
 ;;; XML Schema Part 2: Datatypes Second Edition
 
@@ -365,6 +370,26 @@
     (when (eq result :error)
       (error "not valid for data type ~A: ~S" type e))
     result))
+
+(defmethod %parse :around ((type xsd-type) e context)
+  (call-next-method type
+		    (munge-whitespace type e)
+		    context))
+
+(defgeneric munge-whitespace (type e))
+
+(defmethod munge-whitespace ((type xsd-type) e)
+  (normalize-whitespace e))
+
+(defmethod munge-whitespace ((type xsd-string-type) e)
+  e)
+
+(defmethod munge-whitespace ((type normalized-string-type) e)
+  (replace-whitespace e))
+
+(defmethod munge-whitespace ((type xsd-token-type) e)
+  (normalize-whitespace e))
+
 
 
 ;;; duration
@@ -768,22 +793,16 @@
 
 ;;; normalizedString
 
-(defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
+;;; (changes only the whiteSpace facet, defined above)
 
-(defmethod %parse ((type normalized-string-type) e context)
-  (if (some (lambda (c) (find c #.(remove #\space *whitespace*))) e)
-      :error
-      e))
+(defxsd (normalized-string-type "normalizedString") (xsd-string-type) ())
 
 
 ;;; token
 
-(defxsd (xsd-token-type "token") (normalized-string-type) ())
+;;; (changes only the whiteSpace facet, defined above)
 
-(defmethod %parse ((type xsd-token-type) e context)
-  (if (equal e (normalize-whitespace e))
-      e
-      :error))
+(defxsd (xsd-token-type "token") (normalized-string-type) ())
 
 
 ;;; language
