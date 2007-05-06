@@ -312,9 +312,8 @@
        ,@args)))
 
 (defclass xsd-type (data-type)
-  ((min-length :initarg :min-length :accessor min-length)
-   (max-length :initarg :max-length :accessor max-length)
-   (exact-length :initarg :exact-length :accessor exact-length))
+  ((pattern :initarg :pattern :reader pattern)
+   (spec-pattern :initform nil :reader spec-pattern :allocation :class))
   (:documentation
    "@short{The class of XML Schema built-in types.}
 
@@ -364,6 +363,13 @@
 
 (defgeneric validp/xsd (type v context)
   (:method-combination and))
+
+(defmethod validp/xsd and ((type xsd-type) v context)
+  (declare (ignore context))
+  (and (or (null (pattern type)
+		 (cl-ppcre:all-matches (pattern type) v)))
+       (or (null (spec-pattern type)
+		 (cl-ppcre:all-matches (spec-pattern type) v)))))
 
 (defmethod validp ((type xsd-type) e &optional context)
   (not (eq :error (parse/xsd type e context))))
@@ -447,7 +453,9 @@
      (min-length :initform nil :initarg :min-length :reader min-length)
      (max-length :initform nil :initarg :max-length :reader max-length)))
 
+;; extra-hack fuer die "Laenge" eines QName...
 (defgeneric length-using-type (type u v))
+(defmethod length-using-type ((type length-mixin) e) (length e))
 
 (defmethod validp/xsd and ((type length-mixin) v context)
   (declare (ignore context))
@@ -802,7 +810,7 @@
 
 ;;; base64Binary
 
-(defxsd (base64-binary-type "base64Binary") (xsd-type) ())
+(defxsd (base64-binary-type "base64Binary") (xsd-type length-mixin) ())
 
 (defmethod equal-using-type ((type base64-binary-type) u v)
   (equalp u v))
@@ -826,7 +834,7 @@
 
 ;;; hexBinary
 
-(defxsd (hex-binary-type "hexBinary") (xsd-type) ())
+(defxsd (hex-binary-type "hexBinary") (xsd-type length-mixin) ())
 
 (defmethod equal-using-type ((type hex-binary-type) u v)
   (equalp u v))
@@ -928,26 +936,30 @@
 
 ;;; AnyURi
 
-(defxsd (any-uri-type "AnyURI") (xsd-type) ())
+(defxsd (any-uri-type "AnyURI") (xsd-type length-mixin) ())
 
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
 
 (defmethod parse/xsd ((type any-uri-type) e context)
-  (cxml-rng::escape-uri (normalize-whitespace e)))
+  (cxml-rng::escape-uri e))
 
 
 ;;; QName
 ;;; NOTATION
 
-(defclass qname-like (xsd-type) ())
+(defclass qname-like (xsd-type length-mixin) ())
 
 (defxsd (qname-type "QName") (qname-like) ())
 (defxsd (notation-type "NOTATION") (qname-like) ())
 
-(defstruct (qname (:constructor make-qname (uri lname)))
+(defstruct (qname (:constructor make-qname (uri lname length)))
   uri
-  lname)
+  lname
+  length)
+
+(defmethod length-using-type ((type qname-like) e)
+  (qname-length e))
 
 (defmethod equal-using-type ((type qname-like) u v)
   (and (equal (qname-uri u) (qname-uri v))
@@ -959,7 +971,6 @@
        (every #'cxml::name-rune-p str)))
 
 (defmethod parse/xsd ((type qname-like) e context)
-  (setf e (normalize-whitespace e))
   (handler-case
       (if (namep e)
 	  (multiple-value-bind (prefix local-name) (cxml::split-qname e)
@@ -967,7 +978,7 @@
 			 (context-find-namespace-binding context prefix))))
 	      (if (and prefix (not uri))
 		  :error
-		  (make-qname uri local-name))))
+		  (make-qname uri local-name (length e)))))
 	  :error)
     (cxml:well-formedness-violation ()
       :error)))
@@ -975,17 +986,13 @@
 
 ;;; string
 
-(defxsd (xsd-string-type "string") (xsd-type) ())
+(defxsd (xsd-string-type "string") (xsd-type length-mixin) ())
 
 (defmethod equal-using-type ((type xsd-string-type) u v)
   (equal u v))
 
 (defmethod parse/xsd ((type xsd-string-type) e context)
-  (if (or (and (min-length type) (< (length e) (min-length type)))
-	  (and (max-length type) (> (length e) (max-length type)))
-	  (and (exact-length type) (/= (length e) (exact-length type))))
-      :error
-      e))
+  e)
 
 
 ;;;;
@@ -1008,17 +1015,26 @@
 
 ;;; language
 
-(defxsd (language-type "language") (xsd-token-type) ())
+(defxsd (language-type "language") (xsd-token-type)
+  ((spec-pattern :initform "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
+		 :reader spec-pattern
+		 :allocation :class)))
 
 
 ;;; Name
 
-(defxsd (name-type "Name") (xsd-token-type) ())
+(defxsd (name-type "Name") (xsd-token-type)
+  ((spec-pattern :initform "\\i\\c*"
+		 :reader spec-pattern
+		 :allocation :class)))
 
 
 ;;; NCName
 
-(defxsd (ncname-type "NCName") (name-type) ())
+(defxsd (ncname-type "NCName") (name-type)
+  ((spec-pattern :initform "[\\i-[:]][\\c-[:]]*"
+		 :reader spec-pattern
+		 :allocation :class)))
 
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
@@ -1027,7 +1043,7 @@
   (and (namep str) (cxml::nc-name-p str)))
 
 (defmethod parse/xsd ((type ncname-type) e context)
-  (setf e (normalize-whitespace e))
+  ;; zzz mit pattern machen
   (if (nc-name-p e)
       e
       :error))
@@ -1061,7 +1077,10 @@
 
 ;;; NMTOKEN
 
-(defxsd (nmtoken-type "NMTOKEN") (xsd-token-type) ())
+(defxsd (nmtoken-type "NMTOKEN") (xsd-token-type)
+  ((spec-pattern :initform "\\c+"
+		 :reader spec-pattern
+		 :allocation :class)))
 
 
 ;;; NMTOKENS
@@ -1074,9 +1093,11 @@
 (defxsd (integer-type "integer") (decimal-type) ())
 
 ;; period is forbidden, so there's no point in letting decimal handle parsing
+;; fixme: sind fuehrende nullen nun erlaubt oder nicht?  die spec sagt ja,
+;; das pattern im schema nicht.
 (defmethod parse/xsd ((type integer-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]\d+$" e)
+  (if (cl-ppcre:all-matches "^[+-][1-9]\d*$" e)
       (parse-number:parse-number e)
       :error))
 
@@ -1085,59 +1106,113 @@
 
 (defxsd (non-positive-integer-type "nonPositiveInteger") (integer-type) ())
 
+(defun min* (a b)
+  (cond
+    ((null a) b)
+    ((null b) a)
+    (t (min a b))))
+
+(defun max* (a b)
+  (cond
+    ((null a) b)
+    ((null b) a)
+    (t (max a b))))
+
+(defmethod initialize-instance :after ((type non-positive-integer-type) &key)
+  (setf (max-inclusive type)
+	(min* 0 (max-inclusive type))))
+
 
 ;;; nonPositiveInteger
 
 (defxsd (negative-integer-type "negativeInteger") (non-positive-integer-type)
   ())
 
+(defmethod initialize-instance :after ((type negative-integer-type) &key)
+  (setf (max-inclusive type)
+	(min* -1 (max-inclusive type))))
+
 
 ;;; long
 
 (defxsd (long-type "long") (integer-type) ())
+
+(defmethod initialize-instance :after ((type long-type) &key)
+  (setf (max-inclusive type) (min* 9223372036854775807 (max-inclusive type)))
+  (setf (min-inclusive type) (max* -9223372036854775808 (min-inclusive type))))
 
 
 ;;; int
 
 (defxsd (int-type "int") (long-type) ())
 
+(defmethod initialize-instance :after ((type int-type) &key)
+  (setf (max-inclusive type) (min* 2147483647 (max-inclusive type)))
+  (setf (min-inclusive type) (max* -2147483648 (min-inclusive type))))
+
 
 ;;; short
 
 (defxsd (short-type "short") (int-type) ())
+
+(defmethod initialize-instance :after ((type short-type) &key)
+  (setf (max-inclusive type) (min* 32767 (max-inclusive type)))
+  (setf (min-inclusive type) (max* -32768 (min-inclusive type))))
 
 
 ;;; byte
 
 (defxsd (bite-type "byte") (short-type) ())
 
+(defmethod initialize-instance :after ((type byte-type) &key)
+  (setf (max-inclusive type) (min* 127 (max-inclusive type)))
+  (setf (min-inclusive type) (max* -128 (min-inclusive type))))
+
 
 ;;; nonNegativeInteger
 
 (defxsd (non-negative-integer-type "nonNegativeInteger") (integer-type) ())
+
+(defmethod initialize-instance :after ((type non-negative-integer-type) &key)
+  (setf (min-inclusive type) (max* 0 (min-inclusive type))))
 
 
 ;;; unsignedLong
 
 (defxsd (unsigned-long-type "unsignedLong") (non-negative-integer-type) ())
 
+(defmethod initialize-instance :after ((type unsigned-long-type) &key)
+  (setf (max-inclusive type) (min* 18446744073709551615 (max-inclusive type))))
+
 
 ;;; unsignedInt
 
 (defxsd (unsigned-int-type "unsignedInt") (unsigned-long-type) ())
+
+(defmethod initialize-instance :after ((type unsigned-int-type) &key)
+  (setf (max-inclusive type) (min* 4294967295 (max-inclusive type))))
 
 
 ;;; unsignedShort
 
 (defxsd (unsigned-short-type "unsignedShort") (unsigned-int-type) ())
 
+(defmethod initialize-instance :after ((type unsigned-short-type) &key)
+  (setf (max-inclusive type) (min* 65535 (max-inclusive type))))
+
 
 ;;; unsignedByte
 
 (defxsd (unsigned-byte-type "unsignedByte") (unsigned-short-type) ())
+
+(defmethod initialize-instance :after ((type unsigned-byte-type) &key)
+  (setf (max-inclusive type) (min* 255 (max-inclusive type))))
 
 
 ;;; positiveInteger
 
 (defxsd (positive-integer-type "positiveInteger") (non-negative-integer-type)
   ())
+
+(defmethod initialize-instance :after ((type postive-integer-type) &key)
+  (setf (min-inclusive type) (max* 1 (min-inclusive type))))
