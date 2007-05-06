@@ -4,11 +4,8 @@
     of <a href="http://relaxng.org/spec-20011203.html">Relax
       NG</a> schema validation
     written in Common
-    Lisp, including support for compact syntax.
-    <!--
-    <a href="http://relaxng.org/compact-20021121.html">Compact
-    Syntax</a>, and the XSD data type library are included.
-    -->
+    Lisp, including support for compact syntax and the XSD type
+    library.
   </p>
   <p>
     cxml-rng was written

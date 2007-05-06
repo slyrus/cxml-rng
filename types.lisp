@@ -294,6 +294,9 @@
 
     The Relax NG type library is named @code{:||}."))
 
+(defmethod print-object ((object rng-type) stream)
+  (print-unreadable-object (object stream :type t :identity nil)))
+
 (defclass string-type (rng-type) ()
   (:documentation
    "@short{The Relax NG 'string' type.}
@@ -393,6 +396,16 @@
     The XSD type library
     is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}."))
 
+(defmethod print-object ((object xsd-type) stream)
+  (print-unreadable-object (object stream :type t :identity nil)
+    (describe-facets object stream)))
+
+(defgeneric describe-facets (object stream)
+  (:method-combination progn))
+
+(defmethod describe-facets progn ((object xsd-type) stream)
+  (format stream "~{ :pattern ~A~}" (patterns object)))
+
 (defmethod type-library ((type xsd-type))
   :|http://www.w3.org/2001/XMLSchema-datatypes|)
 
@@ -427,7 +440,11 @@
 		       for (k nil) on args by #'cddr
 		       thereis (eq key k))
 		(return nil))
-	      (push (parse-parameter required-class type-class key value) args)
+	      (push (parse-parameter required-class
+				     type-class
+				     key
+				     (normalize-whitespace value))
+		    args)
 	      (push key args)))))))
 
 (defmethod find-type
@@ -501,6 +518,14 @@
 		    :initarg :max-inclusive
 		    :accessor max-inclusive)))
 
+(defmethod describe-facets progn ((object ordering-mixin) stream)
+  (dolist (slot '(min-exclusive max-exclusive min-inclusive max-inclusive))
+    (let ((value (slot-value object slot)))
+      (when value
+	(format stream " ~A ~A"
+		(intern (symbol-name slot) :keyword)
+		value)))))
+
 (defmethod parse-parameter
     ((class-name (eql 'ordering-mixin)) type-name (param t) value)
   (parse (make-instance type-name) value nil))
@@ -549,6 +574,14 @@
     ((exact-length :initform nil :initarg :exact-length :accessor exact-length)
      (min-length :initform nil :initarg :min-length :accessor min-length)
      (max-length :initform nil :initarg :max-length :accessor max-length)))
+
+(defmethod describe-facets progn ((object length-mixin) stream)
+  (dolist (slot '(exact-length min-length max-length))
+    (let ((value (slot-value object slot)))
+      (when value
+	(format stream " ~A ~A"
+		(intern (symbol-name slot) :keyword)
+		value)))))
 
 (defmethod parse-parameter
     ((class-name (eql 'length-mixin)) (type-name t) (param t) value)
@@ -1006,6 +1039,14 @@
    (total-digits :initform nil
 		 :initarg :total-digits
 		 :accessor total-digits)))
+
+(defmethod describe-facets progn ((object decimal-type) stream)
+  (dolist (slot '(fraction-digits total-digits))
+    (let ((value (slot-value object slot)))
+      (when value
+	(format stream " ~A ~A"
+		(intern (symbol-name slot) :keyword)
+		value)))))
 
 (defmethod parse-parameter
     ((class-name (eql 'decimal-type))

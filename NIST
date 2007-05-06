@@ -5157,28 +5157,28 @@ FAIL NISTXML-positiveInteger-whiteSpace-1-3.xml: no schema
 FAIL NISTXML-positiveInteger-whiteSpace-1-4.xml: no schema
 FAIL NISTXML-positiveInteger-whiteSpace-1-5.xml: no schema
 PASS NISTSchema-double-minExclusive-1.xsd
-FAIL INSTANCE NISTXML-double-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10047BD831}>
+FAIL INSTANCE NISTXML-double-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 161 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-1-1.xml> ]
-FAIL INSTANCE NISTXML-double-minExclusive-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10047BD831}>
+FAIL INSTANCE NISTXML-double-minExclusive-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-1-2.xml> ]
-FAIL INSTANCE NISTXML-double-minExclusive-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10047BD831}>
+FAIL INSTANCE NISTXML-double-minExclusive-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-1-3.xml> ]
 PASS INSTANCE NISTXML-double-minExclusive-1-4.xml
 FAIL INSTANCE NISTXML-double-minExclusive-1-5.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a DOUBLE-FLOAT:
   90071992547409919999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 PASS NISTSchema-double-minExclusive-2.xsd
-FAIL INSTANCE NISTXML-double-minExclusive-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025AC871}>
+FAIL INSTANCE NISTXML-double-minExclusive-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-2-1.xml> ]
 FAIL INSTANCE NISTXML-double-minExclusive-2-2.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a DOUBLE-FLOAT:
   865595097054701433480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-FAIL INSTANCE NISTXML-double-minExclusive-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025AC871}>
+FAIL INSTANCE NISTXML-double-minExclusive-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-2-3.xml> ]
 FAIL INSTANCE NISTXML-double-minExclusive-2-4.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a DOUBLE-FLOAT:
   8688743151699739799900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 FAIL INSTANCE NISTXML-double-minExclusive-2-5.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a DOUBLE-FLOAT:
   90071992547409919999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 PASS NISTSchema-double-minExclusive-3.xsd
-FAIL INSTANCE NISTXML-double-minExclusive-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10028EBC31}>
+FAIL INSTANCE NISTXML-double-minExclusive-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MIN-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-minExclusive-3-1.xml> ]
 PASS INSTANCE NISTXML-double-minExclusive-3-2.xml
 PASS INSTANCE NISTXML-double-minExclusive-3-3.xml
@@ -5235,7 +5235,7 @@ FAIL NISTSchema-double-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: To
   90071992547409919999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 FAIL NISTXML-double-minInclusive-5-1.xml: no schema
 PASS NISTSchema-double-maxExclusive-1.xsd
-FAIL INSTANCE NISTXML-double-maxExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {1004723B21}>
+FAIL INSTANCE NISTXML-double-maxExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 141 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-1-1.xml> ]
 FAIL NISTSchema-double-maxExclusive-2.xsd: (BOGUS CONDITION) failed to parse: Too large to be represented as a DOUBLE-FLOAT:
   142669920118068484150000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -5252,15 +5252,15 @@ FAIL NISTXML-double-maxExclusive-3-3.xml: no schema
 FAIL NISTXML-double-maxExclusive-3-4.xml: no schema
 FAIL NISTXML-double-maxExclusive-3-5.xml: no schema
 PASS NISTSchema-double-maxExclusive-4.xsd
-FAIL INSTANCE NISTXML-double-maxExclusive-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025849B1}>
+FAIL INSTANCE NISTXML-double-maxExclusive-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 141 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-4-1.xml> ]
-FAIL INSTANCE NISTXML-double-maxExclusive-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025849B1}>
+FAIL INSTANCE NISTXML-double-maxExclusive-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 156 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-4-2.xml> ]
-FAIL INSTANCE NISTXML-double-maxExclusive-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025849B1}>
+FAIL INSTANCE NISTXML-double-maxExclusive-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 154 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-4-3.xml> ]
-FAIL INSTANCE NISTXML-double-maxExclusive-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025849B1}>
+FAIL INSTANCE NISTXML-double-maxExclusive-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 154 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-4-4.xml> ]
-FAIL INSTANCE NISTXML-double-maxExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE {10025849B1}>
+FAIL INSTANCE NISTXML-double-maxExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DOUBLE-TYPE  MAX-EXCLUSIVE 0.0d0>
   [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-double-maxExclusive-4-5.xml> ]
 FAIL NISTSchema-double-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: Too large to be represented as a DOUBLE-FLOAT:
   90071992547409919999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -5508,7 +5508,7 @@ FAIL NISTXML-double-whiteSpace-1-3.xml: no schema
 FAIL NISTXML-double-whiteSpace-1-4.xml: no schema
 FAIL NISTXML-double-whiteSpace-1-5.xml: no schema
 PASS NISTSchema-float-minExclusive-1.xsd
-FAIL INSTANCE NISTXML-float-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1003CE0471}>
+FAIL INSTANCE NISTXML-float-minExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MIN-EXCLUSIVE 0.0>
   [ Error at line 17, column 157 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-minExclusive-1-1.xml> ]
 PASS INSTANCE NISTXML-float-minExclusive-1-2.xml
 PASS INSTANCE NISTXML-float-minExclusive-1-3.xml
@@ -5516,7 +5516,7 @@ PASS INSTANCE NISTXML-float-minExclusive-1-4.xml
 FAIL INSTANCE NISTXML-float-minExclusive-1-5.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a SINGLE-FLOAT:
   1677721599999999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 PASS NISTSchema-float-minExclusive-2.xsd
-FAIL INSTANCE NISTXML-float-minExclusive-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1003E4C831}>
+FAIL INSTANCE NISTXML-float-minExclusive-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MIN-EXCLUSIVE 0.0>
   [ Error at line 17, column 156 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-minExclusive-2-1.xml> ]
 FAIL INSTANCE NISTXML-float-minExclusive-2-2.xml: (BOGUS CONDITON) failed to validate: Too large to be represented as a SINGLE-FLOAT:
   15751967304608578301000000000000000000000000000000000
@@ -5580,7 +5580,7 @@ FAIL NISTSchema-float-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: Too
   1677721599999999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 FAIL NISTXML-float-minInclusive-5-1.xml: no schema
 PASS NISTSchema-float-maxExclusive-1.xsd
-FAIL INSTANCE NISTXML-float-maxExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {100257B1A1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 137 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-1-1.xml> ]
 PASS NISTSchema-float-maxExclusive-2.xsd
 PASS INSTANCE NISTXML-float-maxExclusive-2-1.xml
@@ -5589,26 +5589,26 @@ PASS INSTANCE NISTXML-float-maxExclusive-2-3.xml
 PASS INSTANCE NISTXML-float-maxExclusive-2-4.xml
 PASS INSTANCE NISTXML-float-maxExclusive-2-5.xml
 PASS NISTSchema-float-maxExclusive-3.xsd
-FAIL INSTANCE NISTXML-float-maxExclusive-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {10028B0E01}>
+FAIL INSTANCE NISTXML-float-maxExclusive-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 137 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-3-1.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {10028B0E01}>
+FAIL INSTANCE NISTXML-float-maxExclusive-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-3-2.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {10028B0E01}>
+FAIL INSTANCE NISTXML-float-maxExclusive-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-3-3.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {10028B0E01}>
+FAIL INSTANCE NISTXML-float-maxExclusive-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-3-4.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {10028B0E01}>
+FAIL INSTANCE NISTXML-float-maxExclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 157 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-3-5.xml> ]
 PASS NISTSchema-float-maxExclusive-4.xsd
-FAIL INSTANCE NISTXML-float-maxExclusive-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1002EEF5F1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 137 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-4-1.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1002EEF5F1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-4-2.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1002EEF5F1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-4-3.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1002EEF5F1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-4-4.xml> ]
-FAIL INSTANCE NISTXML-float-maxExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE {1002EEF5F1}>
+FAIL INSTANCE NISTXML-float-maxExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<FLOAT-TYPE  MAX-EXCLUSIVE 0.0>
   [ Error at line 17, column 156 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-float-maxExclusive-4-5.xml> ]
 FAIL NISTSchema-float-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: Too large to be represented as a SINGLE-FLOAT:
   1677721599999999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -7806,7 +7806,7 @@ FAIL NISTXML-gYearMonth-whiteSpace-1-5.xml: no schema
 FAIL NISTSchema-gYear-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {100478D2E1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1970"
                                                                                 NIL).
 FAIL NISTXML-gYear-minExclusive-1-1.xml: no schema
@@ -7817,7 +7817,7 @@ FAIL NISTXML-gYear-minExclusive-1-5.xml: no schema
 FAIL NISTSchema-gYear-minExclusive-2.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1005544F21}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2019"
                                                                                 NIL).
 FAIL NISTXML-gYear-minExclusive-2-1.xml: no schema
@@ -7828,7 +7828,7 @@ FAIL NISTXML-gYear-minExclusive-2-5.xml: no schema
 FAIL NISTSchema-gYear-minExclusive-3.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10024CA2B1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2022"
                                                                                 NIL).
 FAIL NISTXML-gYear-minExclusive-3-1.xml: no schema
@@ -7839,7 +7839,7 @@ FAIL NISTXML-gYear-minExclusive-3-5.xml: no schema
 FAIL NISTSchema-gYear-minExclusive-4.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10025DAC91}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1981"
                                                                                 NIL).
 FAIL NISTXML-gYear-minExclusive-4-1.xml: no schema
@@ -7850,14 +7850,14 @@ FAIL NISTXML-gYear-minExclusive-4-5.xml: no schema
 FAIL NISTSchema-gYear-minExclusive-5.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10027917B1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2029"
                                                                                 NIL).
 FAIL NISTXML-gYear-minExclusive-5-1.xml: no schema
 FAIL NISTSchema-gYear-minInclusive-1.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10028361C1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1970"
                                                                                 NIL).
 FAIL NISTXML-gYear-minInclusive-1-1.xml: no schema
@@ -7868,7 +7868,7 @@ FAIL NISTXML-gYear-minInclusive-1-5.xml: no schema
 FAIL NISTSchema-gYear-minInclusive-2.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1002995131}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2024"
                                                                                 NIL).
 FAIL NISTXML-gYear-minInclusive-2-1.xml: no schema
@@ -7879,7 +7879,7 @@ FAIL NISTXML-gYear-minInclusive-2-5.xml: no schema
 FAIL NISTSchema-gYear-minInclusive-3.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1002C3CAB1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1979"
                                                                                 NIL).
 FAIL NISTXML-gYear-minInclusive-3-1.xml: no schema
@@ -7890,7 +7890,7 @@ FAIL NISTXML-gYear-minInclusive-3-5.xml: no schema
 FAIL NISTSchema-gYear-minInclusive-4.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1002EF5831}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2026"
                                                                                 NIL).
 FAIL NISTXML-gYear-minInclusive-4-1.xml: no schema
@@ -7901,21 +7901,21 @@ FAIL NISTXML-gYear-minInclusive-4-5.xml: no schema
 FAIL NISTSchema-gYear-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10032F1C91}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2030"
                                                                                 NIL).
 FAIL NISTXML-gYear-minInclusive-5-1.xml: no schema
 FAIL NISTSchema-gYear-maxExclusive-1.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {100369CF21}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1971"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxExclusive-1-1.xml: no schema
 FAIL NISTSchema-gYear-maxExclusive-2.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10038AA3F1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1995"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxExclusive-2-1.xml: no schema
@@ -7926,7 +7926,7 @@ FAIL NISTXML-gYear-maxExclusive-2-5.xml: no schema
 FAIL NISTSchema-gYear-maxExclusive-3.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1003CDD9D1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2020"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxExclusive-3-1.xml: no schema
@@ -7937,7 +7937,7 @@ FAIL NISTXML-gYear-maxExclusive-3-5.xml: no schema
 FAIL NISTSchema-gYear-maxExclusive-4.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1003E35831}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1982"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxExclusive-4-1.xml: no schema
@@ -7948,7 +7948,7 @@ FAIL NISTXML-gYear-maxExclusive-4-5.xml: no schema
 FAIL NISTSchema-gYear-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1003EDA1C1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2030"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxExclusive-5-1.xml: no schema
@@ -7959,21 +7959,21 @@ FAIL NISTXML-gYear-maxExclusive-5-5.xml: no schema
 FAIL NISTSchema-gYear-maxInclusive-1.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1003F81E71}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1970"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxInclusive-1-1.xml: no schema
 FAIL NISTSchema-gYear-maxInclusive-2.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {1003FFB821}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1970"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxInclusive-2-1.xml: no schema
 FAIL NISTSchema-gYear-maxInclusive-3.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10040747B1}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1983"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxInclusive-3-1.xml: no schema
@@ -7984,7 +7984,7 @@ FAIL NISTXML-gYear-maxInclusive-3-5.xml: no schema
 FAIL NISTSchema-gYear-maxInclusive-4.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {100412D631}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "1984"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxInclusive-4-1.xml: no schema
@@ -7995,7 +7995,7 @@ FAIL NISTXML-gYear-maxInclusive-4-5.xml: no schema
 FAIL NISTSchema-gYear-maxInclusive-5.xsd: (BOGUS CONDITION) failed to parse: There is no primary method for the generic function
                                                                                #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                              when called with arguments
-                                                                               (#<CXML-TYPES:YEAR-TYPE {10041EC831}>
+                                                                               (#<CXML-TYPES:YEAR-TYPE >
                                                                                 "2030"
                                                                                 NIL).
 FAIL NISTXML-gYear-maxInclusive-5-1.xml: no schema
@@ -8007,157 +8007,157 @@ PASS NISTSchema-gYear-pattern-1.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-1-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10042BD081}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1004309001}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10027D65B1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10042BD081}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {10043F3781}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10028B85B1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10042BD081}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1004489491}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10029E1AB1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10042BD081}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {1004558F11}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002A68D01}>).
 FAIL INSTANCE NISTXML-gYear-pattern-1-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10042BD081}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2018>
                                                                                      "2018"
-                                                                                     #<CXML-RNG::VALIDATOR {10045CCDC1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002AC13B1}>).
 PASS NISTSchema-gYear-pattern-2.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-2-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100479D391}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {10047AD2C1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002BE7761}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100479D391}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1004851301}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002CA9BE1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100479D391}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1005EF62A1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002D43D01}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {1002410361}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1006B130E1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002DEF441}>).
 FAIL INSTANCE NISTXML-gYear-pattern-2-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {1002410361}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1985>
                                                                                      "1985"
-                                                                                     #<CXML-RNG::VALIDATOR {1002529101}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002E2C151}>).
 PASS NISTSchema-gYear-pattern-3.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-3-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100262A6A1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {10026325E1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002EF9001}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100262A6A1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {100268C791}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002F5A081}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100262A6A1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {1002712081}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1002FC9A81}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100262A6A1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {100277B501}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100300F781}>).
 FAIL INSTANCE NISTXML-gYear-pattern-3-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100262A6A1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 2003>
                                                                                      "2003"
-                                                                                     #<CXML-RNG::VALIDATOR {10027D2501}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003061501}>).
 PASS NISTSchema-gYear-pattern-4.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-4-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100293B931}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2021"
-                                                                                     #<CXML-RNG::VALIDATOR {1002955881}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003103B01}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100293B931}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "1991"
-                                                                                     #<CXML-RNG::VALIDATOR {1002A04301}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100315D8A1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100293B931}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "1987"
-                                                                                     #<CXML-RNG::VALIDATOR {1002C0C101}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10031A8F91}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100293B931}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2008"
-                                                                                     #<CXML-RNG::VALIDATOR {1002E8B181}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10031E5FB1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-4-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {100293B931}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern \d\d\d\d>
                                                                                      "2020"
-                                                                                     #<CXML-RNG::VALIDATOR {10031DD151}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100326D391}>).
 PASS NISTSchema-gYear-pattern-5.xsd
 FAIL INSTANCE NISTXML-gYear-pattern-5-1.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10035B40B1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {10035CB001}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100337B951}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-2.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10035B40B1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {100380B3B1}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10033CAB01}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-3.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10035B40B1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {100386F151}>).
+                                                                                     #<CXML-RNG::VALIDATOR {1003428A41}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-4.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10035B40B1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {10039D9111}>).
+                                                                                     #<CXML-RNG::VALIDATOR {100348D3B1}>).
 FAIL INSTANCE NISTXML-gYear-pattern-5-5.xml: (BOGUS CONDITON) failed to validate: There is no primary method for the generic function
                                                                                     #<STANDARD-GENERIC-FUNCTION CXML-TYPES::PARSE/XSD (22)>
                                                                                   when called with arguments
-                                                                                    (#<CXML-TYPES:YEAR-TYPE {10035B40B1}>
+                                                                                    (#<CXML-TYPES:YEAR-TYPE  :pattern 1997>
                                                                                      "1997"
-                                                                                     #<CXML-RNG::VALIDATOR {1003C8B111}>).
+                                                                                     #<CXML-RNG::VALIDATOR {10034F4D01}>).
 FAIL NISTSchema-gYear-enumeration-1.xsd: failed to parse: params not valid for type: gYear/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
                                                                                 :NAME enumeration
                                                                                 :VALUE 2022)
@@ -13041,42 +13041,42 @@ PASS INSTANCE NISTXML-QName-maxLength-1-4.xml
 PASS INSTANCE NISTXML-QName-maxLength-1-5.xml
 PASS NISTSchema-QName-maxLength-2.xsd
 PASS INSTANCE NISTXML-QName-maxLength-2-1.xml
-FAIL INSTANCE NISTXML-QName-maxLength-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003A368A1}>
+FAIL INSTANCE NISTXML-QName-maxLength-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 52>
   [ Error at line 17, column 135 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-2-2.xml> ]
 PASS INSTANCE NISTXML-QName-maxLength-2-3.xml
 PASS INSTANCE NISTXML-QName-maxLength-2-4.xml
-FAIL INSTANCE NISTXML-QName-maxLength-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003A368A1}>
+FAIL INSTANCE NISTXML-QName-maxLength-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 52>
   [ Error at line 17, column 171 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-2-5.xml> ]
 PASS NISTSchema-QName-maxLength-3.xsd
 PASS INSTANCE NISTXML-QName-maxLength-3-1.xml
-FAIL INSTANCE NISTXML-QName-maxLength-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E1E111}>
+FAIL INSTANCE NISTXML-QName-maxLength-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 49>
   [ Error at line 17, column 135 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-3-2.xml> ]
 PASS INSTANCE NISTXML-QName-maxLength-3-3.xml
-FAIL INSTANCE NISTXML-QName-maxLength-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E1E111}>
+FAIL INSTANCE NISTXML-QName-maxLength-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 49>
   [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-3-4.xml> ]
-FAIL INSTANCE NISTXML-QName-maxLength-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E1E111}>
+FAIL INSTANCE NISTXML-QName-maxLength-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 49>
   [ Error at line 17, column 171 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-3-5.xml> ]
 PASS NISTSchema-QName-maxLength-4.xsd
 PASS INSTANCE NISTXML-QName-maxLength-4-1.xml
 PASS INSTANCE NISTXML-QName-maxLength-4-2.xml
-FAIL INSTANCE NISTXML-QName-maxLength-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003F6FC21}>
+FAIL INSTANCE NISTXML-QName-maxLength-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 32>
   [ Error at line 17, column 137 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-4-3.xml> ]
 PASS INSTANCE NISTXML-QName-maxLength-4-4.xml
 PASS INSTANCE NISTXML-QName-maxLength-4-5.xml
 PASS NISTSchema-QName-maxLength-5.xsd
 PASS INSTANCE NISTXML-QName-maxLength-5-1.xml
 PASS INSTANCE NISTXML-QName-maxLength-5-2.xml
-FAIL INSTANCE NISTXML-QName-maxLength-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004087C21}>
+FAIL INSTANCE NISTXML-QName-maxLength-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 64>
   [ Error at line 17, column 153 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-5-3.xml> ]
 PASS INSTANCE NISTXML-QName-maxLength-5-4.xml
-FAIL INSTANCE NISTXML-QName-maxLength-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004087C21}>
+FAIL INSTANCE NISTXML-QName-maxLength-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MAX-LENGTH 64>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-maxLength-5-5.xml> ]
 PASS NISTSchema-QName-minLength-1.xsd
 PASS INSTANCE NISTXML-QName-minLength-1-1.xml
 PASS INSTANCE NISTXML-QName-minLength-1-2.xml
 PASS INSTANCE NISTXML-QName-minLength-1-3.xml
 PASS INSTANCE NISTXML-QName-minLength-1-4.xml
-FAIL INSTANCE NISTXML-QName-minLength-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10041F87A1}>
+FAIL INSTANCE NISTXML-QName-minLength-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 1>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-1-5.xml> ]
 PASS NISTSchema-QName-minLength-2.xsd
 PASS INSTANCE NISTXML-QName-minLength-2-1.xml
@@ -13085,20 +13085,20 @@ PASS INSTANCE NISTXML-QName-minLength-2-3.xml
 PASS INSTANCE NISTXML-QName-minLength-2-4.xml
 PASS INSTANCE NISTXML-QName-minLength-2-5.xml
 PASS NISTSchema-QName-minLength-3.xsd
-FAIL INSTANCE NISTXML-QName-minLength-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10045E89F1}>
+FAIL INSTANCE NISTXML-QName-minLength-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 21>
   [ Error at line 17, column 143 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-3-1.xml> ]
 PASS INSTANCE NISTXML-QName-minLength-3-2.xml
 PASS INSTANCE NISTXML-QName-minLength-3-3.xml
-FAIL INSTANCE NISTXML-QName-minLength-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10045E89F1}>
+FAIL INSTANCE NISTXML-QName-minLength-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 21>
   [ Error at line 17, column 173 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-3-4.xml> ]
-FAIL INSTANCE NISTXML-QName-minLength-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10045E89F1}>
+FAIL INSTANCE NISTXML-QName-minLength-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 21>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-3-5.xml> ]
 PASS NISTSchema-QName-minLength-4.xsd
-FAIL INSTANCE NISTXML-QName-minLength-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10047ACFE1}>
+FAIL INSTANCE NISTXML-QName-minLength-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 29>
   [ Error at line 17, column 151 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-4-1.xml> ]
-FAIL INSTANCE NISTXML-QName-minLength-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10047ACFE1}>
+FAIL INSTANCE NISTXML-QName-minLength-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 29>
   [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-4-2.xml> ]
-FAIL INSTANCE NISTXML-QName-minLength-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10047ACFE1}>
+FAIL INSTANCE NISTXML-QName-minLength-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 29>
   [ Error at line 17, column 167 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-4-3.xml> ]
 PASS INSTANCE NISTXML-QName-minLength-4-4.xml
 PASS INSTANCE NISTXML-QName-minLength-4-5.xml
@@ -13107,7 +13107,7 @@ PASS INSTANCE NISTXML-QName-minLength-5-1.xml
 PASS INSTANCE NISTXML-QName-minLength-5-2.xml
 PASS INSTANCE NISTXML-QName-minLength-5-3.xml
 PASS INSTANCE NISTXML-QName-minLength-5-4.xml
-FAIL INSTANCE NISTXML-QName-minLength-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {100260F3D1}>
+FAIL INSTANCE NISTXML-QName-minLength-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  MIN-LENGTH 64>
   [ Error at line 17, column 186 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-minLength-5-5.xml> ]
 PASS NISTSchema-QName-length-1.xsd
 PASS INSTANCE NISTXML-QName-length-1-1.xml
@@ -13116,69 +13116,69 @@ PASS INSTANCE NISTXML-QName-length-1-3.xml
 PASS INSTANCE NISTXML-QName-length-1-4.xml
 PASS INSTANCE NISTXML-QName-length-1-5.xml
 PASS NISTSchema-QName-length-2.xsd
-FAIL INSTANCE NISTXML-QName-length-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10028EF351}>
+FAIL INSTANCE NISTXML-QName-length-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 22>
   [ Error at line 17, column 135 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-2-1.xml> ]
-FAIL INSTANCE NISTXML-QName-length-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10028EF351}>
+FAIL INSTANCE NISTXML-QName-length-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 22>
   [ Error at line 17, column 135 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-2-2.xml> ]
-FAIL INSTANCE NISTXML-QName-length-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10028EF351}>
+FAIL INSTANCE NISTXML-QName-length-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 22>
   [ Error at line 17, column 135 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-2-3.xml> ]
 PASS INSTANCE NISTXML-QName-length-2-4.xml
 PASS INSTANCE NISTXML-QName-length-2-5.xml
 PASS NISTSchema-QName-length-3.xsd
 PASS INSTANCE NISTXML-QName-length-3-1.xml
-FAIL INSTANCE NISTXML-QName-length-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1002E6D881}>
+FAIL INSTANCE NISTXML-QName-length-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 52>
   [ Error at line 17, column 165 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-3-2.xml> ]
-FAIL INSTANCE NISTXML-QName-length-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1002E6D881}>
+FAIL INSTANCE NISTXML-QName-length-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 52>
   [ Error at line 17, column 165 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-3-3.xml> ]
-FAIL INSTANCE NISTXML-QName-length-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1002E6D881}>
+FAIL INSTANCE NISTXML-QName-length-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 52>
   [ Error at line 17, column 165 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-3-4.xml> ]
 PASS INSTANCE NISTXML-QName-length-3-5.xml
 PASS NISTSchema-QName-length-4.xsd
 PASS INSTANCE NISTXML-QName-length-4-1.xml
 PASS INSTANCE NISTXML-QName-length-4-2.xml
-FAIL INSTANCE NISTXML-QName-length-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003859F61}>
+FAIL INSTANCE NISTXML-QName-length-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 8>
   [ Error at line 17, column 121 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-4-3.xml> ]
 PASS INSTANCE NISTXML-QName-length-4-4.xml
-FAIL INSTANCE NISTXML-QName-length-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003859F61}>
+FAIL INSTANCE NISTXML-QName-length-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 8>
   [ Error at line 17, column 121 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-4-5.xml> ]
 PASS NISTSchema-QName-length-5.xsd
 PASS INSTANCE NISTXML-QName-length-5-1.xml
 PASS INSTANCE NISTXML-QName-length-5-2.xml
-FAIL INSTANCE NISTXML-QName-length-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E3E9F1}>
+FAIL INSTANCE NISTXML-QName-length-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 64>
   [ Error at line 17, column 177 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-5-3.xml> ]
-FAIL INSTANCE NISTXML-QName-length-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E3E9F1}>
+FAIL INSTANCE NISTXML-QName-length-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 64>
   [ Error at line 17, column 177 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-5-4.xml> ]
-FAIL INSTANCE NISTXML-QName-length-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003E3E9F1}>
+FAIL INSTANCE NISTXML-QName-length-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  EXACT-LENGTH 64>
   [ Error at line 17, column 177 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-length-5-5.xml> ]
 PASS NISTSchema-QName-pattern-1.xsd
-FAIL INSTANCE NISTXML-QName-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003F9A201}>
+FAIL INSTANCE NISTXML-QName-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{6}>
   [ Error at line 17, column 134 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-1-1.xml> ]
-FAIL INSTANCE NISTXML-QName-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003F9A201}>
+FAIL INSTANCE NISTXML-QName-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{6}>
   [ Error at line 17, column 145 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-1-2.xml> ]
 PASS INSTANCE NISTXML-QName-pattern-1-3.xml
-FAIL INSTANCE NISTXML-QName-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1003F9A201}>
+FAIL INSTANCE NISTXML-QName-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{6}>
   [ Error at line 17, column 147 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-1-4.xml> ]
 PASS INSTANCE NISTXML-QName-pattern-1-5.xml
 PASS NISTSchema-QName-pattern-2.xsd
 PASS INSTANCE NISTXML-QName-pattern-2-1.xml
 PASS INSTANCE NISTXML-QName-pattern-2-2.xml
-FAIL INSTANCE NISTXML-QName-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10040E96D1}>
+FAIL INSTANCE NISTXML-QName-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{52}>
   [ Error at line 17, column 186 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-2-3.xml> ]
-FAIL INSTANCE NISTXML-QName-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10040E96D1}>
+FAIL INSTANCE NISTXML-QName-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{52}>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-2-4.xml> ]
-FAIL INSTANCE NISTXML-QName-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {10040E96D1}>
+FAIL INSTANCE NISTXML-QName-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{52}>
   [ Error at line 17, column 185 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-2-5.xml> ]
 PASS NISTSchema-QName-pattern-3.xsd
 PASS INSTANCE NISTXML-QName-pattern-3-1.xml
-FAIL INSTANCE NISTXML-QName-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004257C51}>
+FAIL INSTANCE NISTXML-QName-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{59}>
   [ Error at line 17, column 202 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-3-2.xml> ]
-FAIL INSTANCE NISTXML-QName-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004257C51}>
+FAIL INSTANCE NISTXML-QName-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{59}>
   [ Error at line 17, column 188 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-3-3.xml> ]
 PASS INSTANCE NISTXML-QName-pattern-3-4.xml
 PASS INSTANCE NISTXML-QName-pattern-3-5.xml
 PASS NISTSchema-QName-pattern-4.xsd
 PASS INSTANCE NISTXML-QName-pattern-4-1.xml
-FAIL INSTANCE NISTXML-QName-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004593B01}>
+FAIL INSTANCE NISTXML-QName-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{40}>
   [ Error at line 17, column 184 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-4-2.xml> ]
 PASS INSTANCE NISTXML-QName-pattern-4-3.xml
 PASS INSTANCE NISTXML-QName-pattern-4-4.xml
@@ -13188,7 +13188,7 @@ PASS INSTANCE NISTXML-QName-pattern-5-1.xml
 PASS INSTANCE NISTXML-QName-pattern-5-2.xml
 PASS INSTANCE NISTXML-QName-pattern-5-3.xml
 PASS INSTANCE NISTXML-QName-pattern-5-4.xml
-FAIL INSTANCE NISTXML-QName-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE {1004712741}>
+FAIL INSTANCE NISTXML-QName-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<QNAME-TYPE  :pattern (\i\c*:)?\i\c{57}>
   [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-QName-pattern-5-5.xml> ]
 FAIL NISTSchema-QName-enumeration-1.xsd: failed to parse: params not valid for type: QName/http://www.w3.org/2001/XMLSchema-datatypes/(#S(CXML-TYPES:PARAM
                                                                                 :NAME enumeration
