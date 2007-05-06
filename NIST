@@ -3320,61 +3320,53 @@ PASS INSTANCE NISTXML-dateTime-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-1-2.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-1-3.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-1-4.xml
-FAIL INSTANCE NISTXML-dateTime-minExclusive-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-EXCLUSIVE (1970 1 1 0 0 0 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minExclusive-1-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minExclusive-1-5.xml
 PASS NISTSchema-dateTime-minExclusive-2.xsd
 PASS INSTANCE NISTXML-dateTime-minExclusive-2-1.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-2-2.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-2-3.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-2-4.xml
-FAIL INSTANCE NISTXML-dateTime-minExclusive-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-EXCLUSIVE (1971 9 27 23 6 45 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minExclusive-2-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minExclusive-2-5.xml
 PASS NISTSchema-dateTime-minExclusive-3.xsd
 PASS INSTANCE NISTXML-dateTime-minExclusive-3-1.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-3-2.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-3-3.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-3-4.xml
-FAIL INSTANCE NISTXML-dateTime-minExclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-EXCLUSIVE (1980 7 5 14 30 54 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minExclusive-3-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minExclusive-3-5.xml
 PASS NISTSchema-dateTime-minExclusive-4.xsd
 PASS INSTANCE NISTXML-dateTime-minExclusive-4-1.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-4-2.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-4-3.xml
 PASS INSTANCE NISTXML-dateTime-minExclusive-4-4.xml
-FAIL INSTANCE NISTXML-dateTime-minExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-EXCLUSIVE (2020 7 19 10 30 50 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minExclusive-4-5.xml> ]
-FAIL NISTSchema-dateTime-minExclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TIME-TYPE >: "2030-12-31T23:59:58"
-FAIL NISTXML-dateTime-minExclusive-5-1.xml: no schema
+PASS INSTANCE NISTXML-dateTime-minExclusive-4-5.xml
+PASS NISTSchema-dateTime-minExclusive-5.xsd
+PASS INSTANCE NISTXML-dateTime-minExclusive-5-1.xml
 PASS NISTSchema-dateTime-minInclusive-1.xsd
 PASS INSTANCE NISTXML-dateTime-minInclusive-1-1.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-1-2.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-1-3.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-1-4.xml
-FAIL INSTANCE NISTXML-dateTime-minInclusive-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-INCLUSIVE (1970 1 1 0 0 0 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minInclusive-1-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minInclusive-1-5.xml
 PASS NISTSchema-dateTime-minInclusive-2.xsd
 PASS INSTANCE NISTXML-dateTime-minInclusive-2-1.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-2-2.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-2-3.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-2-4.xml
-FAIL INSTANCE NISTXML-dateTime-minInclusive-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-INCLUSIVE (1996 6 22 16 24 8 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minInclusive-2-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minInclusive-2-5.xml
 PASS NISTSchema-dateTime-minInclusive-3.xsd
 PASS INSTANCE NISTXML-dateTime-minInclusive-3-1.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-3-2.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-3-3.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-3-4.xml
-FAIL INSTANCE NISTXML-dateTime-minInclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-INCLUSIVE (1989 1 30 17 20 40 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minInclusive-3-5.xml> ]
+PASS INSTANCE NISTXML-dateTime-minInclusive-3-5.xml
 PASS NISTSchema-dateTime-minInclusive-4.xsd
 PASS INSTANCE NISTXML-dateTime-minInclusive-4-1.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-4-2.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-4-3.xml
 PASS INSTANCE NISTXML-dateTime-minInclusive-4-4.xml
-FAIL INSTANCE NISTXML-dateTime-minInclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TIME-TYPE  MIN-INCLUSIVE (1991 2 28 17 38 33 NIL)>
-  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-dateTime-minInclusive-4-5.xml> ]
-FAIL NISTSchema-dateTime-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TIME-TYPE >: "2030-12-31T23:59:59"
-FAIL NISTXML-dateTime-minInclusive-5-1.xml: no schema
+PASS INSTANCE NISTXML-dateTime-minInclusive-4-5.xml
+PASS NISTSchema-dateTime-minInclusive-5.xsd
+PASS INSTANCE NISTXML-dateTime-minInclusive-5-1.xml
 PASS NISTSchema-dateTime-maxExclusive-1.xsd
 PASS INSTANCE NISTXML-dateTime-maxExclusive-1-1.xml
 PASS NISTSchema-dateTime-maxExclusive-2.xsd
@@ -3395,12 +3387,12 @@ PASS INSTANCE NISTXML-dateTime-maxExclusive-4-2.xml
 PASS INSTANCE NISTXML-dateTime-maxExclusive-4-3.xml
 PASS INSTANCE NISTXML-dateTime-maxExclusive-4-4.xml
 PASS INSTANCE NISTXML-dateTime-maxExclusive-4-5.xml
-FAIL NISTSchema-dateTime-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TIME-TYPE >: "2030-12-31T23:59:59"
-FAIL NISTXML-dateTime-maxExclusive-5-1.xml: no schema
-FAIL NISTXML-dateTime-maxExclusive-5-2.xml: no schema
-FAIL NISTXML-dateTime-maxExclusive-5-3.xml: no schema
-FAIL NISTXML-dateTime-maxExclusive-5-4.xml: no schema
-FAIL NISTXML-dateTime-maxExclusive-5-5.xml: no schema
+PASS NISTSchema-dateTime-maxExclusive-5.xsd
+PASS INSTANCE NISTXML-dateTime-maxExclusive-5-1.xml
+PASS INSTANCE NISTXML-dateTime-maxExclusive-5-2.xml
+PASS INSTANCE NISTXML-dateTime-maxExclusive-5-3.xml
+PASS INSTANCE NISTXML-dateTime-maxExclusive-5-4.xml
+PASS INSTANCE NISTXML-dateTime-maxExclusive-5-5.xml
 PASS NISTSchema-dateTime-maxInclusive-1.xsd
 PASS INSTANCE NISTXML-dateTime-maxInclusive-1-1.xml
 PASS NISTSchema-dateTime-maxInclusive-2.xsd
@@ -3421,12 +3413,12 @@ PASS INSTANCE NISTXML-dateTime-maxInclusive-4-2.xml
 PASS INSTANCE NISTXML-dateTime-maxInclusive-4-3.xml
 PASS INSTANCE NISTXML-dateTime-maxInclusive-4-4.xml
 PASS INSTANCE NISTXML-dateTime-maxInclusive-4-5.xml
-FAIL NISTSchema-dateTime-maxInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TIME-TYPE >: "2030-12-31T23:59:59"
-FAIL NISTXML-dateTime-maxInclusive-5-1.xml: no schema
-FAIL NISTXML-dateTime-maxInclusive-5-2.xml: no schema
-FAIL NISTXML-dateTime-maxInclusive-5-3.xml: no schema
-FAIL NISTXML-dateTime-maxInclusive-5-4.xml: no schema
-FAIL NISTXML-dateTime-maxInclusive-5-5.xml: no schema
+PASS NISTSchema-dateTime-maxInclusive-5.xsd
+PASS INSTANCE NISTXML-dateTime-maxInclusive-5-1.xml
+PASS INSTANCE NISTXML-dateTime-maxInclusive-5-2.xml
+PASS INSTANCE NISTXML-dateTime-maxInclusive-5-3.xml
+PASS INSTANCE NISTXML-dateTime-maxInclusive-5-4.xml
+PASS INSTANCE NISTXML-dateTime-maxInclusive-5-5.xml
 PASS NISTSchema-dateTime-pattern-1.xsd
 PASS INSTANCE NISTXML-dateTime-pattern-1-1.xml
 PASS INSTANCE NISTXML-dateTime-pattern-1-2.xml
@@ -3656,63 +3648,53 @@ PASS INSTANCE NISTXML-date-minExclusive-1-1.xml
 PASS INSTANCE NISTXML-date-minExclusive-1-2.xml
 PASS INSTANCE NISTXML-date-minExclusive-1-3.xml
 PASS INSTANCE NISTXML-date-minExclusive-1-4.xml
-FAIL INSTANCE NISTXML-date-minExclusive-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (1970 1 1 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-1-5.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-1-5.xml
 PASS NISTSchema-date-minExclusive-2.xsd
 PASS INSTANCE NISTXML-date-minExclusive-2-1.xml
 PASS INSTANCE NISTXML-date-minExclusive-2-2.xml
-FAIL INSTANCE NISTXML-date-minExclusive-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (1979 11 10 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-2-3.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-2-3.xml
 PASS INSTANCE NISTXML-date-minExclusive-2-4.xml
-FAIL INSTANCE NISTXML-date-minExclusive-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (1979 11 10 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-2-5.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-2-5.xml
 PASS NISTSchema-date-minExclusive-3.xsd
 PASS INSTANCE NISTXML-date-minExclusive-3-1.xml
 PASS INSTANCE NISTXML-date-minExclusive-3-2.xml
 PASS INSTANCE NISTXML-date-minExclusive-3-3.xml
 PASS INSTANCE NISTXML-date-minExclusive-3-4.xml
-FAIL INSTANCE NISTXML-date-minExclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (2026 2 2 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-3-5.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-3-5.xml
 PASS NISTSchema-date-minExclusive-4.xsd
 PASS INSTANCE NISTXML-date-minExclusive-4-1.xml
 PASS INSTANCE NISTXML-date-minExclusive-4-2.xml
 PASS INSTANCE NISTXML-date-minExclusive-4-3.xml
 PASS INSTANCE NISTXML-date-minExclusive-4-4.xml
-FAIL INSTANCE NISTXML-date-minExclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (1970 3 19 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-4-5.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-4-5.xml
 PASS NISTSchema-date-minExclusive-5.xsd
-FAIL INSTANCE NISTXML-date-minExclusive-5-1.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-EXCLUSIVE (2030 12 30 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minExclusive-5-1.xml> ]
+PASS INSTANCE NISTXML-date-minExclusive-5-1.xml
 PASS NISTSchema-date-minInclusive-1.xsd
 PASS INSTANCE NISTXML-date-minInclusive-1-1.xml
 PASS INSTANCE NISTXML-date-minInclusive-1-2.xml
 PASS INSTANCE NISTXML-date-minInclusive-1-3.xml
 PASS INSTANCE NISTXML-date-minInclusive-1-4.xml
-FAIL INSTANCE NISTXML-date-minInclusive-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-INCLUSIVE (1970 1 1 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minInclusive-1-5.xml> ]
+PASS INSTANCE NISTXML-date-minInclusive-1-5.xml
 PASS NISTSchema-date-minInclusive-2.xsd
 PASS INSTANCE NISTXML-date-minInclusive-2-1.xml
 PASS INSTANCE NISTXML-date-minInclusive-2-2.xml
 PASS INSTANCE NISTXML-date-minInclusive-2-3.xml
 PASS INSTANCE NISTXML-date-minInclusive-2-4.xml
-FAIL INSTANCE NISTXML-date-minInclusive-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-INCLUSIVE (1970 3 11 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minInclusive-2-5.xml> ]
+PASS INSTANCE NISTXML-date-minInclusive-2-5.xml
 PASS NISTSchema-date-minInclusive-3.xsd
 PASS INSTANCE NISTXML-date-minInclusive-3-1.xml
 PASS INSTANCE NISTXML-date-minInclusive-3-2.xml
 PASS INSTANCE NISTXML-date-minInclusive-3-3.xml
 PASS INSTANCE NISTXML-date-minInclusive-3-4.xml
-FAIL INSTANCE NISTXML-date-minInclusive-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-INCLUSIVE (1977 4 25 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minInclusive-3-5.xml> ]
+PASS INSTANCE NISTXML-date-minInclusive-3-5.xml
 PASS NISTSchema-date-minInclusive-4.xsd
 PASS INSTANCE NISTXML-date-minInclusive-4-1.xml
 PASS INSTANCE NISTXML-date-minInclusive-4-2.xml
 PASS INSTANCE NISTXML-date-minInclusive-4-3.xml
 PASS INSTANCE NISTXML-date-minInclusive-4-4.xml
-FAIL INSTANCE NISTXML-date-minInclusive-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<DATE-TYPE  MIN-INCLUSIVE (1997 2 26 0 0 0 NIL)>
-  [ Error at line 17, column 138 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-date-minInclusive-4-5.xml> ]
-FAIL NISTSchema-date-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TYPE >: "2030-12-31"
-FAIL NISTXML-date-minInclusive-5-1.xml: no schema
+PASS INSTANCE NISTXML-date-minInclusive-4-5.xml
+PASS NISTSchema-date-minInclusive-5.xsd
+PASS INSTANCE NISTXML-date-minInclusive-5-1.xml
 PASS NISTSchema-date-maxExclusive-1.xsd
 PASS INSTANCE NISTXML-date-maxExclusive-1-1.xml
 PASS NISTSchema-date-maxExclusive-2.xsd
@@ -3733,12 +3715,12 @@ PASS INSTANCE NISTXML-date-maxExclusive-4-2.xml
 PASS INSTANCE NISTXML-date-maxExclusive-4-3.xml
 PASS INSTANCE NISTXML-date-maxExclusive-4-4.xml
 PASS INSTANCE NISTXML-date-maxExclusive-4-5.xml
-FAIL NISTSchema-date-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TYPE >: "2030-12-31"
-FAIL NISTXML-date-maxExclusive-5-1.xml: no schema
-FAIL NISTXML-date-maxExclusive-5-2.xml: no schema
-FAIL NISTXML-date-maxExclusive-5-3.xml: no schema
-FAIL NISTXML-date-maxExclusive-5-4.xml: no schema
-FAIL NISTXML-date-maxExclusive-5-5.xml: no schema
+PASS NISTSchema-date-maxExclusive-5.xsd
+PASS INSTANCE NISTXML-date-maxExclusive-5-1.xml
+PASS INSTANCE NISTXML-date-maxExclusive-5-2.xml
+PASS INSTANCE NISTXML-date-maxExclusive-5-3.xml
+PASS INSTANCE NISTXML-date-maxExclusive-5-4.xml
+PASS INSTANCE NISTXML-date-maxExclusive-5-5.xml
 PASS NISTSchema-date-maxInclusive-1.xsd
 PASS INSTANCE NISTXML-date-maxInclusive-1-1.xml
 PASS NISTSchema-date-maxInclusive-2.xsd
@@ -3759,12 +3741,12 @@ PASS INSTANCE NISTXML-date-maxInclusive-4-2.xml
 PASS INSTANCE NISTXML-date-maxInclusive-4-3.xml
 PASS INSTANCE NISTXML-date-maxInclusive-4-4.xml
 PASS INSTANCE NISTXML-date-maxInclusive-4-5.xml
-FAIL NISTSchema-date-maxInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<DATE-TYPE >: "2030-12-31"
-FAIL NISTXML-date-maxInclusive-5-1.xml: no schema
-FAIL NISTXML-date-maxInclusive-5-2.xml: no schema
-FAIL NISTXML-date-maxInclusive-5-3.xml: no schema
-FAIL NISTXML-date-maxInclusive-5-4.xml: no schema
-FAIL NISTXML-date-maxInclusive-5-5.xml: no schema
+PASS NISTSchema-date-maxInclusive-5.xsd
+PASS INSTANCE NISTXML-date-maxInclusive-5-1.xml
+PASS INSTANCE NISTXML-date-maxInclusive-5-2.xml
+PASS INSTANCE NISTXML-date-maxInclusive-5-3.xml
+PASS INSTANCE NISTXML-date-maxInclusive-5-4.xml
+PASS INSTANCE NISTXML-date-maxInclusive-5-5.xml
 PASS NISTSchema-date-pattern-1.xsd
 PASS INSTANCE NISTXML-date-pattern-1-1.xml
 PASS INSTANCE NISTXML-date-pattern-1-2.xml
@@ -4473,165 +4455,185 @@ PASS INSTANCE NISTXML-gDay-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-gDay-whiteSpace-1-5.xml: (ignored)
-FAIL NISTSchema-gMonth-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--01--"
+FAIL NISTSchema-gMonth-minExclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minExclusive-1-1.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-1-2.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-1-3.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-1-4.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-1-5.xml: no schema
-FAIL NISTSchema-gMonth-minExclusive-2.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--02--"
+FAIL NISTSchema-gMonth-minExclusive-2.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minExclusive-2-1.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-2-2.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-2-3.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-2-4.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-2-5.xml: no schema
-FAIL NISTSchema-gMonth-minExclusive-3.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--04--"
+FAIL NISTSchema-gMonth-minExclusive-3.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minExclusive-3-1.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-3-2.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-3-3.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-3-4.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-3-5.xml: no schema
-FAIL NISTSchema-gMonth-minExclusive-4.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--03--"
+FAIL NISTSchema-gMonth-minExclusive-4.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minExclusive-4-1.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-4-2.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-4-3.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-4-4.xml: no schema
 FAIL NISTXML-gMonth-minExclusive-4-5.xml: no schema
-FAIL NISTSchema-gMonth-minExclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--11--"
+FAIL NISTSchema-gMonth-minExclusive-5.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minExclusive-5-1.xml: no schema
-FAIL NISTSchema-gMonth-minInclusive-1.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--01--"
+FAIL NISTSchema-gMonth-minInclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minInclusive-1-1.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-1-2.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-1-3.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-1-4.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-1-5.xml: no schema
-FAIL NISTSchema-gMonth-minInclusive-2.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--02--"
+FAIL NISTSchema-gMonth-minInclusive-2.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minInclusive-2-1.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-2-2.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-2-3.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-2-4.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-2-5.xml: no schema
-FAIL NISTSchema-gMonth-minInclusive-3.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--11--"
+FAIL NISTSchema-gMonth-minInclusive-3.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minInclusive-3-1.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-3-2.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-3-3.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-3-4.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-3-5.xml: no schema
-FAIL NISTSchema-gMonth-minInclusive-4.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--08--"
+FAIL NISTSchema-gMonth-minInclusive-4.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minInclusive-4-1.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-4-2.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-4-3.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-4-4.xml: no schema
 FAIL NISTXML-gMonth-minInclusive-4-5.xml: no schema
-FAIL NISTSchema-gMonth-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--12--"
+FAIL NISTSchema-gMonth-minInclusive-5.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-minInclusive-5-1.xml: no schema
-FAIL NISTSchema-gMonth-maxExclusive-1.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--02--"
+FAIL NISTSchema-gMonth-maxExclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxExclusive-1-1.xml: no schema
-FAIL NISTSchema-gMonth-maxExclusive-2.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--10--"
+FAIL NISTSchema-gMonth-maxExclusive-2.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxExclusive-2-1.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-2-2.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-2-3.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-2-4.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-2-5.xml: no schema
-FAIL NISTSchema-gMonth-maxExclusive-3.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--10--"
+FAIL NISTSchema-gMonth-maxExclusive-3.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxExclusive-3-1.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-3-2.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-3-3.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-3-4.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-3-5.xml: no schema
-FAIL NISTSchema-gMonth-maxExclusive-4.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--05--"
+FAIL NISTSchema-gMonth-maxExclusive-4.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxExclusive-4-1.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-4-2.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-4-3.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-4-4.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-4-5.xml: no schema
-FAIL NISTSchema-gMonth-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--12--"
+FAIL NISTSchema-gMonth-maxExclusive-5.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxExclusive-5-1.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-5-2.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-5-3.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-5-4.xml: no schema
 FAIL NISTXML-gMonth-maxExclusive-5-5.xml: no schema
-FAIL NISTSchema-gMonth-maxInclusive-1.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--01--"
+FAIL NISTSchema-gMonth-maxInclusive-1.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxInclusive-1-1.xml: no schema
-FAIL NISTSchema-gMonth-maxInclusive-2.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--10--"
+FAIL NISTSchema-gMonth-maxInclusive-2.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxInclusive-2-1.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-2-2.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-2-3.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-2-4.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-2-5.xml: no schema
-FAIL NISTSchema-gMonth-maxInclusive-3.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--04--"
+FAIL NISTSchema-gMonth-maxInclusive-3.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxInclusive-3-1.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-3-2.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-3-3.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-3-4.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-3-5.xml: no schema
-FAIL NISTSchema-gMonth-maxInclusive-4.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--11--"
+FAIL NISTSchema-gMonth-maxInclusive-4.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxInclusive-4-1.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-4-2.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-4-3.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-4-4.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-4-5.xml: no schema
-FAIL NISTSchema-gMonth-maxInclusive-5.xsd: (BOGUS CONDITION) failed to parse: not valid for data type #<MONTH-TYPE >: "--12--"
+FAIL NISTSchema-gMonth-maxInclusive-5.xsd: (BOGUS CONDITION) failed to parse: Argument X is not a REAL:
+                                                                                NIL
 FAIL NISTXML-gMonth-maxInclusive-5-1.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-5-2.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-5-3.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-5-4.xml: no schema
 FAIL NISTXML-gMonth-maxInclusive-5-5.xml: no schema
 PASS NISTSchema-gMonth-pattern-1.xsd
-FAIL INSTANCE NISTXML-gMonth-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-1-1.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-1-2.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-1-3.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-1-4.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-1-5.xml> ]
+FAIL INSTANCE NISTXML-gMonth-pattern-1-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-1-2.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-1-3.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-1-4.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-1-5.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
 PASS NISTSchema-gMonth-pattern-2.xsd
-FAIL INSTANCE NISTXML-gMonth-pattern-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-2-1.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-2-2.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-2-3.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-2-4.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --10-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-2-5.xml> ]
+FAIL INSTANCE NISTXML-gMonth-pattern-2-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-2-2.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-2-3.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-2-4.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-2-5.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
 PASS NISTSchema-gMonth-pattern-3.xsd
-FAIL INSTANCE NISTXML-gMonth-pattern-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --11-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-3-1.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --11-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-3-2.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --11-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-3-3.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --11-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-3-4.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --11-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-3-5.xml> ]
+FAIL INSTANCE NISTXML-gMonth-pattern-3-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-3-2.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-3-3.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-3-4.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-3-5.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
 PASS NISTSchema-gMonth-pattern-4.xsd
-FAIL INSTANCE NISTXML-gMonth-pattern-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --01-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-4-1.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --01-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-4-2.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --01-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-4-3.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --01-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-4-4.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --01-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-4-5.xml> ]
+FAIL INSTANCE NISTXML-gMonth-pattern-4-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-4-2.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-4-3.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-4-4.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-4-5.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
 PASS NISTSchema-gMonth-pattern-5.xsd
-FAIL INSTANCE NISTXML-gMonth-pattern-5-1.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-1.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-5-2.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-2.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-3.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-4.xml> ]
-FAIL INSTANCE NISTXML-gMonth-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<MONTH-TYPE  :pattern --07-->
-  [ Error at line 17, column 125 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-gMonth-pattern-5-5.xml> ]
+FAIL INSTANCE NISTXML-gMonth-pattern-5-1.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-5-2.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-5-3.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-5-4.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
+FAIL INSTANCE NISTXML-gMonth-pattern-5-5.xml: (BOGUS CONDITON) failed to validate: Argument X is not a REAL:
+                                                                                     NIL
 PASS INSTANCE NISTXML-gMonth-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-gMonth-enumeration-1-3.xml: (ignored)
@@ -6496,4 +6498,4 @@ PASS INSTANCE NISTXML-QName-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-5.xml: (ignored)
-Passed 5206/7757 tests.
+Passed 5247/7764 tests.

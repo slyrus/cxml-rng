@@ -770,12 +770,12 @@
 		   (not (zerop (mod y 100))))))
      29)
     ((eql m 2) 28)
-    ((oddp y) 31)
+    ((if (<= m 7) (oddp m) (evenp m)) 31)
     (t 30)))
 
-(defmethod parse-time (minusp y m d h min s tz tz-sign tz-h tz-m
+(defun parse-time (minusp y m d h min s tz tz-sign tz-h tz-m
 		       &key (start 0) end)
-  (declare (ignore start end))		;zzz
+  (declare (ignore tz start end))		;zzz
   ;; parse into numbers
   (flet ((int (str)
 	   (and str (parse-integer str)))
