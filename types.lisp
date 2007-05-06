@@ -1016,18 +1016,47 @@
 (defxsd (float-type "float") (xsd-type ordering-mixin) ())
 
 (defmethod equal-using-type ((type float-type) u v)
-  (= u v))
+  #+(or sbcl allegro) (= u v)
+  #-(or sbcl allegro) (float= u v))
 
 (defmethod lessp-using-type ((type float-type) u v)
-  (< u v))
+  #+(or sbcl allegro) (< u v)
+  #-(or sbcl allegro) (float< u v))
+
+;; this one is more complex than would seem necessary, because too-large
+;; and too-small values must be rounded to infinity rather than erroring out
+(defun parse-float (e min max +inf -inf nan)
+  (cond
+    ((equal e "INF") +inf)
+    ((equal e "-INF") -inf)
+    ((equal e "Nan") nan)
+    (t
+     (destructuring-bind (&optional a b)
+	 (scan-to-strings "^([^eE]+)(?:[eE]([^eE]+))?$" e)
+       (if a
+	   (let* ((mantissa (parse/xsd (make-instance 'decimal-type) a nil))
+		  (exponent
+		   (when b
+		     (parse/xsd (make-instance 'integer-type) b nil))))
+	     (if (or (eq mantissa :error) (eq exponent :error))
+		 :error
+		 (let ((ratio (* mantissa (expt 10 (or exponent 1)))))
+		   (cond
+		     ((< ratio min) -inf)
+		     ((> ratio max) +inf)
+		     (t (float ratio min))))))
+	   :error)))))
 
 ;; zzz nehme hier an, dass single-float in IEEE single float ist.
 ;; Das stimmt unter LispWorks bestimmt wieder nicht.
 (defmethod parse/xsd ((type float-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?\\d+([.]\\d+)?([eE][+-]?\\d+)?$" e)
-      (coerce (parse-number:parse-number e) 'single-float)
-      :error))
+  (parse-float e
+	       most-negative-single-float
+	       most-positive-single-float
+	       single-float-positive-infinity
+	       single-float-negative-infinity
+	       single-float-nan))
 
 
 ;;; decimal
@@ -1102,18 +1131,23 @@
 (defxsd (double-type "double") (xsd-type ordering-mixin) ())
 
 (defmethod equal-using-type ((type double-type) u v)
-  (= u v))
+  #+(or sbcl allegro) (= u v)
+  #-(or sbcl allegro) (float= u v))
 
 (defmethod lessp-using-type ((type double-type) u v)
-  (< u v))
+  #+(or sbcl allegro) (< u v)
+  #-(or sbcl allegro) (float< u v))
 
 ;; zzz nehme hier an, dass double-float in IEEE double float ist.
 ;; Auch das ist nicht garantiert.
 (defmethod parse/xsd ((type double-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?\\d+([.]\\d+)?([eE][+-]?\\d+)?$" e)
-      (coerce (parse-number:parse-number e) 'double-float)
-      :error))
+  (parse-float e
+	       most-negative-double-float
+	       most-positive-double-float
+	       double-float-positive-infinity
+	       double-float-negative-infinity
+	       double-float-nan))
 
 
 ;;; AnyURi

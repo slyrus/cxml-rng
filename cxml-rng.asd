@@ -16,6 +16,7 @@
     :serial t
     :components
     ((:file "package")
+     (:file "floats")
      (:file "types")
      (:file "parse")
      (:file "validate")
