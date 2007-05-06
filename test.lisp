@@ -178,6 +178,9 @@
 
 (defun run-nist-test/Instance (schema href base)
   (cond
+    ((eq schema :ignore)
+     (format t "PASS INSTANCE ~A: (ignored)~%" href)
+     t)
     (schema
      (handler-case
 	 (progn
@@ -203,8 +206,13 @@
 	  (format t "PASS ~A~%" href)
 	  t)
       (rng-error (c)
-	(format t "FAIL ~A: failed to parse:~_ ~A~%" href c)
-	nil)
+	(cond
+	  ((search ":NAME enumeration" (princ-to-string c))
+	   (format t "PASS ~A: enumeration forbidden~%" href)
+	   :ignore)
+	  (t
+	   (format t "FAIL ~A: failed to parse:~_ ~A~%" href c)
+	   nil)))
       (error (c)
 	(format t "FAIL ~A: (BOGUS CONDITION) failed to parse:~_ ~A~%" href c)
 	nil))))
