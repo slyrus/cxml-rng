@@ -399,7 +399,7 @@
 (defun zip (keys values)
   (loop for key in keys for value in values collect key collect value))
 
-(defgeneric parse-parameter (class-name type-name value))
+(defgeneric parse-parameter (class-name type-name param-name value))
 
 (defun parse-parameters (type-class params)
   (let ((patterns '())
@@ -418,8 +418,8 @@
 		  (:|maxInclusive| (values :max-inclusive 'ordering-mixin))
 		  (:|minExclusive| (values :min-exclusive 'ordering-mixin))
 		  (:|maxExclusive| (values :max-exclusive 'ordering-mixin))
-		  (:|totalDigits| (values :total-digits 'decimal))
-		  (:|fractionDigits| (values :fraction-digits 'decimal))
+		  (:|totalDigits| (values :total-digits 'decimal-type))
+		  (:|fractionDigits| (values :fraction-digits 'decimal-type))
 		  (t (return nil)))
 	      (unless (subtypep type-class required-class)
 		(return nil))
@@ -427,7 +427,7 @@
 		       for (k nil) on args by #'cddr
 		       thereis (eq key k))
 		(return nil))
-	      (push (parse-parameter required-class type-class value) args)
+	      (push (parse-parameter required-class type-class key value) args)
 	      (push key args)))))))
 
 (defmethod find-type
@@ -502,7 +502,7 @@
 		    :accessor max-inclusive)))
 
 (defmethod parse-parameter
-    ((class-name (eql 'ordering-mixin)) type-name value)
+    ((class-name (eql 'ordering-mixin)) type-name (param t) value)
   (parse (make-instance type-name) value nil))
 
 (defgeneric lessp-using-type (type u v)
@@ -551,7 +551,7 @@
      (max-length :initform nil :initarg :max-length :accessor max-length)))
 
 (defmethod parse-parameter
-    ((class-name (eql 'length-mixin)) (type-name t) value)
+    ((class-name (eql 'length-mixin)) (type-name t) (param t) value)
   (parse (make-instance 'non-negative-integer-type) value nil))
 
 ;; extra-hack fuer die "Laenge" eines QName...
@@ -1008,7 +1008,17 @@
 		 :accessor total-digits)))
 
 (defmethod parse-parameter
-    ((class-name (eql 'decimal-type)) (type-name t) value)
+    ((class-name (eql 'decimal-type))
+     (type-name t)
+     (param (eql :fraction-digits))
+     value)
+  (parse (make-instance 'non-negative-integer-type) value nil))
+
+(defmethod parse-parameter
+    ((class-name (eql 'decimal-type))
+     (type-name t)
+     (param (eql :total-digits))
+     value)
   (parse (make-instance 'positive-integer-type) value nil))
 
 (defmethod lessp-using-type ((type decimal-type) u v)
@@ -1229,7 +1239,7 @@
 ;; das pattern im schema nicht.
 (defmethod parse/xsd ((type integer-type) e context)
   (declare (ignore context))
-  (if (cl-ppcre:all-matches "^[+-]?[1-9]\\d*$" e)
+  (if (cl-ppcre:all-matches "^[+-]?(?:[1-9]\\d*|0)$" e)
       (parse-number:parse-number e)
       :error))
 
