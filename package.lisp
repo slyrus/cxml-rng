@@ -135,6 +135,15 @@
 
 	   #:xsd-type
 	   #:patterns
+	   #:min-exclusive
+	   #:max-exclusive
+	   #:min-inclusive
+	   #:max-inclusive
+	   #:min-length
+	   #:max-length
+	   #:exact-length
+	   #:fraction-digits
+	   #:total-digits
 
 	   #:duration-type
 	   #:date-time-type
@@ -173,7 +182,7 @@
 	   #:long-type
 	   #:int-type
 	   #:short-type
-	   #:bite-type
+	   #:byte-type
 	   #:non-negative-integer-type
 	   #:unsigned-long-type
 	   #:unsigned-int-type
@@ -183,8 +192,10 @@
   (:documentation
    "@code{cxml-types} defines an extensible interface for XML-related
     data types as required for use in Relax NG validation.
+
     It includes Relax NG's minimal built-in type library, which is named
     @code{:||} and defines the types \"string\" and \"token\".
+
     In addition, it implements the built-in types of
     @a[http://www.w3.org/TR/xmlschema-2/]{XML Schema Datatypes}
     as specified in @a[http://relaxng.org/xsd-20010907.html]{Guidelines for
@@ -304,7 +315,7 @@ T
       @aboutclass{long-type}
       @aboutclass{int-type}
       @aboutclass{short-type}
-      @aboutclass{bite-type}
+      @aboutclass{byte-type}
       @aboutclass{non-negative-integer-type}
       @aboutclass{unsigned-long-type}
       @aboutclass{unsigned-int-type}

@@ -39,14 +39,30 @@
 	<column width="60%">
 	  <padded>
 	    <xsl:for-each select="package">
+	      <xsl:variable name="url"
+			    select="concat('pages/', @id, '.html')"/>
 	      <h2>
-		<a href="pages/{@id}.html">
+		<a href="{$url}">
 		  Package
 		  <xsl:value-of select="@name"/>
 		</a>
 	      </h2>
 	      <div style="left: 100px">
 		<xsl:apply-templates select="documentation-string"/>
+		<div class="indent">
+		  <xsl:if test="sections">
+		    <p><i>About this package:</i></p>
+		    <ul>
+		      <xsl:for-each select="sections/section">
+			<li>
+			  <a href="{$url}#{generate-id()}">
+			    <xsl:value-of select="@section"/>
+			  </a>
+			</li>
+		      </xsl:for-each>
+		    </ul>
+		  </xsl:if>
+		</div>
 	      </div>
 	    </xsl:for-each>
 	  </padded>
@@ -89,7 +105,12 @@
 	      <div style="margin-left: -30px">
 		<h3>About This Package</h3>
 	      </div>
-	      <xsl:apply-templates select="sections/section" mode="toc"/>
+	      <xsl:for-each select="sections/section">
+		<a href="#{generate-id()}" style="font-weight: bold">
+		  <xsl:value-of select="@section"/>
+		</a>
+		<br/>
+	      </xsl:for-each>
 	      <br/>
 	      <xsl:apply-templates select="sections"/>
 	    </xsl:if>
@@ -118,7 +139,10 @@
 	  Class <xsl:value-of select="@name"/>
 	</h2>
       </padded>
-      <macro:maybe-columns test="see-also">
+      <macro:maybe-columns
+	 test="see-also
+	       or //class-definition[@id=current()//superclass/@id]
+	       //see-also/slot">
 	<padded>
 	  <h3>Superclasses</h3>
 	  <div class="indent">
@@ -240,14 +264,14 @@
     <row>
       <xsl:if test="$packagep">
 	<cell align="right">
-	  <a href="{$packagep}{@id}.html">
+	  <span class="nonlink">
 	    <tt>
 	      <span style="color: #777777">
 		<xsl:value-of select="../../@name"/>
 		<xsl:text>:</xsl:text>
 	    </span>
 	    </tt>
-	  </a>
+	  </span>
 	</cell>
       </xsl:if>
       <cell>
@@ -346,6 +370,19 @@
       <div class="indent">
 	<simple-table>
 	  <xsl:apply-templates select="see-also/slot/see"/>
+	</simple-table>
+      </div>
+    </xsl:if>
+    <xsl:if
+       test="//class-definition[@id=current()//superclass/@id]
+	     //see-also
+	     /slot">
+      <h3>Inherited Slot Access Functions</h3>
+      <div class="indent">
+	<simple-table>
+	  <xsl:apply-templates
+	     select="//class-definition[@id=current()//superclass/@id]
+		     //see-also/slot/see"/>
 	</simple-table>
       </div>
     </xsl:if>
@@ -558,13 +595,6 @@
       </h2>
       <xsl:apply-templates/>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template match="section" mode="toc">
-    <a href="#{generate-id()}" style="font-weight: bold">
-      <xsl:value-of select="@section"/>
-    </a>
-    <br/>
   </xsl:template>
 
   <xsl:template match="aboutfun">

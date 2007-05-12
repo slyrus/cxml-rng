@@ -1,3 +1,5 @@
+;;; -*- show-trailing-whitespace: t; indent-tabs: nil -*-
+
 ;;; Copyright (c) 2007 David Lichteblau. All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
@@ -212,8 +214,8 @@
 
 (defstruct pattern
   "@short{The superclass of all patterns.}
-   Instances of this class represent elements of the simplified syntax
-   for Relax NG.
+   Instances of this class represent elements in the \"simplified syntax\"
+   of Relax NG.
 
    Patterns are documented for introspective purposes and are not meant to
    be modified by user code.

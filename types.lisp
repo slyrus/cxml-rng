@@ -384,6 +384,13 @@
 	  ,@slots)
        ,@args)))
 
+(defgeneric patterns (data-type)
+  (:documentation
+   "@arg[data-type]{a subtype of @class{xsd-type}}
+    @return{a list of strings}
+    This slot reader returns a list of the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-pattern]{pattern facets}."))
+
 (defclass xsd-type (data-type)
   ((patterns :initform nil :initarg :patterns :reader patterns))
   (:documentation
@@ -515,6 +522,50 @@
 
 ;;; ordering-mixin
 
+(defgeneric min-exclusive (data-type)
+  (:documentation
+   "@arg[data-type]{an ordered data type}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-minExclusive]{minExclusive facet},
+    or @code{nil} if none was specified.
+    @see{max-exclusive}
+    @see{min-inclusive}
+    @see{max-inclusive}"))
+
+(defgeneric max-exclusive (data-type)
+  (:documentation
+   "@arg[data-type]{an ordered data type}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-maxExclusive]{maxExclusive facet},
+    or @code{nil} if none was specified.
+    @see{min-exclusive}
+    @see{min-inclusive}
+    @see{max-inclusive}"))
+
+(defgeneric min-inclusive (data-type)
+  (:documentation
+   "@arg[data-type]{an ordered data type}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-minInclusive]{minInclusive facet},
+    or @code{nil} if none was specified.
+    @see{min-exclusive}
+    @see{max-exclusive}
+    @see{max-inclusive}"))
+
+(defgeneric max-inclusive (data-type)
+  (:documentation
+   "@arg[data-type]{an ordered data type}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-maxInclusive]{maxInclusive facet},
+    or @code{nil} if none was specified.
+    @see{min-exclusive}
+    @see{max-exclusive}
+    @see{min-inclusive}"))
+
 (defclass ordering-mixin ()
     ((min-exclusive :initform nil
 		    :initarg :min-exclusive
@@ -579,6 +630,36 @@
 
 
 ;;; length-mixin
+
+(defgeneric exact-length (data-type)
+  (:documentation
+   "@arg[data-type]{a data type supporting restrictions on value lengths}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-length]{length facet},
+    or @code{nil} if none was specified.
+    @see{min-length}
+    @see{max-length}"))
+
+(defgeneric min-length (data-type)
+  (:documentation
+   "@arg[data-type]{a data type supporting restrictions on value lengths}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-minLength]{minLength facet},
+    or @code{nil} if none was specified.
+    @see{exact-length}
+    @see{max-length}"))
+
+(defgeneric max-length (data-type)
+  (:documentation
+   "@arg[data-type]{a data type supporting restrictions on value lengths}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-maxLength]{maxLength facet},
+    or @code{nil} if none was specified.
+    @see{exact-length}
+    @see{min-length}"))
 
 (defclass length-mixin ()
     ((exact-length :initform nil :initarg :exact-length :accessor exact-length)
@@ -650,8 +731,8 @@
     maps to @code{(1 2 3 10 30 nil)}
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}."))
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}."))
 
 (defmethod equal-using-type ((type duration-type) u v)
   (equal u v))
@@ -763,8 +844,8 @@
     maps to @code{(2002 10 10 12 0 0 -5)}
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod equal-using-type ((type time-ordering-mixin) u v)
@@ -898,8 +979,8 @@
     Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type time-type) e context)
@@ -932,8 +1013,8 @@
     Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type date-type) e context)
@@ -968,8 +1049,8 @@
     Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type year-month-type) e context)
@@ -1001,8 +1082,8 @@
     from the Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type year-type) e context)
@@ -1034,8 +1115,8 @@
     from the Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type month-day-type) e context)
@@ -1067,8 +1148,8 @@
     from the Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type day-type) e context)
@@ -1099,8 +1180,8 @@
     from the Gregorian year AD 1.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}.  The ordering is partial
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.  The ordering is partial
     except within a timezone, see the spec for details."))
 
 (defmethod parse/xsd ((type month-type) e context)
@@ -1151,8 +1232,8 @@
     vector.
 
     @b{Parameters.} This type allows restrictions on the length of the octet
-    vector through the parameters @fun{exact-length}, @fun{min-length}, and
-    @fun{max-length}."))
+    vector through the parameters @slot{exact-length}, @slot{min-length}, and
+    @slot{max-length}."))
 
 (defmethod equal-using-type ((type base64-binary-type) u v)
   (equalp u v))
@@ -1189,8 +1270,8 @@
     vector.
 
     @b{Parameters.} This type allows restrictions on the length of the octet
-    vector through the parameters @fun{exact-length}, @fun{min-length}, and
-    @fun{max-length}."))
+    vector through the parameters @slot{exact-length}, @slot{min-length}, and
+    @slot{max-length}."))
 
 (defmethod equal-using-type ((type hex-binary-type) u v)
   (equalp u v))
@@ -1229,8 +1310,8 @@
     built-in ordering.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}."))
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}."))
 
 (defmethod equal-using-type ((type float-type) u v)
   #+(or sbcl allegro) (= u v)
@@ -1278,6 +1359,24 @@
 
 ;;; decimal
 
+(defgeneric fraction-digits (data-type)
+  (:documentation
+   "@arg[data-type]{a subtype of @class{decimal-type}}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-fractionDigits]{fractionDigits facet},
+    or @code{nil} if none was specified.
+    @see{total-digits}"))
+
+(defgeneric total-digits (data-type)
+  (:documentation
+   "@arg[data-type]{a subtype of @class{decimal-type}}
+    @return{an integer, or @code{nil}}
+    This slot reader returns the type's
+    @a[http://www.w3.org/TR/xmlschema-2/#rf-totalDigits]{totalDigits facet},
+    or @code{nil} if none was specified.
+    @see{fraction-digits}"))
+
 (defxsd (decimal-type "decimal") (xsd-type ordering-mixin)
   ((fraction-digits :initform nil
 		    :initarg :fraction-digits
@@ -1295,8 +1394,11 @@
     @b{Implementation.} This type returns a @code{rational}.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}."))
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}.
+
+    In addition, the facets @slot{fraction-digits} @slot{total-digits}
+    are recognized."))
 
 (defmethod describe-facets progn ((object decimal-type) stream)
   (dolist (slot '(fraction-digits total-digits))
@@ -1371,8 +1473,8 @@
     built-in ordering.
 
     @b{Parameters.} This type is ordered and allows the parameters
-    @fun{max-inclusive}, @fun{min-inclusive},
-    @fun{max-exclusive}, and @fun{min-exclusive}."))
+    @slot{max-inclusive}, @slot{min-inclusive},
+    @slot{max-exclusive}, and @slot{min-exclusive}."))
 
 (defmethod equal-using-type ((type double-type) u v)
   #+(or sbcl allegro) (= u v)
@@ -1408,8 +1510,8 @@
     special characters have been escaped.
 
     @b{Parameters.} This type allows restrictions on the length of the
-    normalized string through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    normalized string through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defmethod equal-using-type ((type any-uri-type) u v)
   (equal u v))
@@ -1441,8 +1543,8 @@
     fixme: export this structure.
 
     @b{Parameters.} This type allows restrictions on the length of the
-    original QName through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    original QName through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defxsd (notation-type "NOTATION") (qname-like)
   ()
@@ -1458,8 +1560,8 @@
     Schema Datatypes with RELAX NG}.
 
     @b{Parameters.} This type allows restrictions on the length of the
-    original QName through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    original QName through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defstruct (qname (:constructor make-qname (uri lname length)))
   uri
@@ -1506,8 +1608,8 @@
     XSD type that does not normalize or replace whitespace.
 
     @b{Parameters.} This type allows restrictions on the length of the
-    string through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    string through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defmethod equal-using-type ((type xsd-string-type) u v)
   (equal u v))
@@ -1542,8 +1644,8 @@
     (This is the only XSD type that replaces whitespace in this way.)
 
     @b{Parameters.} This type allows restrictions on the length of the
-    normalized string through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    normalized string through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defmethod munge-whitespace ((type normalized-string-type) e)
   (replace-whitespace e))
@@ -1569,8 +1671,8 @@
     token's supertypes @class{string-type} and @class{normalized-string-type}.)
 
     @b{Parameters.} This type allows restrictions on the length of the
-    normalized string through the parameters @fun{exact-length},
-    @fun{min-length}, and @fun{max-length}."))
+    normalized string through the parameters @slot{exact-length},
+    @slot{min-length}, and @slot{max-length}."))
 
 (defmethod munge-whitespace ((type xsd-token-type) e)
   (normalize-whitespace e))
@@ -1682,8 +1784,8 @@
     @class{idref-type}.
 
     @b{Parameters.} This type allows restrictions on the number of values
-    through the parameters @fun{exact-length},@fun{min-length}, and
-    @fun{max-length}."))
+    through the parameters @slot{exact-length}, @slot{min-length}, and
+    @slot{max-length}."))
 
 
 ;;; ENTITY
@@ -1728,8 +1830,8 @@
     the @code{context} argument to @fun{parse} and @fun{validp}.
 
     @b{Parameters.} This type allows restrictions on the number of values
-    through the parameters @fun{exact-length},@fun{min-length}, and
-    @fun{max-length}."))
+    through the parameters @slot{exact-length}, @slot{min-length}, and
+    @slot{max-length}."))
 
 
 ;;; NMTOKEN
@@ -1763,13 +1865,25 @@
     @class{nmtoken-type}.
 
     @b{Parameters.} This type allows restrictions on the number of values
-    through the parameters @fun{exact-length},@fun{min-length}, and
-    @fun{max-length}."))
+    through the parameters @slot{exact-length}, @slot{min-length}, and
+    @slot{max-length}."))
 
 
 ;;; integer
 
-(defxsd (integer-type "integer") (decimal-type) ())
+(defxsd (integer-type "integer") (decimal-type)
+  ()
+  (:documentation
+   "@short{The integer data type, derived from decimal.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#integer]{specification}.
+
+    @b{Syntax.} An integer, written it the decimal system without leading
+    zeros.  No decimal point is permitted.
+
+    @b{Implementation.} This type returns an @code{integer}.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 ;; period is forbidden, so there's no point in letting decimal handle parsing
 ;; fixme: sind fuehrende nullen nun erlaubt oder nicht?  die spec sagt ja,
@@ -1783,7 +1897,16 @@
 
 ;;; nonPositiveInteger
 
-(defxsd (non-positive-integer-type "nonPositiveInteger") (integer-type) ())
+(defxsd (non-positive-integer-type "nonPositiveInteger") (integer-type)
+  ()
+  (:documentation
+   "@short{The nonPositiveInteger data type, derived from integer.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#nonPositiveInteger]{specification}.
+
+    @b{Restrictions.} This type allows only values <= 0.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defun min* (a b)
   (cond
@@ -1805,7 +1928,15 @@
 ;;; nonPositiveInteger
 
 (defxsd (negative-integer-type "negativeInteger") (non-positive-integer-type)
-  ())
+  ()
+  (:documentation
+   "@short{The negativeInteger data type, derived from nonPositiveInteger.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#negativeInteger]{specification}.
+
+    @b{Restrictions.} This type allows only values < 0.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type negative-integer-type) &key)
   (setf (max-inclusive type)
@@ -1814,7 +1945,17 @@
 
 ;;; long
 
-(defxsd (long-type "long") (integer-type) ())
+(defxsd (long-type "long") (integer-type)
+  ()
+  (:documentation
+   "@short{The long data type, derived from integer.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#long]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [-2^63, 2^63-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type long-type) &key)
   (setf (max-inclusive type) (min* 9223372036854775807 (max-inclusive type)))
@@ -1823,7 +1964,17 @@
 
 ;;; int
 
-(defxsd (int-type "int") (long-type) ())
+(defxsd (int-type "int") (long-type)
+  ()
+  (:documentation
+   "@short{The int data type, derived from long.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#int]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [-2^31, 2^31-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type int-type) &key)
   (setf (max-inclusive type) (min* 2147483647 (max-inclusive type)))
@@ -1832,7 +1983,17 @@
 
 ;;; short
 
-(defxsd (short-type "short") (int-type) ())
+(defxsd (short-type "short") (int-type)
+  ()
+  (:documentation
+   "@short{The short data type, derived from int.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#short]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [-2^15, 2^15-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type short-type) &key)
   (setf (max-inclusive type) (min* 32767 (max-inclusive type)))
@@ -1841,7 +2002,17 @@
 
 ;;; byte
 
-(defxsd (byte-type "byte") (short-type) ())
+(defxsd (byte-type "byte") (short-type)
+  ()
+  (:documentation
+   "@short{The byte data type, derived from short.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#byte]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [-128, 127].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type byte-type) &key)
   (setf (max-inclusive type) (min* 127 (max-inclusive type)))
@@ -1850,7 +2021,16 @@
 
 ;;; nonNegativeInteger
 
-(defxsd (non-negative-integer-type "nonNegativeInteger") (integer-type) ())
+(defxsd (non-negative-integer-type "nonNegativeInteger") (integer-type)
+  ()
+  (:documentation
+   "@short{The nonNegativeInteger data type, derived from integer.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger]{specification}.
+
+    @b{Restrictions.} This type allows only values >= 0.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type non-negative-integer-type) &key)
   (setf (min-inclusive type) (max* 0 (min-inclusive type))))
@@ -1858,7 +2038,17 @@
 
 ;;; unsignedLong
 
-(defxsd (unsigned-long-type "unsignedLong") (non-negative-integer-type) ())
+(defxsd (unsigned-long-type "unsignedLong") (non-negative-integer-type)
+  ()
+  (:documentation
+   "@short{The unsignedLong data type, derived from nonNegativeInteger.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#unsignedLong]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [0, 2^64-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type unsigned-long-type) &key)
   (setf (max-inclusive type) (min* 18446744073709551615 (max-inclusive type))))
@@ -1866,7 +2056,17 @@
 
 ;;; unsignedInt
 
-(defxsd (unsigned-int-type "unsignedInt") (unsigned-long-type) ())
+(defxsd (unsigned-int-type "unsignedInt") (unsigned-long-type)
+  ()
+  (:documentation
+   "@short{The unsignedInt data type, derived from unsignedLong.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#unsignedInt]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [0, 2^32-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type unsigned-int-type) &key)
   (setf (max-inclusive type) (min* 4294967295 (max-inclusive type))))
@@ -1874,7 +2074,17 @@
 
 ;;; unsignedShort
 
-(defxsd (unsigned-short-type "unsignedShort") (unsigned-int-type) ())
+(defxsd (unsigned-short-type "unsignedShort") (unsigned-int-type)
+  ()
+  (:documentation
+   "@short{The unsignedShort data type, derived from unsignedInt.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#unsignedShort]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [0, 2^16-1].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type unsigned-short-type) &key)
   (setf (max-inclusive type) (min* 65535 (max-inclusive type))))
@@ -1882,7 +2092,17 @@
 
 ;;; unsignedByte
 
-(defxsd (unsigned-byte-type "unsignedByte") (unsigned-short-type) ())
+(defxsd (unsigned-byte-type "unsignedByte") (unsigned-short-type)
+  ()
+  (:documentation
+   "@short{The unsignedByte data type, derived from unsignedInt.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#unsignedByte]{specification}.
+
+    @b{Restrictions.} This type allows only values from the interval
+    [0, 255].
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type unsigned-byte-type) &key)
   (setf (max-inclusive type) (min* 255 (max-inclusive type))))
@@ -1891,7 +2111,15 @@
 ;;; positiveInteger
 
 (defxsd (positive-integer-type "positiveInteger") (non-negative-integer-type)
-  ())
+  ()
+  (:documentation
+   "@short{The positiveInteger data type, derived from nonNegativeInteger.}
+
+    C.f. the @a[http://www.w3.org/TR/xmlschema-2/#positiveInteger]{specification}.
+
+    @b{Restrictions.} This type allows only values > 0.
+
+    @b{Parameters and implementation.} Unchanged from the supertype."))
 
 (defmethod initialize-instance :after ((type positive-integer-type) &key)
   (setf (min-inclusive type) (max* 1 (min-inclusive type))))

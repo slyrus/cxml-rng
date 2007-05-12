@@ -58,7 +58,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template mode="extract" match="see-slot">
+  <xsl:template mode="extract" match="see-slot|slot">
     <see>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
@@ -105,7 +105,7 @@
     </xsl:if>
 
     <xsl:if test=".//see or .//see-slot or .//see-constructor
-		  or .//class or .//fun or .//variable">
+		  or .//class or .//fun or .//variable or .//slot">
       <see-also>
 	<xsl:if test=".//class or .//fun or .//variable">
 	  <auto>
@@ -120,9 +120,9 @@
 	  </other>
 	</xsl:if>
 
-	<xsl:if test=".//see-slot">
+	<xsl:if test=".//see-slot or .//slot">
 	  <slot>
-	    <xsl:apply-templates mode="extract" select=".//see-slot"/>
+	    <xsl:apply-templates mode="extract" select=".//see-slot|.//slot"/>
 	  </slot>
 	</xsl:if>
 

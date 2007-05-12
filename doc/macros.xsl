@@ -1,18 +1,14 @@
 <!--
-    
-    "BECAUSE WE CAN"
-
     This file is used to transform XSLT stylesheets using "macros" into
     real XSLT stylesheets.
-
-    (The macro expansion is in a bogus namespace until moved into the
-    XSL namespace using rename.xsl.)
   -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:macro="http://lichteblau.com/macro"
 		xmlns:extra="http://lichteblau.com/extra"
 		version="1.0">
   <xsl:output method="xml" indent="no"/>
+
+  <xsl:namespace-alias stylesheet-prefix="extra" result-prefix="xsl"/>
 
   <xsl:template match="@*|node()">
     <xsl:copy>
