@@ -18,10 +18,17 @@
 
   <xsl:template match="/">
     <pages>
+      <xsl:call-template name="configuration-attributes"/>
       <xsl:apply-templates select="documentation"/>
       <xsl:apply-templates select="documentation/package"/>
       <xsl:apply-templates select="documentation/package/symbols/*"/>
     </pages>
+  </xsl:template>
+
+  <xsl:template name="configuration-attributes">
+    <macro:copy-attribute name="logo" path="documentation"/>
+    <macro:copy-attribute name="css" path="documentation"/>
+    <macro:copy-attribute name="heading" path="documentation"/>
   </xsl:template>
 
 
@@ -30,7 +37,7 @@
     -->
 
   <xsl:template match="documentation">
-    <main-page title="{@title}">
+    <main-page title="{@index-title}">
       <padded>
 	Index of packages:
       </padded>
@@ -89,7 +96,7 @@
 	<p class="noindent">
 	  Up:
 	  <a href="../index.html">
-	    <xsl:value-of select="/documentation/@title"/>
+	    <xsl:value-of select="/documentation/@index-title"/>
 	  </a>
 	</p>
 	<h1>

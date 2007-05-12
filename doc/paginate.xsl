@@ -46,7 +46,7 @@
 	<title>
 	  <xsl:value-of select="@title"/>
 	</title>
-	<link rel="stylesheet" type="text/css" href="{@base}doc.css"/>
+	<link rel="stylesheet" type="text/css" href="{@base}{/pages/@css}"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
       </head>
       <body>
@@ -108,14 +108,26 @@
     <div id="header">
       <table cellspacing="0" cellpadding="0" width="100%">
 	<tr>
-	  <td width="176">
-	    <a id="headerlink" href="{$base}../index.html">
-	      <img src="{$base}logo.png" border="0"/>
-	    </a>
-	  </td>
+	  <xsl:if test="/pages/@logo">
+	    <td width="176">
+	      <a id="headerlink" href="{$base}../index.html">
+		<img src="{$base}{/pages/@logo}" border="0"/>
+	      </a>
+	    </td>
+	  </xsl:if>
 	  <td valign="center">
-	    &#x2014;
-	    <b> Relax NG for Closure XML</b>
+	    <xsl:choose>
+	      <xsl:when test="/pages/@logo">
+		&#x2014;
+	      </xsl:when>
+	      <xsl:otherwise>
+		&#160;&#160;
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <b>
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of select="/pages/@heading"/>
+	    </b>
 	  </td>
 	  <td valign="center" align="right">
             <b>API documentation</b>

@@ -36,4 +36,12 @@
       </extra:otherwise>
     </extra:choose>
   </xsl:template>
+
+  <xsl:template match="macro:copy-attribute">
+    <extra:if test="{@path}/@{@name}">
+      <extra:attribute name="{@name}">
+	<extra:value-of select="{@path}/@{@name}"/>
+      </extra:attribute>
+    </extra:if>
+  </xsl:template>    
 </xsl:stylesheet>
