@@ -48,7 +48,7 @@
 	    <xsl:for-each select="package">
 	      <xsl:variable name="url"
 			    select="concat('pages/', @id, '.html')"/>
-	      <h2>
+	      <h2 class="page-title">
 		<a href="{$url}">
 		  Package
 		  <xsl:value-of select="@name"/>
@@ -142,7 +142,7 @@
 	    <xsl:value-of select="../../@name"/>
 	  </a>
 	</p>
-	<h2>
+	<h2 class="page-title">
 	  Class <xsl:value-of select="@name"/>
 	</h2>
       </padded>
@@ -188,7 +188,7 @@
 	    <xsl:value-of select="../../@name"/>
 	  </a>
 	</p>
-	<h2>
+	<h2 class="page-title">
 	  Function
 	  <xsl:value-of select="@name"/>
 	</h2>
@@ -218,7 +218,7 @@
 	    <xsl:value-of select="../../@name"/>
 	  </a>
 	</p>
-	<h2>
+	<h2 class="page-title">
 	  Macro
 	  <xsl:value-of select="@name"/>
 	</h2>
@@ -239,7 +239,7 @@
 	    <xsl:value-of select="../../@name"/>
 	  </a>
 	</p>
-	<h2>
+	<h2 class="page-title">
 	  Variable
 	  <xsl:value-of select="@name"/>
 	</h2>
