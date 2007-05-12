@@ -365,7 +365,7 @@
    circularity into the pattern graph, by referring to elements defined
    elsewhere.
 
-   (@code{ref} pattern in the full Relax NG syntax can be used to refer
+   (@code{ref} patterns in the full Relax NG syntax can be used to refer
    to any pattern definition in the grammar.  Simplification normalizes
    the schema so that ref patterns only refer to definitions which have
    an @code{element} as their child.)
@@ -383,7 +383,7 @@
    circularity into the pattern graph, by referring to elements defined
    elsewhere.
 
-   (@code{ref} pattern in the full Relax NG syntax can be used to refer
+   (@code{ref} patterns in the full Relax NG syntax can be used to refer
    to any pattern definition in the grammar.  Simplification normalizes
    the schema so that ref patterns only refer to definitions which have
    an @code{element} as their child.)"

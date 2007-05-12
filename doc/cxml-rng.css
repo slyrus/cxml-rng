@@ -79,6 +79,13 @@ h4 {
   padding-top: 1em;
 }
 
+pre {
+  background-color: #eeeeee;
+  border: solid 1px #d0d0d0;
+  padding: 1em;
+  margin-right: 10%;
+}
+
 .code {
   border: solid 1px #d0d0d0;
   padding: 1em;

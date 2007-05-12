@@ -60,11 +60,10 @@
     is included.
 
     @begin[Example]{section}
-    @begin{code}
-    (cxml:parse-file \"test.xml\"
-                     (cxml-rng:make-validator
-                      (cxml-rng:parse-schema #p\"test.rng\")))
-    @end{code}
+    @begin{pre}(cxml:parse-file \"test.xml\"
+                 (cxml-rng:make-validator
+                  (cxml-rng:parse-schema #p\"test.rng\")))
+    @end{pre}
     @end{section}
     @begin[Classes]{section}
     @aboutclass{schema}
