@@ -44,46 +44,6 @@ a:hover {
   border: none;
 }
 
-div.sidebar-title {
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #000000; /* #0000aa */
-  border: solid #000000; /* #0000aa */
-  border-top-width: 1px;
-  border-bottom-width: 0px;
-  border-left-width: 4px;
-  border-right-width: 0px;
-  margin: 0em 2pt 1px 2em;
-}
-
-div.sidebar-title a {
-  color: #ffffff;
-}
-
-div.sidebar-main {
-  background-color: #eeeeee;
-  border: solid #000000; /* #0000aa */
-  border-top-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 4px;
-  border-right-width: 0px;
-  margin: 0em 2pt 1em 2em;
-  padding-top: 2px;
-  padding-left: 2px;
-}
-
-div.sidebar ul {
-  list-style-type: square;
-  padding: 0pt 0pt 0pt 1em;
-  margin: 0 0 1em;
-}
-
-div.sidebar ul.sub {
-  list-style-type: disc;
-  padding: 0pt 0pt 0pt 1em;
-  margin: 0 0 1em;
-}
-
 body {
   color: #000000;
   background-color: #ffffff;
@@ -119,13 +79,6 @@ h4 {
 
 .grau {
   padding-top: 1em;
-//   background-color: #f0f0f0;
-//   width: 60%;
-//   margin-left: -1em;
-//   padding-left: 1em;
-//   padding-top: 2px;
-//   padding-bottom: 2px;
-//   border: 1px solid #cccccc;
 }
 
 .code {
