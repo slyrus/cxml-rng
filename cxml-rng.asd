@@ -17,6 +17,7 @@
     :components
     ((:file "package")
      (:file "floats")
+     (:file "nppcre")
      (:file "types")
      (:file "parse")
      (:file "validate")

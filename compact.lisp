@@ -111,6 +111,9 @@
 ;;;; Tokenization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun nc-name-p (str)
+  (and (cxml-types::namep str) (cxml::nc-name-p str)))
+
 (clex:deflexer rng
     (
      ;; NCName
@@ -197,7 +200,7 @@
 	       (lname (subseq clex:bag (1+ pos ))))
 	  (when (find #\: lname)
 	    (rng-error "too many colons"))
-	  (unless (and (cxml-types::nc-name-p prefix))
+	  (unless (and (nc-name-p prefix))
 	    (rng-error nil "not an ncname: ~A" prefix))
 	  (let ((ch (clex::getch)))
 	    (cond
@@ -205,17 +208,17 @@
 	       (values 'nsname prefix))
 	      (t
 	       (clex::backup ch)
-	       (unless (and (cxml-types::nc-name-p lname))
+	       (unless (and (nc-name-p lname))
 		 (rng-error nil "not an ncname: ~A" lname))
 	       (values 'cname (cons prefix lname)))))))
        (t
-	(unless (cxml-types::nc-name-p clex:bag)
+	(unless (nc-name-p clex:bag)
 	  (rng-error nil "not an ncname: ~A" clex:bag))
 	(values 'identifier clex:bag)))))
 
   ((and #\\ name-start-char (* name-char))
    (let ((str (subseq clex:bag 1)))
-     (unless (cxml-types::nc-name-p str)
+     (unless (nc-name-p str)
        (rng-error nil "not an ncname: ~A" clex:bag))
      (return (values 'identifier str))))
 

@@ -391,8 +391,12 @@
     This slot reader returns a list of the type's
     @a[http://www.w3.org/TR/xmlschema-2/#rf-pattern]{pattern facets}."))
 
+(defmethod (setf patterns) :after (newval data-type)
+  (slot-makunbound data-type 'compiled-patterns))
+
 (defclass xsd-type (data-type)
-  ((patterns :initform nil :initarg :patterns :reader patterns))
+  ((patterns :initform nil :accessor patterns)
+   (compiled-patterns :accessor compiled-patterns))
   (:documentation
    "@short{The class of XML Schema built-in types.}
 
@@ -413,6 +417,9 @@
     as an argument.
 
     @see-slot{patterns}"))
+
+(defmethod initialize-instance :after ((instance xsd-type) &key patterns)
+  (setf (patterns instance) (append (patterns instance) patterns)))
 
 (defmethod print-object ((object xsd-type) stream)
   (print-unreadable-object (object stream :type t :identity nil)
@@ -488,12 +495,12 @@
 
 (defmethod validp/xsd and ((type xsd-type) v context)
   (declare (ignore context))
-  ;; zzz
-  #+(or)
+  (unless (slot-boundp type 'compiled-patterns)
+    (setf (compiled-patterns type)
+	  (mapcar #'pattern-scanner (patterns type))))
   (every (lambda (pattern)
 	   (cl-ppcre:all-matches pattern v))
-	 (patterns type))
-  t)
+	 (compiled-patterns type)))
 
 (defmethod validp ((type xsd-type) e &optional context)
   (not (eq :error (parse/xsd type e context))))
@@ -1680,8 +1687,11 @@
 
 ;;; language
 
+(defmacro precompile (pattern)
+  `(load-time-value (pattern-scanner ,pattern)))
+
 (defxsd (language-type "language") (xsd-token-type)
-  ((patterns :initform '("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*")))
+  ((patterns :initform (precompile "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*")))
   (:documentation
    "@short{The language data type, derived from token.}
 
@@ -1696,7 +1706,7 @@
 ;;; Name
 
 (defxsd (name-type "Name") (xsd-token-type)
-  ((patterns :initform '("\\i\\c*")))
+  ((patterns :initform (precompile "\\i\\c*")))
   (:documentation
    "@short{The Name data type, derived from token.}
 
@@ -1711,7 +1721,7 @@
 ;;; NCName
 
 (defxsd (ncname-type "NCName") (name-type)
-  ((patterns :initform '("[\\i-[:]][\\c-[:]]*")))
+  ((patterns :initform (precompile "[\\i-[:]][\\c-[:]]*")))
   (:documentation
    "@short{The NCName data type, derived from Name.}
 
@@ -1725,14 +1735,9 @@
 (defmethod equal-using-type ((type ncname-type) u v)
   (equal u v))
 
-(defun nc-name-p (str)
-  (and (namep str) (cxml::nc-name-p str)))
-
 (defmethod parse/xsd ((type ncname-type) e context)
-  ;; zzz mit pattern machen
-  (if (nc-name-p e)
-      e
-      :error))
+  e)
+
 
 ;;; ID
 
@@ -1837,7 +1842,7 @@
 ;;; NMTOKEN
 
 (defxsd (nmtoken-type "NMTOKEN") (xsd-token-type)
-  ((patterns :initform '("\\c+")))
+  ((patterns :initform (precompile "\\c+")))
   (:documentation
    "@short{The NMTOKEN data type, derived from token.}
 

@@ -135,6 +135,7 @@
 
 (defvar *validate-grammar* t)
 (defparameter *relax-ng-grammar* nil)
+(defun flush () (setf *relax-ng-grammar* nil))
 
 (defun make-validating-source (input)
   (let ((upstream (cxml:make-source input)))
