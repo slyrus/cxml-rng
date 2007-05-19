@@ -159,7 +159,8 @@
 	       args
 	       (replace-scary-characters
 		(with-output-to-string (s)
-		  (expectation (current-pattern hsx) s)))))
+		  (let ((*print-level* nil))
+		    (expectation (current-pattern hsx) s))))))
   (setf (current-pattern hsx) pattern))
 
 ;; make sure slime doesn't die
@@ -787,38 +788,44 @@
   (expectation (pattern-a pattern) s))
 
 (defmethod expectation ((pattern attribute) s)
-  (write-string "an attribute " s)
-  (describe-name (pattern-name pattern) s)
-  (format s "~%  with a value of ")
-  (expectation (pattern-child pattern) s))
+  (pprint-logical-block (s nil)
+    (write-string "an attribute " s)
+    (describe-name (pattern-name pattern) s)
+    (format s "~:@_  with a value of ")
+    (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern choice) s)
-  (expectation (pattern-a pattern) s)
-  (format s "~%  or ")
-  (expectation (pattern-b pattern) s))
+  (pprint-logical-block (s nil)
+    (expectation (pattern-a pattern) s)
+    (format s "~:@_  or ")
+    (expectation (pattern-b pattern) s)))
 
 (defmethod expectation ((pattern element) s)
-  (write-string "an element " s)
-  (describe-name (pattern-name pattern) s))
+  (pprint-logical-block (s nil)
+    (write-string "an element " s)
+    (describe-name (pattern-name pattern) s)))
 
 (defmethod expectation ((pattern data) s)
   (format s "a text node of type ~A" (pattern-type pattern)))
 
 (defmethod expectation ((pattern interleave) s)
-  (expectation (pattern-a pattern) s)
-  (format s "~%  interleaved with ")
-  (expectation (pattern-b pattern) s))
+  (pprint-logical-block (s nil)
+    (expectation (pattern-a pattern) s)
+    (format s "~:@_  interleaved with ")
+    (expectation (pattern-b pattern) s)))
 
 (defmethod expectation ((pattern list-pattern) s)
-  (format s "a whitespace separated list of:~%  ")
-  (expectation (pattern-child pattern) s))
+  (pprint-logical-block (s nil)
+    (format s "a whitespace separated list of:~:@_  ")
+    (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern not-allowed) s)
   "nothing is allowed here at all")
 
 (defmethod expectation ((pattern one-or-more) s)
-  (format s "one or more of:~%  ")
-  (expectation (pattern-child pattern) s))
+  (pprint-logical-block (s nil)
+    (format s "one or more of:~:@_  ")
+    (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern text) s)
   "whitespace")
@@ -837,21 +844,24 @@
 	  (name-uri nc)))
 
 (defmethod describe-name ((nc any-name) s)
-  (write-string "of any name" s)
-  (when (any-name-except nc)
-    (write-string " except " s)
-    (describe-name (any-name-except nc) s)))
+  (pprint-logical-block (s nil)
+    (write-string "of any name" s)
+    (when (any-name-except nc)
+      (format s "~:@_ except ")
+      (describe-name (any-name-except nc) s))))
 
 (defmethod describe-name ((nc ns-name) s)
-  (format s "with a name in the namespace ~S" (ns-name-uri nc))
-  (when (ns-name-except nc)
-    (write-string " except for " s)
-    (describe-name (ns-name-except nc) s)))
+  (pprint-logical-block (s nil)
+    (format s "with a name in the namespace ~S" (ns-name-uri nc))
+    (when (ns-name-except nc)
+      (format s "~:@_ except for ")
+      (describe-name (ns-name-except nc) s))))
 
 (defmethod describe-name ((nc name-class-choice) s)
-  (describe-name (name-class-choice-a nc) s)
-  (format s "~%  or ")
-  (describe-name (name-class-choice-b nc) s))
+  (pprint-logical-block (s nil)
+    (describe-name (name-class-choice-a nc) s)
+    (format s "~:@_  or ")
+    (describe-name (name-class-choice-b nc) s)))
 
 
 ;;;;
