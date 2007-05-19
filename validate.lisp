@@ -41,8 +41,9 @@
       (setf (gethash key table) (funcall fn))))
 
 
-(defun make-validator (schema)
+(defun make-validator (schema &optional handler)
   "@arg[schema]{the parsed Relax NG @class{schema} object}
+   @arg[handler]{an additional SAX handler to broadcast events to}
    @return{a SAX handler}
    @short{This function creates a validation handler for @code{schema}},
     to be used for validation of a document against that schema.
@@ -50,14 +51,20 @@
    The validation handler processes SAX events and can be used with any
    function generating such events, in particular with cxml:parse-file.
 
+   Events will be passed on unchanged to @code{handler}.
+
    @see{parse-schema}"
   (let* ((table (ensure-registratur schema))
 	 (start (schema-interned-start schema))
 	 (validator
 	  (make-instance 'validator
 			 :registratur table
-			 :current-pattern start)))
-    (make-instance 'text-normalizer :chained-handler validator)))
+			 :current-pattern start))
+	 (wrapper
+	  (make-instance 'text-normalizer :chained-handler validator)))
+    (when handler
+      (setf wrapper (cxml:make-broadcast-handler wrapper handler)))
+    wrapper))
 
 
 ;;;; CONTAINS

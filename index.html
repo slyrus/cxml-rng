@@ -91,15 +91,13 @@
                  <span style="color: black">(cxml-rng:make-validator
                   (cxml-rng:parse-schema #p"example.rng"))</span>)</pre>
   <p>
-    In order to validate while also processing events with
-    another handler, use a broadcast handler.  For example, to
-    parse XML into DOM while also validating it, broadcast to
-    the validator and DOM builder (in that order):
+    The validator accepts another SAX handler as an optional
+    second argument.  For example, to parse XML into DOM while also
+    validating it, use the validator like this:
   </p>
   <pre class="code" style="color: #777777">(cxml:parse-file "example.xml"
-                 <span style="color: black">(cxml:make-broadcast-handler</span>
-                  (cxml-rng:make-validator
-                   (cxml-rng:parse-schema #p"example.rng"))
+                 <span style="color: black">(cxml-rng:make-validator</span>
+                  (cxml-rng:parse-schema #p"example.rng")
                   <span style="color: black">(cxml-dom:make-dom-builder))</span>)</pre>
   <p>
     To validate with the klacks parser, use a tapping source.
