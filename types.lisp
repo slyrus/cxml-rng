@@ -495,12 +495,7 @@
 
 (defmethod validp/xsd and ((type xsd-type) v context)
   (declare (ignore context))
-  (unless (slot-boundp type 'compiled-patterns)
-    (setf (compiled-patterns type)
-	  (mapcar #'pattern-scanner (patterns type))))
-  (every (lambda (pattern)
-	   (cl-ppcre:all-matches pattern v))
-	 (compiled-patterns type)))
+  t)
 
 (defmethod validp ((type xsd-type) e &optional context)
   (not (eq :error (parse/xsd type e context))))
@@ -514,12 +509,18 @@
 ;; Handle the whiteSpace "facet" before the subclass sees it.
 ;; If parsing succeded, check other facets by asking validp/xsd.
 (defmethod parse/xsd :around ((type xsd-type) e context)
-  (let ((result (call-next-method type
-				  (munge-whitespace type e)
-				  context)))
-    (if (or (eq result :error) (validp/xsd type result context))
-	result
-	:error)))
+  (setf e (munge-whitespace type e))
+  (unless (slot-boundp type 'compiled-patterns)
+    (setf (compiled-patterns type)
+	  (mapcar #'pattern-scanner (patterns type))))
+  (if (every (lambda (pattern)
+	       (cl-ppcre:all-matches pattern e))
+	     (compiled-patterns type))
+      (let ((result (call-next-method type e context)))
+	(if (or (eq result :error) (validp/xsd type result context))
+	    result
+	    :error))
+      :error))
 
 (defgeneric munge-whitespace (type e))
 

@@ -4747,35 +4747,60 @@ PASS INSTANCE NISTXML-string-length-5-3.xml
 PASS INSTANCE NISTXML-string-length-5-4.xml
 PASS INSTANCE NISTXML-string-length-5-5.xml
 PASS NISTSchema-string-pattern-1.xsd
-PASS INSTANCE NISTXML-string-pattern-1-1.xml
-PASS INSTANCE NISTXML-string-pattern-1-2.xml
-PASS INSTANCE NISTXML-string-pattern-1-3.xml
-PASS INSTANCE NISTXML-string-pattern-1-4.xml
-PASS INSTANCE NISTXML-string-pattern-1-5.xml
+FAIL INSTANCE NISTXML-string-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s16311-1237>
+  [ Error at line 18, column 55 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-1-1.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s16311-1237>
+  [ Error at line 18, column 60 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-1-2.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s16311-1237>
+  [ Error at line 18, column 57 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-1-3.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s16311-1237>
+  [ Error at line 18, column 51 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-1-4.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s16311-1237>
+  [ Error at line 18, column 51 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-1-5.xml> ]
 PASS NISTSchema-string-pattern-2.xsd
-PASS INSTANCE NISTXML-string-pattern-2-1.xml
-PASS INSTANCE NISTXML-string-pattern-2-2.xml
-PASS INSTANCE NISTXML-string-pattern-2-3.xml
-PASS INSTANCE NISTXML-string-pattern-2-4.xml
-PASS INSTANCE NISTXML-string-pattern-2-5.xml
+FAIL INSTANCE NISTXML-string-pattern-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s19500-1840>
+  [ Error at line 18, column 50 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-2-1.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s19500-1840>
+  [ Error at line 18, column 54 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-2-2.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s19500-1840>
+  [ Error at line 18, column 49 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-2-3.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s19500-1840>
+  [ Error at line 18, column 58 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-2-4.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s19500-1840>
+  [ Error at line 18, column 49 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-2-5.xml> ]
 PASS NISTSchema-string-pattern-3.xsd
-PASS INSTANCE NISTXML-string-pattern-3-1.xml
-PASS INSTANCE NISTXML-string-pattern-3-2.xml
-PASS INSTANCE NISTXML-string-pattern-3-3.xml
-PASS INSTANCE NISTXML-string-pattern-3-4.xml
-PASS INSTANCE NISTXML-string-pattern-3-5.xml
+FAIL INSTANCE NISTXML-string-pattern-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13019-1228>
+  [ Error at line 18, column 68 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-3-1.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13019-1228>
+  [ Error at line 18, column 66 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-3-2.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13019-1228>
+  [ Error at line 18, column 59 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-3-3.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13019-1228>
+  [ Error at line 18, column 61 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-3-4.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13019-1228>
+  [ Error at line 18, column 59 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-3-5.xml> ]
 PASS NISTSchema-string-pattern-4.xsd
-PASS INSTANCE NISTXML-string-pattern-4-1.xml
-PASS INSTANCE NISTXML-string-pattern-4-2.xml
-PASS INSTANCE NISTXML-string-pattern-4-3.xml
-PASS INSTANCE NISTXML-string-pattern-4-4.xml
-PASS INSTANCE NISTXML-string-pattern-4-5.xml
+FAIL INSTANCE NISTXML-string-pattern-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s10030-1212>
+  [ Error at line 18, column 51 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-4-1.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s10030-1212>
+  [ Error at line 18, column 50 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-4-2.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s10030-1212>
+  [ Error at line 18, column 56 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-4-3.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s10030-1212>
+  [ Error at line 18, column 51 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-4-4.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\n([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s10030-1212>
+  [ Error at line 18, column 58 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-4-5.xml> ]
 PASS NISTSchema-string-pattern-5.xsd
-PASS INSTANCE NISTXML-string-pattern-5-1.xml
-PASS INSTANCE NISTXML-string-pattern-5-2.xml
-PASS INSTANCE NISTXML-string-pattern-5-3.xml
-PASS INSTANCE NISTXML-string-pattern-5-4.xml
-PASS INSTANCE NISTXML-string-pattern-5-5.xml
+FAIL INSTANCE NISTXML-string-pattern-5-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s10029-1422>
+  [ Error at line 18, column 66 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-5-1.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-5-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s10029-1422>
+  [ Error at line 18, column 61 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-5-2.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s10029-1422>
+  [ Error at line 18, column 57 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-5-3.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s10029-1422>
+  [ Error at line 18, column 58 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-5-4.xml> ]
+FAIL INSTANCE NISTXML-string-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\n([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s10029-1422>
+  [ Error at line 18, column 59 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-string-pattern-5-5.xml> ]
 PASS INSTANCE NISTXML-string-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-string-enumeration-1-3.xml: (ignored)
@@ -4899,35 +4924,60 @@ PASS INSTANCE NISTXML-normalizedString-length-5-3.xml
 PASS INSTANCE NISTXML-normalizedString-length-5-4.xml
 PASS INSTANCE NISTXML-normalizedString-length-5-5.xml
 PASS NISTSchema-normalizedString-pattern-1.xsd
-PASS INSTANCE NISTXML-normalizedString-pattern-1-1.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-1-2.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-1-3.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-1-4.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-1-5.xml
+FAIL INSTANCE NISTXML-normalizedString-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s15604-1536>
+  [ Error at line 17, column 181 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-1-1.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s15604-1536>
+  [ Error at line 17, column 182 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-1-2.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s15604-1536>
+  [ Error at line 17, column 180 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-1-3.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s15604-1536>
+  [ Error at line 17, column 183 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-1-4.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){1}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s15604-1536>
+  [ Error at line 17, column 182 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-1-5.xml> ]
 PASS NISTSchema-normalizedString-pattern-2.xsd
-PASS INSTANCE NISTXML-normalizedString-pattern-2-1.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-2-2.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-2-3.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-2-4.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-2-5.xml
+FAIL INSTANCE NISTXML-normalizedString-pattern-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s12297>
+  [ Error at line 17, column 218 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-2-1.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s12297>
+  [ Error at line 17, column 220 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-2-2.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s12297>
+  [ Error at line 17, column 220 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-2-3.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s12297>
+  [ Error at line 17, column 209 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-2-4.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s12297>
+  [ Error at line 17, column 216 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-2-5.xml> ]
 PASS NISTSchema-normalizedString-pattern-3.xsd
-PASS INSTANCE NISTXML-normalizedString-pattern-3-1.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-3-2.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-3-3.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-3-4.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-3-5.xml
+FAIL INSTANCE NISTXML-normalizedString-pattern-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s16749-1552>
+  [ Error at line 17, column 210 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-3-1.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s16749-1552>
+  [ Error at line 17, column 204 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-3-2.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s16749-1552>
+  [ Error at line 17, column 215 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-3-3.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s16749-1552>
+  [ Error at line 17, column 209 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-3-4.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s16749-1552>
+  [ Error at line 17, column 198 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-3-5.xml> ]
 PASS NISTSchema-normalizedString-pattern-4.xsd
-PASS INSTANCE NISTXML-normalizedString-pattern-4-1.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-4-2.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-4-3.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-4-4.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-4-5.xml
+FAIL INSTANCE NISTXML-normalizedString-pattern-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s10977-1526>
+  [ Error at line 17, column 220 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-4-1.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s10977-1526>
+  [ Error at line 17, column 227 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-4-2.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s10977-1526>
+  [ Error at line 17, column 210 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-4-3.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s10977-1526>
+  [ Error at line 17, column 222 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-4-4.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s10977-1526>
+  [ Error at line 17, column 242 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-4-5.xml> ]
 PASS NISTSchema-normalizedString-pattern-5.xsd
-PASS INSTANCE NISTXML-normalizedString-pattern-5-1.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-5-2.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-5-3.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-5-4.xml
-PASS INSTANCE NISTXML-normalizedString-pattern-5-5.xml
+FAIL INSTANCE NISTXML-normalizedString-pattern-5-1.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s16318>
+  [ Error at line 17, column 203 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-5-1.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-5-2.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s16318>
+  [ Error at line 17, column 214 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-5-2.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s16318>
+  [ Error at line 17, column 198 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-5-3.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s16318>
+  [ Error at line 17, column 224 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-5-4.xml> ]
+FAIL INSTANCE NISTXML-normalizedString-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<NORMALIZED-STRING-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s16318>
+  [ Error at line 17, column 213 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-normalizedString-pattern-5-5.xml> ]
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-normalizedString-enumeration-1-3.xml: (ignored)
@@ -5046,35 +5096,60 @@ PASS INSTANCE NISTXML-token-length-5-3.xml
 PASS INSTANCE NISTXML-token-length-5-4.xml
 PASS INSTANCE NISTXML-token-length-5-5.xml
 PASS NISTSchema-token-pattern-1.xsd
-PASS INSTANCE NISTXML-token-pattern-1-1.xml
-PASS INSTANCE NISTXML-token-pattern-1-2.xml
-PASS INSTANCE NISTXML-token-pattern-1-3.xml
-PASS INSTANCE NISTXML-token-pattern-1-4.xml
-PASS INSTANCE NISTXML-token-pattern-1-5.xml
+FAIL INSTANCE NISTXML-token-pattern-1-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s14297>
+  [ Error at line 17, column 175 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-1-1.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-1-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s14297>
+  [ Error at line 17, column 193 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-1-2.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-1-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s14297>
+  [ Error at line 17, column 168 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-1-3.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-1-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s14297>
+  [ Error at line 17, column 162 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-1-4.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-1-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s14297>
+  [ Error at line 17, column 187 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-1-5.xml> ]
 PASS NISTSchema-token-pattern-2.xsd
-PASS INSTANCE NISTXML-token-pattern-2-1.xml
-PASS INSTANCE NISTXML-token-pattern-2-2.xml
-PASS INSTANCE NISTXML-token-pattern-2-3.xml
-PASS INSTANCE NISTXML-token-pattern-2-4.xml
-PASS INSTANCE NISTXML-token-pattern-2-5.xml
+FAIL INSTANCE NISTXML-token-pattern-2-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s12230-1968>
+  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-2-1.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-2-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s12230-1968>
+  [ Error at line 17, column 169 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-2-2.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-2-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s12230-1968>
+  [ Error at line 17, column 159 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-2-3.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-2-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s12230-1968>
+  [ Error at line 17, column 165 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-2-4.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-2-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){2}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s12230-1968>
+  [ Error at line 17, column 164 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-2-5.xml> ]
 PASS NISTSchema-token-pattern-3.xsd
-PASS INSTANCE NISTXML-token-pattern-3-1.xml
-PASS INSTANCE NISTXML-token-pattern-3-2.xml
-PASS INSTANCE NISTXML-token-pattern-3-3.xml
-PASS INSTANCE NISTXML-token-pattern-3-4.xml
-PASS INSTANCE NISTXML-token-pattern-3-5.xml
+FAIL INSTANCE NISTXML-token-pattern-3-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s18640>
+  [ Error at line 17, column 161 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-3-1.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-3-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s18640>
+  [ Error at line 17, column 165 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-3-2.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-3-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s18640>
+  [ Error at line 17, column 156 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-3-3.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-3-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s18640>
+  [ Error at line 17, column 161 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-3-4.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-3-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){3}Street\s([A-Z][a-z]{1,20}\s){1},\s[A-Z]{2}\s18640>
+  [ Error at line 17, column 160 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-3-5.xml> ]
 PASS NISTSchema-token-pattern-4.xsd
-PASS INSTANCE NISTXML-token-pattern-4-1.xml
-PASS INSTANCE NISTXML-token-pattern-4-2.xml
-PASS INSTANCE NISTXML-token-pattern-4-3.xml
-PASS INSTANCE NISTXML-token-pattern-4-4.xml
-PASS INSTANCE NISTXML-token-pattern-4-5.xml
+FAIL INSTANCE NISTXML-token-pattern-4-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s15549-1978>
+  [ Error at line 17, column 179 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-4-1.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-4-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s15549-1978>
+  [ Error at line 17, column 201 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-4-2.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-4-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s15549-1978>
+  [ Error at line 17, column 201 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-4-3.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-4-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s15549-1978>
+  [ Error at line 17, column 198 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-4-4.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-4-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){5}Street\s([A-Z][a-z]{1,20}\s){3},\s[A-Z]{2}\s15549-1978>
+  [ Error at line 17, column 177 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-4-5.xml> ]
 PASS NISTSchema-token-pattern-5.xsd
-PASS INSTANCE NISTXML-token-pattern-5-1.xml
-PASS INSTANCE NISTXML-token-pattern-5-2.xml
-PASS INSTANCE NISTXML-token-pattern-5-3.xml
-PASS INSTANCE NISTXML-token-pattern-5-4.xml
-PASS INSTANCE NISTXML-token-pattern-5-5.xml
+FAIL INSTANCE NISTXML-token-pattern-5-1.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){4}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13121-1314>
+  [ Error at line 17, column 174 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-5-1.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-5-2.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){4}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13121-1314>
+  [ Error at line 17, column 182 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-5-2.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-5-3.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){4}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13121-1314>
+  [ Error at line 17, column 167 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-5-3.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-5-4.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){4}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13121-1314>
+  [ Error at line 17, column 194 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-5-4.xml> ]
+FAIL INSTANCE NISTXML-token-pattern-5-5.xml: failed to validate: text node not valid, was expecting a text node of type #<XSD-TOKEN-TYPE  :pattern \d{1,5}\s([A-Z][a-z]{1,20}\s){4}Street\s([A-Z][a-z]{1,20}\s){2},\s[A-Z]{2}\s13121-1314>
+  [ Error at line 17, column 180 in #<URI file://+/home/david/NISTSchemaTests/NISTXML-token-pattern-5-5.xml> ]
 PASS INSTANCE NISTXML-token-enumeration-1-1.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-token-enumeration-1-3.xml: (ignored)
@@ -6498,4 +6573,4 @@ PASS INSTANCE NISTXML-QName-whiteSpace-1-2.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-3.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-4.xml: (ignored)
 PASS INSTANCE NISTXML-QName-whiteSpace-1-5.xml: (ignored)
-Passed 5247/7764 tests.
+Passed 5172/7764 tests.
