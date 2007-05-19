@@ -1,11 +1,11 @@
 001:  PASS
-002:  FAIL: didn't detect invalid schema
-003:  FAIL: didn't detect invalid schema
-004:  FAIL: didn't detect invalid schema
-005:  FAIL: didn't detect invalid schema
-006:  FAIL: didn't detect invalid schema
-007:  FAIL: didn't detect invalid schema
-008:  FAIL: didn't detect invalid schema
+002:  PASS: DTD-COMPATIBILITY-ERROR
+003:  PASS: DTD-COMPATIBILITY-ERROR
+004:  PASS: DTD-COMPATIBILITY-ERROR
+005:  PASS: DTD-COMPATIBILITY-ERROR
+006:  PASS: DTD-COMPATIBILITY-ERROR
+007:  PASS: DTD-COMPATIBILITY-ERROR
+008:  PASS: DTD-COMPATIBILITY-ERROR
 009:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
   [ Error at line 8, column 28 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/009/c.rng> ]
 009-1.i: FAIL: cannot run test
@@ -82,4 +82,4 @@
 052:  FAIL: didn't detect invalid schema
 053:  PASS
 054:  PASS
-Passed 10/62 tests.
+Passed 17/62 tests.

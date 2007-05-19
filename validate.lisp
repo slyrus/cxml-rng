@@ -65,7 +65,7 @@
 	  (make-instance 'text-normalizer :chained-handler validator)))
     (when handler
       (setf wrapper (cxml:make-broadcast-handler wrapper handler)))
-    wrapper))
+    (values wrapper validator)))
 
 
 ;;;; CONTAINS
@@ -142,6 +142,8 @@
    (after-start-tag-p :accessor after-start-tag-p)
    (pending-text-node :initform nil :accessor pending-text-node)
    (registratur :initarg :registratur :accessor registratur)
+   (validation-error-class :initarg :validation-error-class
+			   :accessor validation-error-class)
    (open-start-tag\'-cache :initform (make-hash-table :test 'equal)
 			   :reader open-start-tag\'-cache)
    (close-start-tag\'-cache :initform (make-hash-table)
@@ -154,13 +156,14 @@
 
 (defun advance (hsx pattern message &rest args)
   (when (typep pattern 'not-allowed)
-    (rng-error hsx "~?, was expecting ~A"
-	       message
-	       args
-	       (replace-scary-characters
-		(with-output-to-string (s)
-		  (let ((*print-level* nil))
-		    (expectation (current-pattern hsx) s))))))
+    (let ((*error-class* (validation-error-class hsx)))
+      (rng-error hsx "~?, was expecting ~A"
+		 message
+		 args
+		 (replace-scary-characters
+		  (with-output-to-string (s)
+		    (let ((*print-level* nil))
+		      (expectation (current-pattern hsx) s)))))))
   (setf (current-pattern hsx) pattern))
 
 ;; make sure slime doesn't die
@@ -753,7 +756,7 @@
 ;;; FIXME: since we ignore PI, CDATA, and comment events, we should probably
 ;;; discard them properly.
 
-(defclass text-normalizer (cxml:sax-proxy)
+(defclass text-normalizer (cxml:sax-proxy sax:sax-parser-mixin)
   ((pending-text-node :initform (make-string-output-stream)
 		      :accessor pending-text-node)))
 
@@ -791,13 +794,13 @@
   (pprint-logical-block (s nil)
     (write-string "an attribute " s)
     (describe-name (pattern-name pattern) s)
-    (format s "~:@_  with a value of ")
+    (format s "~:@_with a value of ")
     (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern choice) s)
   (pprint-logical-block (s nil)
     (expectation (pattern-a pattern) s)
-    (format s "~:@_  or ")
+    (format s "~:@_or ")
     (expectation (pattern-b pattern) s)))
 
 (defmethod expectation ((pattern element) s)
@@ -811,24 +814,24 @@
 (defmethod expectation ((pattern interleave) s)
   (pprint-logical-block (s nil)
     (expectation (pattern-a pattern) s)
-    (format s "~:@_  interleaved with ")
+    (format s "~:@_interleaved with ")
     (expectation (pattern-b pattern) s)))
 
 (defmethod expectation ((pattern list-pattern) s)
   (pprint-logical-block (s nil)
-    (format s "a whitespace separated list of:~:@_  ")
+    (format s "a whitespace separated list of:~:@_")
     (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern not-allowed) s)
-  "nothing is allowed here at all")
+  (write-string "nothing" s))
 
 (defmethod expectation ((pattern one-or-more) s)
   (pprint-logical-block (s nil)
-    (format s "one or more of:~:@_  ")
+    (format s "one or more of:~:@_")
     (expectation (pattern-child pattern) s)))
 
 (defmethod expectation ((pattern text) s)
-  "whitespace")
+  (write-string "whitespace" s))
 
 (defmethod expectation ((pattern value) s)
   (format s "a text node of type ~A and value ~S"
@@ -847,20 +850,20 @@
   (pprint-logical-block (s nil)
     (write-string "of any name" s)
     (when (any-name-except nc)
-      (format s "~:@_ except ")
+      (format s "~:@_except ")
       (describe-name (any-name-except nc) s))))
 
 (defmethod describe-name ((nc ns-name) s)
   (pprint-logical-block (s nil)
     (format s "with a name in the namespace ~S" (ns-name-uri nc))
     (when (ns-name-except nc)
-      (format s "~:@_ except for ")
+      (format s "~:@_except for ")
       (describe-name (ns-name-except nc) s))))
 
 (defmethod describe-name ((nc name-class-choice) s)
   (pprint-logical-block (s nil)
     (describe-name (name-class-choice-a nc) s)
-    (format s "~:@_  or ")
+    (format s "~:@_or ")
     (describe-name (name-class-choice-b nc) s)))
 
 

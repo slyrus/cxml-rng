@@ -65,6 +65,8 @@
        Return the System ID of the document being parsed when the Relax NG
        error was detected, or NIL if not available.")
 
+(defvar *error-class* 'rng-error)
+
 (defun rng-error (source fmt &rest args)
   "@unexport{}"
   (let ((s (make-string-output-stream)))
@@ -85,7 +87,7 @@
 		line-number
 		column-number
 		system-id))
-      (error 'rng-error
+      (error *error-class*
 	     :format-control "~A"
 	     :format-arguments (list (get-output-stream-string s))
 	     :line-number line-number
@@ -138,7 +140,11 @@
 
 (defvar *validate-grammar* t)
 (defparameter *relax-ng-grammar* nil)
-(defun flush () (setf *relax-ng-grammar* nil))
+(defparameter *compatibility-grammar* nil)
+
+(defun flush ()
+  (setf *relax-ng-grammar* nil)
+  (setf *compatibility-grammar* nil))
 
 (defun make-validating-source (input schema)
   "@arg[input]{a @code{source} or a stream designator}
@@ -160,10 +166,20 @@
 (defun make-schema-source (input)
   (let ((upstream (cxml:make-source input)))
     (if *validate-grammar*
-	(make-validating-source upstream *relax-ng-grammar*)
+	(let ((handler (make-validator *relax-ng-grammar*)))
+	  (when (eq *validate-grammar* :both)
+	    (setf handler
+		  (cxml:make-broadcast-handler
+		   handler
+		   (multiple-value-bind (h v)
+		       (make-validator *compatibility-grammar*
+				       :validation-error-class)
+		     (setf (validation-error-class v) 'dtd-compatibility-error)
+		     h))))
+	  (klacks:make-tapping-source upstream handler))
 	upstream)))
 
-(defun parse-schema (input &key entity-resolver)
+(defun parse-schema (input &key entity-resolver (dtd-compatibility t))
   "@arg[input]{a string, pathname, stream, or xstream}
    @arg[entity-resolver]{a function of two arguments, or NIL}
    @return{a parsed @class{schema}}
@@ -189,45 +205,50 @@
    @see{make-validator}"
   (when *validate-grammar*
     (unless *relax-ng-grammar*
-      (setf *relax-ng-grammar*
-	    (let* ((*validate-grammar* nil)
-		   (d (slot-value (asdf:find-system :cxml-rng)
-				  'asdf::relative-pathname)))
-	      (parse-schema (merge-pathnames "rng.rng" d))
-	      #+(or)
-	      (parse-compact (merge-pathnames "rng.rnc" d))))))
-  (klacks:with-open-source (source (make-schema-source input))
-    (invoke-with-klacks-handler
-     (lambda ()
-       (klacks:find-event source :start-element)
-       (let* ((*datatype-library* "")
-	      (*namespace-uri* "")
-	      (*entity-resolver* entity-resolver)
-	      (*external-href-stack* '())
-	      (*include-uri-stack* '())
-	      (*grammar* (make-grammar nil))
-	      (start (p/pattern source)))
-	 (unless start
-	   (rng-error nil "empty grammar"))
-	 (setf (grammar-start *grammar*)
-	       (make-definition :name :start :child start))
-	 (check-pattern-definitions source *grammar*)
-	 (check-recursion start 0)
-	 (multiple-value-bind (new-start defns)
-	     (finalize-definitions start)
-	   (setf start (fold-not-allowed new-start))
-	   (dolist (defn defns)
-	     (setf (defn-child defn) (fold-not-allowed (defn-child defn))))
-	   (setf start (fold-empty start))
-	   (dolist (defn defns)
-	     (setf (defn-child defn) (fold-empty (defn-child defn)))))
-	 (multiple-value-bind (new-start defns)
-	     (finalize-definitions start)
-	   (check-start-restrictions new-start)
-	   (dolist (defn defns)
-	     (check-restrictions (defn-child defn)))
-	   (make-schema new-start defns))))
-     source)))
+      (let* ((*validate-grammar* nil)
+	     (d (slot-value (asdf:find-system :cxml-rng)
+			    'asdf::relative-pathname)))
+	#+(or) (parse-compact (merge-pathnames "rng.rnc" d))
+	(setf *relax-ng-grammar*
+	      (parse-schema (merge-pathnames "rng.rng" d)))
+	(setf *compatibility-grammar*
+	      (parse-schema (merge-pathnames "compatibility.rng" d))))))
+  (let ((*validate-grammar*
+	 (if (and *validate-grammar* dtd-compatibility)
+	     :both
+	     *validate-grammar*)))
+    (klacks:with-open-source (source (make-schema-source input))
+      (invoke-with-klacks-handler
+       (lambda ()
+	 (klacks:find-event source :start-element)
+	 (let* ((*datatype-library* "")
+		(*namespace-uri* "")
+		(*entity-resolver* entity-resolver)
+		(*external-href-stack* '())
+		(*include-uri-stack* '())
+		(*grammar* (make-grammar nil))
+		(start (p/pattern source)))
+	   (unless start
+	     (rng-error nil "empty grammar"))
+	   (setf (grammar-start *grammar*)
+		 (make-definition :name :start :child start))
+	   (check-pattern-definitions source *grammar*)
+	   (check-recursion start 0)
+	   (multiple-value-bind (new-start defns)
+	       (finalize-definitions start)
+	     (setf start (fold-not-allowed new-start))
+	     (dolist (defn defns)
+	       (setf (defn-child defn) (fold-not-allowed (defn-child defn))))
+	     (setf start (fold-empty start))
+	     (dolist (defn defns)
+	       (setf (defn-child defn) (fold-empty (defn-child defn)))))
+	   (multiple-value-bind (new-start defns)
+	       (finalize-definitions start)
+	     (check-start-restrictions new-start)
+	     (dolist (defn defns)
+	       (check-restrictions (defn-child defn)))
+	     (make-schema new-start defns))))
+       source))))
 
 
 ;;;; pattern structures
