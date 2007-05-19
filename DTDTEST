@@ -1,0 +1,85 @@
+001:  PASS
+002:  FAIL: didn't detect invalid schema
+003:  FAIL: didn't detect invalid schema
+004:  FAIL: didn't detect invalid schema
+005:  FAIL: didn't detect invalid schema
+006:  FAIL: didn't detect invalid schema
+007:  FAIL: didn't detect invalid schema
+008:  FAIL: didn't detect invalid schema
+009:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 8, column 28 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/009/c.rng> ]
+009-1.i: FAIL: cannot run test
+009-2.v: FAIL: cannot run test
+009-3.v: FAIL: cannot run test
+009-4.i: FAIL: cannot run test
+010:  PASS
+010-1.i: FAIL: didn't detect invalid document
+010-2.v: PASS
+010-3.v: PASS
+010-4.i: FAIL: didn't detect invalid document
+011:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 4, column 93 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/011/c.rng> ]
+012:  FAIL: type not found: IDREF/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 11, column 97 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/012/c.rng> ]
+013:  FAIL: type not found: IDREFS/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 4, column 97 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/013/c.rng> ]
+014:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/014/c.rng> ]
+015:  FAIL: type not found: IDREF/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 9, column 97 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/015/c.rng> ]
+016:  FAIL: type not found: IDREFS/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 20, column 98 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/016/c.rng> ]
+017:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 9, column 94 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/017/c.rng> ]
+018:  FAIL: type not found: IDREF/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 13, column 98 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/018/c.rng> ]
+019:  FAIL: type not found: IDREFS/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 19, column 99 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/019/c.rng> ]
+020:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/020/c.rng> ]
+021:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 6, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/021/c.rng> ]
+022:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 6, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/022/c.rng> ]
+023:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 96 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/023/c.rng> ]
+024:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/024/c.rng> ]
+025:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/025/c.rng> ]
+026:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/026/c.rng> ]
+027:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 6, column 94 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/027/c.rng> ]
+028:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 20, column 97 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/028/c.rng> ]
+029:  PASS
+030:  PASS
+031:  PASS
+032:  PASS
+033:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 7, column 94 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/033/c.rng> ]
+034:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 20, column 94 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/034/c.rng> ]
+035:  FAIL: type not found: ID/http://relaxng.org/ns/compatibility/datatypes/1.0
+  [ Error at line 17, column 95 in #<URI file://+/home/david/src/lisp/cxml-rng/dtd-split/035/c.rng> ]
+036:  PASS
+037:  PASS
+038:  PASS
+039:  PASS
+040:  PASS
+041:  FAIL: restrictions on string sequences violated
+042:  PASS
+043:  PASS
+044:  PASS
+045:  PASS
+046:  PASS
+047:  PASS
+048:  FAIL: restrictions on string sequences violated
+049:  PASS
+050:  PASS
+051:  PASS
+052:  PASS
+053:  PASS
+054:  PASS
+Passed 25/62 tests.

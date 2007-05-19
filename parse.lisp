@@ -44,6 +44,9 @@
     @see-slot{rng-error-column-number}
     @see-slot{rng-error-system-id}"))
 
+(define-condition dtd-compatibility-error (rng-error)
+  ())
+
 (setf (documentation 'rng-error-line-number 'function)
       "@arg[instance]{an instance of @class{rng-error}}
        @return{an integer, or nil}

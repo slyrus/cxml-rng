@@ -29,8 +29,9 @@
 
 (in-package :cxml-rng)
 
-(defun run-tests (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*"))
-  (dribble "/home/david/src/lisp/cxml-rng/TEST" :if-exists :rename-and-delete)
+(defun run-tests (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*")
+		            (output-file "/home/david/src/lisp/cxml-rng/TEST"))
+  (dribble output-file :if-exists :rename-and-delete)
   (let ((pass 0)
 	(total 0)
 	(*package* (find-package :cxml-rng))
@@ -51,6 +52,14 @@
 			   (pathname-name x))))))))))
     (format t "Passed ~D/~D tests.~%" pass total))
   (dribble))
+
+(defvar *compatibility-test-p* nil)
+
+(defun run-dtd-tests
+    (&optional (p "/home/david/src/lisp/cxml-rng/dtd-split/*")
+               (q "/home/david/src/lisp/cxml-rng/DTDTEST"))
+  (let ((*compatibility-test-p* t))
+    (run-tests p q)))
 
 (defun run-validation-test
     (m n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
@@ -87,9 +96,20 @@
 		(progn
 		  (doit)
 		  (format t "FAIL: didn't detect invalid document~%"))
+	      (dtd-compatibility-error (c)
+		(cond
+		  (*compatibility-test-p*
+		   (incf pass)
+		   (format t "PASS: ~A~%" (type-of c)))
+		  (t
+		   (format t "FAIL: incorrect condition type: ~A~%" c))))
 	      (rng-error (c)
-		(incf pass)
-		(format t "PASS: ~A~%" (type-of c)))
+		(cond
+		  (*compatibility-test-p*
+		   (format t "FAIL: incorrect condition type: ~A~%" c))
+		  (t
+		   (incf pass)
+		   (format t "PASS: ~A~%" (type-of c)))))
 	      (error (c)
 		(format t "FAIL: incorrect condition type: ~A~%" c))))))
     pass))
@@ -124,9 +144,22 @@
 	      (parse-schema i)
 	      (format t " FAIL: didn't detect invalid schema~%")
 	      nil)
+	  (dtd-compatibility-error (c)
+	    (cond
+	      (*compatibility-test-p*
+	       (format t " PASS: ~A~%" (type-of c))
+	       t)
+	      (t
+	       (format t " FAIL: incorrect condition type: ~A~%" c)
+	       nil)))
 	  (rng-error (c)
-	    (format t " PASS: ~S~%" (type-of c))
-	    t)
+	    (cond
+	      (*compatibility-test-p*
+	       (format t " FAIL: incorrect condition type: ~A~%" c)
+	       nil)
+	      (t
+	       (format t " PASS: ~A~%" (type-of c))
+	       t)))
 	  (error (c)
 	    (format t " FAIL: incorrect condition type: ~A~%" c)
 	    nil)))))
