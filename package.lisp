@@ -119,6 +119,7 @@
 	   #:type-library
 	   #:type-name
 	   #:type-context-dependent-p
+	   #:type-id-type
 	   #:parse
 	   #:equal-using-type
 	   #:lessp-using-type
@@ -132,6 +133,11 @@
 	   #:rng-type
 	   #:token-type
 	   #:string-type
+
+	   #:dtd-compatibility-type
+	   #:id-type
+	   #:idref-type
+	   #:idrefs-type
 
 	   #:xsd-type
 	   #:patterns
@@ -169,9 +175,9 @@
 	   #:language-type
 	   #:name-type
 	   #:ncname-type
-	   #:id-type
-	   #:idref-type
-	   #:idrefs-type
+	   #:xsd-id-type
+	   #:xsd-idref-type
+	   #:xsd-idrefs-type
 	   #:entity-type
 	   #:entities-type
 	   #:nmtoken-type
@@ -201,6 +207,11 @@
     as specified in @a[http://relaxng.org/xsd-20010907.html]{Guidelines for
     using W3C XML Schema Datatypes with RELAX NG}.  The XSD type library
     is named @code{:|http://www.w3.org/2001/XMLSchema-datatypes|}.
+
+    The types defined by @a[http://relaxng.org/compatibility-20011203.html]{
+      RELAX NG DTD Compatibility}
+    a available through the data type library named
+    @code{:|http://relaxng.org/ns/compatibility/datatypes/1.0|}.
 
     @begin[Example]{section}
     @begin{pre}
@@ -262,6 +273,20 @@ T
       @aboutfun{context-find-namespace-binding}
       @aboutfun{context-find-unparsed-entity}
     @end{section}
+    @begin[Relax NG built-in types]{section}
+      The following primitive types are defined by Relax NG:
+
+      @aboutclass{string-type}
+      @aboutclass{token-type}
+    @end{section}
+    @begin[DTD compatibility types]{section}
+      The following primitive types are defined by Relax NG DTD
+      Compatibility:
+
+      @aboutclass{id-type}
+      @aboutclass{idref-type}
+      @aboutclass{idrefs-type}
+    @end{section}
     @begin[Primitive XSD built-in types]{section}
       The following primitive types are part of the XSD built-in data type
       library:
@@ -292,7 +317,7 @@ T
       Relax NG does not implement the enumeration facet, so although these
       types are described as \"derived\", they are implemented directly.
 
-      @aboutclass{idrefs-type}
+      @aboutclass{xsd-idrefs-type}
       @aboutclass{entities-type}
       @aboutclass{nmtokens-type}
     @end{section}
@@ -305,8 +330,8 @@ T
       @aboutclass{language-type}
       @aboutclass{name-type}
       @aboutclass{ncname-type}
-      @aboutclass{id-type}
-      @aboutclass{idref-type}
+      @aboutclass{xsd-id-type}
+      @aboutclass{xsd-idref-type}
       @aboutclass{entity-type}
       @aboutclass{nmtoken-type}
       @aboutclass{integer-type}

@@ -72,6 +72,7 @@
     @see-slot{type-name}
     @see-slot{type-library}
     @see-slot{type-context-dependent-p}
+    @see-slot{type-id-type}
     @see{parse}
     @see{equal-using-type}
     @see{lessp-using-type}
@@ -102,7 +103,8 @@
     @short{Return the name of the library this type belongs to.}
 
     @see{type-name}
-    @see{type-context-dependent-p}"))
+    @see{type-context-dependent-p}
+    @see{type-id-type}"))
 
 (defgeneric type-name (type)
   (:documentation
@@ -111,7 +113,8 @@
     @short{Return the name this type has within its library.}
 
     @see{type-library}
-    @see{type-context-dependent-p}"))
+    @see{type-context-dependent-p}
+    @see{type-id-type}"))
 
 (defmethod find-type ((library t) name params)
   (declare (ignore name params))
@@ -130,9 +133,29 @@
     @see{validation-context}
     @see{type-name}
     @see{type-library}
-    @see{type-context-dependent-p}"))
+    @see{type-context-dependent-p}
+    @see{type-id-type}"))
 
 (defmethod type-context-dependent-p ((type data-type))
+  nil)
+
+(defgeneric type-id-type (type)
+  (:documentation
+   "@arg[type]{an instance of @class{data-type}}
+    @return{one of @code{nil}, @code{:id}, @code{:idref}, or @code{:idrefs}}
+    @short{Returns the @em{ID-type} of @code{type}.}
+
+    The symbols @code{nil}, @code{:id}, @code{:idref}, or @code{:idrefs}
+    represent the ID-types @em{null}, @em{ID},  @em{IDREF}, and @em{IDREFS},
+    respectively, as defined by
+    @a[http://relaxng.org/compatibility-20011203.html]{
+      RELAX NG DTD Compatibility}.
+
+    @see{type-name}
+    @see{type-library}
+    @see{type-context-dependent-p}"))
+
+(defmethod type-id-type ((type data-type))
   nil)
 
 (defgeneric equal-using-type (type u v)
@@ -367,6 +390,111 @@
   (cl-ppcre:regex-replace-all #.(format nil "[~A]" *whitespace*)
 			      str
 			      " "))
+
+
+;;; DTD compatibility types
+
+(defclass dtd-compatibility-type (data-type)
+    ((chained-type :accessor chained-type))
+  (:documentation
+   "@short{The class of DTD Compatibility data types.}
+
+    This library contains three types: ID, IDREF, and IDREFS.
+
+    This type library is named
+    @code{:|http://relaxng.org/ns/compatibility/datatypes/1.0|}."))
+
+(defmethod print-object ((object dtd-compatibility-type) stream)
+  (print-unreadable-object (object stream :type t :identity nil)))
+
+(defclass id-type (dtd-compatibility-type) ()
+  (:documentation
+   "@short{The DTD compatibility 'ID' type.}
+
+    For this type, @fun{parse} will return the string with leading and
+    trailing whitespace removed.
+
+    The resulting value must be an NCName.
+
+    The ID-type of this data type is 'ID', ensuring that each value is
+    only used for one element in a document.
+
+    @see{xsd-id-type}"))
+
+(defclass idref-type (dtd-compatibility-type) ()
+  (:documentation
+   "@short{The DTD compatibility 'IDREF' type.}
+
+    For this type, @fun{parse} will return the string with leading and
+    trailing whitespace removed.
+
+    The resulting value must be an NCName.
+
+    The ID-type of this data type is 'IDREF', ensuring that the value
+    referenced must be declared as the ID of an element in the document.
+
+    @see{xsd-idref-type}"))
+
+(defclass idrefs-type (dtd-compatibility-type) ()
+  (:documentation
+   "@short{The DTD compatibility 'IDREFS' type.}
+
+    Strings are valid for this data type they contain a whitespace-separated
+    list of one or more NCNames.  @fun{parse} will return a list of these
+    substrings.
+
+    The ID-type of this data type is 'IDREFS', ensuring that each value
+    referenced must be declared as the ID of an element in the document.
+
+    @see{xsd-idrefs-type}"))
+
+;; die Implementation dieser Typen deligieren wir einfach mal an die
+;; entsprechenden XSD-Typen.
+(defmethod initialize-instance :after ((instance id-type) &key)
+  (setf (chained-type instance)
+	(or (find-type :|http://www.w3.org/2001/XMLSchema-datatypes| "ID" nil)
+	    (error "oops"))))
+
+(defmethod initialize-instance :after ((instance idref-type) &key)
+  (setf (chained-type instance)
+	(or (find-type :|http://www.w3.org/2001/XMLSchema-datatypes| "IDREF" nil)
+	    (error "oops"))))
+
+(defmethod initialize-instance :after ((instance idrefs-type) &key)
+  (setf (chained-type instance)
+	(or (find-type :|http://www.w3.org/2001/XMLSchema-datatypes| "IDREFS" nil)
+	    (error "oops"))))
+
+(defmethod type-library ((type dtd-compatibility-type))
+  :|http://relaxng.org/ns/compatibility/datatypes/1.0|)
+
+(defmethod type-name ((type id-type)) "ID")
+(defmethod type-name ((type idref-type)) "IDREF")
+(defmethod type-name ((type idrefs-type)) "IDREFS")
+
+(defvar *id-type* (make-instance 'id-type))
+(defvar *idref-type* (make-instance 'idref-type))
+(defvar *idrefs-type* (make-instance 'idrefs-type))
+
+(defmethod find-type
+    ((library (eql :|http://relaxng.org/ns/compatibility/datatypes/1.0|||))
+     name params)
+  (cond
+    ((eq name :probe) t)
+    (params :error)
+    ((equal name "ID") *id-type*)
+    ((equal name "IDREF") *idref-type*)
+    ((equal name "IDREFS") *idrefs-type*)
+    (t nil)))
+
+(defmethod validp ((type dtd-compatibility-type) e &optional context)
+  (validp (chained-type type) e context))
+
+(defmethod parse ((type dtd-compatibility-type) e &optional context)
+  (parse (chained-type type) e context))
+
+(defmethod type-id-type ((type dtd-compatibility-type))
+  (type-id-type (chained-type type)))
 
 
 ;;; XML Schema Part 2: Datatypes Second Edition
@@ -1743,56 +1871,75 @@
 
 ;;; ID
 
-(defxsd (id-type "ID") (ncname-type)
+(defxsd (xsd-id-type "ID") (ncname-type)
   ()
   (:documentation
    "@short{The ID data type, derived from NCName.}
 
     C.f. the @a[http://www.w3.org/TR/xmlschema-2/#ID]{specification}.
 
-    @b{Restrictions.} None, except when used with DTD compatibility.
+    @b{Restrictions.} None, except that this type has the ID-type 'ID'
+    for the purposes of DTD compatibility.
     See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
     Schema Datatypes with RELAX NG}.
-    (fixme: not implemented yet -- dfl, 2007-06-06)
 
-    @b{Parameters and implementation.} Unchanged from the supertype."))
+    @b{Parameters and implementation.} Unchanged from the supertype.
+
+    @see{id-type}"))
+
+(defmethod type-id-type ((type xsd-id-type))
+  :id)
 
 
 ;;; IDREF
 
-(defxsd (idref-type "IDREF") (id-type)
+(defxsd (xsd-idref-type "IDREF") (xsd-id-type)
   ()
   (:documentation
    "@short{The IDREF data type, derived from ID.}
 
     C.f. the @a[http://www.w3.org/TR/xmlschema-2/#IDREF]{specification}.
 
-    @b{Restrictions.} None, except when used with DTD compatibility.
+    @b{Restrictions.} None, except that this type has the ID-type 'IDREF'
+    for the purposes of DTD compatibility.
     See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
     Schema Datatypes with RELAX NG}.
-    (fixme: not implemented yet -- dfl, 2007-06-06)
 
-    @b{Parameters and implementation.} Unchanged from the supertype."))
+    @b{Parameters and implementation.} Unchanged from the supertype.
+
+    @see{idref-type}"))
+
+(defmethod type-id-type ((type xsd-idref-type))
+  :idref)
 
 
 ;;; IDREFS
 
-(defxsd (idrefs-type "IDREFS") (enumeration-type)
-  ((word-type :initform (make-instance 'idref-type)))
+(defxsd (xsd-idrefs-type "IDREFS") (enumeration-type)
+  ((word-type :initform (make-instance 'xsd-idref-type)))
   (:documentation
    "@short{The IDREFS data type, an enumeration.}
 
-    @b{Syntax.} A whitespace-separated sequence of @class{idref-type}
+    @b{Syntax.} A whitespace-separated sequence of @class{xsd-idref-type}
     values, with at least one element.
 
     C.f. the @a[http://www.w3.org/TR/xmlschema-2/#IDREFS]{specification}.
 
     @b{Implementation.} This type returns a list of the values as returned by
-    @class{idref-type}.
+    @class{xsd-idref-type}.
+
+    This type has the ID-type 'IDREFS' for the purposes of DTD compatibility.
+    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
+    Schema Datatypes with RELAX NG}.
 
     @b{Parameters.} This type allows restrictions on the number of values
     through the parameters @slot{exact-length}, @slot{min-length}, and
-    @slot{max-length}."))
+    @slot{max-length}.
+
+    @see{idrefs-type}"))
+
+(defmethod type-id-type ((type xsd-idrefs-type))
+  :idrefs)
 
 
 ;;; ENTITY

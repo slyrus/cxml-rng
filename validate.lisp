@@ -142,7 +142,8 @@
    (after-start-tag-p :accessor after-start-tag-p)
    (pending-text-node :initform nil :accessor pending-text-node)
    (registratur :initarg :registratur :accessor registratur)
-   (validation-error-class :initarg :validation-error-class
+   (validation-error-class :initform 'rng-error
+			   :initarg :validation-error-class
 			   :accessor validation-error-class)
    (open-start-tag\'-cache :initform (make-hash-table :test 'equal)
 			   :reader open-start-tag\'-cache)
