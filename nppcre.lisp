@@ -46,29 +46,22 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defparameter *standard-optimize-settings* '(optimize)))
 
-(defvar *real-convert-aux* #'cl-ppcre::convert-aux)
+(defvar *in-pattern-parser-p* nil)
+
 (defvar *convert-char-class-to-hash* #'cl-ppcre::convert-char-class-to-hash)
 
-;;; zzz Evil hacks!
-
-(format t "Patching CL-PPCRE::CONVERT-AUX~%")
-(setf (fdefinition 'cl-ppcre::convert-aux)
-      (lambda (tree)
-	(if (typep tree 'cl-ppcre::regex)
-	    tree
-	    (funcall *real-convert-aux* tree))))
+;;; zzz Evil hack!
 
 (format t "Patching CL-PPCRE::CONVERT-CHAR-CLASS-TO-HASH~%")
 (setf (fdefinition 'cl-ppcre::convert-char-class-to-hash)
       (lambda (list)
-	(let ((hash (funcall *convert-char-class-to-hash*
-			     (remove-if (lambda (x)
-					  (typep x 'cl-ppcre::char-class))
-					list))))
-	  (dolist (x list)
-	    (when (typep x 'cl-ppcre::char-class)
-	      (add-char-class-to-hash x hash)))
-	  hash)))
+	(when *in-pattern-parser-p*
+	  (setf list (mapcan (lambda (x)
+			       (if (symbolp x)
+				   (symbol-value x)
+				   x))
+			     list)))
+	(funcall *convert-char-class-to-hash* list)))
 
 (defun signal-ppcre-syntax-error (fmt &rest args)
   (error "invalid pattern: ~?" fmt args))
@@ -84,62 +77,15 @@
             (t
               (coerce ,=string= 'simple-string))))))
 
-(defvar *initial-name-char*
-  (make-instance 'cl-ppcre::char-class
-		 :hash (cl-ppcre::make-char-hash #'cxml::name-start-rune-p)
-		 :case-insensitive-p nil
-		 :invertedp nil
-		 :word-char-class-p nil))
-
-(defvar *non-initial-name-char*
-  (make-instance 'cl-ppcre::char-class
-		 :hash (cl-ppcre::make-char-hash #'cxml::name-start-rune-p)
-		 :case-insensitive-p nil
-		 :invertedp t
-		 :word-char-class-p nil))
-
-(defvar *name-char*
-  (make-instance 'cl-ppcre::char-class
-		 :hash (cl-ppcre::make-char-hash #'cxml::name-rune-p)
-		 :case-insensitive-p nil
-		 :invertedp nil
-		 :word-char-class-p nil))
-
-(defvar *non-name-char*
-  (make-instance 'cl-ppcre::char-class
-		 :hash (cl-ppcre::make-char-hash #'cxml::name-rune-p)
-		 :case-insensitive-p nil
-		 :invertedp t
-		 :word-char-class-p nil))
-
 (declaim (inline map-char-to-special-class))
 (defun map-char-to-special-char-class (chr)
   (declare #.*standard-optimize-settings*)
   "Maps escaped characters like \"\\d\" to the tokens which represent
 their associated character classes."
   (case chr
-    ((#\.)
-      :non-newline)
-    ((#\i)
-      *initial-name-char*)
-    ((#\I)
-      *non-initial-name-char*)
-    ((#\c)
-      *name-char*)
-    ((#\C)
-      *non-name-char*)
-    ((#\d)
-      :digit-class)
-    ((#\D)
-      :non-digit-class)
-    ((#\w)
-      :word-char-class)
-    ((#\W)
-      :non-word-char-class)
-    ((#\s)
-      :whitespace-char-class)
-    ((#\S)
-      :non-whitespace-char-class)))
+    (#\. '\.)
+    (#\s '\\s) (#\i '\\i) (#\c '\\c) (#\d '\\d) (#\w '\\w)
+    (#\S '^s) (#\I '^i) (#\C '^c) (#\D '^d) (#\W '^w)))
 
 (locally
   (declare #.*standard-optimize-settings*)
@@ -273,6 +219,14 @@ handled elsewhere."
         ;; all other characters aren't affected by a backslash
         chr))))
 
+(defun convert-substraction (r s)
+  (flet ((rangify (x)
+	   (etypecase x
+	     (character `((:range ,x ,x)))
+	     (list (assert (eq (car x) :range)) (list x))
+	     (symbol (copy-list (symbol-value x))))))
+    (ranges- (mapcan #'rangify r) (mapcan #'rangify s))))
+
 (defun collect-char-class (lexer)
   (declare #.*standard-optimize-settings*)
   "Reads and consumes characters from regex string until a right
@@ -315,9 +269,15 @@ we're inside a range or not."
                            (when (looking-at-p lexer #\[)
 			     (incf (lexer-pos lexer))
 			     (return-from collect-char-class
-			       (convert-substraction
-				(nreverse list)
-				(collect-char-class lexer))))
+			       (prog1
+				   (convert-substraction
+				    (nreverse list)
+				    (collect-char-class lexer))
+				 (unless
+				     (eql (next-char-non-extended lexer) #\])
+				   (signal-ppcre-syntax-error*
+				    start-pos
+				    "Missing right bracket to close character class")))))
 			   (push #\- list))
                          (setq hyphen-seen nil))
                        (otherwise
@@ -337,6 +297,16 @@ we're inside a range or not."
                    ;; reverse the list to preserve the order intended
                    ;; by the author of the regex string
                    (return-from collect-char-class (nreverse list)))
+                 ((and hyphen-seen (char= c #\[))
+		  (return-from collect-char-class
+		    (prog1
+			(convert-substraction
+			 (nreverse list)
+			 (collect-char-class lexer))
+		      (unless (eql (next-char-non-extended lexer) #\])
+			(signal-ppcre-syntax-error*
+			 start-pos
+			 "Missing right bracket to close character class")))))
                  ((and (char= c #\-)
                        last-char
                        (not hyphen-seen))
@@ -672,7 +642,8 @@ Will return <parse-tree> or (:ALTERNATION <parse-tree> <parse-tree>)."
 (defun parse-pattern (string)
   (declare #.*standard-optimize-settings*)
   "Translate the regex string STRING into a parse tree."
-  (let* ((lexer (make-lexer string))
+  (let* ((*in-pattern-parser-p* t)
+	 (lexer (make-lexer string))
          (parse-tree (reverse-strings (reg-expr lexer))))
     ;; check whether we've consumed the whole regex string
     (if (end-of-string-p lexer)
@@ -681,58 +652,8 @@ Will return <parse-tree> or (:ALTERNATION <parse-tree> <parse-tree>)."
 	 (lexer-pos lexer)
 	 "Expected end of string"))))
 
-(defun invert-char-class (char-class)
-  (with-slots (cl-ppcre::hash cl-ppcre::invertedp) char-class
-    (make-instance 'cl-ppcre::char-class
-		   :hash (cl-ppcre::merge-inverted-hash (make-hash-table)
-							cl-ppcre::hash)
-		   :invertedp (not cl-ppcre::invertedp)
-		   :case-insensitive-p nil
-		   :word-char-class-p nil)))
-
-(defun char-class (regex)
-  (etypecase regex
-    (cl-ppcre::char-class regex)
-    (cl-ppcre::str
-     (assert (eql 1 (cl-ppcre::len regex)))
-     (let ((hash (make-hash-table)))
-       (setf (gethash (elt (cl-ppcre::str regex) 0) hash) t)
-       (make-instance 'cl-ppcre::char-class
-		      :hash hash
-		      :invertedp nil
-		      :case-insensitive-p nil
-		      :word-char-class-p nil)))))
-
-(defun listify (x)
-  (if (listp x) x (list x)))
-
-(defun convert-substraction (r s)
-  (let ((result
-	 (char-class (cl-ppcre::convert (cons :char-class (listify r)))))
-	(minus
-	 (char-class (cl-ppcre::convert (cons :char-class (listify s))))))
-    (when (cl-ppcre::invertedp result)
-      (setf result (invert-char-class result)))
-    (when (cl-ppcre::invertedp minus)
-      (setf minus (invert-char-class minus)))
-    (let ((hash (cl-ppcre::hash result)))
-      (loop
-	 for char being each hash-key in (cl-ppcre::hash minus)
-	 do (remhash char hash))
-      (when (> (hash-table-count hash) (/ cl-ppcre::*regex-char-code-limit* 2))
-	(setf result (invert-char-class result))))
-    (list result)))
-
 (defmethod pattern-scanner ((str string))
   (cl-ppcre:create-scanner (parse-pattern str)))
 
 (defmethod pattern-scanner ((scanner function))
   scanner)
-
-(defun add-char-class-to-hash (class hash)
-  (cl-ppcre::merge-hash hash
-			(if (cl-ppcre::invertedp class)
-			    (cl-ppcre::merge-inverted-hash
-			     (make-hash-table)
-			     (cl-ppcre::hash class))
-			    (cl-ppcre::hash class))))

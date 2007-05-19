@@ -780,7 +780,9 @@
 
 (defmethod expectation ((pattern attribute) s)
   (write-string "an attribute " s)
-  (describe-name (pattern-name pattern) s))
+  (describe-name (pattern-name pattern) s)
+  (format s "~%  with a value of ")
+  (expectation (pattern-child pattern) s))
 
 (defmethod expectation ((pattern choice) s)
   (expectation (pattern-a pattern) s)

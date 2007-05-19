@@ -36,12 +36,12 @@
 ;;                      - Disable *full-table-p* by default.
 ;;                      - Added SBCL case to the CMUCL workarounds.
 
-(defpackage :clex
+(defpackage :cxml-clex
   (:use :cl :runes)
   (:export
    #:deflexer #:backup #:begin #:initial #:bag))
 
-(in-package :CLEX)
+(in-package :cxml-clex)
 
 ;;; NOTE -- It turns out that this code is a magintude slower under CMUCL
 ;;; compared to CLISP or ACL. Probably they do not have a good implementation of
@@ -73,8 +73,13 @@
 	  (range* (max amin bmax) amax))
 	result))))
 
-(defun ranges- (aa b)
+(defun ranges-range (aa b)
   (mapcan (lambda (a) (range- a b)) aa))
+
+(defun ranges- (aa b)
+  (dolist (l b)
+    (setf aa (ranges-range aa l)))
+  aa)
 
 (defun partition-range (a pos)
   (multiple-value-bind (min max) (destructure-range a)
@@ -102,8 +107,7 @@
        (dolist (k (state-transitions this)
 		(push (cons new that) (state-transitions this)))
 	 (when (eq (cdr k) that)
-	   (dolist (l (car k))		;avoid duplicates
-	     (setf new (ranges- new l)))
+	   (setf new (ranges- new (car k))) ;avoid duplicates
 	   (setf (car k) (append new (car k)))
 	   (return nil)))
        ;; split existing ranges to remove overlap

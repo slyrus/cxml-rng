@@ -17,6 +17,7 @@
     :components
     ((:file "package")
      (:file "floats")
+     (:file "unicode")
      (:file "nppcre")
      (:file "types")
      (:file "parse")

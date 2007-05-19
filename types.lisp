@@ -1688,7 +1688,7 @@
 ;;; language
 
 (defmacro precompile (pattern)
-  `(load-time-value (pattern-scanner ,pattern)))
+  `(load-time-value (list (pattern-scanner ,pattern))))
 
 (defxsd (language-type "language") (xsd-token-type)
   ((patterns :initform (precompile "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*")))

@@ -114,7 +114,7 @@
 (defun nc-name-p (str)
   (and (cxml-types::namep str) (cxml::nc-name-p str)))
 
-(clex:deflexer rng
+(cxml-clex:deflexer rng
     (
      ;; NCName
      (letter+extras
@@ -155,71 +155,71 @@
 
   ((* space))
 
-  ((and "##") (clex:begin 'documentation-line))
+  ((and "##") (cxml-clex:begin 'documentation-line))
   ((and "##" newline))
-  ((clex::in documentation-line newline) (clex:begin 'clex:initial))
-  ((clex::in documentation-line comment-char)
-   (return (values 'documentation-line clex:bag)))
+  ((cxml-clex::in documentation-line newline) (cxml-clex:begin 'cxml-clex:initial))
+  ((cxml-clex::in documentation-line comment-char)
+   (return (values 'documentation-line cxml-clex:bag)))
 
-  ((and #\# init-comment-char) (clex:begin 'comment))
+  ((and #\# init-comment-char) (cxml-clex:begin 'comment))
   ((and #\# newline))
-  ((clex::in comment newline) (clex:begin 'clex:initial))
-  ((clex::in comment comment-char))
+  ((cxml-clex::in comment newline) (cxml-clex:begin 'cxml-clex:initial))
+  ((cxml-clex::in comment comment-char))
 
   ((and "'''" (* (or string-char #\' #\")) "'''")
    (return
-     (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
+     (values 'literal-segment (subseq cxml-clex:bag 3 (- (length cxml-clex:bag) 3)))))
 
   ((and #\' (* (or string-char #\")) #\')
-   (when (or (find (code-char 13) clex:bag)
-	     (find (code-char 10) clex:bag))
+   (when (or (find (code-char 13) cxml-clex:bag)
+	     (find (code-char 10) cxml-clex:bag))
      (rng-error nil "disallowed newline in string literal"))
    (return
-     (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
+     (values 'literal-segment (subseq cxml-clex:bag 1 (- (length cxml-clex:bag) 1)))))
 
   ((and #\" #\" #\" (* (or string-char #\' #\")) #\" #\" #\")
    (return
-     (values 'literal-segment (subseq clex:bag 3 (- (length clex:bag) 3)))))
+     (values 'literal-segment (subseq cxml-clex:bag 3 (- (length cxml-clex:bag) 3)))))
 
   ((and #\" (* (or string-char #\')) #\")
-   (when (or (find (code-char 13) clex:bag)
-	     (find (code-char 10) clex:bag))
+   (when (or (find (code-char 13) cxml-clex:bag)
+	     (find (code-char 10) cxml-clex:bag))
      (rng-error nil "disallowed newline in string literal"))
    (return
-     (values 'literal-segment (subseq clex:bag 1 (- (length clex:bag) 1)))))
+     (values 'literal-segment (subseq cxml-clex:bag 1 (- (length cxml-clex:bag) 1)))))
 
   ((and name-start-char (* name-char))
    (return
      (cond
-       ((find clex:bag *keywords* :test #'equal)
-	(let ((sym (intern (string-upcase clex:bag) :keyword)))
+       ((find cxml-clex:bag *keywords* :test #'equal)
+	(let ((sym (intern (string-upcase cxml-clex:bag) :keyword)))
 	  (values sym sym)))
-       ((find #\: clex:bag)
-	(let* ((pos (position #\: clex:bag))
-	       (prefix (subseq clex:bag 0 pos))
-	       (lname (subseq clex:bag (1+ pos ))))
+       ((find #\: cxml-clex:bag)
+	(let* ((pos (position #\: cxml-clex:bag))
+	       (prefix (subseq cxml-clex:bag 0 pos))
+	       (lname (subseq cxml-clex:bag (1+ pos ))))
 	  (when (find #\: lname)
 	    (rng-error "too many colons"))
 	  (unless (and (nc-name-p prefix))
 	    (rng-error nil "not an ncname: ~A" prefix))
-	  (let ((ch (clex::getch)))
+	  (let ((ch (cxml-clex::getch)))
 	    (cond
 	      ((and (equal lname "") (eql ch #\*))
 	       (values 'nsname prefix))
 	      (t
-	       (clex::backup ch)
+	       (cxml-clex::backup ch)
 	       (unless (and (nc-name-p lname))
 		 (rng-error nil "not an ncname: ~A" lname))
 	       (values 'cname (cons prefix lname)))))))
        (t
-	(unless (nc-name-p clex:bag)
-	  (rng-error nil "not an ncname: ~A" clex:bag))
-	(values 'identifier clex:bag)))))
+	(unless (nc-name-p cxml-clex:bag)
+	  (rng-error nil "not an ncname: ~A" cxml-clex:bag))
+	(values 'identifier cxml-clex:bag)))))
 
   ((and #\\ name-start-char (* name-char))
-   (let ((str (subseq clex:bag 1)))
+   (let ((str (subseq cxml-clex:bag 1)))
      (unless (nc-name-p str)
-       (rng-error nil "not an ncname: ~A" clex:bag))
+       (rng-error nil "not an ncname: ~A" cxml-clex:bag))
      (return (values 'identifier str))))
 
   (#\= (double '=))
