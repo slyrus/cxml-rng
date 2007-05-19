@@ -12,6 +12,7 @@
 	   #:parse-compact
 	   #:serialize-schema
 	   #:make-validator
+	   #:make-validating-source
 
 	   #:pattern
 	   #:element

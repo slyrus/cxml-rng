@@ -137,11 +137,27 @@
 (defparameter *relax-ng-grammar* nil)
 (defun flush () (setf *relax-ng-grammar* nil))
 
-(defun make-validating-source (input)
+(defun make-validating-source (input schema)
+  "@arg[input]{a @code{source} or a stream designator}
+   @arg[schema]{the parsed Relax NG @class{schema} object}
+   @return{a klacks source}
+   @short{This function creates a klacks source for @code{input} that validates
+   events against @code{schema}.}
+
+   Input can be a klacks source or any argument applicable to
+   @code{cxml:make-source}.
+
+   @see{parse-schema}
+   @see{make-validator}"
+  (klacks:make-tapping-source (if (typep input 'klacks:source)
+				  input
+				  (cxml:make-source input))
+			      (make-validator schema)))
+
+(defun make-schema-source (input)
   (let ((upstream (cxml:make-source input)))
     (if *validate-grammar*
-	(klacks:make-tapping-source upstream
-				    (make-validator *relax-ng-grammar*))
+	(make-validating-source upstream *relax-ng-grammar*)
 	upstream)))
 
 (defun parse-schema (input &key entity-resolver)
@@ -177,7 +193,7 @@
 	      (parse-schema (merge-pathnames "rng.rng" d))
 	      #+(or)
 	      (parse-compact (merge-pathnames "rng.rnc" d))))))
-  (klacks:with-open-source (source (make-validating-source input))
+  (klacks:with-open-source (source (make-schema-source input))
     (invoke-with-klacks-handler
      (lambda ()
        (klacks:find-event source :start-element)
@@ -974,7 +990,7 @@
 	    (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 		   (xstream (xstream-open-schema uri compactp)))
 	      (klacks:with-open-source
-		  (source (make-validating-source xstream))
+		  (source (make-schema-source xstream))
 		(invoke-with-klacks-handler
 		 (lambda ()
 		   (klacks:find-event source :start-element)
@@ -1181,7 +1197,7 @@
 	    (rng-error source "looping include"))
 	  (let* ((*include-uri-stack* (cons uri *include-uri-stack*))
 		 (xstream (xstream-open-schema uri compactp)))
-	    (klacks:with-open-source (source (make-validating-source xstream))
+	    (klacks:with-open-source (source (make-schema-source xstream))
 	      (invoke-with-klacks-handler
 	       (lambda ()
 		 (klacks:find-event source :start-element)

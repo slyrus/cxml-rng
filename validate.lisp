@@ -53,7 +53,8 @@
 
    Events will be passed on unchanged to @code{handler}.
 
-   @see{parse-schema}"
+   @see{parse-schema}
+   @see{make-validating-source}"
   (let* ((table (ensure-registratur schema))
 	 (start (schema-interned-start schema))
 	 (validator

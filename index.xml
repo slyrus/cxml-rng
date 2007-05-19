@@ -85,13 +85,12 @@
                   (cxml-rng:parse-schema #p"example.rng")
                   <blau>(cxml-dom:make-dom-builder))</blau>)</pre>
   <p>
-    To validate with the klacks parser, use a tapping source.
+    When using the klacks parser, create a validating source.
   </p>
   <pre class="code" style="color: #777777">(klacks:with-open-source
-    (s <blau>(klacks:make-tapping-source</blau>
-        (cxml:make-source #p"example.xml")
-        <blau>(cxml-rng:make-validator 
-         (cxml-rng:parse-schema #p"example.rng"))</blau>))
+    (s <blau>(cxml-rng:make-validating-source
+        #p"example.xml"
+        (cxml-rng:parse-schema #p"example.rng"))</blau>)
   (loop for key = (klacks:peek-next s) while key do (print key)))</pre>
 
   <h3>Documentation</h3>
