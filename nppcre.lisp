@@ -77,15 +77,30 @@
             (t
               (coerce ,=string= 'simple-string))))))
 
-(declaim (inline map-char-to-special-class))
-(defun map-char-to-special-char-class (chr)
+(defun map-char-to-special-char-class (chr lexer)
   (declare #.*standard-optimize-settings*)
   "Maps escaped characters like \"\\d\" to the tokens which represent
 their associated character classes."
   (case chr
     (#\. '\.)
     (#\s '\\s) (#\i '\\i) (#\c '\\c) (#\d '\\d) (#\w '\\w)
-    (#\S '^s) (#\I '^i) (#\C '^c) (#\D '^d) (#\W '^w)))
+    (#\S '^s) (#\I '^i) (#\C '^c) (#\D '^d) (#\W '^w)
+    (#\p
+     (unless (eql (next-char lexer) #\{)
+       (signal-ppcre-syntax-error "Missing open brace after \\p"))
+     (let* ((bag (loop
+		    for c = (next-char lexer)
+		    for last = (eql c #\})
+		    and done = nil then last
+		    until done
+		    unless c do
+		      (signal-ppcre-syntax-error
+		       "Missing close brace after \\p")
+		    collect c))
+	    (bag (coerce (list* #\p #\{ bag) 'string)))
+       (or (find-symbol bag 'cxml-types)
+	   (signal-ppcre-syntax-error "Invalid character property: ~A"
+				      bag))))))
 
 (locally
   (declare #.*standard-optimize-settings*)
@@ -256,9 +271,10 @@ we're inside a range or not."
                    ;; we've seen a backslash
                    (let ((next-char (next-char-non-extended lexer)))
                      (case next-char
-                       ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S)
+                       ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S #\p)
                          ;; a special character class
-                         (push (map-char-to-special-char-class next-char) list)
+                         (push (map-char-to-special-char-class next-char lexer)
+			       list)
                          ;; if the last character was a hyphen
                          ;; just collect it literally
                          (when hyphen-seen
@@ -432,9 +448,9 @@ resets the lexer to its old position."
                 ;; to peek one char ahead:
                 (let ((next-char (next-char-non-extended lexer)))
                   (case next-char
-                    ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S)
+                    ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S #\p)
                       ;; these will be treated like character classes
-                      (map-char-to-special-char-class next-char))
+                      (map-char-to-special-char-class next-char lexer))
                     (otherwise
                       ;; in all other cases just unescape the
                       ;; character

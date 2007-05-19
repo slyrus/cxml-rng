@@ -493,8 +493,9 @@
 (defgeneric validp/xsd (type v context)
   (:method-combination and))
 
+;; make CLOS happy:
 (defmethod validp/xsd and ((type xsd-type) v context)
-  (declare (ignore context))
+  (declare (ignore v context))
   t)
 
 (defmethod validp ((type xsd-type) e &optional context)
