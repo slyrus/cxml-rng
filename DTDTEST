@@ -34,30 +34,30 @@
 026:  PASS
 027:  PASS
 028:  PASS
-029:  FAIL: didn't detect invalid schema
-030:  FAIL: didn't detect invalid schema
-031:  FAIL: didn't detect invalid schema
-032:  FAIL: didn't detect invalid schema
-033:  FAIL: didn't detect invalid schema
-034:  PASS
+029:  PASS: DTD-COMPATIBILITY-ERROR
+030:  PASS: DTD-COMPATIBILITY-ERROR
+031:  PASS: DTD-COMPATIBILITY-ERROR
+032:  PASS: DTD-COMPATIBILITY-ERROR
+033:  PASS: DTD-COMPATIBILITY-ERROR
+034:  FAIL: defaultValue not valid
 035:  FAIL: didn't detect invalid schema
 036:  FAIL: didn't detect invalid schema
-037:  FAIL: didn't detect invalid schema
+037:  PASS: DTD-COMPATIBILITY-ERROR
 038:  FAIL: didn't detect invalid schema
 039:  FAIL: didn't detect invalid schema
 040:  PASS
 041:  FAIL: restrictions on string sequences violated
 042:  PASS
 043:  FAIL: didn't detect invalid schema
-044:  FAIL: didn't detect invalid schema
+044:  PASS: DTD-COMPATIBILITY-ERROR
 045:  PASS
 046:  PASS
-047:  FAIL: didn't detect invalid schema
+047:  PASS: DTD-COMPATIBILITY-ERROR
 048:  FAIL: incorrect condition type: restrictions on string sequences violated
-049:  FAIL: didn't detect invalid schema
-050:  FAIL: didn't detect invalid schema
-051:  FAIL: didn't detect invalid schema
-052:  FAIL: didn't detect invalid schema
+049:  PASS: DTD-COMPATIBILITY-ERROR
+050:  PASS: DTD-COMPATIBILITY-ERROR
+051:  PASS: DTD-COMPATIBILITY-ERROR
+052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 26/62 tests.
+Passed 37/62 tests.

@@ -501,8 +501,11 @@
 (defgeneric intern-pattern (pattern table))
 
 (defmethod intern-pattern ((pattern element) table)
-  (pushnew pattern *seen-elements*)
-  pattern)
+  (let ((copy (ensuref (list 'element pattern)
+		       table
+		       (copy-structure pattern))))
+    (pushnew copy *seen-elements*)
+    copy))
 
 (defmethod intern-pattern :around ((pattern pattern) table)
   (finalize-pattern (call-next-method)))

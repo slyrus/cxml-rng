@@ -1,6 +1,7 @@
 (defpackage :cxml-rng
   (:use :cl)
   (:export #:rng-error
+	   #:dtd-compatibility-error
 	   #:rng-error-line-number
 	   #:rng-error-column-number
 	   #:rng-error-system-id
@@ -69,6 +70,7 @@
     @begin[Classes]{section}
     @aboutclass{schema}
     @aboutclass{rng-error}
+    @aboutclass{dtd-compatibility-error}
     @end{section}
     @begin[Parsing and validating]{section}
     @aboutfun{parse-schema}
@@ -210,7 +212,7 @@
 
     The types defined by @a[http://relaxng.org/compatibility-20011203.html]{
       RELAX NG DTD Compatibility}
-    a available through the data type library named
+    are available through the data type library named
     @code{:|http://relaxng.org/ns/compatibility/datatypes/1.0|}.
 
     @begin[Example]{section}

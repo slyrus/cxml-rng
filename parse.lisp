@@ -39,13 +39,31 @@
    (column-number :initarg :column-number :accessor rng-error-column-number)
    (system-id :initarg :system-id :accessor rng-error-system-id))
   (:documentation
-   "The class of all validation errors.
+   "@short{The class of all validation and schema parsing errors.}
+
+    Signalled while parsing a schema, this error signifies that the schema
+    is incorrect (or not compatible with DTD Compatibility).  Signalled
+    during validation, this error signifies that the document is invalid
+    (or not sound).
+
+    When parsing or validating with DTD Compatibility, check for
+    @code{dtd-compatibility-error} to distinguish between
+    correctness and compatibility or validity and soundness.
+
     @see-slot{rng-error-line-number}
     @see-slot{rng-error-column-number}
     @see-slot{rng-error-system-id}"))
 
 (define-condition dtd-compatibility-error (rng-error)
-  ())
+  ()
+  (:documentation
+   "@short{The class of DTD compatibility errors.}
+
+    Signalled while parsing a schema, this error signifies that the schema
+    is not compatible (as opposed to incorrect).
+
+    Signalled during validation, this error signifies that the document
+    is not sound (as opposed to invalid)."))
 
 (setf (documentation 'rng-error-line-number 'function)
       "@arg[instance]{an instance of @class{rng-error}}
@@ -119,7 +137,8 @@
   (start (missing) :type pattern)
   (definitions (missing) :type list)
   (interned-start nil :type (or null pattern))
-  (registratur nil :type (or null hash-table)))
+  (registratur nil :type (or null hash-table))
+  (compatibility-table nil :type (or null compatibility-table)))
 
 (setf (documentation 'schema-start 'function)
       "@arg[instance]{an instance of @class{schema}}
@@ -139,6 +158,7 @@
 	  (rng-error source "Cannot parse schema: ~A" c)))))
 
 (defvar *validate-grammar* t)
+(defvar *process-dtd-compatibility*)
 (defparameter *relax-ng-grammar* nil)
 (defparameter *compatibility-grammar* nil)
 
@@ -167,7 +187,7 @@
   (let ((upstream (cxml:make-source input)))
     (if *validate-grammar*
 	(let ((handler (make-validator *relax-ng-grammar*)))
-	  (when (eq *validate-grammar* :both)
+	  (when *process-dtd-compatibility*
 	    (setf handler
 		  (cxml:make-broadcast-handler
 		   handler
@@ -179,9 +199,10 @@
 	  (klacks:make-tapping-source upstream handler))
 	upstream)))
 
-(defun parse-schema (input &key entity-resolver (dtd-compatibility t))
+(defun parse-schema (input &key entity-resolver (process-dtd-compatibility t))
   "@arg[input]{a string, pathname, stream, or xstream}
    @arg[entity-resolver]{a function of two arguments, or NIL}
+   @arg[process-dtd-compatibility]{a boolean}
    @return{a parsed @class{schema}}
    @short{This function parses a Relax NG schema file in XML syntax}
    and returns a parsed representation of that schema.
@@ -201,6 +222,12 @@
    Alternatively it may return a Common Lisp stream specialized on
    @code{(unsigned-byte 8)} which will be used instead.
 
+   If @code{process-dtd-compatibility} is true, the schema will be checked
+   for @em{compatibility} with Relax NG DTD Compatibility, and default values
+   will be recorded.  (Without @code{process-dtd-compatibility}, the schema
+   will not be checked @em{compatibility}, and annotations for
+   DTD Compatibility will be ignored like any other foreign element.)
+
    @see{parse-compact}
    @see{make-validator}"
   (when *validate-grammar*
@@ -213,10 +240,7 @@
 	      (parse-schema (merge-pathnames "rng.rng" d)))
 	(setf *compatibility-grammar*
 	      (parse-schema (merge-pathnames "compatibility.rng" d))))))
-  (let ((*validate-grammar*
-	 (if (and *validate-grammar* dtd-compatibility)
-	     :both
-	     *validate-grammar*)))
+  (let ((*process-dtd-compatibility* process-dtd-compatibility))
     (klacks:with-open-source (source (make-schema-source input))
       (invoke-with-klacks-handler
        (lambda ()
@@ -247,7 +271,10 @@
 	     (check-start-restrictions new-start)
 	     (dolist (defn defns)
 	       (check-restrictions (defn-child defn)))
-	     (make-schema new-start defns))))
+	     (let ((schema (make-schema new-start defns)))
+	       (when *process-dtd-compatibility*
+		 (check-schema-compatibility schema defns))
+	       schema))))
        source))))
 
 
@@ -313,14 +340,17 @@
    @see-slot{pattern-name}
    @see-slot{pattern-child}")
 
-(defstruct (attribute (:include %named-pattern))
+(defstruct (attribute (:include %named-pattern)
+		      (:conc-name "PATTERN-")
+		      (:constructor make-attribute (default-value)))
   "@short{This pattern specifies that an attribute of a certain name class
    is required.}
 
    Its child pattern describes the type of the attribute's
    contents.
    @see-slot{pattern-name}
-   @see-slot{pattern-child}")
+   @see-slot{pattern-child}"
+  default-value)
 
 (defstruct (%combination (:include pattern) (:conc-name "PATTERN-"))
   a b)
@@ -539,6 +569,38 @@
   redefinition
   child)
 
+(defstruct (compatibility-table (:conc-name "DTD-"))
+  (elements (make-hash-table :test 'equal) :type hash-table))
+
+(defstruct (dtd-member (:conc-name "DTD-"))
+  (name (error "missing") :type name))
+
+(defstruct (dtd-element
+	     (:include dtd-member)
+	     (:conc-name "DTD-")
+	     (:constructor make-dtd-element (name)))
+  (attributes (make-hash-table :test 'equal) :type hash-table))
+
+(defstruct (dtd-attribute
+	     (:include dtd-member)
+	     (:conc-name "DTD-")
+	     (:constructor make-dtd-attribute (name default-value)))
+  (default-value (error "missing") :type string)
+  (declaring-elements nil :type list))
+
+(defun getname (name table)
+  (gethash (list (name-uri name) (name-lname name)) table))
+
+(defun (setf getname) (newval name table)
+  (setf (gethash (list (name-uri name) (name-lname name)) table) newval))
+
+(defun ensure-dtd-element (element compatibility-table)
+  (let ((elements (dtd-elements compatibility-table))
+	(element-name (pattern-name element)))
+    (or (getname element-name elements)
+	(setf (getname element-name elements)
+	      (make-dtd-element element-name)))))
+
 
 ;;; name-class
 
@@ -690,7 +752,7 @@
 	    (code-char 10)))
 
 (defun ntc (lname source-or-attrs)
-  ;; used for (n)ame, (t)ype, and (c)ombine, this also strings whitespace
+  ;; used for (n)ame, (t)ype, and (c)ombine, this also strips whitespace
   (let* ((attrs
 	  (if (listp source-or-attrs)
 	      source-or-attrs
@@ -794,7 +856,13 @@
 
 (defun p/attribute (source name)
   (klacks:expecting-element (source "attribute")
-    (let ((result (make-attribute)))
+    (let* ((dv
+	    (when *process-dtd-compatibility*
+	      (sax:find-attribute-ns
+	       "http://relaxng.org/ns/compatibility/annotations/1.0"
+	       "defaultValue"
+	       (klacks:list-attributes source))))
+	   (result (make-attribute (when dv (sax:attribute-value dv)))))
       (consume-and-skip-to-native source)
       (if name
 	  (setf (pattern-name result)
@@ -1940,3 +2008,112 @@
 
 (defmethod check-restrictions ((pattern not-allowed))
   nil)
+
+
+;;; compatibility restrictions
+
+(defvar *in-element* nil)
+(defvar *in-attribute* nil)
+(defvar *in-choices* nil)
+(defvar *in-default-value-p* nil)
+(defvar *compatibility-table*)
+(defvar *dtd-restriction-validator*)
+
+(defun check-schema-compatibility (schema defns)
+  (let* ((*error-class* 'dtd-compatibility-error)
+	 (elements (mapcar #'defn-child defns))
+	 (table (make-compatibility-table))
+	 (*dtd-restriction-validator* (nth-value 1 (make-validator schema))))
+    (setf (schema-compatibility-table schema) table)
+    (let ((*compatibility-table* table))
+      (mapc #'check-pattern-compatibility elements))
+    (loop for elt1 being each hash-value in (dtd-elements table) do
+	  (let ((nc1 (dtd-name elt1)))
+	    (dolist (elt2 elements)
+	      (let ((nc2 (pattern-name elt2)))
+		(when (classes-overlap-p nc1 nc2)
+		  (check-element-overlap-compatibility elt1 elt2))))))))
+
+(defun check-element-overlap-compatibility (elt1 elt2)
+  (unless
+      (if (typep (pattern-name elt2) 'name)
+	  ;; must both declare the same defaulted attributes
+	  (loop
+	     for a being each hash-value in (dtd-attributes elt1)
+	     always (find elt2 (dtd-declaring-elements a)))
+	  ;; elt1 has an attribute with defaultValue
+	  ;; elt2 cannot have any defaultValue  ##
+	  nil)
+    (rng-error nil "overlapping elements with and without defaultValue")))
+
+(defmethod check-pattern-compatibility ((pattern attribute))
+  (declare (optimize debug (speed 0) (space 0)))
+  (let* ((*in-attribute* pattern)
+	 (default-value (pattern-default-value pattern))
+	 (*in-default-value-p* t))
+    (when default-value
+      (unless (typep (pattern-name pattern) 'name)
+	(rng-error nil "defaultValue declared in attribute without <name>"))
+      (unless (typep (pattern-name *in-element*) 'name)
+	(rng-error nil "defaultValue declared in element without <name>"))
+      (let* ((hsx *dtd-restriction-validator*)
+	     (derivation
+	      (intern-pattern (pattern-child pattern) (registratur hsx))))
+	(unless (value-matches-p hsx derivation default-value)
+	  (rng-error nil "defaultValue not valid")))
+      (unless *in-choices*
+	(rng-error nil "defaultValue declared outside of <choice>"))
+      (dolist (choice *in-choices*
+	       (rng-error nil "defaultValue in <choice>, but no <empty> found"))
+	(when (or (typep (pattern-a choice) 'empty)
+		  (typep (pattern-b choice) 'empty))
+	  (return)))
+      (let* ((dtd-element
+	      (ensure-dtd-element *in-element* *compatibility-table*))
+	     (attributes (dtd-attributes dtd-element))
+	     (name (pattern-name pattern))
+	     (a (getname name attributes)))
+	(cond
+	  ((null a)
+	   (setf a (make-dtd-attribute name default-value))
+	   (setf (getname name attributes) a))
+	  ((not (equal (dtd-default-value a) default-value))
+	   (rng-error nil "competing defaultValue definitions")))
+	(push *in-element* (dtd-declaring-elements a))))
+    (check-pattern-compatibility (pattern-child pattern))))
+
+(defmethod check-pattern-compatibility ((pattern ref))
+  nil)
+
+(defmethod check-pattern-compatibility ((pattern one-or-more))
+  (check-pattern-compatibility (pattern-child pattern)))
+
+(defmethod check-pattern-compatibility ((pattern %combination))
+  (check-pattern-compatibility (pattern-a pattern))
+  (check-pattern-compatibility (pattern-b pattern)))
+
+(defmethod check-pattern-compatibility ((pattern choice))
+  (let ((*in-choices* (cons pattern *in-choices*)))
+    (check-pattern-compatibility (pattern-a pattern))
+    (check-pattern-compatibility (pattern-b pattern))))
+
+(defmethod check-pattern-compatibility ((pattern list-pattern))
+  (check-pattern-compatibility (pattern-child pattern)))
+
+(defmethod check-pattern-compatibility ((pattern %leaf))
+  nil)
+
+(defmethod check-pattern-compatibility ((pattern data))
+  (when (and *in-default-value-p*
+	     (cxml-types:type-context-dependent-p (pattern-type pattern)))
+    (rng-error nil "defaultValue declared with context dependent type")))
+
+(defmethod check-pattern-compatibility ((pattern value))
+  (when (and *in-default-value-p*
+	     (cxml-types:type-context-dependent-p (pattern-type pattern)))
+    (rng-error nil "defaultValue declared with context dependent type")))
+
+(defmethod check-pattern-compatibility ((pattern element))
+  (assert (null *in-element*))
+  (let ((*in-element* pattern))
+    (check-pattern-compatibility (pattern-child pattern))))

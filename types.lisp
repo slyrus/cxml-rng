@@ -472,9 +472,10 @@
 (defmethod type-name ((type idref-type)) "IDREF")
 (defmethod type-name ((type idrefs-type)) "IDREFS")
 
-(defvar *id-type* (make-instance 'id-type))
-(defvar *idref-type* (make-instance 'idref-type))
-(defvar *idrefs-type* (make-instance 'idrefs-type))
+;; default values set below
+(declaim (special *id-type*))
+(declaim (special *idref-type*))
+(declaim (special *idrefs-type*))
 
 (defmethod find-type
     ((library (eql :|http://relaxng.org/ns/compatibility/datatypes/1.0|||))
@@ -2277,3 +2278,10 @@
 
 (defmethod initialize-instance :after ((type positive-integer-type) &key)
   (setf (min-inclusive type) (max* 1 (min-inclusive type))))
+
+
+;;;; backpatch ID types
+
+(defvar *id-type* (make-instance 'id-type))
+(defvar *idref-type* (make-instance 'idref-type))
+(defvar *idrefs-type* (make-instance 'idrefs-type))
