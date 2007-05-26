@@ -14,6 +14,7 @@
 	   #:serialize-schema
 	   #:make-validator
 	   #:make-validating-source
+	   #:make-dtd-compatibility-handler
 
 	   #:pattern
 	   #:element

@@ -53,8 +53,13 @@
 
    Events will be passed on unchanged to @code{handler}.
 
+   This validator does @em{not} perform DTD compatibility processing.
+   (Specify a DTD compatibility handler as the second argument to this
+   function instead.)
+
    @see{parse-schema}
-   @see{make-validating-source}"
+   @see{make-validating-source}
+   @see{make-dtd-compatibility-handler}"
   (let* ((table (ensure-registratur schema))
 	 (start (schema-interned-start schema))
 	 (validator
@@ -66,6 +71,37 @@
     (when handler
       (setf wrapper (cxml:make-broadcast-handler wrapper handler)))
     (values wrapper validator)))
+
+(defun make-dtd-compatibility-handler (schema handler)
+  "@arg[schema]{the parsed Relax NG @class{schema} object}
+   @arg[handler]{an additional SAX handler to broadcast events to}
+   @return{a SAX handler}
+   @short{This function creates a handler for DTD Compatibility processing}
+   according to @code{schema}.
+
+   The validation handler processes SAX events and can be used with any
+   function generating such events, in particular with cxml:parse-file.
+
+   Compatibility processing consists of two steps: Infoset modification
+   for default values, and soundness checking for attributes with an
+   ID-type.
+
+   In @code{sax:start-element}, infoset modification will be performed as
+   specified for DTD compatibility.  This entails addition of attributes
+   according to their defaultValue, and addition (and, when the element ends,
+   removal) of suitable namespace declarations if no prefix has been declared
+   for the defaulted attribute yet.
+
+   Also in @code{sax:start-element}, the handler checks that no ID is declared
+   more than once.  Before the end of the document, the handler checks that
+   all IDs referred to by attributes with ID-types IDREF or IDREFS have been
+   declared.
+
+   @see{parse-schema}
+   @see{make-validator}"
+  (make-instance 'dtd-compatibility-handler
+		 :compatibility-table (schema-compatibility-table schema)
+		 :handlers (list handler)))
 
 
 ;;;; CONTAINS
@@ -869,6 +905,103 @@
     (describe-name (name-class-choice-a nc) s)
     (format s "~:@_or ")
     (describe-name (name-class-choice-b nc) s)))
+
+
+;;;; DTD-COMPATIBILITY-HANDLER
+
+(defclass dtd-compatibility-handler
+    (cxml:broadcast-handler cxml-types:sax-validation-context-mixin)
+    ((compatibility-table :initarg :compatibility-table
+			  :accessor compatibility-table)
+     (extra-namespaces :initform nil :accessor extra-namespaces)
+     (seen-ids :initform (make-hash-table :test 'equal) :accessor seen-ids)
+     (seen-idrefs :initform nil :accessor seen-idrefs)))
+
+(defmethod sax:start-element
+    ((hsx dtd-compatibility-handler) uri lname qname attributes)
+  (declare (ignore qname))
+  (push nil (extra-namespaces hsx))
+  (let ((dtd-element
+	 (gethash (list (or uri "") lname)
+		  (dtd-elements
+		   (compatibility-table hsx))))
+	(*error-class* 'dtd-compatibility-error))
+    (when dtd-element
+      (loop for a being each hash-value in (dtd-attributes dtd-element) do
+	   (setf attributes (process-dtd-attribute hsx a attributes)))))
+  (call-next-method hsx uri lname qname attributes))
+
+(defmethod sax:end-element :before
+    ((hsx dtd-compatibility-handler) uri lname qname)
+  (declare (ignore uri lname qname))
+  (dolist (c (pop (extra-namespaces hsx)))
+    (dolist (next (cxml:broadcast-handler-handlers hsx))
+      (sax:end-prefix-mapping next (car c)))))
+
+(defmethod sax:end-document :before ((hsx dtd-compatibility-handler))
+  (let ((*error-class* 'dtd-compatibility-error))
+    (dolist (id (seen-idrefs hsx))
+      (unless (gethash id (seen-ids hsx))
+	(rng-error nil "referenced ID ~A not defined" id)))))
+
+(defun process-dtd-attribute (hsx a attributes)
+  (let* ((uri (name-uri (dtd-name a)))
+	 (lname (name-lname (dtd-name a)))
+	 (b (find-if (lambda (b)
+		       (and (equal (or (sax:attribute-namespace-uri b) "") uri)
+			    (equal (sax:attribute-local-name b) lname)))
+		     attributes)))
+    (cond
+      (b
+       (let ((ids (cl-ppcre:split #.(format nil "[~A]+" *whitespace*)
+				  (sax:attribute-value b))))
+	 (when ids
+	   (case (dtd-id-type a)
+	     ((nil))
+	     (:id
+	      (when (cdr ids)
+		(rng-error hsx "more than one token in ID: ~A" ids))
+	      (let ((id (car ids)))
+		(when (gethash id (seen-ids hsx))
+		  (rng-error hsx "multiple declarations for ID: ~A" id))
+		(setf (gethash id (seen-ids hsx)) t)))
+	     ((:idref :idrefs)
+	      (setf (seen-idrefs hsx) (append ids (seen-idrefs hsx))))))))
+      (t
+       (when (dtd-default-value a)
+	 (let ((prefix
+		(flet ((uri-to-prefix (stack)
+			 (car (find uri stack :key #'cdr :test #'equal))))
+		  (or (uri-to-prefix (cxml-types::context-stack hsx))
+		      (some #'uri-to-prefix (extra-namespaces hsx))))))
+	   (unless prefix
+	     (setf prefix
+		   (loop
+		      for i from 0
+		      for name = (format nil "ns-~D" i)
+		      while (find name
+				  (cxml-types::context-stack hsx)
+				  :key #'car
+				  :test #'equal)
+		      finally (return name)))
+	     (when sax:*include-xmlns-attributes*
+	       (push (sax:make-attribute
+		      :namespace-uri "http://www.w3.org/2000/xmlns/"
+		      :local-name prefix
+		      :qname (format nil "xmlns:~A" prefix)
+		      :value uri
+		      :specified-p nil)
+		     attributes))
+	     (push (cons prefix uri) (car (extra-namespaces hsx)))
+	     (dolist (next (cxml:broadcast-handler-handlers hsx))
+	       (sax:start-prefix-mapping next prefix uri)))
+	   (push (sax:make-attribute :namespace-uri uri
+				     :local-name lname
+				     :qname (format nil "~A:~A" prefix lname)
+				     :value (dtd-default-value a)
+				     :specified-p nil)
+		 attributes))))))
+  attributes)
 
 
 ;;;;

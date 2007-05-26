@@ -7,15 +7,15 @@
 007:  PASS: DTD-COMPATIBILITY-ERROR
 008:  PASS: DTD-COMPATIBILITY-ERROR
 009:  PASS
-009-1.i: FAIL: didn't detect invalid document
+009-1.i: PASS: DTD-COMPATIBILITY-ERROR
 009-2.v: PASS
 009-3.v: PASS
-009-4.i: FAIL: didn't detect invalid document
+009-4.i: PASS: DTD-COMPATIBILITY-ERROR
 010:  PASS
-010-1.i: FAIL: didn't detect invalid document
+010-1.i: PASS: DTD-COMPATIBILITY-ERROR
 010-2.v: PASS
 010-3.v: PASS
-010-4.i: FAIL: didn't detect invalid document
+010-4.i: PASS: DTD-COMPATIBILITY-ERROR
 011:  PASS: DTD-COMPATIBILITY-ERROR
 012:  PASS: DTD-COMPATIBILITY-ERROR
 013:  PASS: DTD-COMPATIBILITY-ERROR
@@ -53,11 +53,11 @@
 045:  PASS
 046:  PASS
 047:  PASS: DTD-COMPATIBILITY-ERROR
-048:  FAIL: incorrect condition type: restrictions on string sequences violated
+048:  FAIL: incorrect condition type (B): restrictions on string sequences violated
 049:  PASS: DTD-COMPATIBILITY-ERROR
 050:  PASS: DTD-COMPATIBILITY-ERROR
 051:  PASS: DTD-COMPATIBILITY-ERROR
 052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 50/62 tests.
+Passed 54/62 tests.

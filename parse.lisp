@@ -192,8 +192,7 @@
 		  (cxml:make-broadcast-handler
 		   handler
 		   (multiple-value-bind (h v)
-		       (make-validator *compatibility-grammar*
-				       :validation-error-class)
+		       (make-validator *compatibility-grammar*)
 		     (setf (validation-error-class v) 'dtd-compatibility-error)
 		     h))))
 	  (klacks:make-tapping-source upstream handler))

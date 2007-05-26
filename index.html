@@ -21,8 +21,8 @@
     of <a href="http://relaxng.org/spec-20011203.html">Relax
       NG</a> schema validation
     written in Common
-    Lisp, including support for compact syntax and the XSD type
-    library.
+    Lisp, including support for compact syntax, DTD Compatibility, and
+    the XSD type library.
   </p>
   <p>
     cxml-rng was written
@@ -107,6 +107,16 @@
         #p"example.xml"
         (cxml-rng:parse-schema #p"example.rng"))</span>)
   (loop for key = (klacks:peek-next s) while key do (print key)))</pre>
+  <p>
+    DTD Compatibility processing (basically, checking of IDs and
+    addition of default values) is done using a
+    <a href="doc/pages/cxml-rng__make-dtd-compatibility-handler.html">DTD Compatibility handler</a>.
+    You can use this handler together with a validator or by its own.
+  </p>
+  <pre class="code" style="color: #777777">(cxml:parse-file "example.xml"
+                 <span style="color: black">(cxml-rng:make-dtd-compatibility-handler</span>
+                  (cxml-rng:parse-schema #p"example.rng")
+                  <span style="color: black">(cxml-dom:make-dom-builder))</span>)</pre>
 
   <h3>Documentation</h3>
   <p>

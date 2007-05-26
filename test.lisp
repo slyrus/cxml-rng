@@ -88,7 +88,9 @@
     (dolist (x tests)
       (format t "~A-~D: " name (pathname-name x))
       (flet ((doit ()
-	       (cxml:parse-file x (make-validator grammar))))
+	       (cxml:parse-file x (make-dtd-compatibility-handler
+				   grammar
+				   (make-validator grammar)))))
 	(if (find #\v (pathname-name x))
 	    (handler-case
 		(progn
@@ -107,16 +109,16 @@
 		   (incf pass)
 		   (format t "PASS: ~A~%" (type-of c)))
 		  (t
-		   (format t "FAIL: incorrect condition type: ~A~%" c))))
+		   (format t "FAIL: incorrect condition type (a): ~A~%" c))))
 	      (rng-error (c)
 		(cond
 		  (*compatibility-test-p*
-		   (format t "FAIL: incorrect condition type: ~A~%" c))
+		   (format t "FAIL: incorrect condition type (b): ~A~%" c))
 		  (t
 		   (incf pass)
 		   (format t "PASS: ~A~%" (type-of c)))))
 	      (error (c)
-		(format t "FAIL: incorrect condition type: ~A~%" c))))))
+		(format t "FAIL: incorrect condition type (c): ~A~%" c))))))
     pass))
 
 (defun run-test (n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
@@ -155,18 +157,18 @@
 	       (format t " PASS: ~A~%" (type-of c))
 	       t)
 	      (t
-	       (format t " FAIL: incorrect condition type: ~A~%" c)
+	       (format t " FAIL: incorrect condition type (A): ~A~%" c)
 	       nil)))
 	  (rng-error (c)
 	    (cond
 	      (*compatibility-test-p*
-	       (format t " FAIL: incorrect condition type: ~A~%" c)
+	       (format t " FAIL: incorrect condition type (B): ~A~%" c)
 	       nil)
 	      (t
 	       (format t " PASS: ~A~%" (type-of c))
 	       t)))
 	  (error (c)
-	    (format t " FAIL: incorrect condition type: ~A~%" c)
+	    (format t " FAIL: incorrect condition type (C): ~A~%" c)
 	    nil)))))
 
 (defvar *test-xmllint*)
