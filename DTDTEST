@@ -29,8 +29,8 @@
 021:  FAIL: restrictions on string sequences violated
 022:  PASS
 023:  PASS
-024:  FAIL: didn't detect invalid schema
-025:  FAIL: didn't detect invalid schema
+024:  PASS: DTD-COMPATIBILITY-ERROR
+025:  PASS: DTD-COMPATIBILITY-ERROR
 026:  PASS
 027:  PASS
 028:  PASS
@@ -60,4 +60,4 @@
 052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 47/62 tests.
+Passed 49/62 tests.

@@ -587,7 +587,8 @@
 	     (:constructor make-dtd-attribute (name)))
   (default-value nil :type (or null string))
   (id-type :unknown :type (member :unknown nil :id :idref :idrefs))
-  (declaring-elements nil :type list))
+  (value-declared-by nil :type list)
+  (id-type-declared-by nil :type list))
 
 (defun getname (name table)
   (gethash (list (name-uri name) (name-lname name)) table))
@@ -2062,13 +2063,26 @@
 	  (loop
 	     for a being each hash-value in (dtd-attributes elt1)
 	     always (or (null (dtd-default-value a))
-			(find elt2 (dtd-declaring-elements a))))
+			(find elt2 (dtd-value-declared-by a))))
 	  ;; elt1 has an attribute with defaultValue
 	  ;; elt2 cannot have any defaultValue  ##
 	  (loop
 	     for a being each hash-value in (dtd-attributes elt1)
 	     never (dtd-default-value a)))
-    (rng-error nil "overlapping elements with and without defaultValue")))
+    (rng-error nil "overlapping elements with and without defaultValue"))
+  (unless
+      (if (typep (pattern-name elt2) 'name)
+	  ;; must both declare the same attributes with ID-type
+	  (loop
+	     for a being each hash-value in (dtd-attributes elt1)
+	     always (or (eq (dtd-id-type a) :unknown)
+			(find elt2 (dtd-id-type-declared-by a))))
+	  ;; elt1 has an attribute with ID-type
+	  ;; elt2 cannot have any ID-type  ##
+	  (loop
+	     for a being each hash-value in (dtd-attributes elt1)
+	     always (eq (dtd-id-type a) :unknown)))
+    (rng-error nil "overlapping elements with and without ID-type")))
 
 (defun check-attribute-compatibility/default (pattern default-value)
   (unless (typep (pattern-name pattern) 'name)
@@ -2095,7 +2109,7 @@
        (setf (dtd-default-value a) default-value))
       ((not (equal (dtd-default-value a) default-value))
        (rng-error nil "inconsistent defaultValue declarations")))
-    (push *in-element* (dtd-declaring-elements a))))
+    (push *in-element* (dtd-value-declared-by a))))
 
 (defun check-attribute-compatibility/id (pattern default-value)
   (let* ((dt (pattern-type (pattern-child pattern)))
@@ -2107,9 +2121,7 @@
       (unless (typep (pattern-name pattern) 'name)
 	(rng-error nil "defaultValue declared in attribute without <name>"))
       (unless (typep (pattern-name *in-element*) 'name)
-	(rng-error nil "defaultValue declared in element without <name>")))
-    (when (and (typep (pattern-name *in-element*) 'name)
-	       (typep (pattern-name pattern) 'name))
+	(rng-error nil "defaultValue declared in element without <name>"))
       (let ((a (ensure-dtd-attribute (pattern-name pattern)
 				     *in-element*
 				     *compatibility-table*))) 
@@ -2117,7 +2129,8 @@
 	  ((eq (dtd-id-type a) :unknown)
 	   (setf (dtd-id-type a) id-type))
 	  ((not (eq id-type (dtd-id-type a)))
-	   (rng-error nil "inconsistent ID type attributes")))))))
+	   (rng-error nil "inconsistent ID type attributes")))
+	(push *in-element* (dtd-id-type-declared-by a))))))
 
 (defmethod check-pattern-compatibility ((pattern attribute))
   (declare (optimize debug (speed 0) (space 0)))
