@@ -584,8 +584,9 @@
 (defstruct (dtd-attribute
 	     (:include dtd-member)
 	     (:conc-name "DTD-")
-	     (:constructor make-dtd-attribute (name default-value)))
-  (default-value (error "missing") :type string)
+	     (:constructor make-dtd-attribute (name)))
+  (default-value nil :type (or null string))
+  (id-type :unknown :type (member :unknown nil :id :idref :idrefs))
   (declaring-elements nil :type list))
 
 (defun getname (name table)
@@ -600,6 +601,18 @@
     (or (getname element-name elements)
 	(setf (getname element-name elements)
 	      (make-dtd-element element-name)))))
+
+(defun ensure-dtd-attribute (attribute-name element table)
+  (let* ((dtd-element (ensure-dtd-element element table))
+	 (attributes (dtd-attributes dtd-element))
+	 (a (getname attribute-name attributes)))
+    (cond
+      (a
+       (values a t))
+      (t
+       (setf a (make-dtd-attribute attribute-name))
+       (setf (getname attribute-name attributes) a)
+       (values a nil)))))
 
 
 ;;; name-class
@@ -2032,7 +2045,15 @@
 	    (dolist (elt2 elements)
 	      (let ((nc2 (pattern-name elt2)))
 		(when (classes-overlap-p nc1 nc2)
-		  (check-element-overlap-compatibility elt1 elt2))))))))
+		  (check-element-overlap-compatibility elt1 elt2)))))
+	 ;; clean out ID type bookkeeping:
+	 (let ((attributes (dtd-attributes elt1)))
+	   (maphash (lambda (k v)
+		      (when (eq (dtd-id-type v) :unknown)
+			(if (dtd-default-value v)
+			    (setf (dtd-id-type v) nil)
+			    (remhash k attributes))))
+		    attributes)))))
 
 (defun check-element-overlap-compatibility (elt1 elt2)
   (unless
@@ -2040,11 +2061,61 @@
 	  ;; must both declare the same defaulted attributes
 	  (loop
 	     for a being each hash-value in (dtd-attributes elt1)
-	     always (find elt2 (dtd-declaring-elements a)))
+	     always (or (null (dtd-default-value a))
+			(find elt2 (dtd-declaring-elements a))))
 	  ;; elt1 has an attribute with defaultValue
 	  ;; elt2 cannot have any defaultValue  ##
-	  nil)
+	  (loop
+	     for a being each hash-value in (dtd-attributes elt1)
+	     never (dtd-default-value a)))
     (rng-error nil "overlapping elements with and without defaultValue")))
+
+(defun check-attribute-compatibility/default (pattern default-value)
+  (unless (typep (pattern-name pattern) 'name)
+    (rng-error nil "defaultValue declared in attribute without <name>"))
+  (unless (typep (pattern-name *in-element*) 'name)
+    (rng-error nil "defaultValue declared in element without <name>"))
+  (let* ((hsx *dtd-restriction-validator*)
+	 (derivation
+	  (intern-pattern (pattern-child pattern) (registratur hsx))))
+    (unless (value-matches-p hsx derivation default-value)
+      (rng-error nil "defaultValue not valid")))
+  (unless *in-choices*
+    (rng-error nil "defaultValue declared outside of <choice>"))
+  (dolist (choice *in-choices*
+	   (rng-error nil "defaultValue in <choice>, but no <empty> found"))
+    (when (or (typep (pattern-a choice) 'empty)
+	      (typep (pattern-b choice) 'empty))
+      (return)))
+  (let ((a (ensure-dtd-attribute (pattern-name pattern)
+				 *in-element*
+				 *compatibility-table*))) 
+    (cond
+      ((null (dtd-default-value a))
+       (setf (dtd-default-value a) default-value))
+      ((not (equal (dtd-default-value a) default-value))
+       (rng-error nil "inconsistent defaultValue declarations")))
+    (push *in-element* (dtd-declaring-elements a))))
+
+(defun check-attribute-compatibility/id (pattern default-value)
+  (let* ((dt (pattern-type (pattern-child pattern)))
+	 (id-type (cxml-types:type-id-type dt)))
+    (when (and default-value (cxml-types:type-context-dependent-p dt))
+      (rng-error nil
+		 "defaultValue declared with context dependent type"))
+    (when id-type
+      (unless (typep (pattern-name pattern) 'name)
+	(rng-error nil "defaultValue declared in attribute without <name>"))
+      (unless (typep (pattern-name *in-element*) 'name)
+	(rng-error nil "defaultValue declared in element without <name>"))
+      (let ((a (ensure-dtd-attribute (pattern-name pattern)
+				     *in-element*
+				     *compatibility-table*))) 
+	(cond
+	  ((eq (dtd-id-type a) :unknown)
+	   (setf (dtd-id-type a) id-type))
+	  ((not (eq id-type (dtd-id-type a)))
+	   (rng-error nil "inconsistent ID type attributes")))))))
 
 (defmethod check-pattern-compatibility ((pattern attribute))
   (declare (optimize debug (speed 0) (space 0)))
@@ -2052,35 +2123,10 @@
 	 (default-value (pattern-default-value pattern))
 	 (*in-default-value-p* t))
     (when default-value
-      (unless (typep (pattern-name pattern) 'name)
-	(rng-error nil "defaultValue declared in attribute without <name>"))
-      (unless (typep (pattern-name *in-element*) 'name)
-	(rng-error nil "defaultValue declared in element without <name>"))
-      (let* ((hsx *dtd-restriction-validator*)
-	     (derivation
-	      (intern-pattern (pattern-child pattern) (registratur hsx))))
-	(unless (value-matches-p hsx derivation default-value)
-	  (rng-error nil "defaultValue not valid")))
-      (unless *in-choices*
-	(rng-error nil "defaultValue declared outside of <choice>"))
-      (dolist (choice *in-choices*
-	       (rng-error nil "defaultValue in <choice>, but no <empty> found"))
-	(when (or (typep (pattern-a choice) 'empty)
-		  (typep (pattern-b choice) 'empty))
-	  (return)))
-      (let* ((dtd-element
-	      (ensure-dtd-element *in-element* *compatibility-table*))
-	     (attributes (dtd-attributes dtd-element))
-	     (name (pattern-name pattern))
-	     (a (getname name attributes)))
-	(cond
-	  ((null a)
-	   (setf a (make-dtd-attribute name default-value))
-	   (setf (getname name attributes) a))
-	  ((not (equal (dtd-default-value a) default-value))
-	   (rng-error nil "competing defaultValue definitions")))
-	(push *in-element* (dtd-declaring-elements a))))
-    (check-pattern-compatibility (pattern-child pattern))))
+      (check-attribute-compatibility/default pattern default-value))
+    (if (typep (pattern-child pattern) '(or data value))
+	(check-attribute-compatibility/id pattern default-value)
+	(check-pattern-compatibility (pattern-child pattern)))))
 
 (defmethod check-pattern-compatibility ((pattern ref))
   nil)
@@ -2106,12 +2152,16 @@
 (defmethod check-pattern-compatibility ((pattern data))
   (when (and *in-default-value-p*
 	     (cxml-types:type-context-dependent-p (pattern-type pattern)))
-    (rng-error nil "defaultValue declared with context dependent type")))
+    (rng-error nil "defaultValue declared with context dependent type"))
+  (when (cxml-types:type-id-type (pattern-type pattern))
+    (rng-error nil "ID type not a child of attribute")))
 
 (defmethod check-pattern-compatibility ((pattern value))
   (when (and *in-default-value-p*
 	     (cxml-types:type-context-dependent-p (pattern-type pattern)))
-    (rng-error nil "defaultValue declared with context dependent type")))
+    (rng-error nil "defaultValue declared with context dependent type"))
+  (when (cxml-types:type-id-type (pattern-type pattern))
+    (rng-error nil "ID type not a child of attribute")))
 
 (defmethod check-pattern-compatibility ((pattern element))
   (assert (null *in-element*))

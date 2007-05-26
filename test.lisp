@@ -61,6 +61,11 @@
   (let ((*compatibility-test-p* t))
     (run-tests p q)))
 
+(defun run-dtd-test
+    (n &optional (p "/home/david/src/lisp/cxml-rng/dtd-split/*"))
+  (let ((*break-on-signals* 'error))
+    (run-test n p)))
+
 (defun run-validation-test
     (m n &optional (p "/home/david/src/lisp/cxml-rng/spec-split/"))
   (let ((d (merge-pathnames (format nil "~3,'0D/" m) p))

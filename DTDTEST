@@ -16,15 +16,15 @@
 010-2.v: PASS
 010-3.v: PASS
 010-4.i: FAIL: didn't detect invalid document
-011:  FAIL: didn't detect invalid schema
-012:  FAIL: didn't detect invalid schema
-013:  FAIL: didn't detect invalid schema
-014:  FAIL: didn't detect invalid schema
-015:  FAIL: didn't detect invalid schema
-016:  FAIL: didn't detect invalid schema
-017:  FAIL: didn't detect invalid schema
-018:  FAIL: didn't detect invalid schema
-019:  FAIL: didn't detect invalid schema
+011:  PASS: DTD-COMPATIBILITY-ERROR
+012:  PASS: DTD-COMPATIBILITY-ERROR
+013:  PASS: DTD-COMPATIBILITY-ERROR
+014:  PASS: DTD-COMPATIBILITY-ERROR
+015:  PASS: DTD-COMPATIBILITY-ERROR
+016:  PASS: DTD-COMPATIBILITY-ERROR
+017:  PASS: DTD-COMPATIBILITY-ERROR
+018:  PASS: DTD-COMPATIBILITY-ERROR
+019:  PASS: DTD-COMPATIBILITY-ERROR
 020:  FAIL: didn't detect invalid schema
 021:  FAIL: restrictions on string sequences violated
 022:  PASS
@@ -60,4 +60,4 @@
 052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 37/62 tests.
+Passed 46/62 tests.

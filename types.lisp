@@ -1879,10 +1879,11 @@
 
     C.f. the @a[http://www.w3.org/TR/xmlschema-2/#ID]{specification}.
 
-    @b{Restrictions.} None, except that this type has the ID-type 'ID'
-    for the purposes of DTD compatibility.
-    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
-    Schema Datatypes with RELAX NG}.
+    @b{Restrictions.} None.
+
+    @b{ID type.} This type has the ID-type 'ID'for the purposes of DTD
+    compatibility. See @a[http://relaxng.org/xsd-20010907.html]{Guidelines
+    for using W3C XML Schema Datatypes with RELAX NG}.
 
     @b{Parameters and implementation.} Unchanged from the supertype.
 
@@ -1901,10 +1902,11 @@
 
     C.f. the @a[http://www.w3.org/TR/xmlschema-2/#IDREF]{specification}.
 
-    @b{Restrictions.} None, except that this type has the ID-type 'IDREF'
-    for the purposes of DTD compatibility.
-    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
-    Schema Datatypes with RELAX NG}.
+    @b{Restrictions.} None.
+
+    @b{ID type.} This type has the ID-type 'IDREF'for the purposes of DTD
+    compatibility. See @a[http://relaxng.org/xsd-20010907.html]{Guidelines
+    for using W3C XML Schema Datatypes with RELAX NG}.
 
     @b{Parameters and implementation.} Unchanged from the supertype.
 
@@ -1929,9 +1931,9 @@
     @b{Implementation.} This type returns a list of the values as returned by
     @class{xsd-idref-type}.
 
-    This type has the ID-type 'IDREFS' for the purposes of DTD compatibility.
-    See @a[http://relaxng.org/xsd-20010907.html]{Guidelines for using W3C XML
-    Schema Datatypes with RELAX NG}.
+    @b{ID type.} This type has the ID-type 'IDREFS'for the purposes of DTD
+    compatibility. See @a[http://relaxng.org/xsd-20010907.html]{Guidelines
+    for using W3C XML Schema Datatypes with RELAX NG}.
 
     @b{Parameters.} This type allows restrictions on the number of values
     through the parameters @slot{exact-length}, @slot{min-length}, and
