@@ -23,10 +23,16 @@
 
   <h3>Download and Installation</h3>
 
+<!--
   <p>
     Download cxml-rng
     <a href="http://www.lichteblau.com/cxml-rng/download/">tarballs</a>
     or get it from git: <tt>http://www.lichteblau.com/git/cxml-rng.git</tt>
+  </p>
+-->
+  <p>
+    Download a cxml-rng
+    <a href="http://www.lichteblau.com/cxml-rng/download/">tarball</a>.
   </p>
   <p>
     cxml-rng needs

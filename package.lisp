@@ -60,6 +60,7 @@
     Relax NG} schema validation for Closure XML.
 
     Support for @a[http://relaxng.org/compact-20021121.html]{Compact Syntax}
+    and @a[http://relaxng.org/compatibility-20011203.html]{DTD Compatibility}
     is included.
 
     @begin[Example]{section}
@@ -77,6 +78,7 @@
     @aboutfun{parse-schema}
     @aboutfun{parse-compact}
     @aboutfun{make-validator}
+    @aboutfun{make-dtd-compatibility-handler}
     @aboutfun{serialize-grammar}
     @end{section}
     @begin[Grammar introspection]{section}
