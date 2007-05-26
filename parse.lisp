@@ -2107,7 +2107,9 @@
       (unless (typep (pattern-name pattern) 'name)
 	(rng-error nil "defaultValue declared in attribute without <name>"))
       (unless (typep (pattern-name *in-element*) 'name)
-	(rng-error nil "defaultValue declared in element without <name>"))
+	(rng-error nil "defaultValue declared in element without <name>")))
+    (when (and (typep (pattern-name *in-element*) 'name)
+	       (typep (pattern-name pattern) 'name))
       (let ((a (ensure-dtd-attribute (pattern-name pattern)
 				     *in-element*
 				     *compatibility-table*))) 

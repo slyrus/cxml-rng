@@ -25,7 +25,7 @@
 017:  PASS: DTD-COMPATIBILITY-ERROR
 018:  PASS: DTD-COMPATIBILITY-ERROR
 019:  PASS: DTD-COMPATIBILITY-ERROR
-020:  FAIL: didn't detect invalid schema
+020:  PASS: DTD-COMPATIBILITY-ERROR
 021:  FAIL: restrictions on string sequences violated
 022:  PASS
 023:  PASS
@@ -60,4 +60,4 @@
 052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 46/62 tests.
+Passed 47/62 tests.
