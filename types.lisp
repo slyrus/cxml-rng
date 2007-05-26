@@ -1718,6 +1718,9 @@
        (cxml::name-start-rune-p (elt str 0))
        (every #'cxml::name-rune-p str)))
 
+(defmethod type-context-dependent-p ((type qname-like))
+  t)
+
 (defmethod parse/xsd ((type qname-like) e context)
   (handler-case
       (if (namep e)
@@ -1961,6 +1964,9 @@
     the @code{context} argument to @fun{parse} and @fun{validp}.
 
     @b{Parameters and implementation.} Unchanged from the supertype."))
+
+(defmethod type-context-dependent-p ((type entity-type))
+  t)
 
 (defmethod parse/xsd ((type entity-type) e context)
   (if (context-find-unparsed-entity context e)

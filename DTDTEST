@@ -41,7 +41,7 @@
 033:  PASS: DTD-COMPATIBILITY-ERROR
 034:  FAIL: defaultValue not valid
 035:  FAIL: didn't detect invalid schema
-036:  FAIL: didn't detect invalid schema
+036:  PASS: DTD-COMPATIBILITY-ERROR
 037:  PASS: DTD-COMPATIBILITY-ERROR
 038:  FAIL: didn't detect invalid schema
 039:  FAIL: didn't detect invalid schema
@@ -60,4 +60,4 @@
 052:  PASS: DTD-COMPATIBILITY-ERROR
 053:  PASS
 054:  PASS
-Passed 49/62 tests.
+Passed 50/62 tests.
