@@ -1124,7 +1124,7 @@
     (multiple-value-bind (key uri lname) (klacks:peek source)
       uri
       (ecase key
-	(:characters
+	((:characters :comment)
 	 (klacks:consume source))
 	(:start-element
 	 (with-library-and-ns (klacks:list-attributes source)
