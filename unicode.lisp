@@ -69,91 +69,91 @@
       (setf aa (ranges-range aa l))))
   aa)
 
-(defblock |p{isBasicLatin}| 0 127) 
-(defblock |p{isLatin-1Supplement}| 128 255) 
-(defblock |p{isLatinExtended-A}| 256 383) 
-(defblock |p{isLatinExtended-B}| 384 591) 
-(defblock |p{isIPAExtensions}| 592 687) 
-(defblock |p{isSpacingModifierLetters}| 688 767) 
-(defblock |p{isCombiningDiacriticalMarks}| 768 879) 
-(defblock |p{isGreek}| 880 1023) 
-(defblock |p{isCyrillic}| 1024 1279) 
-(defblock |p{isArmenian}| 1328 1423) 
-(defblock |p{isHebrew}| 1424 1535) 
-(defblock |p{isArabic}| 1536 1791) 
-(defblock |p{isSyriac}| 1792 1871) 
-(defblock |p{isThaana}| 1920 1983) 
-(defblock |p{isDevanagari}| 2304 2431) 
-(defblock |p{isBengali}| 2432 2559) 
-(defblock |p{isGurmukhi}| 2560 2687) 
-(defblock |p{isGujarati}| 2688 2815) 
-(defblock |p{isOriya}| 2816 2943) 
-(defblock |p{isTamil}| 2944 3071) 
-(defblock |p{isTelugu}| 3072 3199) 
-(defblock |p{isKannada}| 3200 3327) 
-(defblock |p{isMalayalam}| 3328 3455) 
-(defblock |p{isSinhala}| 3456 3583) 
-(defblock |p{isThai}| 3584 3711) 
-(defblock |p{isLao}| 3712 3839) 
-(defblock |p{isTibetan}| 3840 4095) 
-(defblock |p{isMyanmar}| 4096 4255) 
-(defblock |p{isGeorgian}| 4256 4351) 
-(defblock |p{isHangulJamo}| 4352 4607) 
-(defblock |p{isEthiopic}| 4608 4991) 
-(defblock |p{isCherokee}| 5024 5119) 
-(defblock |p{isUnifiedCanadianAboriginalSyllabics}| 5120 5759) 
-(defblock |p{isOgham}| 5760 5791) 
-(defblock |p{isRunic}| 5792 5887) 
-(defblock |p{isKhmer}| 6016 6143) 
-(defblock |p{isMongolian}| 6144 6319) 
-(defblock |p{isLatinExtendedAdditional}| 7680 7935) 
-(defblock |p{isGreekExtended}| 7936 8191) 
-(defblock |p{isGeneralPunctuation}| 8192 8303) 
-(defblock |p{isSuperscriptsandSubscripts}| 8304 8351) 
-(defblock |p{isCurrencySymbols}| 8352 8399) 
-(defblock |p{isCombiningMarksforSymbols}| 8400 8447) 
-(defblock |p{isLetterlikeSymbols}| 8448 8527) 
-(defblock |p{isNumberForms}| 8528 8591) 
-(defblock |p{isArrows}| 8592 8703) 
-(defblock |p{isMathematicalOperators}| 8704 8959) 
-(defblock |p{isMiscellaneousTechnical}| 8960 9215) 
-(defblock |p{isControlPictures}| 9216 9279) 
-(defblock |p{isOpticalCharacterRecognition}| 9280 9311) 
-(defblock |p{isEnclosedAlphanumerics}| 9312 9471) 
-(defblock |p{isBoxDrawing}| 9472 9599) 
-(defblock |p{isBlockElements}| 9600 9631) 
-(defblock |p{isGeometricShapes}| 9632 9727) 
-(defblock |p{isMiscellaneousSymbols}| 9728 9983) 
-(defblock |p{isDingbats}| 9984 10175) 
-(defblock |p{isBraillePatterns}| 10240 10495) 
-(defblock |p{isCJKRadicalsSupplement}| 11904 12031) 
-(defblock |p{isKangxiRadicals}| 12032 12255) 
-(defblock |p{isIdeographicDescriptionCharacters}| 12272 12287) 
-(defblock |p{isCJKSymbolsandPunctuation}| 12288 12351) 
-(defblock |p{isHiragana}| 12352 12447) 
-(defblock |p{isKatakana}| 12448 12543) 
-(defblock |p{isBopomofo}| 12544 12591) 
-(defblock |p{isHangulCompatibilityJamo}| 12592 12687) 
-(defblock |p{isKanbun}| 12688 12703) 
-(defblock |p{isBopomofoExtended}| 12704 12735) 
-(defblock |p{isEnclosedCJKLettersandMonths}| 12800 13055) 
-(defblock |p{isCJKCompatibility}| 13056 13311) 
-(defblock |p{isCJKUnifiedIdeographsExtensionA}| 13312 19893) 
-(defblock |p{isCJKUnifiedIdeographs}| 19968 40959) 
-(defblock |p{isYiSyllables}| 40960 42127) 
-(defblock |p{isYiRadicals}| 42128 42191) 
-(defblock |p{isHangulSyllables}| 44032 55203) 
-(defblock |p{isPrivateUse}| 57344 63743) 
-(defblock |p{isCJKCompatibilityIdeographs}| 63744 64255) 
-(defblock |p{isAlphabeticPresentationForms}| 64256 64335) 
-(defblock |p{isArabicPresentationForms-A}| 64336 65023) 
-(defblock |p{isCombiningHalfMarks}| 65056 65071) 
-(defblock |p{isCJKCompatibilityForms}| 65072 65103) 
-(defblock |p{isSmallFormVariants}| 65104 65135) 
-(defblock |p{isArabicPresentationForms-B}| 65136 65278) 
-(defblock |p{isSpecials}| 65279 65279) 
-(defblock |p{isHalfwidthandFullwidthForms}| 65280 65519) 
-(defblock |p{isSpecials}| 65520 65533) 
+(defblock |p{isBasicLatin}| 0 127)
+(defblock |p{isLatin-1Supplement}| 128 255)
+(defblock |p{isLatinExtended-A}| 256 383)
+(defblock |p{isLatinExtended-B}| 384 591)
+(defblock |p{isIPAExtensions}| 592 687)
+(defblock |p{isSpacingModifierLetters}| 688 767)
+(defblock |p{isCombiningDiacriticalMarks}| 768 879)
+(defblock |p{isGreek}| 880 1023)
+(defblock |p{isCyrillic}| 1024 1279)
+(defblock |p{isArmenian}| 1328 1423)
+(defblock |p{isHebrew}| 1424 1535)
+(defblock |p{isArabic}| 1536 1791)
+(defblock |p{isSyriac}| 1792 1871)
+(defblock |p{isThaana}| 1920 1983)
+(defblock |p{isDevanagari}| 2304 2431)
+(defblock |p{isBengali}| 2432 2559)
+(defblock |p{isGurmukhi}| 2560 2687)
+(defblock |p{isGujarati}| 2688 2815)
+(defblock |p{isOriya}| 2816 2943)
+(defblock |p{isTamil}| 2944 3071)
+(defblock |p{isTelugu}| 3072 3199)
+(defblock |p{isKannada}| 3200 3327)
+(defblock |p{isMalayalam}| 3328 3455)
+(defblock |p{isSinhala}| 3456 3583)
+(defblock |p{isThai}| 3584 3711)
+(defblock |p{isLao}| 3712 3839)
+(defblock |p{isTibetan}| 3840 4095)
+(defblock |p{isMyanmar}| 4096 4255)
+(defblock |p{isGeorgian}| 4256 4351)
+(defblock |p{isHangulJamo}| 4352 4607)
+(defblock |p{isEthiopic}| 4608 4991)
+(defblock |p{isCherokee}| 5024 5119)
+(defblock |p{isUnifiedCanadianAboriginalSyllabics}| 5120 5759)
+(defblock |p{isOgham}| 5760 5791)
+(defblock |p{isRunic}| 5792 5887)
+(defblock |p{isKhmer}| 6016 6143)
+(defblock |p{isMongolian}| 6144 6319)
+(defblock |p{isLatinExtendedAdditional}| 7680 7935)
+(defblock |p{isGreekExtended}| 7936 8191)
+(defblock |p{isGeneralPunctuation}| 8192 8303)
+(defblock |p{isSuperscriptsandSubscripts}| 8304 8351)
+(defblock |p{isCurrencySymbols}| 8352 8399)
+(defblock |p{isCombiningMarksforSymbols}| 8400 8447)
+(defblock |p{isLetterlikeSymbols}| 8448 8527)
+(defblock |p{isNumberForms}| 8528 8591)
+(defblock |p{isArrows}| 8592 8703)
+(defblock |p{isMathematicalOperators}| 8704 8959)
+(defblock |p{isMiscellaneousTechnical}| 8960 9215)
+(defblock |p{isControlPictures}| 9216 9279)
+(defblock |p{isOpticalCharacterRecognition}| 9280 9311)
+(defblock |p{isEnclosedAlphanumerics}| 9312 9471)
+(defblock |p{isBoxDrawing}| 9472 9599)
+(defblock |p{isBlockElements}| 9600 9631)
+(defblock |p{isGeometricShapes}| 9632 9727)
+(defblock |p{isMiscellaneousSymbols}| 9728 9983)
+(defblock |p{isDingbats}| 9984 10175)
+(defblock |p{isBraillePatterns}| 10240 10495)
+(defblock |p{isCJKRadicalsSupplement}| 11904 12031)
+(defblock |p{isKangxiRadicals}| 12032 12255)
+(defblock |p{isIdeographicDescriptionCharacters}| 12272 12287)
+(defblock |p{isCJKSymbolsandPunctuation}| 12288 12351)
+(defblock |p{isHiragana}| 12352 12447)
+(defblock |p{isKatakana}| 12448 12543)
+(defblock |p{isBopomofo}| 12544 12591)
+(defblock |p{isHangulCompatibilityJamo}| 12592 12687)
+(defblock |p{isKanbun}| 12688 12703)
+(defblock |p{isBopomofoExtended}| 12704 12735)
+(defblock |p{isEnclosedCJKLettersandMonths}| 12800 13055)
+(defblock |p{isCJKCompatibility}| 13056 13311)
+(defblock |p{isCJKUnifiedIdeographsExtensionA}| 13312 19893)
+(defblock |p{isCJKUnifiedIdeographs}| 19968 40959)
+(defblock |p{isYiSyllables}| 40960 42127)
+(defblock |p{isYiRadicals}| 42128 42191)
+(defblock |p{isHangulSyllables}| 44032 55203)
+(defblock |p{isPrivateUse}| 57344 63743)
+(defblock |p{isCJKCompatibilityIdeographs}| 63744 64255)
+(defblock |p{isAlphabeticPresentationForms}| 64256 64335)
+(defblock |p{isArabicPresentationForms-A}| 64336 65023)
+(defblock |p{isCombiningHalfMarks}| 65056 65071)
+(defblock |p{isCJKCompatibilityForms}| 65072 65103)
+(defblock |p{isSmallFormVariants}| 65104 65135)
+(defblock |p{isArabicPresentationForms-B}| 65136 65278)
+(defblock |p{isSpecials}| 65279 65279)
+(defblock |p{isHalfwidthandFullwidthForms}| 65280 65519)
+(defblock |p{isSpecials}| 65520 65533)
 
 (DEFRANGES |p{Lu}|
  (MASSAGE-RANGES
@@ -230,7 +230,7 @@
     (120128 120132) (120134 120134) (120138 120144) (120172 120197)
     (120224 120249) (120276 120301) (120328 120353) (120380 120405)
     (120432 120457) (120488 120512) (120546 120570) (120604 120628)
-    (120662 120686) (120720 120744)))) 
+    (120662 120686) (120720 120744))))
 
 (DEFRANGES |p{Ll}|
  (MASSAGE-RANGES
@@ -307,19 +307,19 @@
     (120250 120275) (120302 120327) (120354 120379) (120406 120431)
     (120458 120483) (120514 120538) (120540 120545) (120572 120596)
     (120598 120603) (120630 120654) (120656 120661) (120688 120712)
-    (120714 120719) (120746 120770) (120772 120777)))) 
+    (120714 120719) (120746 120770) (120772 120777))))
 
 (DEFRANGES |p{Lt}|
  (MASSAGE-RANGES
   '((453 453) (456 456) (459 459) (498 498) (8072 8079) (8088 8095)
-    (8104 8111) (8124 8124) (8140 8140) (8188 8188)))) 
+    (8104 8111) (8124 8124) (8140 8140) (8188 8188))))
 
 (DEFRANGES |p{Lm}|
  (MASSAGE-RANGES
   '((688 696) (699 705) (720 721) (736 740) (750 750) (890 890)
     (1369 1369) (1600 1600) (1765 1766) (3654 3654) (3782 3782)
     (6211 6211) (12293 12293) (12337 12341) (12445 12446) (12540 12542)
-    (65392 65392) (65438 65439)))) 
+    (65392 65392) (65438 65439))))
 
 (DEFRANGES |p{Lo}|
  (MASSAGE-RANGES
@@ -360,7 +360,7 @@
     (64326 64433) (64467 64829) (64848 64911) (64914 64967) (65008 65019)
     (65136 65138) (65140 65140) (65142 65276) (65382 65391) (65393 65437)
     (65440 65470) (65474 65479) (65482 65487) (65490 65495) (65498 65500)
-    (66304 66334) (66352 66377) (131072 173782) (194560 195101)))) 
+    (66304 66334) (66352 66377) (131072 173782) (194560 195101))))
 
 (DEFRANGES |p{Mn}|
  (MASSAGE-RANGES
@@ -383,7 +383,7 @@
     (4153 4153) (4184 4185) (6071 6077) (6086 6086) (6089 6099)
     (6313 6313) (8400 8412) (8417 8417) (12330 12335) (12441 12442)
     (64286 64286) (65056 65059) (119143 119145) (119163 119170)
-    (119173 119179) (119210 119213)))) 
+    (119173 119179) (119210 119213))))
 
 (DEFRANGES |p{Mc}|
  (MASSAGE-RANGES
@@ -397,40 +397,40 @@
     (3398 3400) (3402 3404) (3415 3415) (3458 3459) (3535 3537)
     (3544 3551) (3570 3571) (3902 3903) (3967 3967) (4140 4140)
     (4145 4145) (4152 4152) (4182 4183) (6068 6070) (6078 6085)
-    (6087 6088) (119141 119142) (119149 119154)))) 
+    (6087 6088) (119141 119142) (119149 119154))))
 
 (DEFRANGES |p{Me}|
- (MASSAGE-RANGES '((1160 1161) (1757 1758) (8413 8416) (8418 8419)))) 
+ (MASSAGE-RANGES '((1160 1161) (1757 1758) (8413 8416) (8418 8419))))
 
 (DEFRANGES |p{Nd}|
  (MASSAGE-RANGES
   '((48 57) (1632 1641) (1776 1785) (2406 2415) (2534 2543) (2662 2671)
     (2790 2799) (2918 2927) (3047 3055) (3174 3183) (3302 3311)
     (3430 3439) (3664 3673) (3792 3801) (3872 3881) (4160 4169)
-    (4969 4977) (6112 6121) (6160 6169) (65296 65305) (120782 120831)))) 
+    (4969 4977) (6112 6121) (6160 6169) (65296 65305) (120782 120831))))
 
 (DEFRANGES |p{Nl}|
  (MASSAGE-RANGES
   '((5870 5872) (8544 8579) (12295 12295) (12321 12329) (12344 12346)
-    (66378 66378)))) 
+    (66378 66378))))
 
 (DEFRANGES |p{No}|
  (MASSAGE-RANGES
   '((178 179) (185 185) (188 190) (2548 2553) (3056 3058) (3882 3891)
     (4978 4988) (8304 8304) (8308 8313) (8320 8329) (8531 8543)
     (9312 9371) (9450 9450) (10102 10131) (12690 12693) (12832 12841)
-    (12928 12937) (66336 66339)))) 
+    (12928 12937) (66336 66339))))
 
 (DEFRANGES |p{Pc}|
  (MASSAGE-RANGES
   '((95 95) (8255 8256) (12539 12539) (65075 65076) (65101 65103)
-    (65343 65343) (65381 65381)))) 
+    (65343 65343) (65381 65381))))
 
 (DEFRANGES |p{Pd}|
  (MASSAGE-RANGES
   '((45 45) (173 173) (1418 1418) (6150 6150) (8208 8213) (12316 12316)
     (12336 12336) (65073 65074) (65112 65112) (65123 65123)
-    (65293 65293)))) 
+    (65293 65293))))
 
 (DEFRANGES |p{Ps}|
  (MASSAGE-RANGES
@@ -441,7 +441,7 @@
     (12317 12317) (64830 64830) (65077 65077) (65079 65079) (65081 65081)
     (65083 65083) (65085 65085) (65087 65087) (65089 65089) (65091 65091)
     (65113 65113) (65115 65115) (65117 65117) (65288 65288) (65339 65339)
-    (65371 65371) (65378 65378)))) 
+    (65371 65371) (65378 65378))))
 
 (DEFRANGES |p{Pe}|
  (MASSAGE-RANGES
@@ -452,14 +452,14 @@
     (65078 65078) (65080 65080) (65082 65082) (65084 65084) (65086 65086)
     (65088 65088) (65090 65090) (65092 65092) (65114 65114) (65116 65116)
     (65118 65118) (65289 65289) (65341 65341) (65373 65373)
-    (65379 65379)))) 
+    (65379 65379))))
 
 (DEFRANGES |p{Pi}|
  (MASSAGE-RANGES
-  '((171 171) (8216 8216) (8219 8220) (8223 8223) (8249 8249)))) 
+  '((171 171) (8216 8216) (8219 8220) (8223 8223) (8249 8249))))
 
 (DEFRANGES |p{Pf}|
- (MASSAGE-RANGES '((187 187) (8217 8217) (8221 8221) (8250 8250)))) 
+ (MASSAGE-RANGES '((187 187) (8217 8217) (8221 8221) (8250 8250))))
 
 (DEFRANGES |p{Po}|
  (MASSAGE-RANGES
@@ -475,15 +475,15 @@
     (65097 65100) (65104 65106) (65108 65111) (65119 65121) (65128 65128)
     (65130 65131) (65281 65283) (65285 65287) (65290 65290) (65292 65292)
     (65294 65295) (65306 65307) (65311 65312) (65340 65340) (65377 65377)
-    (65380 65380)))) 
+    (65380 65380))))
 
 (DEFRANGES |p{Zs}|
  (MASSAGE-RANGES
-  '((32 32) (160 160) (5760 5760) (8192 8203) (8239 8239) (12288 12288)))) 
+  '((32 32) (160 160) (5760 5760) (8192 8203) (8239 8239) (12288 12288))))
 
-(DEFRANGES |p{Zl}| (MASSAGE-RANGES '((8232 8232)))) 
+(DEFRANGES |p{Zl}| (MASSAGE-RANGES '((8232 8232))))
 
-(DEFRANGES |p{Zp}| (MASSAGE-RANGES '((8233 8233)))) 
+(DEFRANGES |p{Zp}| (MASSAGE-RANGES '((8233 8233))))
 
 (DEFRANGES |p{Sm}|
  (MASSAGE-RANGES
@@ -495,19 +495,19 @@
     (65124 65126) (65291 65291) (65308 65310) (65372 65372) (65374 65374)
     (65506 65506) (65513 65516) (120513 120513) (120539 120539)
     (120571 120571) (120597 120597) (120629 120629) (120655 120655)
-    (120687 120687) (120713 120713) (120745 120745) (120771 120771)))) 
+    (120687 120687) (120713 120713) (120745 120745) (120771 120771))))
 
 (DEFRANGES |p{Sc}|
  (MASSAGE-RANGES
   '((36 36) (162 165) (2546 2547) (3647 3647) (6107 6107) (8352 8367)
-    (65129 65129) (65284 65284) (65504 65505) (65509 65510)))) 
+    (65129 65129) (65284 65284) (65504 65505) (65509 65510))))
 
 (DEFRANGES |p{Sk}|
  (MASSAGE-RANGES
   '((94 94) (96 96) (168 168) (175 175) (180 180) (184 184) (697 698)
     (706 719) (722 735) (741 749) (884 885) (900 901) (8125 8125)
     (8127 8129) (8141 8143) (8157 8159) (8173 8175) (8189 8190)
-    (12443 12444) (65342 65342) (65344 65344) (65507 65507)))) 
+    (12443 12444) (65342 65342) (65344 65344) (65507 65507))))
 
 (DEFRANGES |p{So}|
  (MASSAGE-RANGES
@@ -532,18 +532,18 @@
     (42165 42176) (42178 42180) (42182 42182) (65508 65508) (65512 65512)
     (65517 65518) (65532 65533) (118784 119029) (119040 119078)
     (119082 119140) (119146 119148) (119171 119172) (119180 119209)
-    (119214 119261)))) 
+    (119214 119261))))
 
-(DEFRANGES |p{Cc}| (MASSAGE-RANGES '((0 31) (127 159)))) 
+(DEFRANGES |p{Cc}| (MASSAGE-RANGES '((0 31) (127 159))))
 
 (DEFRANGES |p{Cf}|
  (MASSAGE-RANGES
   '((1807 1807) (6155 6158) (8204 8207) (8234 8238) (8298 8303)
     (65279 65279) (65529 65531) (119155 119162) (917505 917505)
-    (917536 917631)))) 
+    (917536 917631))))
 
 (DEFRANGES |p{Co}|
- (MASSAGE-RANGES '((57344 63743) (983040 1048573) (1048576 1114109)))) 
+ (MASSAGE-RANGES '((57344 63743) (983040 1048573) (1048576 1114109))))
 
 (defranges |p{L}| (append |p{Lu}| |p{Ll}| |p{Lt}| |p{Lm}| |p{Lo}|))
 (defranges |p{M}| (append |p{Mn}| |p{Mc}| |p{Me}|))
