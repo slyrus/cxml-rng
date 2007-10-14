@@ -282,11 +282,11 @@
     automatically, and the user's SAX handler can simply be passed as a
     validation context to data type functions."))
 
-(defmethod sax:start-prefix-mapping
+(defmethod sax:start-prefix-mapping :after
     ((handler sax-validation-context-mixin) prefix uri)
   (push (cons prefix uri) (context-stack handler)))
 
-(defmethod sax:end-prefix-mapping
+(defmethod sax:end-prefix-mapping :after
     ((handler sax-validation-context-mixin) prefix)
   (setf (context-stack handler)
 	(remove prefix

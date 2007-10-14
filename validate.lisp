@@ -172,7 +172,7 @@
 
 ;;;; VALIDATOR
 
-(defclass validator (sax:sax-parser-mixin
+(defclass validator (sax:default-handler
 		     cxml-types:sax-validation-context-mixin)
   ((current-pattern :initarg :current-pattern :accessor current-pattern)
    (after-start-tag-p :accessor after-start-tag-p)
@@ -796,7 +796,7 @@
 ;;; FIXME: since we ignore PI, CDATA, and comment events, we should probably
 ;;; discard them properly.
 
-(defclass text-normalizer (cxml:sax-proxy sax:sax-parser-mixin)
+(defclass text-normalizer (cxml:sax-proxy)
   ((pending-text-node :initform (make-string-output-stream)
 		      :accessor pending-text-node)))
 
