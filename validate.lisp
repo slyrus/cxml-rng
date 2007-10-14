@@ -194,7 +194,7 @@
 (defun advance (hsx pattern message &rest args)
   (when (typep pattern 'not-allowed)
     (let ((*error-class* (validation-error-class hsx)))
-      (rng-error hsx "~?, was expecting ~A"
+      (rng-error hsx "~?,~%was expecting ~A"
 		 message
 		 args
 		 (replace-scary-characters
@@ -670,7 +670,8 @@
 
 (defun attributes\' (handler pattern attributes)
   (dolist (a attributes)
-    (setf pattern (attribute\' handler pattern a)))
+    (setf pattern (attribute\' handler pattern a))
+    (advance handler pattern "attribute not valid: ~A" a))
   pattern)
 
 (defgeneric attribute\' (handler pattern attribute))
@@ -828,7 +829,17 @@
   (expectation (pattern-a pattern) s))
 
 (defmethod expectation ((pattern group) s)
-  (expectation (pattern-a pattern) s))
+  (cond
+    ;; zzz: for better error messages with attributes we should probably
+    ;; have a separate attribute-expectation function
+    ((typep (pattern-a pattern) 'attribute)
+     (pprint-logical-block (s nil)
+       (expectation (pattern-a pattern) s)
+       (when (typep (pattern-a pattern) 'attribute)
+	 (format s "~:@_and ")
+	 (expectation (pattern-b pattern) s))))
+    (t
+     (expectation (pattern-a pattern) s))))
 
 (defmethod expectation ((pattern attribute) s)
   (pprint-logical-block (s nil)
