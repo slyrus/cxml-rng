@@ -651,7 +651,7 @@
 		 (:constructor make-name (uri lname)))
   "@short{This name class allows only a specific name.}
 
-   A specific namespace URI and local name are expected. 
+   A specific namespace URI and local name are expected.
 
    @see-slot{name-uri}
    @see-slot{name-lname}"
@@ -673,7 +673,7 @@
   "@short{This name class allows all names in a specific namespace}, with
    possible exceptions.
 
-   A specific namespace URI is expected. 
+   A specific namespace URI is expected.
 
    Exceptions are given as @code{ns-name-except}.
 
@@ -1578,7 +1578,7 @@
 
 ;;; 4.8. name attribute of element and attribute elements
 ;;;   `name' is stored as a slot, not a child.  Done by p/element and
-;;;    p/attribute.  
+;;;    p/attribute.
 
 ;;; 4.9. ns attribute
 ;;;    done by p/name-class, p/value, p/element, p/attribute
@@ -2102,7 +2102,7 @@
       (return)))
   (let ((a (ensure-dtd-attribute (pattern-name pattern)
 				 *in-element*
-				 *compatibility-table*))) 
+				 *compatibility-table*)))
     (cond
       ((null (dtd-default-value a))
        (setf (dtd-default-value a) default-value))
@@ -2123,7 +2123,7 @@
 	(rng-error nil "defaultValue declared in element without <name>"))
       (let ((a (ensure-dtd-attribute (pattern-name pattern)
 				     *in-element*
-				     *compatibility-table*))) 
+				     *compatibility-table*)))
 	(cond
 	  ((eq (dtd-id-type a) :unknown)
 	   (setf (dtd-id-type a) id-type))
