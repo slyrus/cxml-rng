@@ -28,6 +28,11 @@
 
 (in-package :cxml-types)
 
+;;; FIXME: On Lisps using UTF-16 characters, we are unable to recognize
+;;; ranges including code points above #x10000.  To do so, we would have
+;;; to check for substrings of up to two characters rather than indiviual
+;;; characters.
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +limit-1+ (1- cl-ppcre::*regex-char-code-limit*)))
 
@@ -54,8 +59,12 @@
       (let ((result nil))
 	(labels ((range* (min max)
 		   (when (and (< min max)
-                              (not (<= #xD800 min #xDFFF))
-                              (not (<= #xD800 (1- max) #xDFFF)))
+                              #-rune-is-utf-16
+			      (not (or (<= #xD800 min #xDFFF)
+				       (<= #xD800 (1- max) #xDFFF)))
+                              #+rune-is-utf-16
+			      ;; FIXME: See surrogate comment above.
+			      (not (>= max #x10000)))
 		     (push (list :range (code-char min) (code-char (1- max)))
 			   result))))
 	  (range* amin (min bmin amax))
