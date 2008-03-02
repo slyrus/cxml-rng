@@ -8,13 +8,10 @@
 <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body style="width: 62em">
-<div id="header"><table cellspacing="0" cellpadding="0" width="100%"><tr>
-<td width="176"><img src="doc/logo.png"></td>
-<td valign="center">
-	    —
-	    <b> Relax NG for Closure XML</b>
-</td>
-</tr></table></div>
+<div id="header"><div style="margin-left: 15px"><b><span>cxml–</span><span style="color: #ff9500">rng</span>
+	    
+	  Relax NG for Closure XML
+	</b></div></div>
 <div id="homepage" class="main">
   <p>
     An implementation
@@ -72,6 +69,11 @@
     Lisp implementations with Unicode support.
   </p>
 
+  <h3>Documentation</h3>
+  <p>
+    <a href="doc/index.html">API documentation</a> is available.
+  </p>
+
   <h3>Example</h3>
   <p>
     Use <a href="doc/pages/cxml-rng__parse-schema.html">cxml-rng:parse-schema</a>
@@ -124,10 +126,35 @@
                   (cxml-rng:parse-schema #p"example.rng")
                   <span style="color: black">(cxml-dom:make-dom-builder))</span>)</pre>
 
-  <h3>Documentation</h3>
-  <p>
-    <a href="doc/index.html">API documentation</a> is available.
-  </p>
+  <h3>Recent changes</h3>
+  <p><b>2008-03-dd</b></p>
+  <ul>
+    <li>
+      Use 21 bit characters on Lisps offering them.
+      (Also fixes OpenMCL issues.)
+    </li>
+  </ul>
+  <p><b>2007-10-21</b></p>
+  <ul>
+    <li>
+      Slightly better error messages around attribute issues.
+    </li>
+    <li>
+      Update to current CXML.
+    </li>
+  </ul>
+  <p><b>2007-07-01</b></p>
+  <ul>
+    <li>
+      Allows comments in grammar contents.
+    </li>
+  </ul>
+  <p><b>2007-05-26</b></p>
+  <ul>
+    <li>
+      Initial public release. 
+    </li>
+  </ul>
 </div>
 </body>
 </html>

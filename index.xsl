@@ -40,17 +40,14 @@
   
   <xsl:template name="header">
     <div id="header">
-      <table cellspacing="0" cellpadding="0" width="100%">
-	<tr>
-	  <td width="176">
-	    <img src="doc/logo.png"/>
-	  </td>
-	  <td valign="center">
-	    &#x2014;
-	    <b> Relax NG for Closure XML</b>
-	  </td>
-	</tr>
-      </table>
+      <div style="margin-left: 15px">
+	<b>
+	  <span>cxml&#x2013;</span>
+	  <span style="color: #ff9500">rng</span>
+	  &#160;&#160;
+	  Relax NG for Closure XML
+	</b>
+      </div>
     </div>
   </xsl:template>
 </xsl:stylesheet>

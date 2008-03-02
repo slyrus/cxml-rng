@@ -55,6 +55,11 @@
     Lisp implementations with Unicode support.
   </p>
 
+  <h3>Documentation</h3>
+  <p>
+    <a href="doc/index.html">API documentation</a> is available.
+  </p>
+
   <h3>Example</h3>
   <p>
     Use <a href="doc/pages/cxml-rng__parse-schema.html">cxml-rng:parse-schema</a>
@@ -109,8 +114,33 @@
                   (cxml-rng:parse-schema #p"example.rng")
                   <blau>(cxml-dom:make-dom-builder))</blau>)</pre>
 
-  <h3>Documentation</h3>
-  <p>
-    <a href="doc/index.html">API documentation</a> is available.
-  </p>
+  <h3>Recent changes</h3>
+  <p><b>2008-03-dd</b></p>
+  <ul>
+    <li>
+      Use 21 bit characters on Lisps offering them.
+      (Also fixes OpenMCL issues.)
+    </li>
+  </ul>
+  <p><b>2007-10-21</b></p>
+  <ul>
+    <li>
+      Slightly better error messages around attribute issues.
+    </li>
+    <li>
+      Update to current CXML.
+    </li>
+  </ul>
+  <p><b>2007-07-01</b></p>
+  <ul>
+    <li>
+      Allows comments in grammar contents.
+    </li>
+  </ul>
+  <p><b>2007-05-26</b></p>
+  <ul>
+    <li>
+      Initial public release. 
+    </li>
+  </ul>
 </page>
