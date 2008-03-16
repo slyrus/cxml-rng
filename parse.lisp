@@ -736,8 +736,10 @@
 	(when (equal (klacks:current-uri source) *rng-namespace*)
 	  (return))
 	(klacks:serialize-element source nil))
-      (:end-element (return)))
-    (klacks:consume source)))
+      (:end-element
+       (return))
+      (t
+       (klacks:consume source)))))
 
 (defun consume-and-skip-to-native (source)
   (klacks:consume source)
