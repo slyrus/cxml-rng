@@ -30,7 +30,7 @@
 
 ;;; FIXME: On Lisps using UTF-16 characters, we are unable to recognize
 ;;; ranges including code points above #x10000.  To do so, we would have
-;;; to check for substrings of up to two characters rather than indiviual
+;;; to check for substrings of up to two characters rather than individual
 ;;; characters.
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -44,11 +44,19 @@
      (setf (cl-ppcre:parse-tree-synonym ',name) (cons :char-class ,name))))
 
 (defmacro defblock (name min max)
-  `(defranges ,name '((:range ,(code-char min) ,(code-char max)))))
+  (let ((ranges
+	 (when (and #+rune-is-utf-16 (code-char min)
+		    #+rune-is-utf-16 (code-char max))
+	   `((:range ,(code-char min) ,(code-char max))))))
+    `(defranges ,name ',ranges)))
 
 (defun massage-ranges (l)
-  (mapcar (lambda (x)
-	    (list :range (code-char (car x)) (code-char (cadr x))))
+  (mapcan (lambda (x)
+	    (let ((a (code-char (car x)))
+		  (b (code-char (cadr x))))
+	      (if (and #+rune-is-utf-16 a #+rune-is-utf-16 b)
+		  (list (list :range a b))
+		  '())))
 	  l))
 
 (defun range- (a b)
@@ -64,7 +72,9 @@
 				       (<= #xD800 (1- max) #xDFFF)))
                               #+rune-is-utf-16
 			      ;; FIXME: See surrogate comment above.
-			      (not (>= max #x10000)))
+			      (and (< max #x10000)
+				   (code-char min)
+				   (code-char (1- max))))
 		     (push (list :range (code-char min) (code-char (1- max)))
 			   result))))
 	  (range* amin (min bmin amax))
