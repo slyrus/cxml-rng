@@ -48,21 +48,6 @@
 
 (defvar *in-pattern-parser-p* nil)
 
-(defvar *convert-char-class-to-hash* #'cl-ppcre::convert-char-class-to-hash)
-
-;;; zzz Evil hack!
-
-(format t "Patching CL-PPCRE::CONVERT-CHAR-CLASS-TO-HASH~%")
-(setf (fdefinition 'cl-ppcre::convert-char-class-to-hash)
-      (lambda (list)
-	(when *in-pattern-parser-p*
-	  (setf list (mapcan (lambda (x)
-			       (if (symbolp x)
-				   (symbol-value x)
-				   x))
-			     list)))
-	(funcall *convert-char-class-to-hash* list)))
-
 (defun signal-ppcre-syntax-error (fmt &rest args)
   (error "invalid pattern: ~?" fmt args))
 
@@ -238,7 +223,10 @@ handled elsewhere."
   (flet ((rangify (x)
 	   (etypecase x
 	     (character `((:range ,x ,x)))
-	     (list (assert (eq (car x) :range)) (list x))
+	     (list
+	      (ecase (car x)
+		(:range (list x))
+		(:property (copy-list (symbol-value (second x))))))
 	     (symbol (copy-list (symbol-value x))))))
     (ranges- (mapcan #'rangify r) (mapcan #'rangify s))))
 
@@ -273,7 +261,10 @@ we're inside a range or not."
                      (case next-char
                        ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S #\p)
                          ;; a special character class
-                         (push (map-char-to-special-char-class next-char lexer)
+                         (push (list :property
+				     (map-char-to-special-char-class
+				      next-char
+				      lexer))
 			       list)
                          ;; if the last character was a hyphen
                          ;; just collect it literally
@@ -450,7 +441,8 @@ resets the lexer to its old position."
                   (case next-char
                     ((#\. #\i #\I #\c #\C #\d #\D #\w #\W #\s #\S #\p)
                       ;; these will be treated like character classes
-                      (map-char-to-special-char-class next-char lexer))
+		     (list :property
+			   (map-char-to-special-char-class next-char lexer)))
                     (otherwise
                       ;; in all other cases just unescape the
                       ;; character

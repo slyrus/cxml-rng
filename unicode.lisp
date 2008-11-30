@@ -41,6 +41,12 @@
 (defmacro defranges (name form)
   `(progn
      (defparameter ,name ,form)
+     (defun ,name (character)
+       (some (lambda (range)
+	       (<= (char-code (second range))
+		   (char-code character)
+		   (char-code (third range))))
+	     ,name))
      (setf (cl-ppcre:parse-tree-synonym ',name) (cons :char-class ,name))))
 
 (defmacro defblock (name min max)
@@ -172,8 +178,10 @@
 (defblock |p{isCJKCompatibilityForms}| 65072 65103)
 (defblock |p{isSmallFormVariants}| 65104 65135)
 (defblock |p{isArabicPresentationForms-B}| 65136 65278)
-(defblock |p{isSpecials}| 65279 65279)
 (defblock |p{isHalfwidthandFullwidthForms}| 65280 65519)
+
+;; FIXME: which one is correct?
+;; (defblock |p{isSpecials}| 65279 65279)
 (defblock |p{isSpecials}| 65520 65533)
 
 (DEFRANGES |p{Lu}|
