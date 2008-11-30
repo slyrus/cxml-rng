@@ -115,8 +115,11 @@
                   <blau>(cxml-dom:make-dom-builder))</blau>)</pre>
 
   <h3>Recent changes</h3>
-  <p><b>2008-03-dd</b></p>
+  <p><b>2008-11-30</b></p>
   <ul>
+    <li>
+      Build fix: Upgraded to current cl-ppcre.
+    </li>
     <li>
       Use 21 bit characters on Lisps offering them.
       (Also fixes OpenMCL issues.)
