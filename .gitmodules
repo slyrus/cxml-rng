@@ -1,0 +1,3 @@
+[submodule "cxml-rng-test"]
+	path = cxml-rng-test
+	url = git://repo.or.cz/cxml-rng-test.git

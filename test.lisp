@@ -29,8 +29,13 @@
 
 (in-package :cxml-rng)
 
-(defun run-tests (&optional (p "/home/david/src/lisp/cxml-rng/spec-split/*")
-		            (output-file "/home/david/src/lisp/cxml-rng/TEST"))
+(defun system-directory (&optional (system :cxml-rng))
+  (asdf:component-relative-pathname (asdf:find-system system)))
+
+(defun run-tests
+    (&optional (p (merge-pathnames
+		   "cxml-rng-test/spec-split/*" (system-directory)))
+     (output-file (merge-pathnames "TEST" (system-directory))))
   (dribble output-file :if-exists :rename-and-delete)
   (let ((pass 0)
 	(total 0)
@@ -56,13 +61,15 @@
 (defvar *compatibility-test-p* nil)
 
 (defun run-dtd-tests
-    (&optional (p "/home/david/src/lisp/cxml-rng/dtd-split/*")
-               (q "/home/david/src/lisp/cxml-rng/DTDTEST"))
+    (&optional (p (merge-pathnames
+		   "cxml-rng-test/dtd-split/*" (system-directory)))
+               (q (merge-pathnames "DTDTEST" (system-directory))))
   (let ((*compatibility-test-p* t))
     (run-tests p q)))
 
 (defun run-dtd-test
-    (n &optional (p "/home/david/src/lisp/cxml-rng/dtd-split/*"))
+    (n &optional (p (merge-pathnames
+		     "cxml-rng-test/dtd-split/*" (system-directory))))
   (let ((*break-on-signals* 'error))
     (run-test n p)))
 
