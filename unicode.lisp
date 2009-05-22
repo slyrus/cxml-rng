@@ -51,8 +51,8 @@
 
 (defmacro defblock (name min max)
   (let ((ranges
-	 (when (and #+rune-is-utf-16 (code-char min)
-		    #+rune-is-utf-16 (code-char max))
+	 (when (and (code-char min)
+		    (code-char max))
 	   `((:range ,(code-char min) ,(code-char max))))))
     `(defranges ,name ',ranges)))
 
@@ -60,7 +60,7 @@
   (mapcan (lambda (x)
 	    (let ((a (code-char (car x)))
 		  (b (code-char (cadr x))))
-	      (if (and #+rune-is-utf-16 a #+rune-is-utf-16 b)
+	      (if (and a b)
 		  (list (list :range a b))
 		  '())))
 	  l))
@@ -73,14 +73,14 @@
       (let ((result nil))
 	(labels ((range* (min max)
 		   (when (and (< min max)
+			      (code-char min)
+			      (code-char (1- max))
                               #-rune-is-utf-16
 			      (not (or (<= #xD800 min #xDFFF)
 				       (<= #xD800 (1- max) #xDFFF)))
                               #+rune-is-utf-16
 			      ;; FIXME: See surrogate comment above.
-			      (and (< max #x10000)
-				   (code-char min)
-				   (code-char (1- max))))
+			      (< max #x10000))
 		     (push (list :range (code-char min) (code-char (1- max)))
 			   result))))
 	  (range* amin (min bmin amax))
