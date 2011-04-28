@@ -1430,6 +1430,7 @@
 
 (defvar *definitions-to-names*)
 (defvar *seen-names*)
+(defvar *newly-seen-definitions*)
 
 (defun serialization-name (defn)
   (or (gethash defn *definitions-to-names*)
@@ -1439,6 +1440,7 @@
 				    (defn-name defn)
 				    (hash-table-count *seen-names*))
 			    (string (defn-name defn)))))
+	      (push defn *newly-seen-definitions*)
 	      (setf (gethash name *seen-names*) defn)
 	      name))))
 
@@ -1454,12 +1456,16 @@
    @see{parse-schema}"
   (cxml:with-xml-output sink
     (let ((*definitions-to-names* (make-hash-table))
+	  (*newly-seen-definitions* '())
 	  (*seen-names* (make-hash-table :test 'equal)))
       (cxml:with-element "grammar"
 	(cxml:with-element "start"
 	  (serialize-pattern (schema-start schema)))
-	(loop for defn being each hash-key in *definitions-to-names* do
-	      (serialize-definition defn))))))
+	(do () ((null *newly-seen-definitions*))
+	  (mapc #'serialize-definition
+		(prog1
+		    *newly-seen-definitions*
+		  (setf *newly-seen-definitions* '()))))))))
 
 (defun serialize-pattern (pattern)
   (etypecase pattern
