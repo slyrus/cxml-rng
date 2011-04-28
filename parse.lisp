@@ -1458,14 +1458,15 @@
     (let ((*definitions-to-names* (make-hash-table))
 	  (*newly-seen-definitions* '())
 	  (*seen-names* (make-hash-table :test 'equal)))
-      (cxml:with-element "grammar"
-	(cxml:with-element "start"
-	  (serialize-pattern (schema-start schema)))
-	(do () ((null *newly-seen-definitions*))
-	  (mapc #'serialize-definition
-		(prog1
-		    *newly-seen-definitions*
-		  (setf *newly-seen-definitions* '()))))))))
+      (cxml:with-namespace ("" "http://relaxng.org/ns/structure/1.0")
+	(cxml:with-element "grammar"
+	  (cxml:with-element "start"
+	    (serialize-pattern (schema-start schema)))
+	  (do () ((null *newly-seen-definitions*))
+	    (mapc #'serialize-definition
+		  (prog1
+		      *newly-seen-definitions*
+		    (setf *newly-seen-definitions* '())))))))))
 
 (defun serialize-pattern (pattern)
   (etypecase pattern
@@ -1503,15 +1504,15 @@
     (value
       (cxml:with-element "value"
 	(let ((type (pattern-type pattern)))
-	  (cxml:attribute "datatype-library"
+	  (cxml:attribute "datatypeLibrary"
 			  (symbol-name (cxml-types:type-library type)))
 	  (cxml:attribute "type" (cxml-types:type-name type)))
 	(cxml:attribute "ns" (pattern-ns pattern))
 	(cxml:text (pattern-string pattern))))
     (data
-      (cxml:with-element "value"
+      (cxml:with-element "data"
 	(let ((type (pattern-type pattern)))
-	  (cxml:attribute "datatype-library"
+	  (cxml:attribute "datatypeLibrary"
 			  (symbol-name (cxml-types:type-library type)))
 	  (cxml:attribute "type" (cxml-types:type-name type)))
 	(dolist (param (pattern-params pattern))
