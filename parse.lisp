@@ -1438,7 +1438,7 @@
 			    (format nil "~A-~D"
 				    (defn-name defn)
 				    (hash-table-count *seen-names*))
-			    (defn-name defn))))
+			    (string (defn-name defn)))))
 	      (setf (gethash name *seen-names*) defn)
 	      name))))
 
