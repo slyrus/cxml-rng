@@ -78,7 +78,7 @@
 			    ,@(or body (list 'result)))
 			   (t
 			    (prog1
-				(elt buffer 0)
+				(or (elt buffer 0) :eof)
 			      (incf pos)))))))
 	   (with-expectation
 	       #\\
