@@ -199,7 +199,7 @@
 	       (prefix (subseq cxml-clex:bag 0 pos))
 	       (lname (subseq cxml-clex:bag (1+ pos ))))
 	  (when (find #\: lname)
-	    (rng-error "too many colons"))
+	    (rng-error nil "too many colons"))
 	  (unless (and (nc-name-p prefix))
 	    (rng-error nil "not an ncname: ~A" prefix))
 	  (let ((ch (cxml-clex::getch)))
