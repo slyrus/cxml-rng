@@ -241,10 +241,10 @@
      (assert *test-xmllint*)
      (let ((asdf::*VERBOSE-OUT* (make-string-output-stream)))
        (cond
-	 ((zerop (asdf:run-shell-command
-		  "xmllint -relaxng ~A ~A"
-		  schema
-		  (namestring (merge-pathnames href base))))
+	 ((zerop (nth-value 2
+                            (uiop:run-program
+                             `("xmllint" "-relaxng" ,schema ,(namestring (uiop:subpathname base href)))
+                             :ignore-error-status t)))
 	  (format t "PASS INSTANCE ~A~%" href)
 	  t)
 	 (t
